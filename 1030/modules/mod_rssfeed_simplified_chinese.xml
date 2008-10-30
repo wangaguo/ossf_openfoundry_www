@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Syndicate</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>RSS新闻联播模块可以显示让网友们读取您网站上最新新闻的链接。当您点按RSS图示，您将重新导向到一个使用XML格式列出所有最新新闻的新页面。为了要在其它Joomla!或RSS新闻联播读取程序中使用新闻联播，您必须剪下然后贴上新窗口的网址。</description>
+	<files>
+		<filename module="mod_rssfeed">mod_rssfeed.php</filename>
+	</files>
+	<params>
+		<param name="text" type="text" default="" label="文字" description="输入要与RSS链接一同显示的文字" />
+		<param name="cache" type="radio" default="0" label="开启快取" description="选择是否要快取这个模块的内容">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+			<param name="moduleclass_sfx" type="text" default="" label="模块CSS字尾" description="一个应用于模块CSS的字尾(table.moduletable)，可以让这页面有独立风格" />
+		<param name="rss091" type="radio" default="1" label="RSS 0.91" description="显示/隐藏 RSS 0.91 链接">
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="rss10" type="radio" default="1" label="RSS 1.0" description="显示/隐藏 RSS 1.0 链接">
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="rss20" type="radio" default="1" label="RSS 2.0" description="显示/隐藏 RSS 2.0 链接">
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="atom" type="radio" default="1" label="Atom" description="显示/隐藏 Atom 0.3 链接">
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="opml" type="radio" default="1" label="OPML" description="显示/隐藏 OPML 链接">
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="rss091_image" type="imagelist" directory="/images/M_images" hide_none="1" default="" label="RSS 0.91 图片" description="选择要使用的图片" />
+		<param name="rss10_image" type="imagelist" directory="/images/M_images" hide_none="1" default="" label="RSS 1.0 图片" description="选择要使用的图片" />
+		<param name="rss20_image" type="imagelist" directory="/images/M_images" hide_none="1" default="" label="RSS 2.0 图片" description="选择要使用的图片" />
+		<param name="atom_image" type="imagelist" directory="/images/M_images" hide_none="1" default="" label="Atom 图片" description="选择要使用的图片" />
+		<param name="opml_image" type="imagelist" directory="/images/M_images" hide_none="1" default="" label="OPML 图片" description="选择要使用的图片" />
+	</params>
+</mosinstall>

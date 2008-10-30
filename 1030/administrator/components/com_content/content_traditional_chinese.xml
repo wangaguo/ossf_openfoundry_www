@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="component" version="1.0.0">
+	<name>內容頁面</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>This shows a single content page</description>
+	<params>
+		<param name="pageclass_sfx" type="text" size="20" default="" label="頁面CSS字尾" description="一個應用於頁面CSS的字尾，可以讓這頁面有獨立風格" />
+		<param name="back_button" type="list" default="0" label="返回按鈕" description="顯示/隱藏返回按鈕，這個可以讓您返回上一個觀看的頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="item_title" type="radio" default="1" label="頁面標題" description="顯示/隱藏項目標題">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="link_titles" type="list" default="" label="標題可被連結" description="讓您的項目標題變為連到這個頁面的連結">
+			<option value="">使用全域</option>
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="introtext" type="radio" default="1" label="摘要文字" description="顯示/隱藏摘要文字">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="section" type="radio" default="0" label="單元名稱" description="顯示/隱藏文章項目所屬單元名稱">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="section_link" type="radio" default="0" label="單元名稱可被連結" description="讓單元的名稱變為可以連結到這個單元頁面的連結">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="category" type="radio" default="0" label="分類名稱" description="顯示/隱藏文章項目所屬分類名稱">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="category_link" type="radio" default="0" label="分類名稱可被連結" description="讓分類的名稱變為可以連結到這個分類頁面的連結">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="rating" type="list" default="" label="項目評價" description="顯示/隱藏項目評價 - 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="author" type="list" default="" label="作者名稱" description="顯示/隱藏作者名稱 - 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="createdate" type="list" default="" label="建立日期時間" description="顯示/隱藏項目建立日期時間 - 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="modifydate" type="list" default="" label="修改日期時間" description="顯示/隱藏項目修改日期時間 - 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="pdf" type="list" default="" label="PDF圖示" description="顯示/隱藏項目pdf產生按鈕- 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="print" type="list" default="" label="列印圖示" description="顯示/隱藏項目列印按鈕 - 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="email" type="list" default="" label="Email圖示" description="顯示/隱藏Email按鈕 - 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="keyref" type="text" size="25" default="" label="關鍵參考字" description="一個參考這個項目的關鍵文字 (像是說明參考)" />
+		<param name="docbook_type" type="list" default="" label="DocBook類型" description="這個內容項目關連到DocBook文件的類型(注意：實驗性質，不建議正式使用).">
+			<option value=""></option>
+			<option value="appendix">附錄</option>
+			<option value="article">文章</option>
+			<option value="book">書籍</option>
+			<option value="chapter">章節</option>
+			<option value="glossary">詞彙表</option>
+			<option value="part">分冊</option>
+			<option value="refentry">Refentry</option>
+			<option value="section">單元</option>
+		</param>
+	</params>
+</mosinstall>

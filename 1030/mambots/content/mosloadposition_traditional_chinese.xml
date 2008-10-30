@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall version="1.0.0" type="mambot" group="content">
+	<name>mosloadposition</name>
+	<author>Joomla! Project</author>
+	<creationDate>January 2005</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>在內容中載入特定模組位置，用法：{mosloadposition user1}</description>
+	<files>
+		<filename mambot="mosloadposition">mosloadposition.php</filename>
+	</files>
+	<params>
+		<param name="style" type="list" default="0" label="風格" description="設定嵌入的模組的風格">
+			<option value="0">使用表格嵌入 - 行列式</option>
+			<option value="1">使用表格嵌入 - 水平的</option>
+			<option value="-2">使用Divs嵌入</option>
+			<option value="-3">使用多重Divs嵌入</option>
+			<option value="-1">不嵌入 - 直接輸出</option>
+		</param>
+	</params>
+</mosinstall>

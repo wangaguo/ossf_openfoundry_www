@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="menu" version="1.0.0">
+	<name>連結 - RSS新聞聯播</name>
+	<group>Component|Link</group>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>建立連到一個已發佈新聞聯播的連結</description>
+	<params>
+		<param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default="" label="選單圖片" description="一個放在您選單項目左邊或右邊的小圖示，圖片必須位於images/stories/" />
+		<param name="pageclass_sfx" type="text" size="20" default="" label="頁面CSS字尾" description="一個應用於頁面CSS的字尾，可以讓這頁面有獨立風格" />
+		<param name="back_button" type="list" default="" label="返回按鈕" description="顯示/隱藏返回按鈕，這個可以讓您返回上一個觀看的頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="page_title" type="radio" default="1" label="頁面標題" description="顯示/隱藏頁面標題">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="header" type="text" size="30" default="" label="頁面標題" description="顯示在網頁最上方的文字。如果是空白的話，選單的名稱將會被顯示" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="headings" type="radio" default="1" label="表格標題" description="顯示/隱藏表格的標題">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="feed_image" type="radio" default="1" label="Feed圖片" description="顯示/隱藏feed的圖片">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="feed_descr" type="radio" default="1" label="Feed說明" description="顯示/隱藏feed的說明文字">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="item_descr" type="radio" default="1" label="項目說明" description="顯示/隱藏項目的說明或摘要文字">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="word_count" type="text" size="6" default="0" label="字數限制" description="讓您可以限制被觀看的項目說明文字的總字數。0表示顯示所有的文字。" />
+	</params>
+</mosinstall>

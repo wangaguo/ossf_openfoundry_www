@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Related Items</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>這個模組顯示與目前顯示的內容項目相關的其它內容項目。這是根據關鍵字的Metadata設計。所有在目前顯示的內容項目的關鍵字會被用來搜尋其它已發佈的項目是否有同樣的關鍵字。例如，如果您有一個項目名稱是'Breeding Parrots'，而有另一個項目名稱為'Hand Raising Black Cockatoos'，如果您加入了關鍵字'parrot'在這兩個項目中。相關模組將會列出'Breeding Parrots'項目，當你在觀看'Hand Raising Black Cockatoos'這個內容時，反之亦然。</description>
+	<files>
+	<filename module="mod_related_items">mod_related_items.php</filename>
+	</files>
+	<params>
+	<param name="cache" type="radio" default="0" label="開啟快取" description="選擇是否要快取這個模組的內容">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+	<param name="moduleclass_sfx" type="text" default="" label="模組CSS字尾" description="一個應用於模組CSS的字尾(table.moduletable)，可以讓這頁面有獨立風格" />
+	</params>
+</mosinstall>

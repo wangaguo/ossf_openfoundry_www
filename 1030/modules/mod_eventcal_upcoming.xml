@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<mosinstall type="module">
+	<name>eventCal Upcoming</name>
+	<author>Carsten Nikiel</author>
+	<creationDate>September 2006</creationDate>
+	<copyright>(C) 2006 Carsten Nikiel</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU GPL</license>
+	<authorEmail>kay_messers@web.de</authorEmail>
+	<authorUrl>http://forge.joomla.org/sf/projects/eventcal</authorUrl>
+	<version>1.6.3</version>
+	<description>eventCal - The Event Calendar System for Joomla! - Upcoming Events Module</description>
+	<files>
+		<filename module="mod_eventcal_upcoming">mod_eventcal_upcoming.php</filename>
+	</files>
+	<params>
+		<param name="howManyEvents" type="text" default="5" label="How many events to show" description="The amount of upcoming events to be displayed" />
+		<param name="catid" type="text" default="" label="Categories" description="Comma-separated list of eventCal categories. Events from all categories will be shown if this is empty." />
+		<param name="noUpcomingEvents" type="text" default="There are no upcoming events!" label="Text if no upcoming events" description="Text which will be displayed if no upcoming events could be found" />
+		<param name="dateFormat" type="text" default="%d.%m.%Y" label="Date Format" description="Format the {date} wild-card will be substituted by." />
+		<param name="template" type="textarea" rows="10" cols="50" default="&amp;lt;small&amp;gt;{date}&amp;lt;/small&amp;gt;&lt;br /&gt;{title}&lt;br /&gt;&amp;lt;small style=&amp;quot;color:black;&amp;quot;&amp;gt;{desc(30)}&amp;lt;/small&amp;gt;" label="template" description="Template for one single entry inside the module-table. You may use title, date, desc, color and cattitle included into {brackets}. " />
+	</params>
+</mosinstall>

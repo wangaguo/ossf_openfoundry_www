@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall version="1.0.x" type="mambot" group="system">
+	<name>Activate JoomlaStats</name>
+	<author>JoomlaStats Team continued on work from Norbert Bayer</author>
+	<creationDate>2006/11/24</creationDate>
+	<copyright>(C) 2006 JoomlaStats Team. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>info@JoomlaStats.org</authorEmail>
+	<authorUrl>www.JoomlaStats.org</authorUrl>
+	<version>1.1</version>
+	<description>This Bot activates the JoomlaStats Component. It's an alternative for manually adding a line to the template.</description>
+	<files>
+		<filename mambot="bot_jstats_activate">bot_jstats_activate.php</filename>
+	</files>
+</mosinstall>
+

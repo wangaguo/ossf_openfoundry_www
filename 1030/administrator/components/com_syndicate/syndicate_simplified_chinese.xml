@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="component" version="1.0.0">
+	<name>Syndicate</name>
+	<author>Joomla! Project</author>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>This component controls the Syndication settings</description>
+	<params>
+		<param name="check" type="radio" default="1" label="安全性检查" description="如果启用的话，新闻联合功能只有在RSS Feed模块发布时才会有作用">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="cache" type="radio" default="1" label="CACHE" description="将feed文件CACHE起来">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="cache_time" type="text" size="8" default="3600" label="CACHE时间" description="CACHE文件将会在这个设定的秒数重新更新" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="count" type="text" size="4" default="5" label="项目数" description="提供的项目数目" />
+		<param name="title" type="text" size="40" default="Powered by Joomla! 1.0" label="Title" description="Syndication Title" />
+		<param name="description" type="textarea" rows="5" cols="30" default="Joomla! site syndication" label="说明文字" description="新闻联合说明文字" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="image_file" type="imagelist" directory="/images/M_images" default="" label="图片" description="包含在feed里的图片文件" />
+		<param name="image_alt" type="text" size="30" default="Powered by Joomla! 1.0" label="图片说明" description="图片的说明文字" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="limit_text" type="radio" default="1" label="文章限制" description="使用下面的数值来限制显示文字">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="text_length" type="text" size="4" default="20" label="文章字数" description="文章的字数 - 0将会不显示任何文字" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="rss091" type="radio" default="1" label="RSS 0.91" description="启动/关闭RSS 0.91 feed 联合供稿">
+			<option value="0">关闭</option>
+			<option value="1">启动</option>
+		</param>
+		<param name="rss10" type="radio" default="1" label="RSS 1.0" description="启动/关闭RSS 1.0 feed 联合供稿">
+		<option value="0">关闭</option>
+			<option value="1">启动</option>
+		</param>
+		<param name="rss20" type="radio" default="1" label="RSS 2.0" description="启动/关闭RSS 2.0 feed 联合供稿">
+			<option value="0">关闭</option>
+			<option value="1">启动</option>
+		</param>
+		<param name="atom03" type="radio" default="1" label="ATOM 0.3" description="启动/关闭 ATOM 0.3 feed 联合供稿">
+		<option value="0">关闭</option>
+			<option value="1">启动</option>
+		</param>
+		<param name="opml" type="radio" default="1" label="OPML" description="启动/关闭 OPML feed 联合供稿">
+		<option value="0">关闭</option>
+			<option value="1">启动</option>
+		</param>
+		<param name="orderby" type="list" default="front" label="排序" description="显示的项目的排序方式">
+			<option value="front">默认</option>
+			<option value="front">首页的顺序</option>
+			<option value="date">较旧的排前</option>
+			<option value="rdate">较新的排前</option>
+			<option value="alpha">标题字母排序</option>
+			<option value="ralpha">标题字母反向排序</option>
+			<option value="author">作者字母排序</option>
+			<option value="rauthor">作者字母排序</option>
+			<option value="hits">最多点阅排前</option>
+			<option value="rhits">最少点阅排前</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="live_bookmark" type="list" default="0" label="即时书签" description=" 启动对Firefox 即时书签功能支持">
+			<option value="0">关闭</option>
+			<option value="RSS0.91">RSS 0.91</option>
+			<option value="RSS1.0">RSS 1.0</option>
+			<option value="RSS2.0">RSS 2.0</option>
+			<option value="ATOM0.3">ATOM 0.3</option>
+		</param>
+	</params>
+</mosinstall>

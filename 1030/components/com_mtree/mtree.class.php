@@ -1,0 +1,103 @@
+<?php
+/**
+* Mosets Tree class 
+*
+* @package Mosets Tree 1.50
+* @copyright (C) 2005 Mosets Consulting
+* @url http://www.Mosets.com/
+* @author Lee Cher Yeong <mtree@mosets.com>
+**/
+defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+
+class mtree {
+
+	function mtree() {
+		$this->_config = new stdClass();
+
+		require('administrator/components/com_mtree/config.mtree.php');
+
+		$this->_config->mt_template = $mt_template;
+		$this->_config->mt_language = $mt_language;
+		$this->_config->mt_map = $mt_map;
+		$this->_config->mt_show_map = $mt_show_map;
+		$this->_config->mt_show_print = $mt_show_print;
+		$this->_config->mt_show_recommend = $mt_show_recommend;
+		$this->_config->mt_show_rating = $mt_show_rating;
+		$this->_config->mt_show_review = $mt_show_review;
+		$this->_config->mt_show_visit = $mt_show_visit;
+		$this->_config->mt_show_contact = $mt_show_contact;
+		$this->_config->mt_use_owner_email = $mt_use_owner_email;
+		$this->_config->mt_show_report = $mt_show_report;
+		$this->_config->mt_show_claim = $mt_show_claim;
+		$this->_config->mt_show_ownerlisting = $mt_show_ownerlisting;
+		$this->_config->mt_show_email = $mt_show_email;
+		$this->_config->mt_fe_num_of_subcats = $mt_fe_num_of_subcats;
+		$this->_config->mt_fe_num_of_links = $mt_fe_num_of_links;
+		$this->_config->mt_fe_num_of_reviews = $mt_fe_num_of_reviews;
+		$this->_config->mt_fe_num_of_popularlisting = $mt_fe_num_of_popularlisting;
+		$this->_config->mt_fe_num_of_newlisting = $mt_fe_num_of_newlisting;
+		$this->_config->mt_fe_total_newlisting = $mt_fe_total_newlisting;
+		$this->_config->mt_fe_num_of_mostrated = $mt_fe_num_of_mostrated;
+		$this->_config->mt_fe_num_of_toprated = $mt_fe_num_of_toprated;
+		$this->_config->mt_fe_num_of_mostreview = $mt_fe_num_of_mostreview;
+		$this->_config->mt_fe_num_of_searchresults = $mt_fe_num_of_searchresults;
+		$this->_config->mt_rate_once = $mt_rate_once;
+		$this->_config->mt_min_votes_for_toprated= $mt_min_votes_for_toprated;
+		$this->_config->mt_min_votes_to_show_rating= $mt_min_votes_to_show_rating;
+		$this->_config->mt_user_review_once = $mt_user_review_once;
+		$this->_config->mt_user_rating = $mt_user_rating;
+		$this->_config->mt_user_review = $mt_user_review;
+		$this->_config->mt_user_recommend = $mt_user_recommend;
+		$this->_config->mt_user_addlisting = $mt_user_addlisting;
+		$this->_config->mt_user_addcategory = $mt_user_addcategory;
+		$this->_config->mt_user_allowmodify = $mt_user_allowmodify;
+		$this->_config->mt_user_allowdelete = $mt_user_allowdelete;
+		$this->_config->mt_needapproval_addlisting = $mt_needapproval_addlisting;
+		$this->_config->mt_needapproval_modifylisting = $mt_needapproval_modifylisting;
+		$this->_config->mt_needapproval_addcategory = $mt_needapproval_addcategory;
+		$this->_config->mt_needapproval_addreview = $mt_needapproval_addreview;
+		$this->_config->mt_link_new = $mt_link_new;
+		$this->_config->mt_link_popular = $mt_link_popular;
+		$this->_config->mt_hit_lag = $mt_hit_lag;
+		$this->_config->mt_notifyuser_newlisting = $mt_notifyuser_newlisting;
+		$this->_config->mt_notifyadmin_newlisting = $mt_notifyadmin_newlisting;
+		$this->_config->mt_notifyuser_modifylisting= $mt_notifyuser_modifylisting;
+		$this->_config->mt_notifyadmin_modifylisting = $mt_notifyadmin_modifylisting;
+		$this->_config->mt_notifyuser_approved = $mt_notifyuser_approved;
+		$this->_config->mt_notifyuser_review_approved = $mt_notifyuser_review_approved;
+		$this->_config->mt_notifyadmin_delete = $mt_notifyadmin_delete;
+		$this->_config->mt_use_internal_notes = $mt_use_internal_notes;
+		$this->_config->mt_allow_html = $mt_use_internal_notes;
+		$this->_config->mt_search_link_name = $mt_search_link_name;
+		$this->_config->mt_search_link_desc = $mt_search_link_desc;
+		$this->_config->mt_search_address = $mt_search_address;
+		$this->_config->mt_search_city = $mt_search_city;
+		$this->_config->mt_search_postcode = $mt_search_postcode;
+		$this->_config->mt_search_state = $mt_search_state;
+		$this->_config->mt_search_country = $mt_search_country;
+		$this->_config->mt_search_email = $mt_search_email;
+		$this->_config->mt_search_website = $mt_search_website;
+		$this->_config->mt_search_telephone = $mt_search_telephone;
+		$this->_config->mt_search_fax = $mt_search_fax;
+
+		$this->_config->mt_display_empty_cat = $mt_display_empty_cat;
+		$this->_config->mt_display_alpha_index = $mt_display_alpha_index;
+		$this->_config->mt_allow_listings_submission_in_root = $mt_allow_listings_submission_in_root;
+		$this->_config->mt_display_listings_in_root = $mt_display_listings_in_root;
+		$this->_config->mt_display_cat_count_in_root = $mt_display_cat_count_in_root;
+		$this->_config->mt_display_listing_count_in_root = $mt_display_listing_count_in_root;
+		$this->_config->mt_display_cat_count_in_subcat = $mt_display_cat_count_in_subcat;
+		$this->_config->mt_display_listing_count_in_subcat = $mt_display_listing_count_in_subcat;
+
+	}
+
+	function getCfg( $varname ) {
+		if (isset( $this->_config->$varname )) {
+			return $this->_config->$varname;
+		} else {
+			return null;
+		}
+	}
+
+}
+?>

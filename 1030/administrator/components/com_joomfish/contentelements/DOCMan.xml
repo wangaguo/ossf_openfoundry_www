@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<joomfish type="contentelement">
+  <name>DOCMan</name>
+  <author>Ivo Apostolov</author>
+  <version>1.7</version>
+  <description>Joom!Fish definition for Mtree Categories</description>
+  <reference>
+     <table name="docman">
+        <field type="referenceid" name="id" translate="0">ID</field>
+        <field type="titletext" name="dmname" translate="1">Name</field>
+        <field type="htmltext" name="dmdescription" translate="1">Description</field>
+     </table>
+  </reference>
+</joomfish>

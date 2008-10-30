@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<joomfish type="contentelement">
+  <name>選單</name>
+  <author>A. Kempkens</author>
+  <version>1.7</version>
+  <description>定義核心程式的選單管理</description>
+  <reference>
+  	<table name="menu">
+  		<field type="referenceid" name="id" translate="0">ID</field>
+  		<field type="titletext" name="name" translate="1">名稱</field>
+  		<field type="checked_out_by" name="checked_out" translate="0">檢視人</field>
+  		<field type="checked_out_date" name="checked_out_time" translate="0">檢視日期</field>
+  		<filter>c.published >= 0</filter>
+  	</table>
+  </reference>
+  <translationfilters>
+  	  <keyword>name</keyword>
+  	  <menutype>menutype</menutype>
+  </translationfilters>
+ </joomfish>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall type="template" version="4.5.1">
+  <name>Bluetree Classifieds</name>
+  <creationDate>November 2004</creationDate>
+  <author>Lee Cher Yeong</author>
+  <copyright>This template is copyrighted to Lee Cher Yeong.</copyright>
+  <authorEmail>mtree@mosets.com</authorEmail>
+  <authorUrl>www.mosets.com</authorUrl>
+  <version>1.0</version>
+  <description>A bluetree template for classifieds.</description>
+</mosinstall>

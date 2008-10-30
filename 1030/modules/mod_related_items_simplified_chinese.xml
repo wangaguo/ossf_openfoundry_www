@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Related Items</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>这个模块显示与目前显示的内容项目相关的其它内容项目。这是根据关键字的Metadata设计。所有在目前显示的内容项目的关键字会被用来搜寻其它已发布的项目是否有同样的关键字。例如，如果您有一个项目名称是'Breeding Parrots'，而有另一个项目名称为'Hand Raising Black Cockatoos'，如果您加入了关键字'parrot'在这两个项目中。相关模块将会列出'Breeding Parrots'项目，当你在观看'Hand Raising Black Cockatoos'这个内容时，反之亦然。</description>
+	<files>
+	<filename module="mod_related_items">mod_related_items.php</filename>
+	</files>
+	<params>
+	<param name="cache" type="radio" default="0" label="开启快取" description="选择是否要快取这个模块的内容">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+	<param name="moduleclass_sfx" type="text" default="" label="模块CSS字尾" description="一个应用于模块CSS的字尾(table.moduletable)，可以让这页面有独立风格" />
+	</params>
+</mosinstall>

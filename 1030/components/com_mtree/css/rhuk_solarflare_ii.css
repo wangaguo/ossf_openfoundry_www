@@ -1,0 +1,60 @@
+/* Superscript */
+sup.new {color:green; font-size:10px}
+sup.featured {color:blue}
+sup.popular {color:red}
+
+/* Photos */
+img.editPhoto {border:5px solid #c0c0c0;}
+img.printPhoto {padding:5px 10px 5px 5px}
+img.catPhoto {padding:5px 10px 5px 5px; float:left}
+img.listingPhoto {margin-right:15px; margin-bottom:5px; border: 1px solid #C0C0C0; float:left;}
+img.listingPhoto_bus {margin-right:15px; margin-bottom:5px; border: 1px solid #C0C0C0}
+
+/* General */
+.dottedLine {border-bottom:1px dotted #C0C0C0; padding-top:8px; margin-bottom:10px;clear:both}
+a.indexCat:link, a.indexCat:visited {font-size:17px; line-height:1.5; text-decoration:none}
+a.indexSubCat:link, a.indexSubCat:visited{font-size:12px; font-weight:normal; text-decoration:none}
+a.bulletData:link, a.bulletData:visited, a.bulletData:hover {font-weight: normal;text-decoration:none}
+.mtframe {width:96%;text-align:left}
+.mtborder {background:#f0f0f0; color:#000000; border:1px solid #cccccc;}
+.mtdata {color:#333333}
+.thead {color:#333333;text-align:left;text-decoration:underline; padding:0px; margin:0px;font-size:13px}
+a.addsite:link, a.addsite:visited, a.addsite:hover {float:right;font-weight:normal}
+
+/* Review */
+.reviewBorder {border-bottom: 1px solid #E9E9E9;padding-top:8px}
+
+/* Span */
+span.xlistings {color:#606060; float:left}
+
+/* Listing */
+.featuredHiLight {background-color: #FFF4E8; padding: 5px; border: 1px solid #FFE7CE;}
+.listingName {font-size: 15px; font-weight: bold;}
+.listingSummary {padding-top:5px; font-size: 12px; margin-bottom:10px}
+.listingCat {color:#808080; padding-top:5px}
+.listingData {color:#808080; font-size:10px}
+
+/* Links */
+a.category:link, a.category:visited {color:#009900; text-decoration: none; font-weight: normal;}
+a.subCatNormal:link, a.subCatNormal:visited, a.subCatNormal:hover {font-size:12px;font-weight:normal; line-height:2}
+a.subCatFeatured:link, a.subCatFeatured:visited, a.subCatFeatured:hover {font-size:12px;font-weight:bold; line-height:2}
+a.relCat:link, a.relCat:visited {font-size:12px;font-weight:normal; line-height:2}
+.detailsAddress {font-size: 12px; width: 40%; float:left; margin-top: 8px}
+.detailsContact {float:left;width:60%; margin-top: 8px}
+.detailsText {margin: 10px 0px 10px 0px; font-size: 12px; line-height: 1.3}
+a.website:link, a.website:visited {font-size:12px;font-weight:normal;text-decoration:none}
+
+/* Classifieds */
+.listingBorder_clas {border-left: 1px solid #C0C0C0;border-right: 1px solid #E1E1E1;}
+.listingBorder2_clas {border-right: 1px solid #E1E1E1;}
+.listingBorder3_clas {border-right: 1px solid #C0C0C0;}
+
+/* Scripts */
+.normalHiLight {background-color:#F0F0F0; padding:5px}
+.clas_title {background-color:#C0C0C0; border:0px solid #fff;}
+.listingSummary_clas {margin-top:10px; margin-bottom:10px; font-size:12px; line-height:1.2}
+.featuredListingFooter_clas {font-size:11px; padding:2px 0px 2px 5px;background-color:#78C2EF}
+.normalListingFooter_clas {font-size:11px; padding:2px 0px 2px 5px;background-color:#fff}
+
+/* Weblinks */
+.website {color:#808080;font-size:11px}
