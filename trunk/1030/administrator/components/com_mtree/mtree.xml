@@ -1,0 +1,577 @@
+<?xml version="1.0"  encoding="iso-8859-1"?>
+
+<mosinstall type="component">
+    <name>mtree</name>
+    <creationDate>July 2006</creationDate>
+    <author>Mosets Consulting</author>
+    <copyright>This Joomla! Component is copyrighted Mosets Consulting</copyright>
+    <authorEmail>mtree@mosets.com</authorEmail>
+    <authorUrl>http://www.mosets.com/</authorUrl>
+    <version>1.59</version>
+    <description>Mosets tree is a directory component for Joomla!</description>
+    <params></params>
+    <files>
+
+	<filename>mtree.class.php</filename>
+	<filename>mtree.php</filename>
+	<filename>mtree.tools.php</filename>
+	<filename>Savant2.php</filename>
+	<filename>sef_ext.php</filename>
+	<filename>index.html</filename>
+
+	<filename>css/javabean.css</filename>
+	<filename>css/mosets_bluetree.css</filename>
+	<filename>css/mtree.css</filename>
+	<filename>css/rhuk_planetfall.css</filename>
+	<filename>css/rhuk_solarflare_ii.css</filename>
+	
+	<filename>js/dtree.css</filename>
+	<filename>js/dtree.js</filename>
+	<filename>js/index.html</filename>
+        
+	<filename>language/english.php</filename>
+	<filename>language/english.xml</filename>
+	<filename>language/index.html</filename>
+        
+	<filename>Savant2/Compiler.php</filename>
+	<filename>Savant2/Error.php</filename>
+	<filename>Savant2/Filter.php</filename>
+	<filename>Savant2/Plugin.php</filename>
+	<filename>Savant2/Savant2_Compiler_basic.php</filename>
+	<filename>Savant2/Savant2_Error_exception.php</filename>
+	<filename>Savant2/Savant2_Error_pear.php</filename>
+	<filename>Savant2/Savant2_Error_stack.php</filename>
+	<filename>Savant2/Savant2_Filter_colorizeCode.php</filename>
+	<filename>Savant2/Savant2_Filter_trimwhitespace.php</filename>
+	<filename>Savant2/Savant2_Plugin_ahref.php</filename>
+	<filename>Savant2/Savant2_Plugin_ahrefclaim.php</filename>
+	<filename>Savant2/Savant2_Plugin_ahrefcontact.php</filename>
+	<filename>Savant2/Savant2_Plugin_ahreflisting.php</filename>
+	<filename>Savant2/Savant2_Plugin_ahreflistingimage.php</filename>
+	<filename>Savant2/Savant2_Plugin_ahrefmap.php</filename>
+	<filename>Savant2/Savant2_Plugin_ahrefownerlisting.php</filename>
+	<filename>Savant2/Savant2_Plugin_ahrefprint.php</filename>
+	<filename>Savant2/Savant2_Plugin_ahrefrating.php</filename>
+	<filename>Savant2/Savant2_Plugin_ahrefrecommend.php</filename>
+	<filename>Savant2/Savant2_Plugin_ahrefreport.php</filename>
+	<filename>Savant2/Savant2_Plugin_ahrefreview.php</filename>
+	<filename>Savant2/Savant2_Plugin_ahrefvisit.php</filename>
+	<filename>Savant2/Savant2_Plugin_checkbox.php</filename>
+	<filename>Savant2/Savant2_Plugin_cycle.php</filename>
+	<filename>Savant2/Savant2_Plugin_dateformat.php</filename>
+	<filename>Savant2/Savant2_Plugin_editor.php</filename>
+	<filename>Savant2/Savant2_Plugin_form.php</filename>
+	<filename>Savant2/Savant2_Plugin_image.php</filename>
+	<filename>Savant2/Savant2_Plugin_input.php</filename>
+	<filename>Savant2/Savant2_Plugin_javascript.php</filename>
+	<filename>Savant2/Savant2_Plugin_listalpha.php</filename>
+	<filename>Savant2/Savant2_Plugin_listingname.php</filename>
+	<filename>Savant2/Savant2_Plugin_modify.php</filename>
+	<filename>Savant2/Savant2_Plugin_mt_checkboxes.php</filename>
+	<filename>Savant2/Savant2_Plugin_mtpath.php</filename>
+	<filename>Savant2/Savant2_Plugin_options.php</filename>
+	<filename>Savant2/Savant2_Plugin_radios.php</filename>
+	<filename>Savant2/Savant2_Plugin_rating.php</filename>
+	<filename>Savant2/Savant2_Plugin_stylesheet.php</filename>
+	<filename>Savant2/Savant2_Plugin_textarea.php</filename>
+	<filename>Savant2/index.html</filename>
+        
+	<filename>templates/index.html</filename>
+
+	<filename>templates/bluetree/page_writeReview.tpl.php</filename>
+	<filename>templates/bluetree/page_errorListing.tpl.php</filename>
+	<filename>templates/bluetree/page_listing.tpl.php</filename>
+	<filename>templates/bluetree/page_subCatIndex.tpl.php</filename>
+	<filename>templates/bluetree/sub_listingSummary.tpl.php</filename>
+	<filename>templates/bluetree/page_recommend.tpl.php</filename>
+	<filename>templates/bluetree/page_rating.tpl.php</filename>
+	<filename>templates/bluetree/sub_reviews.tpl.php</filename>
+	<filename>templates/bluetree/sub_listings.tpl.php</filename>
+	<filename>templates/bluetree/sub_subCats.tpl.php</filename>
+	<filename>templates/bluetree/sub_alphaIndex.tpl.php</filename>
+	<filename>templates/bluetree/page_listAlpha.tpl.php</filename>
+	<filename>templates/bluetree/page_addListing.tpl.php</filename>
+	<filename>templates/bluetree/page_addCategory.tpl.php</filename>
+	<filename>templates/bluetree/page_myListing.tpl.php</filename>
+	<filename>templates/bluetree/page_print.tpl.php</filename>
+	<filename>templates/bluetree/page_popular.tpl.php</filename>
+	<filename>templates/bluetree/page_new.tpl.php</filename>
+	<filename>templates/bluetree/page_confirmDelete.tpl.php</filename>
+	<filename>templates/bluetree/page_mostRated.tpl.php</filename>
+	<filename>templates/bluetree/page_topRated.tpl.php</filename>
+	<filename>templates/bluetree/page_mostReviewed.tpl.php</filename>
+	<filename>templates/bluetree/page_contactOwner.tpl.php</filename>
+	<filename>templates/bluetree/page_error.tpl.php</filename>
+	<filename>templates/bluetree/page_index.tpl.php</filename>
+	<filename>templates/bluetree/sub_listingDetails.tpl.php</filename>
+	<filename>templates/bluetree/templateDetails.xml</filename>
+	<filename>templates/bluetree/page_searchResults.tpl.php</filename>
+	<filename>templates/bluetree/page_advSearch.tpl.php</filename>
+	<filename>templates/bluetree/page_advSearchRedirect.tpl.php</filename>
+	<filename>templates/bluetree/page_advSearchResults.tpl.php</filename>
+	<filename>templates/bluetree/page_claim.tpl.php</filename>
+	<filename>templates/bluetree/page_report.tpl.php</filename>
+	<filename>templates/bluetree/page_featured.tpl.php</filename>
+	<filename>templates/bluetree/page_ownerListing.tpl.php</filename>
+	<filename>templates/bluetree/index.html</filename>
+
+	<filename>templates/bluetree_business/page_writeReview.tpl.php</filename>
+	<filename>templates/bluetree_business/page_errorListing.tpl.php</filename>
+	<filename>templates/bluetree_business/page_listing.tpl.php</filename>
+	<filename>templates/bluetree_business/page_subCatIndex.tpl.php</filename>
+	<filename>templates/bluetree_business/sub_listingSummary.tpl.php</filename>
+	<filename>templates/bluetree_business/page_recommend.tpl.php</filename>
+	<filename>templates/bluetree_business/page_rating.tpl.php</filename>
+	<filename>templates/bluetree_business/sub_reviews.tpl.php</filename>
+	<filename>templates/bluetree_business/sub_listings.tpl.php</filename>
+	<filename>templates/bluetree_business/sub_subCats.tpl.php</filename>
+	<filename>templates/bluetree_business/sub_alphaIndex.tpl.php</filename>
+	<filename>templates/bluetree_business/page_listAlpha.tpl.php</filename>
+	<filename>templates/bluetree_business/page_addListing.tpl.php</filename>
+	<filename>templates/bluetree_business/page_addCategory.tpl.php</filename>
+	<filename>templates/bluetree_business/page_myListing.tpl.php</filename>
+	<filename>templates/bluetree_business/page_print.tpl.php</filename>
+	<filename>templates/bluetree_business/page_popular.tpl.php</filename>
+	<filename>templates/bluetree_business/page_new.tpl.php</filename>
+	<filename>templates/bluetree_business/page_confirmDelete.tpl.php</filename>
+	<filename>templates/bluetree_business/page_mostRated.tpl.php</filename>
+	<filename>templates/bluetree_business/page_topRated.tpl.php</filename>
+	<filename>templates/bluetree_business/page_mostReviewed.tpl.php</filename>
+	<filename>templates/bluetree_business/page_contactOwner.tpl.php</filename>
+	<filename>templates/bluetree_business/page_error.tpl.php</filename>
+	<filename>templates/bluetree_business/page_index.tpl.php</filename>
+	<filename>templates/bluetree_business/sub_listingDetails.tpl.php</filename>
+	<filename>templates/bluetree_business/templateDetails.xml</filename>
+	<filename>templates/bluetree_business/page_searchResults.tpl.php</filename>
+	<filename>templates/bluetree_business/page_advSearch.tpl.php</filename>
+	<filename>templates/bluetree_business/page_advSearchRedirect.tpl.php</filename>
+	<filename>templates/bluetree_business/page_advSearchResults.tpl.php</filename>
+	<filename>templates/bluetree_business/page_claim.tpl.php</filename>
+	<filename>templates/bluetree_business/page_report.tpl.php</filename>
+	<filename>templates/bluetree_business/page_featured.tpl.php</filename>
+	<filename>templates/bluetree_business/page_ownerListing.tpl.php</filename>
+	<filename>templates/bluetree_business/index.html</filename>
+
+	<filename>templates/bluetree_classifieds/page_writeReview.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_errorListing.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_listing.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_subCatIndex.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/sub_listingSummary.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_recommend.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_rating.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/sub_reviews.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/sub_listings.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/sub_subCats.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/sub_alphaIndex.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_listAlpha.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_addListing.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_addCategory.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_myListing.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_print.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_popular.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_new.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_confirmDelete.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_mostRated.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_topRated.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_mostReviewed.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_contactOwner.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_error.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_index.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/sub_listingDetails.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/templateDetails.xml</filename>
+	<filename>templates/bluetree_classifieds/page_searchResults.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_advSearch.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_advSearchRedirect.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_advSearchResults.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_claim.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_report.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_featured.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/page_ownerListing.tpl.php</filename>
+	<filename>templates/bluetree_classifieds/index.html</filename>
+
+	<filename>templates/bluetree_weblinks/page_writeReview.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_errorListing.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_listing.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_subCatIndex.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/sub_listingSummary.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_recommend.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_rating.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/sub_reviews.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/sub_listings.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/sub_subCats.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/sub_alphaIndex.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_listAlpha.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_addListing.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_addCategory.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_myListing.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_print.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_popular.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_new.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_confirmDelete.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_mostRated.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_topRated.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_mostReviewed.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_contactOwner.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_error.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_index.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/sub_listingDetails.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/templateDetails.xml</filename>
+	<filename>templates/bluetree_weblinks/page_searchResults.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_advSearch.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_advSearchRedirect.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_advSearchResults.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_claim.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_report.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_featured.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/page_ownerListing.tpl.php</filename>
+	<filename>templates/bluetree_weblinks/index.html</filename>
+
+    </files>
+    <images>
+	<filename>img/anchor.gif</filename>
+    <filename>img/favicon.png</filename>
+	<filename>img/folder-closed.gif</filename>
+	<filename>img/folder-open.gif</filename>
+	<filename>img/folderopenbig.gif</filename>
+	<filename>img/index.html</filename>
+	<filename>img/logo_mtree.gif</filename>
+    <filename>img/photo.png</filename>
+    <filename>img/cats/index.html</filename>
+	<filename>img/dtree/addfolder.gif</filename>
+	<filename>img/dtree/addpage.gif</filename>
+	<filename>img/dtree/base.gif</filename>
+	<filename>img/dtree/empty.gif</filename>
+	<filename>img/dtree/folder.gif</filename>
+	<filename>img/dtree/folderopen.gif</filename>
+	<filename>img/dtree/imgfolder.gif</filename>
+	<filename>img/dtree/imgfolder2.gif</filename>
+	<filename>img/dtree/index.html</filename>
+	<filename>img/dtree/join.gif</filename>
+	<filename>img/dtree/joinbottom.gif</filename>
+	<filename>img/dtree/line.gif</filename>
+	<filename>img/dtree/minus.gif</filename>
+	<filename>img/dtree/minusbottom.gif</filename>
+	<filename>img/dtree/nolines_minus.gif</filename>
+	<filename>img/dtree/nolines_plus.gif</filename>
+	<filename>img/dtree/page.gif</filename>
+	<filename>img/dtree/plus.gif</filename>
+	<filename>img/dtree/plusbottom.gif</filename>
+
+	<filename>img/listings/mosets.png</filename>
+	<filename>img/listings/joomla.png</filename>
+	<filename>img/listings/index.html</filename>
+    </images>
+
+    <install>
+    <queries>
+		<query>
+		CREATE TABLE IF NOT EXISTS `#__mt_cats` (
+		  `cat_id` int(11) NOT NULL auto_increment,
+		  `cat_name` varchar(255) NOT NULL default '',
+		  `cat_desc` text NOT NULL,
+		  `cat_parent` int(11) NOT NULL default '0',
+		  `cat_links` int(11) NOT NULL default '0',
+		  `cat_cats` int(11) NOT NULL default '0',
+		  `cat_featured` tinyint(4) NOT NULL default '0',
+		  `cat_image` varchar(255) NOT NULL default '',
+		  `cat_published` tinyint(4) NOT NULL default '0',
+		  `cat_created` datetime NOT NULL default '0000-00-00 00:00:00',
+		  `cat_approved` tinyint(4) NOT NULL default '0',
+		  `cat_template` varchar(255) NOT NULL default '',
+		  `cat_usemainindex` tinyint(4) NOT NULL default '0',
+		  `cat_allow_submission` tinyint(4) NOT NULL default '1',
+		  `cat_show_listings` tinyint(3) unsigned NOT NULL default '1',
+		  `metakey` text NOT NULL,
+		  `metadesc` text NOT NULL,
+		  `ordering` int(11) NOT NULL default '0',
+		  `lft` int(11) NOT NULL default '0',
+		  `rgt` int(11) NOT NULL default '0',
+		  PRIMARY KEY  (`cat_id`),
+		  KEY `cat_id` (`cat_id`,`cat_published`,`cat_approved`),
+		  KEY `cat_parent` (`cat_parent`,`cat_published`,`cat_approved`,`cat_cats`,`cat_links`),
+		  KEY `dtree` (`cat_published`,`cat_approved`),
+		  KEY `lft_rgt` (`lft`,`rgt`),
+		  KEY `func_getPathWay` (`lft`,`rgt`,`cat_id`,`cat_parent`)
+		) TYPE=MyISAM;
+		</query>
+		<query>
+		CREATE TABLE IF NOT EXISTS `#__mt_cl` (
+		  `cl_id` int(11) NOT NULL auto_increment,
+		  `link_id` int(11) NOT NULL default '0',
+		  `cat_id` int(11) NOT NULL default '0',
+		  `main` smallint(6) NOT NULL default '0',
+		  PRIMARY KEY  (`cl_id`),
+		  KEY `link_id` (`link_id`),
+		  KEY `cat_id` (`cat_id`)
+		) TYPE=MyISAM PACK_KEYS=0;
+		</query>
+		<query>
+		CREATE TABLE IF NOT EXISTS `#__mt_config` (
+		  `name` varchar(255) NOT NULL default '',
+		  `value` text NOT NULL,
+		  `searchable` tinyint(4) NOT NULL default '0',
+		  PRIMARY KEY  (`name`)
+		) TYPE=MyISAM;
+		</query>
+		<query>
+		CREATE TABLE IF NOT EXISTS `#__mt_links` (
+		  `link_id` int(11) NOT NULL auto_increment,
+		  `link_name` varchar(255) NOT NULL default '',
+		  `link_desc` mediumtext NOT NULL,
+		  `user_id` int(11) NOT NULL default '0',
+		  `link_hits` int(11) NOT NULL default '0',
+		  `link_votes` int(11) NOT NULL default '0',
+		  `link_rating` decimal(3,2) NOT NULL default '0.00',
+		  `link_featured` smallint(6) NOT NULL default '0',
+		  `link_image` varchar(255) NOT NULL default '',
+		  `link_published` tinyint(4) NOT NULL default '0',
+		  `link_approved` int(4) NOT NULL default '0',
+		  `link_template` varchar(255) NOT NULL default '',
+		  `attribs` text NOT NULL,
+		  `metakey` text NOT NULL,
+		  `metadesc` text NOT NULL,
+		  `internal_notes` text NOT NULL,
+		  `ordering` int(11) NOT NULL default '0',
+		  `link_created` datetime NOT NULL default '0000-00-00 00:00:00',
+		  `publish_up` datetime NOT NULL default '0000-00-00 00:00:00',
+		  `publish_down` datetime NOT NULL default '0000-00-00 00:00:00',
+		  `link_modified` datetime NOT NULL default '0000-00-00 00:00:00',
+		  `link_visited` int(11) NOT NULL default '0',
+		  `address` varchar(255) NOT NULL default '',
+		  `city` varchar(255) NOT NULL default '',
+		  `state` varchar(255) NOT NULL default '',
+		  `country` varchar(255) NOT NULL default '',
+		  `postcode` varchar(255) NOT NULL default '',
+		  `telephone` varchar(255) NOT NULL default '',
+		  `fax` varchar(255) NOT NULL default '',
+		  `email` varchar(255) NOT NULL default '',
+		  `website` varchar(255) NOT NULL default '',
+		  `price` double(9,2) NOT NULL default '0.00',
+		  `cust_1` text NOT NULL,
+		  `cust_2` text NOT NULL,
+		  `cust_3` text NOT NULL,
+		  `cust_4` text NOT NULL,
+		  `cust_5` text NOT NULL,
+		  `cust_6` text NOT NULL,
+		  `cust_7` text NOT NULL,
+		  `cust_8` text NOT NULL,
+		  `cust_9` text NOT NULL,
+		  `cust_10` text NOT NULL,
+		  `cust_11` text NOT NULL,
+		  `cust_12` text NOT NULL,
+		  `cust_13` text NOT NULL,
+		  `cust_14` text NOT NULL,
+		  `cust_15` text NOT NULL,
+		  `cust_16` text NOT NULL,
+		  `cust_17` text NOT NULL,
+		  `cust_18` text NOT NULL,
+		  `cust_19` text NOT NULL,
+		  `cust_20` text NOT NULL,
+		  `cust_21` text NOT NULL,
+		  `cust_22` text NOT NULL,
+		  `cust_23` text NOT NULL,
+		  `cust_24` text NOT NULL,
+		  `cust_25` text NOT NULL,
+		  `cust_26` text NOT NULL,
+		  `cust_27` text NOT NULL,
+		  `cust_28` text NOT NULL,
+		  `cust_29` text NOT NULL,
+		  `cust_30` text NOT NULL,
+		  PRIMARY KEY  (`link_id`),
+		  KEY `link_rating` (`link_rating`),
+		  KEY `link_votes` (`link_votes`),
+		  KEY `link_name` (`link_name`),
+		  KEY `publishing` (`link_published`,`link_approved`,`publish_up`,`publish_down`),
+		  KEY `count_listfeatured` (`link_published`,`link_approved`,`link_featured`,`publish_up`,`publish_down`,`link_id`),
+		  KEY `count_viewowner` (`link_published`,`link_approved`,`user_id`,`publish_up`,`publish_down`),
+		  KEY `mylisting` (`user_id`,`link_id`),
+		  FULLTEXT KEY `link_name_desc` (`link_name`,`link_desc`)
+		) TYPE=MyISAM;
+		</query>
+		<query>
+		CREATE TABLE IF NOT EXISTS `#__mt_log` (
+		  `log_ip` varchar(255) NOT NULL default '',
+		  `log_type` varchar(32) NOT NULL default '',
+		  `user_id` int(11) NOT NULL default '0',
+		  `log_date` datetime NOT NULL default '0000-00-00 00:00:00',
+		  `link_id` int(11) NOT NULL default '0',
+		  KEY `link_id2` (`link_id`,`log_ip`),
+		  KEY `link_id1` (`link_id`,`user_id`)
+		) TYPE=MyISAM;
+		</query>
+		<query>
+		CREATE TABLE IF NOT EXISTS `#__mt_relcats` (
+		  `cat_id` int(11) NOT NULL default '0',
+		  `rel_id` int(11) NOT NULL default '0',
+		  KEY `cat_id` (`cat_id`,`rel_id`)
+		) TYPE=MyISAM;
+		</query>
+		<query>
+		CREATE TABLE IF NOT EXISTS `#__mt_reviews` (
+		  `rev_id` int(11) NOT NULL auto_increment,
+		  `link_id` int(11) NOT NULL default '0',
+		  `user_id` int(11) NOT NULL default '0',
+		  `guest_name` varchar(255) NOT NULL default '',
+		  `rev_title` varchar(255) NOT NULL default '',
+		  `rev_text` text NOT NULL,
+		  `rev_date` date NOT NULL default '0000-00-00',
+		  `rev_approved` tinyint(4) NOT NULL default '1',
+		  `admin_note` mediumtext NOT NULL,
+		  PRIMARY KEY  (`rev_id`),
+		  KEY `link_id` (`link_id`,`rev_approved`)
+		) TYPE=MyISAM;
+		</query>
+		<query>
+		CREATE TABLE IF NOT EXISTS `#__mt_searchlog` (
+		  `search_id` int(11) NOT NULL auto_increment,
+		  `search_text` text NOT NULL,
+		  PRIMARY KEY  (`search_id`)
+		) TYPE=MyISAM;
+		</query>
+		<query>
+		CREATE TABLE `#__mt_claims` (
+		  `claim_id` int(11) NOT NULL auto_increment,
+		  `user_id` int(11) NOT NULL,
+		  `link_id` int(11) NOT NULL,
+		  `comment` mediumtext NOT NULL,
+		  `created` datetime NOT NULL,
+		  `admin_note` mediumtext NOT NULL,
+		  PRIMARY KEY  (`claim_id`)
+		) TYPE=MyISAM;
+		</query>
+		<query>
+		CREATE TABLE `#__mt_reports` (
+		  `report_id` int(11) NOT NULL auto_increment,
+		  `user_id` int(11) NOT NULL,
+		  `guest_name` varchar(255) NOT NULL,
+		  `link_id` int(11) NOT NULL,
+		  `subject` varchar(255) NOT NULL,
+		  `comment` mediumtext NOT NULL,
+		  `created` datetime NOT NULL,
+		  `admin_note` mediumtext NOT NULL,
+		  PRIMARY KEY  (`report_id`)
+		) TYPE=MyISAM;
+		</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (1, 'Arts', '', 0, 0, 3, 0, '', 1, '2004-11-27 21:36:46', 1, '', 0, 1, 1, '', '', 10, 2, 9)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (2, 'Computers', '', 0, 0, 3, 0, '', 1, '2004-11-27 21:36:46', 1, '', 0, 1, 1, '', '', 9, 10, 17)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (3, 'Health', '', 0, 0, 3, 0, '', 1, '2004-11-27 21:36:46', 1, '', 0, 1, '', 1, '', 8, 18, 25)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (4, 'Recreation', '', 0, 0, 3, 0, '', 1, '2004-11-27 21:36:46', 1, '', 0, 1, 1, '', '', 7, 26, 33)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (5, 'Science', '', 0, 0, 3, 0, '', 1, '2004-11-27 21:36:46', 1, '', 0, 1, 1, '', '', 6, 34, 41)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (6, 'Business', '', 0, 0, 3, 0, '', 1, '2004-11-27 21:36:46', 1, '', 0, 1, 1, '', '', 5, 42, 49)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (7, 'Games', '', 0, 0, 3, 0, '', 1, '2004-11-27 21:36:46', 1, '', 0, 1, 1, '', '', 4, 50, 57)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (8, 'Movies', '', 1, 0, 0, 0, '', 1, '2004-11-27 21:37:59', 1, '', 0, 1, 1, '', '', 3, 3, 4)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (9, 'Reference', '', 0, 0, 3, 0, '', 1, '2004-11-27 21:36:46', 1, '', 0, 1, 1, '', '', 3, 58, 65)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (10, 'Shopping', '', 0, 0, 3, 0, '', 1, '2004-11-27 21:36:46', 1, '', 0, 1, 1, '', '', 2, 66, 73)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (11, 'Sports', '', 0, 0, 3, 0, '', 1, '2004-11-27 21:36:46', 1, '', 0, 1, 1, '', '', 1, 74, 81)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (12, 'Television', '', 1, 0, 0, 0, '', 1, '2004-11-27 21:37:59', 1, '', 0, 1, 1, '', '', 2, 5, 6)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (13, 'Music', '', 1, 0, 0, 0, '', 1, '2004-11-27 21:37:59', 1, '', 0, 1, 1, '', '', 1, 7, 8)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (14, 'Companies', '', 6, 0, 0, 0, '', 1, '2004-11-27 21:38:36', 1, '', 0, 1, 1, '', '', 3, 43, 44)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (15, 'Finance', '', 6, 0, 0, 0, '', 1, '2004-11-27 21:38:36', 1, '', 0, 1, 1, '', '', 2, 45, 46)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (16, 'Employment', '', 6, 0, 0, 0, '', 1, '2004-11-27 21:38:36', 1, '', 0, 1, 1, '', '', 1, 47, 48)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (17, 'Internet', '', 2, 0, 0, 0, '', 1, '2004-11-27 21:39:04', 1, '', 0, 1, 1, '', '', 3, 11, 12)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (18, 'Programming', '', 2, 0, 0, 0, '', 1, '2004-11-27 21:39:04', 1, '', 0, 1, 1, '', '', 2, 13, 14)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (19, 'Software', '', 2, 0, 0, 0, '', 1, '2004-11-27 21:39:04', 1, '', 0, 1, 1, '', '', 1, 15, 16)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (20, 'Gambling', '', 7, 0, 0, 0, '', 1, '2004-11-27 21:39:33', 1, '', 0, 1, 1, '', '', 3, 51, 52)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (21, 'Roleplaying', '', 7, 0, 0, 0, '', 1, '2004-11-27 21:39:33', 1, '', 0, 1, 1, '', '', 2, 53, 54)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (22, 'Console', '', 7, 0, 0, 0, '', 1, '2004-11-27 21:39:33', 1, '', 0, 1, 1, '', '', 1, 55, 56)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (23, 'Fitness', '', 3, 0, 0, 0, '', 1, '2004-11-27 21:39:57', 1, '', 0, 1, 1, '', '', 3, 19, 20)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (24, 'Medicine', '', 3, 0, 0, 0, '', 1, '2004-11-27 21:39:57', 1, '', 0, 1, 1, '', '', 2, 21, 22)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (25, 'Alternative', '', 3, 0, 0, 0, '', 1, '2004-11-27 21:39:57', 1, '', 0, 1, 1, '', '', 1, 23, 24)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (26, 'Food', '', 4, 0, 0, 0, '', 1, '2004-11-27 21:40:30', 1, '', 0, 1, 1, '', '', 3, 27, 28)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (27, 'Outdoor', '', 4, 0, 0, 0, '', 1, '2004-11-27 21:40:30', 1, '', 0, 1, 1, '', '', 2, 29, 30)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (28, 'Travel', '', 4, 0, 0, 0, '', 1, '2004-11-27 21:40:30', 1, '', 0, 1, 1, '', '', 1, 31, 32)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (29, 'Education', '', 9, 0, 0, 0, '', 1, '2004-11-27 21:40:54', 1, '', 0, 1, 1, '', '', 3, 59, 60)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (30, 'Libraries', '', 9, 0, 0, 0, '', 1, '2004-11-27 21:40:54', 1, '', 0, 1, 1, '', '', 2, 61, 62)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (31, 'Maps', '', 9, 0, 0, 0, '', 1, '2004-11-27 21:40:54', 1, '', 0, 1, 1, '', '', 1, 63, 64)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (32, 'Biology', '', 5, 0, 0, 0, '', 1, '2004-11-27 21:41:26', 1, '', 0, 1, 1, '', '', 3, 35, 36)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (33, 'Psychology', '', 5, 0, 0, 0, '', 1, '2004-11-27 21:41:26', 1, '', 0, 1, 1, '', '', 2, 37, 38)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (34, 'Physics', '', 5, 0, 0, 0, '', 1, '2004-11-27 21:41:26', 1, '', 0, 1, 1, '', '', 1, 39, 40)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (35, 'Autos', '', 10, 0, 0, 0, '', 1, '2004-11-27 21:41:49', 1, '', 0, 1, 1, '', '', 3, 67, 68)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (36, 'Clothing', '', 10, 0, 0, 0, '', 1, '2004-11-27 21:41:49', 1, '', 0, 1, 1, '', '', 2, 69, 70)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (37, 'Gifts', '', 10, 0, 0, 0, '', 1, '2004-11-27 21:41:49', 1, '', 0, 1, 1, '', '', 1, 71, 72)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (38, 'Basketball', '', 11, 0, 0, 0, '', 1, '2004-11-27 21:42:16', 1, '', 0, 1, 1, '', '', 3, 75, 76)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (39, 'Football', '', 11, 0, 0, 0, '', 1, '2004-11-27 21:42:16', 1, '', 0, 1, 1, '', '', 2, 77, 78)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (40, 'Golf', '', 11, 0, 0, 0, '', 1, '2004-11-27 21:42:16', 1, '', 0, 1, 1, '', '', 1, 79, 80)</query>
+		<query>INSERT INTO `#__mt_cats` VALUES (0, 'Root', '', -1, 0, 0, 0, '', 1, '0000-00-00 00:00:00', 1, '', 0, 0, 1, '', '', 0, 1, 82)</query>
+		<query>UPDATE `#__mt_cats` SET cat_id = '0' WHERE cat_parent = '-1'</query>
+
+		<query>INSERT INTO `#__mt_cl` VALUES (1, 1, 0, 1)</query>
+		<query>INSERT INTO `#__mt_cl` VALUES (2, 2, 0, 1)</query>
+		<query>INSERT INTO `#__mt_cl` VALUES (3, 3, 0, 1)</query>
+		<query>INSERT INTO `#__mt_cl` VALUES (4, 4, 0, 1)</query>
+
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_1', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_2', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_3', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_4', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_5', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_6', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_7', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_8', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_9', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_10', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_11', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_12', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_13', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_14', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_15', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_16', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_17', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_18', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_19', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_20', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_21', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_22', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_23', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_24', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_25', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_26', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_27', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_28', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_29', '', 0)</query>
+		<query>INSERT INTO `#__mt_config` VALUES ('cust_30', '', 0)</query>
+
+		<query>
+		INSERT INTO `#__mt_links` VALUES (1, 'Mosets', 'Mosets is a small development firm specializes in creating quality and user friendly extensions for Joomla.', 62, 1, 1, '5.00', 1, 'mosets.png', 1, 1, '', 'show_map=\nmap=\nshow_print=\nshow_recommend=\nshow_rating=\nshow_review=\nshow_visit=\nshow_contact=\nshow_report=\nshow_ownerlisting=', 'Real Estate Management System, mosets, Mambo, Mosets, Components, Modules, Templates, Hot Property, Shout It!, Malaysia, Real Estate, PHP, MySQL, CMS, Content Management System', 'MOSETS - A portal for Joomla Components, Modules and Templates. Hot Property - Real Estate Management System for Joomla CMS', 'Developer of Hot Property and Mosets Tree', 4, '2004-11-27 21:17:46', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2006-03-02 06:02:11', 0, '', '', '', '', '', '', '', 'support@mosets.com', 'http://www.mosets.com/', 0.00, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+		</query>
+		<query>
+		INSERT INTO `#__mt_links` VALUES (2, 'Joomla!', 'Joomla! is one of the most powerful Open Source Content Management Systems on the planet. It is used all over the world for everything from simple websites to complex corporate applications. Joomla! is easy to install, simple to manage, and reliable.', 62, 0, 1, '5.00', 1, 'joomla.png', 1, 1, '', 'show_map=\r\nmap=\r\nshow_print=\r\nshow_recommend=\r\nshow_rating=\r\nshow_review=\r\nshow_visit=\r\nshow_contact=\r\nshow_report=\r\nshow_ownerlisting=', 'joomla', 'Joomla! - the dynamic portal engine and content management system ,', '', 3, '2004-11-27 21:25:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2006-03-02 06:00:15', 0, '', '', '', '', '', '', '', '', 'http://www.joomla.org/', 0.00, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+		</query>
+		<query>
+		INSERT INTO `#__mt_links` VALUES (3, 'Joomla! Developer', 'The home to most of the popular Joomla''s components.', 62, 0, 0, '0.00', 0, '', 1, 1, '', 'show_map=\nmap=\nshow_print=\nshow_recommend=\nshow_rating=\nshow_review=\nshow_visit=\nshow_contact=\nshow_report=\nshow_ownerlisting=', 'php, programming, java, javascript, xml, soap, ide, develop, development', 'Joomla! - the dynamic portal engine and content management system ,', '', 2, '2004-11-27 21:30:29', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2006-03-02 06:04:33', 0, '', '', '', '', '', '', '', '', 'http://forge.joomla.org/', 0.00, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+		</query>
+		<query>
+		INSERT INTO `#__mt_links` VALUES (4, 'Joomla! Forum', 'Official Joomla! Forum', 62, 1, 0, '0.00', 0, '', 1, 1, '', 'show_map=\nmap=\nshow_print=\nshow_recommend=\nshow_rating=\nshow_review=\nshow_visit=\nshow_contact=\nshow_report=\nshow_ownerlisting=', 'CMS, PHP, Linux, Joomla!', 'This is a technical support forum for Joomla!', '', 1, '2004-11-27 21:32:50', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2006-03-02 06:03:14', 0, '', '', '', '', '', '', '', '', 'http://forum.joomla.org', 0.00, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+		</query>
+		<query>INSERT INTO `#__mt_relcats` VALUES (7, 11)</query>
+		<query>UPDATE `#__mt_cats` SET `cat_id` = '0' WHERE `cat_name` = 'Root' LIMIT 1 ;</query>
+	</queries>
+    </install>
+    <uninstall>
+        <queries>
+             <query>DROP TABLE `#__mt_cats`, `#__mt_cl`, `#__mt_config`, `#__mt_links`, `#__mt_log`, `#__mt_relcats`, `#__mt_reviews`, `#__mt_searchlog`, `#__mt_claims`, `#__mt_reports`;</query>
+        </queries>
+    </uninstall>
+    <installfile>install.mtree.php</installfile>
+    <uninstallfile>uninstall.mtree.php</uninstallfile>
+    <administration>
+         <menu>Mosets Tree</menu>
+         <files>
+			 <filename>admin.mtree.class.php</filename>
+			 <filename>admin.mtree.html.php</filename>
+			 <filename>admin.mtree.php</filename>
+			 <filename>changelog.txt</filename>
+			 <filename>diagnosis.php</filename>
+			 <filename>dtree.css</filename>
+			 <filename>index.html</filename>
+			 <filename>install.mtree.php</filename>
+			 <filename>license.mtree.php</filename>
+ 			 <filename>recount.mtree.php</filename>
+			 <filename>toolbar.mtree.html.php</filename>
+			 <filename>toolbar.mtree.php</filename>
+			 <filename>tools.mtree.php</filename>
+			 <filename>upgrade.php</filename>
+			 <filename>params/mtree.listing.xml</filename>
+         </files>
+    </administration>
+</mosinstall>

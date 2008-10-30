@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="menu" version="1.0.0">
+	<name>分隔线 / 占位符</name>
+	<group>Other</group>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>建立一个菜单的占位符或分隔线</description>
+	<params>
+	<param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default="" label="菜单图片" description="一个放在您选单项目左边或右边的小图示，图片必须位于images/stories/" />
+	</params>
+</mosinstall>

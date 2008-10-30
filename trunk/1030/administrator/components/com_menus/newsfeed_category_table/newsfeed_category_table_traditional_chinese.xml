@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="menu" version="1.0.0">
+	<name>表格 - RSS新聞聯播分類</name>
+	<group>Component</group>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>顯示某特定分類的新聞聯播項目表格</description>
+	<params>
+			<param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default="" label="選單圖片" description="一個放在您選單項目左邊或右邊的小圖示，圖片必須位於images/stories/" />
+		<param name="pageclass_sfx" type="text" size="20" default="" label="頁面CSS字尾" description="一個應用於頁面CSS的字尾，可以讓這頁面有獨立風格" />
+		<param name="back_button" type="list" default="" label="返回按鈕" description="顯示/隱藏返回按鈕，這個可以讓您返回上一個觀看的頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="page_title" type="radio" default="1" label="頁面標題" description="顯示/隱藏頁面標題">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="header" type="text" size="30" default="" label="頁面標題" description="顯示在網頁最上方的文字。如果是空白的話，選單的名稱將會被顯示" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="headings" type="radio" default="1" label="表格標題" description="顯示/隱藏表格標題">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="name" type="radio" default="1" label="名稱欄位" description="顯示/隱藏名稱欄位">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="articles" type="radio" default="1" label="文章欄位" description="顯示/隱藏文章欄位">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="link" type="radio" default="0" label="連結欄位" description="顯示/隱藏連結欄位">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="other_cat" type="radio" default="1" label="其它分類" description="當觀看分類時，顯示/隱藏其它分類的清單">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="cat_description" type="radio" default="1" label="分類說明" description="顯示/隱藏其它分類的說明">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="cat_items" type="radio" default="1" label="分類項目數目" description="顯示/隱藏每個分類中的項目數目 ">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+	</params>
+</mosinstall>

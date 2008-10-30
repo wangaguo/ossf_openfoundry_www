@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="menu" version="1.0.0">
+	<name>嵌入頁面</name>
+	<group>Other</group>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>使用IFrame嵌入一個外部的網頁/網站到Joomla當中</description>
+	<params>
+	<param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default="" label="選單圖片" description="一個放在您選單項目左邊或右邊的小圖示，圖片必須位於images/stories/" />
+		<param name="pageclass_sfx" type="text" size="20" default="" label="頁面CSS字尾" description="一個應用於頁面CSS的字尾，可以讓這頁面有獨立風格" />
+		<param name="back_button" type="list" default="" label="返回按鈕" description="顯示/隱藏返回按鈕，這個可以讓您返回上一個觀看的頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="page_title" type="radio" default="1" label="頁面標題" description="顯示/隱藏頁面標題">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="header" type="text" size="30" default="" label="頁面標題" description="顯示在網頁最上方的文字。如果是空白的話，選單的名稱將會被顯示" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="scrolling" type="radio" default="auto" label="捲動軸" description="顯示/隱藏水平 & 垂直捲動軸">
+			<option value="no">否</option>
+			<option value="yes">是</option>
+			<option value="auto">自動</option>
+		</param>
+		<param name="width" type="text" size="5" default="100%" label="寬度" description="IFrame視窗的寬度，您可以輸入像素絕對值或是加上%符號的百分比的相對值" />
+		<param name="height" type="text" size="5" default="500" label="高度" description="IFrame視窗的高度" />
+		<param name="height_auto" type="radio" default="0" label="自動高度" description="高度將會根據外部網頁的大小自動設定。這個設定只會在這些網頁和本網站是在同一網域時才有作用。如果您看到有javascript錯誤，確定這個參數是被關閉的。這個設定也會打破這頁的XHTML的相容性。">
+		<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="add" type="radio" default="1" label="自動增加" description="http://預設將會自動被加上，除非偵測到您在網址連結有加上http://或https://。這個設定讓您可以切換這個功能。">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+	</params>
+</mosinstall>

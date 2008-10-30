@@ -1,0 +1,1 @@
+<?php include $this->loadTemplate('../bluetree/sub_reviews.tpl.php') ?>

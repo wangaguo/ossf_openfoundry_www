@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>Mtree Reports</name>
+  <author>Ivo Apostolov</author>
+  <version>1.7</version>
+  <description>Joom!Fish definition for Mtree Reports</description>
+  <reference>
+     <table name="mt_reports">
+        <field type="referenceid" name="report_id" translate="0">ID</field>
+        <field type="titletext" name="guest_name" translate="1">Guest Name</field>
+        <field type="text" name="subject" translate="1">Subject</field>
+        <field type="textarea" name="comment" translate="1">Comment</field>
+        <field type="textarea" name="admin_note" translate="1">Admin Note</field>
+     </table>
+  </reference>
+</joomfish>

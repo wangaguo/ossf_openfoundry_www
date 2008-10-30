@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall type="module">
+	<name>Top Listing</name>
+	<author>Mosets Consulting</author>
+	<creationDate>May 2006</creationDate>
+	<copyright>(C) 2005-2006 Mosets Consulting http://www.mosets.com/</copyright>
+	<authorEmail>mtree@mosets.com</authorEmail>
+	<authorUrl>www.mosets.com</authorUrl>
+	<version>1.58</version>
+	<description>Mosets Tree Listing displays listing in any specific - New, Featured, Popular, Most Rated, Top Rated and Most Reviewed.</description>
+	<files>
+		<filename module="mod_mt_listing">mod_mt_listing.php</filename>
+	</files>
+	<params>
+		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />
+		<param name="listingclass" type="text" default="" label="Listing Class" />
+		<param name="type" type="list" default="1" label="Type" description="Select the type of top list you would like to display.">
+			<option value="1">New Listing</option>
+			<option value="2">Featured Listing</option>
+			<option value="3">Popular Listing</option>
+			<option value="4">Most Rated Listing</option>
+			<option value="5">Top Rated Listing</option>
+			<option value="6">Most Reviewed Listing</option>
+			<option value="7">Custom Top List</option>
+		</param>
+		<param name="count" type="text" default="5" label="Count" description="Number of listings to display." />
+		<param name="show_from_cat_id" type="text" default="0" label="Show listings from this category" description="This option allow you to show listings from a particular category. Setting this to 0 will disable this feature." />
+		<param name="only_subcats" type="radio" default="0" label="Only Sub-cats listing" description="Selecting this option will display listings from the current category and its sub-categories only.">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="shuffle_listing" type="radio" default="1" label="Shuffle Listing" description="Only aplicable to featured listing. Shuffling will generate different featured listing everytime a visitor reload a page.">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="show_website" type="radio" default="1" label="Show Website">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="show_category" type="radio" default="1" label="Show Category Name">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="show_rank" type="radio" default="1" label="Show Rank Number" description="Showing Rank will display sequence number besides the listing name.">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="show_rel_data" type="radio" default="1" label="Show Related Data" description="Showing related data will display the number of hits, reviews, rating or creation date depending on the list type you assign to this module. All types has related data except Featured type.">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="show_more" type="radio" default="1" label="Display 'Show more...'">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="caption_showmore" type="text" default="Show more..." label="'Show more' text" />
+
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="trim_long_names" type="radio" default="1" label="Trim long names">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="trim_long_urls" type="radio" default="1" label="Trim long URLs">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="max_name_char" type="text" default="24" label="Max. characters" description="Maximum number of characters to show in listing name before being trimmed." />
+
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="custom_field" type="list" default="1" label="Custom Field" description="This option is only applicable if you have choose Custom Top List as the type. It will use this field for ranking according sorting option you specify.">
+			<option value="1">cust_1</option>
+			<option value="2">cust_2</option>
+			<option value="3">cust_3</option>
+			<option value="4">cust_4</option>
+			<option value="5">cust_5</option>
+			<option value="6">cust_6</option>
+			<option value="7">cust_7</option>
+			<option value="8">cust_8</option>
+			<option value="9">cust_9</option>
+			<option value="10">cust_10</option>
+			<option value="11">cust_11</option>
+			<option value="12">cust_12</option>
+			<option value="13">cust_13</option>
+			<option value="14">cust_14</option>
+			<option value="15">cust_15</option>
+			<option value="16">cust_16</option>
+			<option value="17">cust_17</option>
+			<option value="18">cust_18</option>
+			<option value="19">cust_19</option>
+			<option value="20">cust_20</option>
+			<option value="21">cust_21</option>
+			<option value="22">cust_22</option>
+			<option value="23">cust_23</option>
+			<option value="24">cust_24</option>
+			<option value="25">cust_25</option>
+			<option value="26">cust_26</option>
+			<option value="27">cust_27</option>
+			<option value="28">cust_28</option>
+			<option value="29">cust_29</option>
+			<option value="30">cust_30</option>
+		</param>
+		<param name="custom_order" type="radio" default="asc" label="Custom Ordering">
+			<option value="asc">Ascending</option>
+			<option value="desc">Descending</option>
+		</param>
+	</params>
+</mosinstall>

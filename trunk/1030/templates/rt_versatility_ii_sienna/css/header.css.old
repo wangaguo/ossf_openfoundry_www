@@ -1,0 +1,152 @@
+/* dark header */
+#header {
+	position: relative; 
+	height: 96px;
+	overflow: hidden;
+	background: #232833 url(../images/header-bg.png) repeat-x; 
+}
+
+
+#access {
+	position: absolute;
+	z-index: 10000;
+	top: 0px;
+	right: 150px;
+	width: 180px;
+	height: 100px;
+	overflow: hidden;
+}
+
+#access #selectors {
+	position: relative;
+	height: 8px;
+	
+}
+
+#access span {
+	background-repeat: no-repeat;
+}
+
+#access a {
+	text-decoration: none;
+}
+
+.font-selector,
+.width-selector {
+	display: block;
+	position: absolute;
+	top: 0;
+	width: 12px;
+	height: 6px;
+}
+
+.f-smaller #selectors .font-selector {
+	right: 159px;
+}
+
+.f-default #selectors .font-selector {
+	right: 129px;
+}
+
+.f-larger #selectors .font-selector {
+	right: 99px;
+}
+
+.w-thin #selectors .width-selector {
+	right: 70px;
+}
+
+.w-wide #selectors .width-selector {
+	right: 40px;
+}
+
+.w-fluid #selectors .width-selector {
+	right: 10px;
+}
+
+#access #buttons {
+	float: right;
+}
+
+#search {
+	float: right;
+}
+
+#access .button {
+	display: block;
+	float: left;
+	width: 20px;
+	height: 12px;
+	margin: 0px 5px;	
+	background-repeat: no-repeat
+}
+
+#logo {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: block;
+	width:397px;
+	height: 96px;
+	background: url(../images/logo.png) no-repeat; 
+}
+#rightbg {
+	position: absolute;
+	right:0px;
+	width:541px;
+        height:96px;
+	top:0px;
+        background: url(../images/rightbg.png) no-repeat;
+	z-index:-10000;
+}
+
+#search {
+	position: absolute;
+	right:0px;
+	width:130px;
+	height:25px;
+	top:5px;
+	z-index:10000;
+	overflow: hidden;
+}
+
+#top {
+	z-index: 1;
+	height: 60px;
+	padding-top: 40px;
+	overflow: hidden;
+/*	margin-left: 800px; */ 
+	margin-bottom: 10px;
+	margin-right: 10px;  
+	color: #999;
+	float: right;
+}
+
+.font-selector,
+.width-selector {
+/*	background: url(../images/access-select.png) no-repeat; */
+}
+
+.lrg .button {
+	background: url(../images/access-lrg.png);
+}
+
+.sml .button {
+	background: url(../images/access-sml.png);
+}
+
+.med .button {
+	background: url(../images/access-med.png);
+}
+
+.thin .button {
+	background: url(../images/access-thin.png);
+}
+
+.wide .button {
+	background: url(../images/access-wide.png);
+}
+
+.fluid .button {
+	background: url(../images/access-fluid.png);
+}

@@ -1,0 +1,1 @@
+<?php include $this->loadTemplate('../bluetree/page_advSearchResults.tpl.php') ?>

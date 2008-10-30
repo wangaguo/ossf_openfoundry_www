@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall version="1.0.3" client="administrator" type="language">
+    <name>Simplified Chinese</name>
+    <version>1.0.3</version>
+    <creationDate>2005-10-24</creationDate>
+    <author>TaiwanJoomla Team</author>
+    <authorEmail>eddy@joomla.com.tw</authorEmail>
+    <authorUrl>www.taiwanjoomla.com</authorUrl>
+    <copyright>(C) 2005 TaiwanJoomla.com</copyright>
+    <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+    <description></description>
+    <files>
+        <filename>simplified_chinese.com_admin.ini</filename>
+        <filename>simplified_chinese.com_banners.ini</filename>
+        <filename>simplified_chinese.com_categories.ini</filename>
+        <filename>simplified_chinese.com_checkin.ini</filename>
+        <filename>simplified_chinese.com_config.ini</filename>
+        <filename>simplified_chinese.com_contact.ini</filename>
+        <filename>simplified_chinese.com_content.ini</filename>
+        <filename>simplified_chinese.com_designer.ini</filename>
+        <filename>simplified_chinese.com_export.ini</filename>
+        <filename>simplified_chinese.com_installer.ini</filename>
+        <filename>simplified_chinese.com_jaforms.ini</filename>
+        <filename>simplified_chinese.com_languages.ini</filename>
+        <filename>simplified_chinese.com_mambots.ini</filename>
+        <filename>simplified_chinese.com_massmail.ini</filename>
+        <filename>simplified_chinese.com_media.ini</filename>
+        <filename>simplified_chinese.com_menumanager.ini</filename>
+        <filename>simplified_chinese.com_menus.ini</filename>
+        <filename>simplified_chinese.com_messages.ini</filename>
+        <filename>simplified_chinese.com_modules.ini</filename>
+        <filename>simplified_chinese.com_newsfeeds.ini</filename>
+        <filename>simplified_chinese.com_poll.ini</filename>
+        <filename>simplified_chinese.com_sections.ini</filename>
+        <filename>simplified_chinese.com_statistics.ini</filename>
+        <filename>simplified_chinese.com_syndicate.ini</filename>
+        <filename>simplified_chinese.com_templates.ini</filename>
+        <filename>simplified_chinese.com_trash.ini</filename>
+        <filename>simplified_chinese.com_typedcontent.ini</filename>
+        <filename>simplified_chinese.com_users.ini</filename>
+        <filename>simplified_chinese.com_weblinks.ini</filename>
+        <filename>simplified_chinese.ini</filename>
+        <filename>simplified_chinese.xml</filename>
+    </files>
+    <params />
+</mosinstall>

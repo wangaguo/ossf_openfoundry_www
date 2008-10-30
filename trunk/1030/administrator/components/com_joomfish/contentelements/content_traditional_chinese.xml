@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<joomfish type="contentelement">
+  <name>內容</name>
+  <author>A. Kempkens</author>
+  <version>1.7</version>
+  <description>定義核心程式的內容元件</description>
+  <reference type="content">
+  	<table name="content">
+  		<field type="referenceid" name="id" translate="0">ID</field>
+  		<field type="titletext" name="title" translate="1">標題</field>
+  		<field type="text" name="title_alias" translate="0">標題別名</field>
+  		<field type="htmltext" name="introtext" translate="1">介紹文字</field>
+  		<field type="htmltext" name="fulltext" translate="1">主要文字</field>
+  		<field type="textarea" name="images" translate="1">圖片</field>
+  		<field type="text" name="metakey" translate="1">關鍵詞</field>
+  		<field type="text" name="metadesc" translate="1">敘述</field>
+  		<field type="created_date" name="created" translate="0">建立日期</field>
+  		<field type="modified_date" name="modified" translate="0">修改日期</field>
+  		<field type="checked_out_by" name="checked_out" translate="0">檢視人</field>
+  		<field type="checked_out_date" name="checked_out_time" translate="0">檢視日期</field>
+  		<filter>c.state >= 0</filter>
+  	</table> 	
+  </reference>
+  <translationfilters>
+  	  <category>catid</category>
+  	  <author>created_by</author>
+  	  <keyword>title</keyword>
+  	  <published>published</published>
+  </translationfilters>
+</joomfish>

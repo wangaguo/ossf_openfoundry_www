@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Newsflash</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>新聞快報模組會在每次重新載入頁面時，隨機從分類中選出一則已經發佈的內容項目。它在使用水平或垂直設定時，還可以一次顯示多個項目。</description>
+	<files>
+		<filename module="mod_newsflash">mod_newsflash.php</filename>
+	</files>
+	<params>
+		<param name="catid" type="mos_category" default="0" label="分類" description="內容分類" />
+		<param name="style" type="list" default="random" label="風格" description="顯示分類的風格">
+			<option value="random">每次隨機選擇一則</option>
+			<option value="horiz">水平的</option>
+			<option value="vert">垂直的</option>
+		</param>
+		<param name="image" type="radio" default="0" label="顯示圖片" description="顯示內容項目的圖片">
+			<option value="1">是</option>
+			<option value="0">否</option>
+		</param>
+		<param name="link_titles" type="list" default="" label="標題可被連結" description="讓項目的標題可以被連結">
+			<option value="">使用全域</option>
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+        <param name="readmore" type="radio" default="0" label="詳細內容" description="顯示/隱藏詳細內容的按鈕">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+        </param>
+        <param name="item_title" type="list" default="0" label="項目標題" description="顯示項目標題">
+			<option value="0">否</option>
+			<option value="1">是</option>
+        </param>
+		<param name="items" type="text" default="" label="項目數目" description="顯示的項目數目" />
+			<param name="cache" type="radio" default="0" label="開啟快取" description="選擇是否要快取這個模組的內容">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+			<param name="moduleclass_sfx" type="text" default="" label="模組CSS字尾" description="一個應用於模組CSS的字尾(table.moduletable)，可以讓這頁面有獨立風格" />
+	</params>
+</mosinstall>

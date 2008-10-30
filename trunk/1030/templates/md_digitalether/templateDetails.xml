@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall version="4.5.3" type="template">
+    <name>md_digitalether</name>
+    <version>1.0.2</version>
+    <creationDate>03/31/05</creationDate>
+    <author>rhuk</author>
+    <authorEmail>rhuk@rockettheme.com</authorEmail>
+    <authorUrl>http://www.rockettheme.com</authorUrl>
+    <copyright>Copyright 2005 - RocketTheme.com</copyright>
+    <license></license>
+    <description>
+	<![CDATA[
+	md_digitalether is the April 2005 template for the RocketTheme template club.  It is not free or public.  This is template is for members of the RocketTheme Template Club only.  For installation help check out the <a href="http://www.rockettheme.com/content/view/72/63/" target="_blank">DigitalEther Overview Page</a> on <a href="http://www.rockettheme.com" target="_blank">rockettheme.com</a>.
+
+<h3>Changelog</h3>
+1.0.3
+<ul>
+	<li>Fixed issue with links breaking with 2nd level menus</li>
+</ul>
+
+1.0.2
+<ul>
+	<li>Fixed showmenu ordering to fix IE login issue</li>
+</ul>
+
+	]]>
+	</description>
+    <files>
+        <filename>index.php</filename>
+        <filename>md_transmenu.php</filename>
+        <filename>packed.js</filename>
+        <filename>styles.css</filename>
+        <filename>templateDetails.xml</filename>
+        <filename>template_thumbnail.png</filename>
+        <filename>transmenu.css</filename>
+        <filename>images/arrow.png</filename>
+        <filename>images/de_bottommenu_bg.png</filename>
+        <filename>images/de_bullet.png</filename>
+        <filename>images/de_fake_box.png</filename>
+        <filename>images/de_header_sample.jpg</filename>
+        <filename>images/de_logo.png</filename>
+        <filename>images/de_rightnav_bg.png</filename>
+        <filename>images/de_rightnav_bottom.png</filename>
+        <filename>images/de_rightnav_fade.png</filename>
+        <filename>images/de_rightnav_top.png</filename>
+        <filename>images/de_shadow_bottom.png</filename>
+        <filename>images/de_shadow_left.png</filename>
+        <filename>images/de_shadow_left_b.png</filename>
+        <filename>images/de_shadow_right.png</filename>
+        <filename>images/de_shadow_right_b.png</filename>
+        <filename>images/de_topmenu_bg.png</filename>
+        <filename>images/de_topnav_bg.png</filename>
+        <filename>images/grey-40.png</filename>
+        <filename>images/grey-80.png</filename>
+        <filename>images/spacer.png</filename>
+        <filename>images/submenu-off.gif</filename>
+        <filename>images/submenu-on.gif</filename>
+        <filename>images/x.gif</filename>
+        <filename>css/index.html</filename>
+        <filename>css/template_css.css</filename>
+    </files>
+    <params />
+</mosinstall>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall version="1.0.0" type="mambot" group="content">
+	<name>mosimage</name>
+	<author>Joomla! Project</author>
+	<creationDate>August 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>用特定图片取代内容中的 {mosimage} 标签</description>
+	<files>
+		<filename mambot="mosimage">mosimage.php</filename>
+	</files>
+	<params>
+		<param name="margin" type="text" default="5" size="5" label="边界(Margin)" description="以像素(px)为单位的边界，在图片及说明的周围 - 只有使用图片说明才会有效" />
+		<param name="padding" type="text" default="0" size="5" label="内距(Padding)" description="以像素(px)为单位的内距，在图片及说明的周围 - 只有使用图片说明才会有效" />
+	</params>
+</mosinstall>

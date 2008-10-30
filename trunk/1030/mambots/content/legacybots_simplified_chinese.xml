@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall version="1.0.0" type="mambot" group="content">
+	<name>legacybots</name>
+	<author>Joomla! Project</author>
+	<creationDate>August 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>支援旧版本4.5的自动化程式(mambots)</description>
+	<files>
+		<filename mambot="legacybots">legacybots.php</filename>
+	</files>
+	<params/>
+</mosinstall>

@@ -1,0 +1,153 @@
+<?php 
+defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+/**
+ * Config class file
+ *
+ * @package com_gallery2
+ * @subpackage Class files
+ */
+
+/**
+ * This is the class used by config screen for checking and getting more info.
+ *
+ * @package com_gallery2
+ * @subpackage Classes
+ */
+class config {
+
+    /**
+	 * Check variables from user input
+	 *
+	 * @param string $type
+	 * @param mixed $val
+	 * @return array(boolean, $val)
+	 */
+    function variableCheck($type, $val){
+        switch($type){
+            case 'path':
+            $val = trim($val);
+            /* first check empty and save this, the rest will be checked */
+            if(empty($val)){
+            	/* just save the value */
+            	$ret[0] = false;
+            } else {
+	            /* now check for windows or linux path */
+	             $val = mosPathName($val);
+	            /* let's check if it is correct */
+	            if(is_dir($val)){
+	                if (file_exists($val.'embed.php')){
+	                    $ret[0] = true;
+	                    $val = addslashes($val);
+	                } else {
+	                    $ret[0] = false;
+	                    $val = '';
+	                }
+	            } else {
+	                $ret[0] = false;
+	                $val = '';
+	            }
+            }
+            break;
+            case 'relativeG2Path':
+            	$val = trim($val);
+            	if(empty($val)){
+            		$ret[0] = true;
+            	} else {
+	            	/* /etz. => ./etz. */
+	            	if(strpos($val, '/') === 0){
+	            		$val = '.'.$val;
+	            	}
+	            	/* ./etz. => etz. ==> ./ is useless only gives ugly urls */
+	            	if(strpos($val, './') === 0){
+	            		$val = str_replace('./', '', $val);
+	            	}
+	            	/* ... => .. */
+	            	$val = str_replace('...', '..', $val);
+	            	
+	           		$ret[0] = true;
+            	}
+            break;
+			case 'loginredirect':
+            	/**TODO
+            	 * embedpath should be in here!
+            	 */
+            default:
+            	$ret[0] = true;
+            break;
+            //etz..
+        }
+        $ret[1] = $val;
+        return $ret;
+    }
+
+
+    /**
+	 * Will retrieve and add some interesting data from Gallery2 database
+	 *
+	 * @return array(bool, msg)
+	 */
+    function getG2Settings(){
+    	global $database;
+    	core::loadConfig(true);
+    	core::initiatedG2();
+    	$g2Config = array();
+		list(, $g2Config['id.allUserGroup']) = 
+				GalleryCoreApi::getPluginParameter('module', 'core', 'id.allUserGroup'); 
+				
+		list(, $g2Config['id.adminGroup']) = 
+				GalleryCoreApi::getPluginParameter('module', 'core', 'id.adminGroup'); 
+				
+		list(, $g2Config['id.everybodyGroup']) = 
+				GalleryCoreApi::getPluginParameter('module', 'core', 'id.everybodyGroup');
+				 
+		list(, $g2Config['id.anonymousUser']) = 
+				GalleryCoreApi::getPluginParameter('module', 'core', 'id.anonymousUser'); 
+				
+		list(, $g2Config['id.rootAlbum']) = 
+				GalleryCoreApi::getPluginParameter('module', 'core', 'id.rootAlbum');
+				
+		list(, $g2AdminGroupUsers) = GalleryCoreApi::fetchUsersForGroup($g2Config['id.adminGroup'], 1);
+		$g2Config['id.admin'] = key($g2AdminGroupUsers);
+
+		foreach($g2Config as $k => $v){
+			$query = "UPDATE `#__gallery2` SET `value` ='$v' WHERE `key`='$k'";
+			$database->setQuery( $query );
+			$check = $database->query();
+			if(!$check){
+				return array(false, 'Failed to store all G2 extra data');
+			}
+		}
+		return array(true, 'Configuration Saved Succesfully!');
+    }
+    
+    /**
+     * Makes Album select option to use in a select box
+     *
+     * @param array $tree
+     * @param array $info
+     * @param integer $depth
+     * @return array $keys
+     */
+    function treeSelect($tree, $info, $depth=false){
+    	if(is_array($tree)){
+	    	$keys = array();
+	    	if(!isset($prefix)){
+	    		$prefix = '';
+	    	}
+	    	foreach($tree as $key => $val){
+	    		if($depth){
+	    			$prefix = ''.str_repeat('&nbsp;', $depth).'<sup>L</sup>&nbsp;';	
+	    		}
+	     		$keys[$key] = $prefix.$info[$key]['title'];
+	     		if(is_array($val) && !empty($val)){
+	     			//$keys = array_merge($keys, config::treeSelect($val, $info, $depth+1));
+	     			$merge = config::treeSelect($val, $info, $depth+1);
+	     			$keys = $keys + $merge;	
+	     		}	
+	     	}
+	     	return $keys;	
+    	}
+    	return array();
+    }
+}
+?>

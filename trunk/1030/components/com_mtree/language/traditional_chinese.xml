@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mtreeinstall version="1.0" type="language">
+	<name>chinese</name>
+	<version>1.58</version>
+	<creationDate>May 2006</creationDate>
+	<author>Mosets Consulting</author>
+	<authorUrl>http://www.mosets.com/</authorUrl>
+	<authorEmail>mtree@mosets.com</authorEmail>
+	<files>
+		<filename>traditional_chinese.php</filename>
+	</files>
+</mtreeinstall>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Poll</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>這個模組是配合投票元件的。這是用來顯示設定好的投票內容。</description>
+	<files>
+	<filename module="mod_poll">mod_poll.php</filename>
+	</files>
+	<params>
+	<param name="cache" type="radio" default="0" label="開啟快取" description="選擇是否要快取這個模組的內容">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+	<param name="moduleclass_sfx" type="text" default="" label="模組CSS字尾" description="一個應用於模組CSS的字尾(table.moduletable)，可以讓這頁面有獨立風格" />
+	</params>
+</mosinstall>

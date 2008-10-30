@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="menu" version="1.0.0">
+	<name>連結 - 靜態內容</name>
+	<group>Content|Link</group>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>建立一個連到靜態內容的連結</description>
+	<params>
+		<param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default="" label="選單圖片" description="一個放在您選單項目左邊或右邊的小圖示，圖片必須位於images/stories/" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="unique_itemid" type="radio" default="0" label="唯一的項目ID" description="在連結中使用唯一的Itemid">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+	</params>
+</mosinstall>

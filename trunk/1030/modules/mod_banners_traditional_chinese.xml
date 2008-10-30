@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Banner</name>
+	<author>Joomla! Project</author>
+	<creationDate>August 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>廣告看板模組允許您顯示在元件裡的活動中廣告在您的網站中。</description>
+	<files>
+		<filename module="mod_banners">mod_banners.php</filename>
+	</files>
+	<params>
+		<param name="banner_cids" type="text" default="" label="廣告客戶" description="需指向一個廣告客戶的id值。輸入多個時可以使用','來分隔!" />
+	<param name="moduleclass_sfx" type="text" default="" label="模組CSS字尾" description="一個應用於模組CSS的字尾(table.moduletable)，可以讓這頁面有獨立風格" />
+	</params>
+</mosinstall>

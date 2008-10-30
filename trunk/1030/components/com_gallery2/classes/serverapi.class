@@ -1,0 +1,139 @@
+<?php
+defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+
+class serverapi {
+	var $protocol;
+	var $dataArray = array();
+	
+	var $scheme;
+	var $host;
+	var $path;
+	var $port;
+	
+	function serverapi($url, $defaultData){
+		$this->__construct($url, $defaultData);
+	}
+	
+	function __construct($url, $defaultData){
+		if(function_exists('curl_init')){
+			$this->protocol = 'Curl';
+		} else if(ini_get('allow_url_fopen') == 1){
+			$this->protocol = 'Fopen';
+		} else {
+			$this->protocol = false;
+		}
+		
+		$url = parse_url($url);
+		$this->scheme = isset($url['scheme']) ? $url['scheme']: 'http://';
+		$this->host = $url['host'];
+		$this->path = isset($url['path']) ? $url['path']: '/';
+		$this->port = isset($url['port']) ? $url['port'] : 80;
+		
+		$this->dataArray = $defaultData;
+	}
+	
+	function sendStats(){
+		core::initiatedG2();
+		core::classRequireOnce('g2stats');
+	
+		$data = array('task' => 'stats');
+		$data['albums'] = intval(g2stats::getAlbums());
+		$data['photos'] = intval(g2stats::getPhotos());
+		
+ 		GalleryEmbed::done();
+		return $this->sendRequest($data);
+	}
+	
+	function sendRequest($extraData = array()){
+		if($this->protocol){
+			$function = '_send'.$this->protocol;
+			$data = $this->_confertDataToString($extraData);
+			
+			$ret = $this->$function($data);
+			if(is_bool($ret)){
+				return $ret;
+			}
+			return unserialize($ret);
+		}
+		return false;
+	}
+	
+	function _sendCurl($data){
+		$url = $this->scheme.'://'.$this->host;
+		if($this->port != 80){
+			$url .= ':'.$this->port;
+		}
+		$url .= $this->path;
+		
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+		$ret = curl_exec($ch);
+		curl_close ($ch);
+		return $ret;
+	}
+	
+	function _sendFopen($data){
+		$uri = $this->path;
+		$host = $this->host;
+		$strlen = strlen($data);
+		$port = $this->port;
+		$reqheader =  	"POST $uri HTTP/1.0\r\n". 
+                   		"Host: $host\r\n". "User-Agent: Mozilla/5.0\r\n". 
+     					"Content-Type: application/x-www-form-urlencoded\r\n". 
+    					"Content-Length: $strlen\r\n\r\n". 
+     					"$data\r\n";
+     	$socket = fsockopen($host, $port, $errno, $errstr); 
+		if(!$socket){
+			return false;
+		}
+     	fputs($socket, $reqheader);
+     	$content = ''; 
+		while (!feof($socket)) { 
+		   $content .= fgets($socket, 4096); 
+		}
+		fclose($socket);
+		/* we have to split header and content */
+		$pos = strpos($content, "\r\n\r\n");
+		if($pos === false){
+			return $content;
+		}
+		return substr($content, $pos + 4);
+	}
+	
+	function _confertDataToString($array){	
+		
+		$array = array_merge($array, $this->dataArray);		
+		$return = '';
+		foreach ($array as $k=>$v){
+			if(!empty($v)){
+       			$return .= $k.'='.urlencode(utf8_encode($v)).'&';
+			}
+		}
+		return substr($return,0,-1);
+	}
+	
+	function getDefaultData() {
+		global $mosConfig_live_site, $mosConfig_absolute_path, $g2Cache;
+		
+		// set a unique id for the site but hashed so it's save and users feel save /
+		$ret['id']  = md5($mosConfig_live_site.$mosConfig_absolute_path);
+		
+		// versions as we need to know for future compatibility /
+		core::classRequireOnce('utility');
+		$ret['bridge'] = $g2Cache->getCachedFunction('expiresLong', 'utility::comVersion');
+		$ret['gallery2'] = $g2Cache->getCachedFunction('expiresLong', 'utility::g2Version');
+		// cms info /
+		include_once($mosConfig_absolute_path.'/includes/version.php');
+		global $_VERSION;
+		$ret['cmsType'] 	= $_VERSION->PRODUCT;
+		$ret['cmsVersion'] 	= $_VERSION->RELEASE.'.'.$_VERSION->DEV_LEVEL ;
+		$ret['php'] 		= PHP_VERSION;
+		
+		return $ret;
+	}
+}
+?>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<joomfish type="contentelement">
+  <name>網站連結</name>
+  <author>A. Kempkens</author>
+  <version>1.7</version>
+  <description>定義核心程式的網站連結元件</description>
+  <reference>
+  	<table name="weblinks">
+  		<field type="referenceid" name="id" translate="0">ID</field>
+  		<field type="titletext" name="title" translate="1">名稱</field>
+  		<field type="textarea" name="description" translate="1">敘述</field>
+  	</table>
+  </reference>
+</joomfish>

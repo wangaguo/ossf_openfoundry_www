@@ -1,0 +1,1 @@
+<?php include $this->loadTemplate( 'sub_listingDetails.tpl.php' ) ?>

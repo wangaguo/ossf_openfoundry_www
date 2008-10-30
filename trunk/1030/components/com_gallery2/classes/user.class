@@ -1,0 +1,227 @@
+<?php 
+defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+/**
+ * User class file
+ *
+ * @package com_gallery2
+ * @subpackage Class files
+ */
+
+/**
+ * This class holds all user functions
+ *
+ * @package com_gallery2
+ * @subpackage Classes
+ */
+class user {
+
+	/**
+	 * Add a new user to Gallery2
+	 *
+	 * $par = array('username' => $my->username, 
+	 *			   'email' => $row->email,
+	 *			   'fullname' => $row->name, 
+	 *	           'hashedpassword' => $row->password,
+	 *			   'hashmethod' => 'md5')
+	 *
+	 * @note use mambo ids
+	 *
+	 * @param integer $userId
+	 * @param array $par
+	 * @return boolean
+	 */
+	function newUser($userId, $par){
+		
+		/* check if there's no G2 user mapped to the activeUserId */
+		$ret = GalleryEmbed::createUser($userId, $par);
+		return $ret;	
+	}
+	
+	
+	/**
+	 * Update a Gallery2 user profile
+	 *
+	 * $userId = mambo userid
+	 * $par = array('username' => $my->username, 
+	 *			   'email' => $row->email,
+	 *			   'fullname' => $row->name, 
+	 *	           'hashedpassword' => $row->password,
+	 *			   'hashmethod' => 'md5')
+	 *
+	 * @param integer $userId
+	 * @param array $par
+	 * @return boolean
+	 */
+	function updateUser($userId, $par){
+		$ret = GalleryEmbed::updateUser($userId, $par);
+		return $ret;
+	}
+	
+	/**
+	 * Delete a Mambo user from Gallery2
+	 *
+	 * @note use Mambo ids 
+	 *
+	 * @param integer $userId
+	 * @return boolean
+	 */
+	function delUser($userId){
+			$ret = GalleryEmbed::deleteUser($userId);
+		if ($ret){ 
+			return false;
+		}
+		return true;
+	}
+	
+	
+
+	/**
+	 * add a user to a Gallery2 group
+	 *
+	 * @note use Mambo ids 
+	 *
+	 * @param integer $userId
+	 * @param interger $groupId
+	 * @return boolean
+	 */
+	function addUserGroup($userId, $groupId){
+			$ret = GalleryEmbed::addUserToGroup($userId, $groupId);		
+		return $ret;
+	}
+
+	/**
+	 * Removes a user from a Gallery group
+	 *
+	 * @note use Mambo ids 
+	 *
+	 * @param integer $userId
+	 * @param integer $groupId
+	 * @return boolean
+	 */
+	function removeUserGroup($userId, $groupId){
+			$ret = GalleryEmbed::removeUserFromGroup($userId, $groupId);
+		if ($ret){ 
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Will change Mambo id into Gallery2 id
+	 *
+	 * @param integer $userId
+	 * @return integer $userId
+	 */
+	function mamboIdToGalleryId($userId){
+			core::initiatedG2();
+			list( , $userId) = GalleryCoreApi::loadEntityByExternalId($userId, 'GalleryUser');
+			$userId = $userId->getId();
+		return $userId;
+	}
+	
+	/**
+	 * Fetch Gallery2 user data, will return a object
+	 *
+	 * @param integer $userId
+	 * @return object
+	 */
+	function loadGalleryUser($userId){
+		list( , $userId) = GalleryCoreApi::loadEntityByExternalId($userId, 'GalleryUser');
+		return $userId;
+	}
+	
+	
+	/**
+	 * Returns a Total/album/photo count for a user
+	 *
+	 * @param integer $userId
+	 * @param boolean $mamboId
+	 * @return array($countTotal, $countAlbum, $countPhoto)
+	 */
+	function userItemCount($userId, $mamboId=true){
+		global $g2Config;
+		if($mamboId){
+			$userId = user::mamboIdToGalleryId($userId);
+		}
+		print $userId;
+		list( , $allItemIds) = GalleryCoreApi::fetchAllItemIdsByOwnerId($userId);
+		$countTotal = count($allItemIds);
+		$countAlbum = 0;
+		list( , $allAlbumIds) = GalleryCoreApi::fetchAllItemIds('GalleryAlbumItem');
+		foreach ($allItemIds as $id) {
+			if (in_array($id, $allAlbumIds)) {
+			  	$countAlbum++;
+			}	
+		}
+		$countPhoto = $countTotal-$countAlbum;
+		if(empty($g2Config['databasequel'])){
+			global $g2Database;
+			$g2Database->setQuery( "SELECT count(".$g2Config['columnPrefix']."id) FROM #__Comment WHERE ".$g2Config['columnPrefix']."commenterId = '".$userId."'" );
+			$countComment = $g2Database->loadResult();
+		} else {
+			global $database;
+			$database->setQuery("SELECT count(".$g2Config['columnPrefix']."id) FROM ".$g2Config['tablePrefix']."Comment WHERE ".$g2Config['columnPrefix']."commenterId = '".$userId."'");
+			$countComment = $database->loadResult();
+		}	
+		return array($countTotal, $countAlbum, $countPhoto, $countComment);			
+	}
+	
+	/**
+	 * Get the ids for latest added pictures or albums
+	 *
+	 * @param integer $userId
+	 * @param integer $count
+	 * @param string $type GalleryPhotoItem or GalleryAlbumItem
+	 * @param boolean $mamboId
+	 * @return array
+	 */
+	function fetchLatest($userId, $count=false, $type='GalleryPhotoItem', $mamboId=true){
+		if($mamboId){
+			$userId = user::mamboIdToGalleryId($userId);
+		}
+		list( , $allItemIds) = GalleryCoreApi::fetchAllItemIdsByOwnerId($userId);
+		list( , $allTypeIds) = GalleryCoreApi::fetchAllItemIds($type);
+		foreach ($allItemIds as $id) {
+			if (in_array($id, $allTypeIds)) {
+				list( , $item) = GalleryCoreApi::loadEntitiesById( $id );
+			   	$list[$item->getcreationTimestamp()] = $item->getId();
+			}	
+		}
+		krsort($list);
+		if($count){
+			$list = array_slice($list, 0, $count);
+		}
+		return $list;		
+	}
+	
+	function fetchLatestComments($userId, $count=false, $mamboId=true){
+		global $gallery, $g2Config;
+		/* TODO make sure i doesn't use active user id but given and confert mambo id to gallery2 id */
+		list ($ret, $aclIds) = GalleryCoreApi::fetchAccessListIds('comment.view', $gallery->getActiveUserId());
+		if ($ret) {
+			return array($ret->wrap(__FILE__, __LINE__), null);
+		}
+		$aclMarkers = GalleryUtilities::makeMarkers(count($aclIds));
+		$aclMarkers = implode(', ', $aclIds);
+		if(empty($g2Config['databasequel'])){
+			global $g2Database;
+			$query = sprintf('SELECT t1.'.$g2Config['columnPrefix'].'id FROM #__Comment as t1, #__ChildEntity as t2, #__AccessSubscriberMap as t3, #__User as t4 WHERE t1.'.$g2Config["columnPrefix"].'id=t2.'.$g2Config["columnPrefix"].'id AND  t4.'.$g2Config["columnPrefix"].'id=t1.'.$g2Config["columnPrefix"].'commenterId AND  t2.'.$g2Config["columnPrefix"].'parentId=t3.'.$g2Config["columnPrefix"].'itemId AND  t3.'.$g2Config["columnPrefix"].'accessListId IN (%s) ORDER BY '.$g2Config["columnPrefix"].'date DESC LIMIT '.$count, $aclMarkers);	
+			$g2database->setQuery($query);
+			$result = $g2database->query();
+		} else {
+			global $database;
+			$query = sprintf('SELECT t1.'.$g2Config['columnPrefix'].'id FROM '.$g2Config["tablePrefix"].'Comment as t1, '.$g2Config["tablePrefix"].'ChildEntity as t2, '.$g2Config["tablePrefix"].'AccessSubscriberMap as t3, '.$g2Config["tablePrefix"].'User as t4 WHERE t1.'.$g2Config["columnPrefix"].'id=t2.'.$g2Config["columnPrefix"].'id AND  t4.'.$g2Config["columnPrefix"].'id=t1.'.$g2Config["columnPrefix"].'commenterId AND  t2.'.$g2Config["columnPrefix"].'parentId=t3.'.$g2Config["columnPrefix"].'itemId AND  t3.'.$g2Config["columnPrefix"].'accessListId IN (%s) ORDER BY '.$g2Config["columnPrefix"].'date DESC LIMIT '.$count, $aclMarkers);	
+			$database->setQuery($query);
+			$result = $database->query();
+		}
+		if($result AND mysql_num_rows($result) > 0){
+			while ($row = mysql_fetch_row($result)){
+				$list[] = $row[0];
+			}
+			return $list;
+		} else {
+			return false;
+		}
+	}
+}
+?>

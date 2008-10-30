@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="menu" version="1.0.0">
+	<name>提供 - 内容</name>
+	<group>Content|Submit</group>
+	<author>Jason407</author>
+	<creationDate>August 2005</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>建立一个让会员能提供内容的链接</description>
+	<params>
+		<param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default="" label="菜单图片" description="一个放在您菜单项目左边或右边的小图示，图片必须位于images/stories/" />
+	</params>
+</mosinstall>

@@ -1,0 +1,219 @@
+<?php 
+defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+/**
+ * Utility class file
+ *
+ * @package com_gallery2
+ * @subpackage Class files
+ */
+
+/**
+ * This class contains some usefull functions
+ *
+ * @package com_gallery2
+ * @subpackage Classes
+ */
+class utility {
+
+	/**
+	 * Will confert a Gallery2 date to a mambo date
+	 *
+	 * @param integer $date
+	 * @param string $format
+	 * @return string
+	 */
+	function g2DateToMambo($date, $format=''){
+		$date = date("Y-m-d H:i:s", $date);
+		if(empty($format)){
+			$date =  mosFormatDate($date);
+		} else {
+			$date =  mosFormatDate($date, $format);
+		}
+	return $date;
+	}
+	
+	/**
+	 * Will return component version
+	 *
+	 * @return integer component version
+	 */
+	function comVersion(){
+		core::relativeRequireOnce( 'version.php' );
+		$_G2VERSION = new g2Version();
+		$comVersion = $_G2VERSION->getShortVersion();
+		return $comVersion;
+	}
+	
+	 
+	 //incomplete needs check if init
+	/**
+	 * Will return the gallery2 core version number
+	 *
+	 * @return integer Gallery2 core number
+	 */
+	function g2Version(){
+		core::initiatedG2();
+		list ($ret, $g2Version) = GalleryCoreApi::getPluginParameter('module', 'core', '_version');
+		if ($ret){ 
+			return false;
+		}
+		if ($ret) {
+			return 'error';
+		}
+		return $g2Version;
+	}
+	
+	/**
+	 * Fetches Latest version from opensource.4theweb.nl
+	 *
+	 * @return array
+	 */
+	function getLatestVersion(){
+		core::classRequireOnce('serverapi');
+		$options = serverapi::getDefaultData();
+		$url = 'http://opensource.4theweb.nl/curl/main.php';
+		$object = new serverapi($url, $options);
+		$ret = $object->sendRequest(array('task' => 'latestVersion'));
+ 		return $ret;
+	}
+	
+	/**
+	 * Function will return Gallery2 ids or id
+	 *
+	 * @param mixed $mamboId
+	 * @return bolean(false) or gallery2 id array
+	 */
+	function getG2Id($mamboId=null){
+		if(is_null($mamboId)){
+			global $g2Config;
+			return $g2Config['id.anonymousUser'];
+		}
+		core::initiatedG2();
+		list($ret, $idArray) = GalleryEmbed::getExternalIdMap('externalId');
+		if ($ret){ 
+			return false;
+		}
+		return $idArray[$mamboId]['entityId'];
+	}
+	
+	
+	/**
+	 * Function will return mambo ids or id
+	 *
+	 * @param mixed $G2Id
+	 * @return false on error array with requesteded id(s)
+	 */
+	function getMamboId($G2Id=null){
+		list($ret, $idArray) = GalleryEmbed::getExternalIdMap('entityId');
+		if ($ret){ 
+			return false;
+		}
+		if($G2Id){
+			return $idArray[$G2Id]['externalId'];
+		} else {
+			return $idArray;
+		}
+	}
+
+	 /**
+	  * Will give a ordered list of albums
+	  *
+	  * @note ignore permissions by default by using admin id!
+	  *
+	  * Sort types that can be used: title, description, summary, key words,
+	  * parentname, creationdate, lastmodified, viewedsince, views, parentid,
+	  * ownerid
+	  *
+	  * @param string $sort default title
+	  * @param string $sortOrder ASC/DESC
+	  * @param boolean(true) for no cache or integer expire time
+	  * @param intger $depth
+	  * @param integer $itemId where to start the list
+	  * @return array($sortedIdlist, $info)
+	  */
+	 function getAlbumList($sort=false, $sortOrder='ASC', $userId=6, $depth=null, $itemId=null){
+    	list($tree, $info) = core::albumTree($depth=null, $itemId, $userId);
+    	$list = utility::arrayKeysRecursive($tree);
+    	unset($tree);
+    	$sort = $sort ? $sort : 'title';
+    	/* make a array to sort */
+    	$listToSort = array();
+    	foreach($list as $albumId){
+    		$listToSort[$albumId] = $info[$albumId][$sort]; 
+    	}
+    	unset($albumId, $sort);
+    	/* sort the list */
+    	if($sortOrder == 'ASC'){
+    		asort($listToSort);	
+    	} else {
+    		arsort($listToSort);
+    	}
+    	
+		$listToSort = array_keys($listToSort);
+		return array($listToSort, $info);
+     }
+     
+     /**
+      * Get all array keys, recursive
+      *
+      * @param array $array
+      * @return array
+      */
+     function arrayKeysRecursive($array){
+     	$keys = array();
+     	foreach($array as $key => $val){
+     		$keys[] = $key;
+     		if(is_array($val) && !empty($val)){
+     			$keys = array_merge($keys, utility::arrayKeysRecursive($val));	
+     		}	
+     	}
+     	return $keys;	
+     }
+     
+    /**
+	 * Confert size into human readable format
+	 *
+	 * @param integer $filesize
+	 * @return string
+	 */
+	function sizeToString($filesize)
+		{
+		   $array = array(
+			   'TB' => 1024 * 1024 * 1024 * 1024,
+			   'GB' => 1024 * 1024 * 1024,
+			   'MB' => 1024 * 1024,
+			   'KB' => 1024,
+		   );
+		   if($filesize <= 1024)
+		   {
+			   $filesize = $filesize . ' Bytes';
+		   }
+		   foreach($array AS $name => $size)
+		   {
+			   if($filesize > $size || $filesize == $size)
+			   {
+				   $filesize = round((round($filesize / $size * 100) / 100), 2) . ' ' . $name;
+			   }
+		   }
+		   return $filesize;
+		}
+		
+	 /**
+      * This function makes the tree flat but keeps depth info
+      *
+      * @param array
+      * @param integer
+      * @return array
+      */
+     function makeFlat($array, $depth=0){
+     	$keys = array();
+     	foreach($array as $key => $val){
+     		$keys[] = array($key, $depth);
+     		if(is_array($val) && !empty($val)){
+     			$keys = array_merge($keys, utility::makeFlat($val, $depth+1));	
+     		}	
+     	}
+     	return $keys;	
+     }
+}
+?>
