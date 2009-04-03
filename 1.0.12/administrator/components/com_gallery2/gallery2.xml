@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<mosinstall type="component" version="4.5">
+    <name>Gallery2</name>
+    <creationDate>15-Jan-2006</creationDate>
+    <author>Michiel Bijland</author>
+    <copyright>4 The Web</copyright>
+    <authorEmail></authorEmail>
+    <authorUrl>opensource.4theweb.nl</authorUrl>
+    <version>2.0.13</version>
+    <description>Gallery G2 Component For Joomla</description>
+    <files>
+    	<filename>index.html</filename>
+        <filename>gallery2.php</filename>
+        <filename>init.inc</filename>
+        <filename>init.php</filename>
+		<filename>version.php</filename>
+		<filename>pages/index.html</filename>
+        <filename>pages/footer.php</filename>
+		<filename>pages/main.php</filename>
+		<filename>pages/user.album.php</filename>
+		<filename>pages/sitemap.php</filename>
+		<filename>classes/index.html</filename>
+		<filename>classes/g2cache.class</filename>
+		<filename>classes/g2curl.class</filename>
+		<filename>classes/serverapi.class</filename>
+		<filename>classes/g2stats.class</filename>
+		<filename>classes/config.class</filename>
+		<filename>classes/core.class</filename>
+		<filename>classes/user.class</filename>
+		<filename>classes/group.class</filename>
+		<filename>classes/utility.class</filename>
+		<filename>classes/userAlbum.class</filename>
+		<filename>classes/siteMap.class</filename>
+		<filename>classes/userSync.class</filename>
+		<filename>classes/textMarkUp.class</filename>
+		<filename>cron/g2CronJob.php</filename>
+		<!-- protect cache files -->
+		<filename>cache/dbCache/long/index.html</filename>
+		<filename>cache/dbCache/short/index.html</filename>
+		<filename>cache/dbCache/index.html</filename>
+		<filename>cache/fileCache/index.html</filename>
+		<filename>cache/fileCache/expires/index.html</filename>
+		<filename>cache/fileCache/expires/long/index.html</filename>
+		<filename>cache/fileCache/expires/short/index.html</filename>
+		<filename>cache/fileCache/lastChanged/index.html</filename>	
+    </files>
+    <install>
+    </install>
+    <installfile>
+        <filename>install.gallery2.php</filename>
+    </installfile>
+    <uninstall>
+    </uninstall>
+    <administration>
+        <menu>Gallery2</menu>
+	   <submenu>
+		<menu act="conf">Config</menu>
+		<menu act="user">User Management</menu>
+		<menu act="album">Album Management</menu>
+		<menu act="help">about and Help</menu>
+	    </submenu>
+        <files>
+        	<filename>index.html</filename>
+            <filename>admin.gallery2.php</filename>
+	    	<filename>admin.gallery2.html.php</filename>
+            <filename>toolbar.gallery2.php</filename>
+            <filename>language/index.html</filename>
+	    	<filename>language/english.php</filename>
+	    	<filename>adminpages/index.html</filename>
+	    	<filename>adminpages/album.manager.php</filename>
+	    	<filename>adminpages/album.manager.html.php</filename>
+	    	<filename>adminpages/config.php</filename>
+	    	<filename>adminpages/config.html.php</filename>
+	    	<filename>adminpages/tools.php</filename>
+	    	<filename>adminpages/user.manager.html.php</filename>
+	    	<filename>adminpages/user.manager.php</filename>
+        </files>
+        <images>
+        	<filename>images/index.html</filename>
+        	<filename>images/logo-228x67.png</filename>
+			<filename>images/foto.png</filename>
+			<filename>images/tools.png</filename>
+			<filename>images/reload.png</filename>
+			<filename>images/reload_f2.png</filename>
+        </images>
+    </administration>
+</mosinstall>

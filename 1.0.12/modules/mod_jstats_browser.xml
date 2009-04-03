@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<mosinstall type="module">
+    <name>JoomlaStats Browser statistics</name>
+    <creationDate>2006.04.25</creationDate>
+    <author>Patrick Diender & RoBo</author>
+    <copyright>This template is released under the GNU/GPL License</copyright>
+    <authorEmail>info@JoomlaStats.org</authorEmail>
+    <authorUrl>http://www.JoomlaStats.org</authorUrl>
+    <version>2.1</version>
+    <description>JoomlaStats Browser Statistics</description>
+     <files>
+         <filename module="mod_jstats_browser">mod_jstats_browser.php</filename>
+     </files>
+	 <params>
+	 	<param name="visitors" type="list" default="" label="show browser statistics for" description="with this option you can choose for what periode to show browser statistics for">
+		<option value="">total</option>
+		<option value="today">today</option>
+		<option value="thisweek">this week</option>
+		<option value="thismonth">this month</option>
+		</param>
+	 	<param name="top" type="list" default="" label="number of items" description="with this option you can choose the number of items in the list">
+		<option value="5">5</option>
+		<option value="10">10</option>
+		<option value="15">15</option>
+		<option value="20">20</option>
+		<option value="25">25</option>
+		</param>
+	 </params>
+</mosinstall>

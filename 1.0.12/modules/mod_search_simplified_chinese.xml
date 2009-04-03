@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Search Module</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>这个模块将会显示搜索对话框</description>
+	<files>
+		<filename module="mod_search">mod_search.php</filename>
+	</files>
+	<params>
+		<param name="moduleclass_sfx" type="text" default="" label="模块CSS字尾" description="一个应用于模块CSS的字尾(table.moduletable)，可以让这页面有独立风格" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="cache" type="radio" default="0" label="开启CACHE" description="选择是否要为这个模块的内容开启CACHE">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="set_itemid" type="text" default="" label="设定Itemid" description="允许设定Itemid连到搜索链接去" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="width" type="text" default="20" label="对话框宽度" description="搜索文字对话框的宽度" />
+		<param name="text" type="text" default="" label="文字" description="搜索文字对话框中显示的文字，不输入任何文字会载入在您语言文件中的_SEARCH_BOX" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="button" type="radio" default="" label="搜索按钮" description="显示搜索按钮">
+			<option value="">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="button_pos" type="list" default="right" label="按钮位置" description="按钮相对于搜索对话框的位置">
+			<option value="right">右</option>
+			<option value="left">左</option>
+			<option value="top">上</option>
+			<option value="bottom">下</option>
+		</param>
+		<param name="button_text" type="text" default="" label="按钮文字" description="显示于按钮上的文字，不输入任何文字会载入您语言文件中的_SEARCH_TITLE" />
+	</params>
+</mosinstall>

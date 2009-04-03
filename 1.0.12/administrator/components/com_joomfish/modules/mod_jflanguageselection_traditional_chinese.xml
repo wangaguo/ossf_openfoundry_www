@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mosinstall type="module" version="1.0.x">
+	<name>JoomFish language selection</name>
+	<creationDate>2006-05-03</creationDate>
+	<copyright>2003 - 2006, Think Network GmbH, Munich</copyright>
+	<license>Think Network, Open Source License</license>
+	<author>Think Network</author>
+	<authorEmail>JoomFish@ThinkMatrix.net</authorEmail>
+	<authorUrl>http://www.joomfish.net</authorUrl>
+	<version>1.7</version>
+	<description>這個模組將在您的網站置入一個語言選擇列</description>
+
+	<files>
+		<filename module="mod_jflanguageselection">mod_jflanguageselection.php</filename>
+		<filename>mod_jflanguageselection.css</filename>
+	</files>
+		<params>
+			<param name="inc_jf_css" type="radio" default="1" label="使用 Joom!Fish 的 CSS" description="選擇模組是否要使用 Joom!Fish 的 CSS.">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>
+			<param name="moduleclass_sfx" type="text" default="" label="模組CSS字尾" description="一個應用於模組CSS的字尾(table.moduletable)，可以讓這頁面有獨立風格" />
+			<param name="@spacer" type="spacer" default="" label="" description="" />
+			<param name="cache" type="radio" default="0" label="使用快取" description="選擇是否要快取這個模組的內容">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>
+			<param name="type" type="list" default="dropdown" label="語言選擇列顯示模式" description="選擇語言選擇列要使用何種方式顯示.">
+					<option value="dropdown">下拉式(國別名稱)</option>
+			    	<option value="names">項目清單 (國別名稱)</option>
+			    	<option value="images">項目清單 (國別圖示)</option>
+			</param>
+			<param name="spacer" type="text" default=" | " label="國別名稱間隔號" description="設定語言清單之間的間隔符號" />
+			<param name="show_acitve" type="radio" default="1" label="顯示執行中的語系" description="選擇目前正在使用中的語系是否不顯示">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</param>
+		</params>
+</mosinstall>

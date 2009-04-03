@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<joomfish type="contentelement">
+  <name>分類</name>
+  <author>A. Kempkens</author>
+  <version>1.7</version>
+  <description>定義核心程式的分類管理內容</description>
+  <reference>
+  	<table name="categories">
+  		<field type="referenceid" name="id" translate="0">ID</field>
+  		<field type="titletext" name="title" translate="1">分類標題</field>
+  		<field type="text" name="name" translate="1">分類名稱</field>
+  		<field type="htmltext" name="description" translate="1">敘述</field>
+  		<field type="checked_out_by" name="checked_out" translate="0">檢視人</field>
+  		<field type="checked_out_date" name="checked_out_time" translate="0">檢視日期</field>
+  	</table>
+  </reference>
+</joomfish>

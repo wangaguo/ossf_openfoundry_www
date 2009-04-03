@@ -1,0 +1,311 @@
+<?php
+defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+core::initiatedG2();
+/**
+ * This is the core class for com_gallery2 component.
+ *
+ * @package com_gallery2
+ * @subpackage Classes
+ */
+class userAlbum{
+
+	/**
+	 * Will return all text strings for user album creation
+	 *
+	 * @return array
+	 */
+	function getAlbumStrings(){
+		global $g2Config, $my;
+		$return = array();
+		
+		$return['name'] = trim(trim($g2Config['userAlbumName']).$my->username); 
+		$return['title'] = trim(userAlbum::replaceTags($g2Config['userAlbumTitle']));
+		$return['summary'] = trim(userAlbum::replaceTags($g2Config['userAlbumSummary']));
+		$return['keywords'] = trim(userAlbum::replaceTags($g2Config['userAlbumKeywords']));
+		$return['description'] = trim(userAlbum::replaceTags($g2Config['userAlbumDescription']));
+		
+		return $return; 
+	}
+	/**
+	 * Replace the Tags given in admin section by there user values
+	 *
+	 * @param string
+	 * @return string
+	 */
+	function replaceTags($string){
+		global $my;
+		$my->load($my->id);
+		/* all tags below here */
+		$string = str_replace('%username%', $my->username, $string);
+		$string = str_replace('%fullname%', trim($my->name), $string);
+		$string = str_replace('%fullnamesplit%', str_replace(' ', ', ', trim($my->name)), $string);
+			
+		return $string;
+	}
+	
+	/**
+	 * Check if cookie exists and is set.
+	 *
+	 * @return boolean
+	 */
+	function isCookieSet(){
+		global $my;
+		if(isset($_COOKIE["albumreminder_$my->id"]) AND $_COOKIE["albumreminder_$my->id"] ==1){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Sets a user cookie
+	 *
+	 * @param integer $timeFrame
+	 * @return boolean
+	 */
+	function setCookie($timeFrame){
+		global $my;
+		$ret = 	setcookie("albumreminder_$my->id", '1', time()+$timeFrame);
+		if($ret){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Gets the user Album id or return false if he hasn't got one.
+	 *
+	 * @return mixed(integer userAlbumid or false)
+	 */
+	function getUserAlbumId(){
+		global $my, $g2Config, $database;
+		/* first check database map */
+		$query = "SELECT `albumid` FROM `#__gallery2_useralbum` WHERE `userid` = '$my->id'";
+		$database->setQuery($query);
+		$albumId = $database->loadResult();
+		
+		if(!$albumId){
+			core::initiatedG2();
+			$g2Config['rootuseralbum'] = empty($g2Config['rootuseralbum']) ? $g2Config['id.rootAlbum'] : $g2Config['rootuseralbum'];
+			list (, $rootalbum) = GalleryCoreApi::loadEntitiesById($g2Config['rootuseralbum']);
+			list ($ret, $childIds) = GalleryCoreApi::fetchChildAlbumItemIds($rootalbum);
+			if(!empty($childIds)){
+				list ($ret, $items) = GalleryCoreApi::loadEntitiesById($childIds);
+				core::classRequireOnce('user');
+				$g2UserId = user::mamboIdToGalleryId($my->id);
+				foreach ($items as $child){
+					if($child->getOwnerid() == $g2UserId){
+						$userId = intval($my->id);
+						$albumId = intval($child->getId());
+						$database->setQuery("INSERT INTO `#__gallery2_useralbum` VALUES ('$userId', '$albumId')");
+						$database->Query();
+						return $albumId;
+					}
+				}
+			}
+		} else {
+			list ($ret, $rootalbum) = GalleryCoreApi::loadEntitiesById($albumId);
+			if ($ret) {
+				/* problem mapped but no album with that id */
+				$query = "DELETE FROM `#__gallery2_useralbum` WHERE `userid` = '$my->id'";
+				$database->setQuery($query);
+				$database->query();
+				return false;
+			}
+			return $albumId;
+		}
+		return false;
+	}
+	
+	/**
+	 * Will create a user album for current user.
+	 *
+	 * @param integer $parentAlbumId
+	 * @return boolean
+	 */
+	function createUserAlbum($parentAlbumId){
+		global $my, $g2Config;
+		core::classRequireOnce('user');
+		$g2UserId = user::mamboIdToGalleryId($my->id);
+		$albumData = userAlbum::getALbumStrings();
+		list ($ret, $core) = GalleryCoreApi::fetchAllPluginParameters('module', 'core');
+		if ($ret) {
+	    	return array(false, 'Failed to load core plugin');
+		}
+		list ($ret, $album) = GalleryCoreApi::createAlbum($parentAlbumId, 	$albumData['name'],
+																		 	$albumData['title'], 
+																		 	$albumData['summary'], 
+																			$albumData['description'],
+																			$albumData['keywords']);
+        if ($ret){
+			return array(false, 'Failed to create The Album!');
+		}
+		
+		$albumId = $album->getId();
+		
+		list ($ret, $lockId) = GalleryCoreApi::acquireWriteLock($albumId);
+		if ($ret) {
+			GalleryCoreApi::deleteEntityById($albumId);
+	   		return array(false, 'Failed to get write lock!');
+		}
+		/* Set owner.. */
+		$album->setOwnerId($g2UserId);
+		$ret = $album->save();
+		if ($ret) {
+		    GalleryCoreApi::releaseLocks($lockId);
+		    GalleryCoreApi::deleteEntityById($albumId);
+			return array(false, 'Failed to Set Owner');
+		}
+		
+		/* Set permissions album, first clear.*/
+		$ret = GalleryCoreApi::removeItemPermissions($albumId);
+		if ($ret) {
+		    GalleryCoreApi::releaseLocks($lockId);
+		    GalleryCoreApi::deleteEntityById($albumId);
+		    return array(false, 'Failed to remove permissions');
+		}
+		
+		/* add admin permissions */
+		$ret = GalleryCoreApi::addGroupPermission($albumId, $g2Config['id.adminGroup'], 'core.all');
+		if ($ret) {
+		    GalleryCoreApi::releaseLocks($lockId);
+		    GalleryCoreApi::deleteEntityById($albumId);
+		    return array(false, 'Failed to add admin permissions!');
+		}
+		
+		/* owner */
+		$permissions = array();
+		$permissions['view'] = $g2Config['userAlbumView']['owner'];
+		$permissions['comment'] = $g2Config['userAlbumComment']['owner'];
+		$permissions['extra'] = $g2Config['userAlbumExtra']['owner'];
+		foreach($permissions as $type => $dataArray){
+			if(is_null($dataArray) || is_null($dataArray[0])){
+				continue;
+			}
+			foreach($dataArray as $permission){
+				$ret = GalleryCoreApi::addUserPermission($albumId, $g2UserId, $permission);
+				if ($ret) {
+				   	GalleryCoreApi::releaseLocks($lockId);
+				   	GalleryCoreApi::deleteEntityById($albumId);
+				   	return array(false, 'Failed on add owner permission type: '.$type);
+				}					
+			}
+		}
+		
+		/* groups */
+		core::classRequireOnce('group');
+		$groups = group::getGroupsByUsername();
+		
+		foreach($groups as $groupId => $groupName){
+			$permissions = array();
+			$permissions['view'] = $g2Config['userAlbumView'][$groupId];
+			$permissions['comment'] = $g2Config['userAlbumComment'][$groupId];
+			$permissions['extra'] = $g2Config['userAlbumExtra'][$groupId];
+			if(is_array($permissions['extra']) && in_array('core.all', $permissions['extra'])){
+				/* admin access, skip the rest */
+				$ret = GalleryCoreApi::addGroupPermission($albumId, $groupId, 'core.all');
+				if ($ret) {
+					GalleryCoreApi::releaseLocks($lockId);
+					GalleryCoreApi::deleteEntityById($albumId);
+					return array(false, 'Failed on group: '.$groupName.' permission Type: Admin permissions');
+				}
+			} else {
+				foreach($permissions as $type => $dataArray){
+					if(is_null($dataArray) || is_null($dataArray[0])){
+						continue;
+					}
+					
+					if(in_array('comment.all', $dataArray) || in_array('core.viewAll', $dataArray)){
+						if($type == 'comment'){
+							$dataArray = array('comment.all');
+						} else {
+							$dataArray = array('core.viewAll');
+						}
+					}
+					
+					foreach($dataArray as $permission){
+						$ret = GalleryCoreApi::addGroupPermission($albumId, $groupId, $permission);
+						if ($ret) {
+					   		GalleryCoreApi::releaseLocks($lockId);
+					   		GalleryCoreApi::deleteEntityById($albumId);
+					    	return array(false, 'Failed on group: '.$groupName.' permission Type: '.$type);
+						}					
+					}
+				}
+			}
+		}
+		
+		/* release lock */
+		$ret = GalleryCoreApi::releaseLocks($lockId);
+		if ($ret) {
+			GalleryCoreApi::deleteEntityById($albumId);
+			return array(false, 'Failed to release write lock!');
+		}
+		
+		/* store info in user album map */
+		global $database;
+		$userId = intval($my->id);
+		$albumId = intval($albumId);
+		$database->setQuery("INSERT INTO `#__gallery2_useralbum` VALUES ('$userId', '$albumId')");
+		$database->Query();
+		
+		return array(true, '');
+	}
+	
+	/**
+	 * Makes a Multiple select list
+	 *
+	 * @param integer $groupId
+	 * @param string $type
+	 * @param string $prefix
+	 * @return string
+	 */
+	function createSelectList($groupId, $type, $prefix = 'userAlbum'){
+		global $g2Config;
+		$type = ucfirst($type);
+		
+		switch($type){
+			case 'Comment':
+				$select = array();
+				//$select[] = mosHTML::makeOption('none', _G2_PER_NONE);
+			   	$select[] = mosHTML::makeOption('comment.view', _G2_PER_COM_VIEW);
+			    $select[] = mosHTML::makeOption('comment.add', _G2_PER_COM_ADD);
+			    $select[] = mosHTML::makeOption('comment.edit', _G2_PER_COM_EDIT);
+			    $select[] = mosHTML::makeOption('comment.delete', _G2_PER_COM_DEL);
+			    $select[] = mosHTML::makeOption('comment.all', _G2_PER_COM_ALL);			
+			break;
+			case 'View';
+		    	$select = array();
+		    	//$select[] = mosHTML::makeOption('none', _G2_PER_NONE);
+		    	$select[] = mosHTML::makeOption('core.view', _G2_PER_VIEW);
+		    	$select[] = mosHTML::makeOption('core.viewResizes', _G2_PER_RESIZE);
+		    	$select[] = mosHTML::makeOption('core.viewSource', _G2_PER_SOURCE);
+		    	$select[] = mosHTML::makeOption('core.viewAll', _G2_PER_VIEWALL);
+			break;
+			case 'Extra':
+		    	$select = array();
+		    	//$select[] = mosHTML::makeOption('none', _G2_PER_NONE);
+		    	$select[] = mosHTML::makeOption('core.addDataItem', _G2_PER_ITEM);
+		    	$select[] = mosHTML::makeOption('core.addAlbumItem', _G2_PER_ALBUM);
+		    	$select[] = mosHTML::makeOption('core.edit', _G2_PER_EDIT);
+		    	$select[] = mosHTML::makeOption('core.changePermissions', _G2_PER_PER);
+		    	$select[] = mosHTML::makeOption('core.delete', _G2_PER_DEL);
+		    	$select[] = mosHTML::makeOption('core.all', _G2_PER_ADMIN);			
+			break;
+		}
+		$count = min(count($select), 4);
+		$name = $prefix.$type.'['.$groupId.'][]';
+		$extra = 'class="inputbox  size="'.$count.' multiple="true"';
+		
+		$selected = array();
+		if(is_array($g2Config[$prefix.$type][$groupId])){
+			foreach($g2Config[$prefix.$type][$groupId] as $val){
+				$selected[] = mosHTML::makeOPTION($val);
+			}
+		}
+		
+		$ret = mosHTML::selectList($select, $name, $extra, 'value', 'text', $selected);
+		
+		return $ret;
+	}
+}
+?>

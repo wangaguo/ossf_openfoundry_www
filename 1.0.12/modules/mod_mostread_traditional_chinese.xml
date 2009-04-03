@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Most Read Content</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>這個模組顯示目前被觀看最多次數的發佈項目，這是決定於被觀看的頁面次數。</description>
+	<files>
+		<filename module="mod_mostread">mod_mostread.php</filename>
+	</files>
+	<params>
+		<param name="moduleclass_sfx" type="text" default="" label="模組CSS字尾" description="一個應用於模組CSS的字尾(table.moduletable)，可以讓這頁面有獨立風格" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="cache" type="radio" default="0" label="開啟快取" description="選擇是否要快取這個模組的內容">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="type" type="list" default="0" label="模組模式" description="允許您控制在這個模組裡顯示的內容類型">
+			<option value="1">只有內容項目</option>
+			<option value="2">只有靜態內容</option>
+			<option value="3">以上兩者都有</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="show_front" type="radio" default="1" label="首頁項目" description="顯示/隱藏指定於首頁的項目 - 只有在只有內容項目的模組模式中才有作用">
+			<option value="1">顯示</option>
+			<option value="0">隱藏</option>
+		</param>
+			<param name="count" type="text" default="5" label="數目" description="要顯示的項目數目 (預設為5)" />
+				<param name="catid" type="text" default="" label="分類ID" description="顯示從某特定的分類中的選出的項目 (要指定多個分類，請用逗號分隔 , )." />
+		<param name="secid" type="text" default="" label="單元ID" description="顯示從某特定的單元中的選出的項目 (要指定多個單元，請用逗號分隔 , )." />
+	</params>
+</mosinstall>

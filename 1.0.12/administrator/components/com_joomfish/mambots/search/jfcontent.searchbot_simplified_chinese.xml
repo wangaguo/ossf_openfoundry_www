@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mosinstall version="4.5.1" type="mambot" group="search">
+	<name>multi lingual content searchbot</name>
+	<license>Think Network, Open Source License</license>
+	<author>Think Network GmbH, Munich - Alex Kempkens</author>
+	<authorEmail>JoomFish@ThinkMatrix.net</authorEmail>
+	<authorUrl>http://www.joomfish.net</authorUrl>
+	<creationDate>2006-05-03</creationDate>
+	<copyright>2003 - 2006, Think Network GmbH, Munich</copyright>
+	<version>1.7</version>
+	<description>允许文字搜寻器也可以针对多国语系的内容项目进行搜寻</description>
+	<files>
+		<filename mambot="jfcontent.searchbot">jfcontent.searchbot.php</filename>
+	</files>
+	<params>
+		<param name="search_limit" type="text" size="5" default="50" label="搜寻限制" description="搜寻项目报告的数量"/>		
+		<param name="nonmenu" type="radio" default="1" label="未加入选单中的静态内容" description="搜寻未加入选单项目连结的静态内容?">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+		<param name="active_language_only" type="radio" default="0" label="只搜寻运作中的语系" description="只针对运作中的语系进行搜寻?">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+	</params>
+</mosinstall>

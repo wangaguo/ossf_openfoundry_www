@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="menu" version="1.0.0">
+	<name>部落格風格 - 內容分類封存</name>
+	<group>Content</group>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>顯示特定分類中已封存的內容項目的列表</description>
+	<params>
+			<param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default="" label="選單圖片" description="一個放在您選單項目左邊或右邊的小圖示，圖片必須位於images/stories/" />
+		<param name="pageclass_sfx" type="text" size="20" default="" label="頁面CSS字尾" description="一個應用於頁面CSS的字尾，可以讓這頁面有獨立風格" />
+		<param name="back_button" type="list" default="" label="返回按鈕" description="顯示/隱藏返回按鈕，這個可以讓您返回上一個觀看的頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="header" type="text" size="30" default="" label="頁面標題" description="顯示於頁面最上方的文字，如果空白則會使用選單名稱" />
+		<param name="page_title" type="radio" default="1" label="頁面標題" description="顯示/隱藏頁面標題">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+	<param name="leading" type="text" size="3" default="1" label="頭條文章(數目)" description="要有多少數目的文章顯示於頭條文章區(全寬度)。0表示沒有項目會被顯示成頭條文章。" />
+		<param name="intro" type="text" size="3" default="4" label="摘要文章(數目)" description="要有多少數目的文章摘要顯示於。" />
+		<param name="columns" type="text" size="3" default="2" label="欄數" description="當顯示摘要文章時，每一列要分為多少欄。" />
+		<param name="link" type="text" size="3" default="4" label="文章連結(數目)" description="要顯示多少數目的文章項目連結。" />
+		<param name="orderby" type="list" default="" label="排列順序" description="這個將會覆蓋項目的排序">
+			<option value="">預設</option>
+	    	<option value="date">最舊的在前</option>
+			<option value="rdate">最新的在前</option>
+			<option value="alpha">標題的字母由小至大</option>
+			<option value="ralpha">標題的字母由大至小</option>
+			<option value="author">作者字母由小至大</option>
+			<option value="rauthor">作者字母由大至小</option>
+			<option value="hits">最多點閱次數在前</option>
+			<option value="rhits">最少點閱次數在前</option>
+			<option value="order">排序</option>
+		</param>
+		<param name="pagination" type="list" default="2" label="分頁瀏覽" description="顯示/隱藏分頁瀏覽支援">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+			<option value="2">自動</option>
+		</param>
+		<param name="pagination_results" type="radio" default="1" label="分頁結果" description="顯示/隱藏分頁結果 ( 例如 1-4 總共 4 )">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="image" type="radio" default="1" label="MOSImages" description="顯示{mosimages}.">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="section" type="radio" default="0" label="單元名稱" description="顯示/隱藏項目所屬的單元名稱">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="section_link" type="list" default="0" label="單元名稱可被連結" description="讓單元的名稱變為可以連結到這個單元頁面的連結">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+	<param name="item_title" type="radio" default="1" label="文章項目標題" description="顯示/隱藏文章項目標題">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="link_titles" type="list" default="" label="文章標題可被連結" description="讓文章標題可被連結">
+			<option value="">使用全域</option>
+			<option value="0">是</option>
+			<option value="1">否</option>
+		</param>
+		<param name="readmore" type="list" default="" label="詳細內容連結" description="顯示/隱藏詳細內容連結">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="rating" type="list" default="" label="項目評價" description="顯示/隱藏項目評價 - 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="author" type="list" default="" label="作者名稱" description="顯示/隱藏作者名稱 - 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="createdate" type="list" default="" label="建立日期時間" description="顯示/隱藏項目建立日期時間 - 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="modifydate" type="list" default="" label="修改日期時間" description="顯示/隱藏項目修改日期時間 - 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="pdf" type="list" default="" label="PDF圖示" description="顯示/隱藏項目pdf產生按鈕- 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="print" type="list" default="" label="列印圖示" description="顯示/隱藏項目列印按鈕 - 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="email" type="list" default="" label="Email圖示" description="顯示/隱藏Email按鈕 - 只會影響這個頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+	</params>
+</mosinstall>

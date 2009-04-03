@@ -1,0 +1,147 @@
+/**
+ * eventCal
+ *
+ * eventCal Mini Module
+ *
+ * @package		mod_eventcal_mini
+ * @author		Kay Messerschmidt
+ * @author		Kyopi Vintage - http://forge.joomla.org/sf/go/post13405
+ * @copyright	Copyright (C) 2006 Kay Messerschmidt. All rights reserved.
+ * @license		http://www.gnu.org/copyleft/gpl.html GNU/GPL
+ * @link		http://forge.joomla.org/sf/projects/eventcal
+ */
+
+/*
+ * This are the standard eventCal Mini CSS definitions. If you want to specify CSS definitions in your template,
+ * just change the Module Class Suffix of the module in your Joomla! admin interface for the specific module,
+ * and put the desired definitions in your template. No need to hardcode anything in this module ;-)
+ */
+
+.moduletable table.eventcal_mini {
+	table-layout: fixed;
+}
+
+.moduletable table.eventcal_mini td.month:hover {
+	background-color:#FFFFFF;
+}
+
+.moduletable table.eventcal_mini td {
+	text-align: center;
+	border: solid 1px #BBBBBB;
+}
+
+.moduletable table.eventcal_mini td.header {
+	border: none;
+	text-align: center;
+	font-weight: bold;
+}
+
+.moduletable table.eventcal_mini td.empty {
+	border: dotted 1px #BBBBBB;
+}
+
+.moduletable table.eventcal_mini td.active {
+	background-color: #BFBFBF;
+}
+
+.moduletable table.eventcal_mini td a {
+	font-weight: normal;
+}
+
+.moduletable table.eventcal_mini td.today a {
+	font-weight: bold;
+}
+
+
+/*
+ * Extended CSS definitions by Kyopi Vintage - http://forge.joomla.org/sf/go/post13405
+ * To enable them, just set the Module Class Suffix to "_xtd".
+ */
+.moduletable table.eventcal_mini_xtd {
+	text-align: center;
+	width: 100%;
+	background-color: #FCFCFC;
+	font-family: Verdana, Tahoma, Arial, sans-serif;
+	table-layout: fixed;
+}
+
+.moduletable table.eventcal_mini_xtd td.header {
+	text-align: center;
+	font-size: 8px;
+	font-weight: bold;
+	font-family: Tahoma, Arial, sans-serif;
+	color: #FF8C00;
+	background: none;
+	text-indent: 0px;
+	height: 14px;
+	line-height: 14px;
+	padding: 0px;
+	margin: 0px;
+	letter-spacing: 0px;
+	border-bottom: 1px solid #EEEEEE;
+	border-top: 1px solid #EEEEEE;
+}
+
+.moduletable table.eventcal_mini_xtd td {
+	text-align: center;
+	font-size: 11px;
+	font-weight: normal;
+	color: #666666;
+	background: none;
+	text-indent: 0px;
+	height: 16px;
+	line-height: 16px;
+	padding: 0px;
+	margin: 0px;
+	letter-spacing: 0px;
+	border: solid 1px #FCFCFC;
+	background-color: #FCFCFC;
+}
+
+.moduletable table.eventcal_mini_xtd td.month:hover {
+	border: solid 1px #D6ECFF;
+	background-color: #D6ECFF;
+}
+
+.moduletable table.eventcal_mini_xtd td a:link,
+.moduletable table.eventcal_mini_xtd td a:visited {
+	font-size: 11px;
+	font-weight: normal;
+	color: #666666;
+}
+
+.moduletable table.eventcal_mini_xtd td.today {
+	text-align: center;
+	border: solid 1px #D6ECFF;
+	background-color: #F0F8FF;
+}
+
+.moduletable table.eventcal_mini_xtd td.today:hover {
+	border: solid 1px #D6ECFF;
+	background-color: #D6ECFF;
+}
+
+.moduletable table.eventcal_mini_xtd td.today a:link,
+.moduletable table.eventcal_mini_xtd td.today a:visited {
+}
+
+.moduletable table.eventcal_mini_xtd td.month {
+	text-align: center;
+}
+
+.moduletable table.eventcal_mini_xtd td.empty {
+}
+
+.moduletable table.eventcal_mini_xtd td.active a {
+	color: #FF8C00;
+}
+
+.moduletable table.eventcal_mini_xtd td.active a:hover {
+	color: #FF8C00;
+	font-weight: bold;
+}
+
+.moduletable table.eventcal_mini_xtd td.active:hover {
+	border: solid 1px #FFE4B5;
+	background-color: #FFF8DC;
+}

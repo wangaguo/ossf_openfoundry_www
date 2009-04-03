@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<joomfish type="contentelement">
+  <name>模组</name>
+  <author>A. Kempkens</author>
+  <version>1.7</version>
+  <description>定义一般的模组管理</description>
+  <reference>
+  	<table name="modules">
+  		<field type="referenceid" name="id" translate="0">ID</field>
+  		<field type="titletext" name="title" translate="1">标题</field>
+  		<field type="htmltext" name="content" translate="1">内容</field>
+  		<field type="checked_out_by" name="checked_out" translate="0">检视人</field>
+  		<field type="checked_out_date" name="checked_out_time" translate="0">检视日期</field>
+  	</table>
+  </reference>
+    <translationfilters>
+  	  <module>access</module>
+    </translationfilters>
+
+</joomfish>

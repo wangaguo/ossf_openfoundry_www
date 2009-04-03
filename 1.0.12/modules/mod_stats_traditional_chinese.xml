@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Statistics</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>統計模組顯示有關您的伺服中的安裝、網站的會員、資料庫中的文章數目、以及您提供網站連結的數目。</description>
+	<files>
+		<filename module="mod_stats">mod_stats.php</filename>
+	</files>
+	<params>
+		<param name="serverinfo" type="radio" default="0" label="伺服器資訊" description="顯示伺服器資訊">
+			<option value="1">是</option>
+			<option value="0">否</option>
+		</param>
+		<param name="siteinfo" type="radio" default="0" label="網站資訊" description="顯示網站資訊">
+			<option value="1">是</option>
+			<option value="0">否</option>
+		</param>
+		<param name="counter" type="radio" default="0" label="點擊計數器" description="顯示點擊計數器">
+			<option value="1">是</option>
+			<option value="0">否</option>
+		</param>
+		<param name="increase" type="text" default="0" label="計數器開始於" description="輸入計數器開始計數的數字" />
+		<param name="moduleclass_sfx" type="text" default="" label="模組CSS字尾" description="一個應用於模組CSS的字尾(table.moduletable)，可以讓這頁面有獨立風格" />
+	</params>
+</mosinstall>

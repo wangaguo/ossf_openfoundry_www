@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Main Menu</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>顯示選單</description>
+	<files>
+		<filename module="mod_mainmenu">mod_mainmenu.php</filename>
+	</files>
+		<params>
+		<param name="class_sfx" type="text" default="" label="選單CSS字尾" description="一個應用於選單項目的CSS字尾" />
+	    <param name="moduleclass_sfx" type="text" default="" label="模組CSS字尾" description="一個應用於模組CSS的字尾(table.moduletable)，可以讓這頁面有獨立風格" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="menutype" type="mos_menu" default="" label="選單名稱" description="選單的名稱（預設是`mainmenu`）" />
+		<param name="menu_style" type="list" default="vert_indent" label="選單風格" description="選單的風格">
+			<option value="vert_indent">垂直的</option>
+			<option value="horiz_flat">水平的</option>
+			<option value="list_flat">平面清單</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="full_active_id" type="radio" default="0" label="啟動高亮度標記" description="啟動對目前的選單項目的高亮度標記，包含`連結 - 元件項目`及`連結 - 網址`，超過一個以上的項目使用，可能會失去XHTML的相容性">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>		
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+
+		<param name="cache" type="radio" default="0" label="開啟快取" description="選擇是否要快取這個模組的內容">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="menu_images" type="radio" default="0" label="顯示選單圖示" description="顯示您選擇給選單項目的選單圖示">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="menu_images_align" type="radio" default="0" label="選單圖示對齊" description="選單圖示的對齊方式">
+			<option value="0">左</option>
+			<option value="1">右</option>
+		</param>
+		<param name="expand_menu" type="radio" default="0" label="展開選單" description="展開選單讓其中的子選單一直被看得到">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="activate_parent" type="radio" default="0" label="啟動父選單" description="設定啟動id也有影響所有在樹狀中的父選單">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="indent_image" type="list" default="0" label="項目圖片" description="選擇要使用的項目圖片">
+			<option value="0">佈景主題中</option>
+			<option value="1">Joomla!預設的圖片</option>
+			<option value="2">使用以下的參數值</option>
+			<option value="3">不使用</option>
+		</param>
+		<param name="indent_image1" type="imagelist" directory="/images/M_images" default="" label="項目圖片1" description="給子選單層級1使用的圖片" />
+		<param name="indent_image2" type="imagelist" directory="/images/M_images" default="" label="項目圖片2" description="給子選單層級2使用的圖片" />
+		<param name="indent_image3" type="imagelist" directory="/images/M_images" default="" label="項目圖片3" description="給子選單層級3使用的圖片" />
+		<param name="indent_image4" type="imagelist" directory="/images/M_images" default="" label="項目圖片4" description="給子選單層級4使用的圖片" />
+		<param name="indent_image5" type="imagelist" directory="/images/M_images" default="" label="項目圖片5" description="給子選單層級5使用的圖片" />
+		<param name="indent_image6" type="imagelist" directory="/images/M_images" default="" label="項目圖片6" description="給子選單層級6使用的圖片" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="spacer" type="text" default="" size="5" label="分隔線" description="針對水平選單使用的分隔線" />
+		<param name="end_spacer" type="text" default="" size="5" label="結尾分隔線" description="針對水平選單使用的結尾分隔線" />
+	</params>
+</mosinstall>

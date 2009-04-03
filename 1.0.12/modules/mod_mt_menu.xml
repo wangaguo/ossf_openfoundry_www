@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall type="module">
+	<name>Directory Menu</name>
+	<author>Mosets Consulting</author>
+	<creationDate>May 2006</creationDate>
+	<copyright>(C) 2005 Mosets Consulting http://www.mosets.com/</copyright>
+	<authorEmail>mtree@mosets.com</authorEmail>
+	<authorUrl>www.mosets.com</authorUrl>
+	<version>1.58</version>
+	<description>Mambo Tree Menu display links used by the component.</description>
+	<files>
+		<filename module="mod_mt_menu">mod_mt_menu.php</filename>
+	</files>
+	<params>
+		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />
+		<param name="linksclass" type="text" default="mainlevel" label="Links Class" />
+		<param name="limit_toplist" type="radio" default="0" label="Limit Top List current category" description="If this is enabled, all the top list's links will show top listings from the current category and it's sub-categories only. Setting this 'No' will show top listings from the entire directory.">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+		<param name="show_home" type="radio" default="0" label="Home" description="Show/Hide the 'Home' link">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="show_browse" type="radio" default="1" label="Browse" description="Show/Hide the 'Browse' link">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="show_addlisting" type="radio" default="1" label="Add Listing" description="Show/Hide the 'Add Listing' link">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="show_addcategory" type="radio" default="1" label="Add Category" description="Show/Hide the 'Add Category' link">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="show_mylisting" type="radio" default="1" label="My Listing" description="Show/Hide the 'My Listing' link">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="show_newlisting" type="radio" default="1" label="New Listing" description="Show/Hide the 'New Listing' link">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="show_featuredlisting" type="radio" default="1" label="Featured Listing" description="Show/Hide the 'Featured Listing' link">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="show_popularlisting" type="radio" default="1" label="Popular Listing" description="Show/Hide the 'Popular Listing' link">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="show_mostratedlisting" type="radio" default="1" label="Most Rated Listing" description="Show/Hide the 'Most Rated Listing' link">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="show_topratedlisting" type="radio" default="1" label="Top Rated Listing" description="Show/Hide the 'Top Rated Listing' link">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="show_mostreviewedlisting" type="radio" default="1" label="Most Reviewed Listing" description="Show/Hide the 'Most Reviewed' link">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+
+		<param name="@spacer" type="spacer" default="" label="" />
+
+		<param name="show_addlisting_force" type="radio" default="0" label="Show Add Listing in non-directory pages" description="By default, 'Add Listing' will be hidden in non-directory pages and category which does not accept new submission. Setting this parameter to 'Yes' will make sure 'Add Listing' link is shown all the time.">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+
+	</params>
+</mosinstall>

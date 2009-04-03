@@ -1,0 +1,85 @@
+a:link,
+a:visited,
+a:hover {
+	color: #006AE1;
+	font-weight:600;
+	text-decoration:none;
+				
+}
+table {
+	border-collapse:collapse;
+
+}
+#nl-banner {
+        background: url(http://www.openfoundry.org/images/newsletter/banner.gif) no-repeat;
+        height:134px;
+}
+.nl-bg {
+	width :631px;
+	margin:auto;
+	background: url(http://www.openfoundry.org/images/newsletter/bg.gif) repeat-y;
+}
+.nl-contentheading {
+	font-size: 110%;	
+	font-weight:400;
+	height:40px;
+	vertical-align:bottom;
+	}
+.nl-cal,
+.nl-cal:before {
+	width:590px;
+	border-collapse:collapse;
+	background-color :#EAEAEA;
+	font-family:"細明體"新細明體,serif;
+	font-size:13px;		
+	content:url(http://www.openfoundry.org/images/newsletter/icon-cat.gif);				
+}
+
+.nl-catl {
+	background: url(http://www.openfoundry.org/images/newsletter/catl.gif) no-repeat;
+	height:28px;
+	width:179px;
+				}
+.nl-catl-bg {
+	background: url(http://www.openfoundry.org/images/newsletter/cal-bg.gif) repeat-x;
+	width:414px;
+				
+}
+.n-written {
+	color:#999999;
+	font-size:12px;
+				
+}
+.kind {
+	background: url(http://www.openfoundry.org/images/newsletter/kind.gif);
+	color:#0F7C01;
+	font-size:16px;
+	font-weight:700;
+	width:116px;
+	height:29px;
+				
+}
+.kind-bg {
+	background :url(http://www.openfoundry.org/images/newsletter/kind-bg.gif) repeat-x;
+	width:482px;
+}
+.nl-footer-left {
+	background :url(http://www.openfoundry.org/images/newsletter/leftdown.gif) no-repeat;
+	height:19px;
+							
+}
+.nl-footer-right {
+	background :url(http://www.openfoundry.org/images/newsletter/rightdown.gif) no-repeat;
+}
+.nl-footer {
+	background: url(http://www.openfoundry.org/images/newsletter/down-bg.gif) repeat-x;
+			
+}
+.nl-footer-con {
+	vertical-align:middle;
+	text-align:center;
+	width:593px;
+	height:22px;
+	font-size:12px;
+	white-space:pre;
+}

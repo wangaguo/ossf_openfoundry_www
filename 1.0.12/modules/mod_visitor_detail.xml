@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<mosinstall type="module">
+    <name>JoomlaStats visitor detail</name>
+    <creationDate>2004.09.14</creationDate>
+    <author>JoomlaStats Team</author>
+    <copyright>This template is released under the GNU/GPL License</copyright>
+    <authorEmail>info@JoomlaStats.org</authorEmail>
+    <authorUrl>http://www.JoomlaStats.org</authorUrl>
+    <version>2.0</version>
+    <description>JoomlaStats Visitor detail</description>
+     <files>
+         <filename module="mod_visitor_detail">mod_visitor_detail.php</filename>
+     </files>
+</mosinstall>

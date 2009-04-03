@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall version="4.5.2" type="mambot" group="search">
+	<name>Search eventCal</name>
+	<author>Kay Messerschmidt</author>
+	<creationDate>September 2006</creationDate>
+	<copyright>(C) 2006 Kay Messerschmidt</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>kay_messers@email.de</authorEmail>
+	<authorUrl>http://forge.joomla.org/sf/projects/eventcal</authorUrl>
+	<version>1.6.3</version>
+	<description>eventCal - The Event Calendar System for Joomla! - Mambot for the Joomla! search funtionality to search through eventCal events</description>
+	<files>
+		<filename mambot="eventcal.searchbot">eventcal.searchbot.php</filename>
+	</files>
+	<params />
+</mosinstall>

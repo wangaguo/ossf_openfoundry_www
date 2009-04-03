@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall type="module" version="1.0.0">
+	<name>eventCal Mini</name>
+	<author>Kay Messerschmidt</author>
+	<creationDate>September 2006</creationDate>
+	<copyright>(C) 2006 Kay Messerschmidt</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>kay_messers@web.de</authorEmail>
+	<authorUrl>http://forge.joomla.org/sf/projects/eventcal</authorUrl>
+	<version>1.6.3</version>
+	<description>eventCal - The Event Calendar System for Joomla! - Mini Calendar Module</description>
+	<files>
+		<filename module="mod_eventcal_mini">mod_eventcal_mini.php</filename>
+		<filename>mod_eventcal_mini.css</filename>
+	</files>
+	<params>
+		<param name="view" type="list" default="month" label="View" description="The sort of view mini eventCal should show up with. Currently, only the whole month view is supported.">
+			<option value="month">month view</option>
+		</param>
+		<param name="week_startingday" type="list" default="monday" label="Starting Day of Week" description="The weekday weeks normally start within your country.">
+			<option value="0">sunday</option>
+			<option value="1">monday</option>
+			<option value="2">tuesday</option>
+			<option value="3">wednesday</option>
+			<option value="4">thursday</option>
+			<option value="5">friday</option>
+			<option value="6">saturday</option>
+		</param>
+		<param name="day_chars_count" type="text" default="5" label="Chars for each day" description="Specify the number of chars you want displayed for each day name. If fewer then the specified number of chars are displayed, this might be related to your Joomla! configuration for $mosConfig_locale." />
+		<param name="catid" type="text" default="" label="Categories" description="Comma-separated list of eventCal categories. Events from all categories will be shown if this is empty." />
+		<param name="moduleclass_suffix" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module (table.eventcal_mini), this allows individual module styling" />
+	</params>
+</mosinstall>

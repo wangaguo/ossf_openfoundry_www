@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<mosinstall type="module">
+
+	<name>JoomlaStats Top Visitors</name>
+	<creationDate>2006.4.25</creationDate>
+	<author>RoBo</author>
+	<copyright>This template is released under the GNU/GPL License</copyright>
+	<authorEmail>info@JoomlaStats.org</authorEmail>
+	<authorUrl>http://www.JoomlaStats.org</authorUrl>
+	<version>1.4</version>
+	<description>JoomlaStats Top Visitors</description>
+	<files>
+		<filename module="mod_jstats_topvisitors">mod_jstats_topvisitors.php</filename>
+	</files>
+	<params>
+
+
+		<param name="UserVisits" type="list" default="10" label="UserVisits" description="Show logged in user visits">
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="3">3</option>
+			<option value="5">5</option>
+			<option value="10">10</option>
+			<option value="15">15</option>
+			<option value="20">20</option>
+			<option value="25">25</option>
+		</param>
+		<param name="NSLookupVisits" type="list" default="10" label="NSLookupVisits" description="Show not-logged in user visits">
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="3">3</option>
+			<option value="5">5</option>
+			<option value="10">10</option>
+			<option value="15">15</option>
+			<option value="20">20</option>
+			<option value="25">25</option>
+		</param>
+		<param name="Pages" type="list" default="10" label="Pages" description="Show page hits of logged-in-users">
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="3">3</option>
+			<option value="5">5</option>
+			<option value="10">10</option>
+			<option value="15">15</option>
+			<option value="20">20</option>
+			<option value="25">25</option>
+		</param>
+		<param name="NSLookupPages" type="list" default="10" label="NSLookupPages" description="Show page hits of not-logged-in-user visits">
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="3">3</option>
+			<option value="5">5</option>
+			<option value="10">10</option>
+			<option value="15">15</option>
+			<option value="20">20</option>
+			<option value="25">25</option>
+		</param>
+	</params>
+</mosinstall>

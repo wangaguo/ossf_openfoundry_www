@@ -1,0 +1,17 @@
+/**
+ * MjazTools BlogTheme for DOCMan
+ * @version      $Id: theme10.css 32 2007-11-06 11:40:26Z mjaz $
+ * @package      mjaztools_blogtheme
+ * @copyright    Copyright (C) 2007 MjazTools. All rights reserved.
+ * @license      GNU/GPL
+ * @link 		 http://www.mjaztools.com/ MjazTools Official Site
+ */
+
+.message {
+	padding: 10px 10px 10px 50px;
+	margin-bottom: 10px;
+	border: 1px solid gray;
+	background: #FFFFCC url(../images/message.gif) no-repeat 10px 50%;
+	color: red;
+	font-weight: bold;
+}

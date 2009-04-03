@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Template Chooser</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>佈景主題選擇模組讓網站訪客可以隨時在網站前台用選單列表來更換佈景主題。</description>
+	<files>
+	<filename module="mod_templatechooser">mod_templatechooser.php</filename>
+	</files>
+	<params>
+		<param name="title_length" type="text" default="20" label="最大名稱長度" description="這是要顯示的最大的佈景主題名稱長度（預設20）" />
+		<param name="show_preview" type="radio" default="0" label="顯示預覽" description="要顯示佈景主題預覽圖">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="preview_width" type="text" default="140" label="寬度" description="預覽圖的寬度（預設140）" />
+		<param name="preview_height" type="text" default="90" label="高度" description="預覽圖的高度（預設90）" />
+	<param name="moduleclass_sfx" type="text" default="" label="模組CSS字尾" description="一個應用於模組CSS的字尾(table.moduletable)，可以讓這頁面有獨立風格" />
+	</params>
+</mosinstall>

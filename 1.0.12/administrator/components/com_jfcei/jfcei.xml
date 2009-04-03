@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<mosinstall type="component">
+   <name>jfcei</name>
+   <creationDate>18/07/2006</creationDate>
+   <author>Ivo Apostolov</author>
+   <copyright>This component is released under the GNU/GPL License</copyright>
+   <authorEmail>joomfish@unwe.net</authorEmail>
+   <authorUrl>http://www.joomfish.net</authorUrl>
+   <version>1.1</version>
+   <description>This component allows you to upload easy and fast Content Elements for Joom!Fish. The component doesn't do anything without the Joom!Fish installed. THE CONTENTELEMENTS folder MUST be WRITEABLE.</description>
+   <installfile>install.jfcei.php</installfile>
+   <uninstallfile>uninstall.jfcei.php</uninstallfile>
+   <administration>
+      <menu>Joom!Fish CE Installer</menu>
+      <files>
+         <filename>admin.jfcei.php</filename>
+         <filename>upload.php</filename>
+         <filename>help.php</filename>
+         <filename>toolbar.jfcei.html.php</filename>
+         <filename>toolbar.jfcei.php</filename>
+         <filename>uninstall.jfcei.php</filename>
+         <filename>install.jfcei.php</filename>
+      </files>
+   </administration>
+   </mosinstall>

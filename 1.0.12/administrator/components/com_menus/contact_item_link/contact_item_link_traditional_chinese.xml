@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="menu" version="1.0.0">
+	<name>連結 - 連絡人項目</name>
+	<group>Component|Link</group>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>建立一個連到已發佈的連絡人項目的連結</description>
+	<params>
+		<param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default="" label="選單圖示" description="一個放在您選單項目左邊或右邊的小圖示，圖片必須位於images/stories/" />
+		<param name="pageclass_sfx" type="text" default="" label="頁面CSS字尾" description="一個應用於頁面CSS的字尾，可以讓這頁面有獨立風格" />
+		<param name="page_title" type="radio" default="1" label="頁面標題" description="顯示/隱藏頁面標題">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="header" type="text" size="30" default="" label="頁面標題" description="顯示於頁面最上方的文字，如果空白則會使用選單名稱" />
+       <param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="bannedEmail" type="text" default="" label="阻擋的Email" size="40" description="包含任何以下字串的Email將會被阻擋，用分號分隔不同字串例如ban;text;etc" />
+		<param name="bannedSubject" type="text" default="" label="阻擋主題" size="40" description="包含任何以下字串的主題將會被阻擋，用分號分隔不同字串例如ban;text;etc" />
+		<param name="bannedText" type="text" default="" label="阻擋文字" size="40" description="包含任何以下字串的文字內容將會被阻擋，用分號分隔不同字串例如ban;text;etc" />
+        <param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="session" type="radio" default="1" label="Session檢查" description="檢查已有的session cookie，這表示沒有cookies的使用者將不能寄送email">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+	</params>
+</mosinstall>

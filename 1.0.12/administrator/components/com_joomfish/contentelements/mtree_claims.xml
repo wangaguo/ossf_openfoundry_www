@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>Mtree Claims</name>
+  <author>Ivo Apostolov</author>
+  <version>1.7</version>
+  <description>Joom!Fish definition for Mtree Claims</description>
+  <reference>
+     <table name="mt_claims">
+        <field type="referenceid" name="claim_id" translate="0">ID</field>
+        <field type="titletext" name="comment" translate="1">Comment</field>
+        <field type="textarea" name="admin_note" translate="1">Admin Note</field>
+     </table>
+  </reference>
+</joomfish>

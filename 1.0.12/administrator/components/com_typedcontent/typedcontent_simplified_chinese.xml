@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="component" version="1.0.0">
+	<name>Typed Content Page</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>This shows a single content page</description>
+	<params>
+	<param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default="" label="菜单图片" description="一个放在您菜单项目左边或右边的小图示，图片必须位于images/stories/" />
+		<param name="item_title" type="radio" default="1" label="页面标题" description="显示/隐藏项目标题">
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+			<param name="pageclass_sfx" type="text" size="20" default="" label="页面CSS字尾" description="一个应用于页面CSS的字尾，可以让这页面有独立风格" />
+		<param name="back_button" type="list" default="0" label="返回按钮" description="显示/隐藏返回按钮，这个可以让您返回上一个观看的页面">
+			<option value="">使用全域</option>
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="rating" type="list" default="" label="项目评价" description="显示/隐藏项目评价 - 只会影响这个页面">
+			<option value="">使用全域</option>
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="author" type="list" default="" label="作者名称" description="显示/隐藏作者名称 - 只会影响这个页面">
+			<option value="">使用全域</option>
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="createdate" type="list" default="" label="建立日期时间" description="显示/隐藏项目建立日期时间 - 只会影响这个页面">
+			<option value="">使用全域</option>
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="modifydate" type="list" default="" label="修改日期时间" description="显示/隐藏项目修改日期时间 - 只会影响这个页面">
+			<option value="">使用全域</option>
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="pdf" type="list" default="" label="PDF图示" description="显示/隐藏项目pdf产生按钮- 只会影响这个页面">
+			<option value="">使用全域</option>
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="print" type="list" default="" label="列印图示" description="显示/隐藏项目列印按钮 - 只会影响这个页面">
+			<option value="">使用全域</option>
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="email" type="list" default="" label="Email图示" description="显示/隐藏Email按钮 - 只会影响这个页面">
+			<option value="">使用全域</option>
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+	</params>
+</mosinstall>

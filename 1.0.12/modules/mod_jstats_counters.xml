@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall type="module" version="4.5.2">
+  <name>JoomlaStats Counters</name>
+  <author>JoomlaStats Team</author>
+  <creationDate>2007-05-12</creationDate>
+  <copyright>This component is released under the GNU/GPL License</copyright>
+  <authorEmail>info@JoomlaStats.org</authorEmail>
+  <authorUrl>www.JoomlaStats.org</authorUrl>
+  <version>1.9</version>
+
+  <description>The mod_jstats_counters module is designed to show the counter-data of the JoomlaStats component (www.JoomlaStats.org)</description>
+  <files>
+    <filename module="mod_jstats_counters">mod_jstats_counters.php</filename>
+    <filename>mod_jstats_counters.xml</filename>
+  </files>
+  <params>
+    <param name="moduleclass_sfx"		type="text"				default=""					label="Module Class Suffix"		description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />
+    <param name="occurred"				type="text"				default="&amp;nbsp;&amp;nbsp;occurred:"		label="Text for occurred"		description="When you choose to enable display when a max. occurred, this text is shown" />
+    
+    <param name="spacer"				type="spacer"										label="Counter VISITORS TODAY" />
+    <param name="v_today_label"			type="text"				default="Visits today:"		label="___Label"				description="Display the Label of the Counter." />
+    <param name="v_today_ordering"		type="text"	size="3"	default="1"					label="___Ordering"				description="Displays the Counter in given order." />
+    <param name="v_today_published"		type="radio"			default="1"					label="___Published"			description="Display unique visitors for today">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+    <param name="spacer" 				type="spacer" 										label="Counter VISITORS YESTERDAY" />
+    <param name="v_yesterday_label"		type="text" 			default="Visits yesterday:"	label="___Label" 				description="Display the Label of the Counter." />
+    <param name="v_yesterday_ordering" 	type="text" size="3"	default="2" 				label="___Ordering" 			description="Displays the Counter in given order." />
+    <param name="v_yesterday_published" type="radio"			default="1" 				label="___Published" 			description="Display unique visitors for yesterday">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    
+    <param name="spacer"				type="spacer"										label="Counter VISITORS THIS MONTH" />
+    <param name="v_month_label"			type="text"				default="Visits month:"		label="___Label" description="Display the Label of the Counter." />
+    <param name="v_month_ordering"		type="text" size="3"	default="3"					label="___Ordering"				description="Displays the Counter in given order." />
+    <param name="v_month_published" 	type="radio"			default="1"					label="___Published" description="Display unique visitors for this month">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    
+    <param name="spacer"				type="spacer"										label="Counter VISITORS TOTAL" />
+    <param name="v_total_label"			type="text"				default="Visits total:"		label="___Label" description="Display the Label of the Counter." />
+    <param name="v_total_ordering"		type="text" size="3"	default="4" 				label="___Ordering" description="Displays the Counter in given order." />
+    <param name="v_counter_offset"		type="text"				default="0" 				label="___Offset" description="Add this number to total counter and show the sum of both. This won\'t change the JoomlaStats - Database or any JoomlaStats - Data." />
+    <param name="v_total_published"		type="radio"			default="1"					label="___Published" description="Display total unique visitors">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>    
+    
+    
+    <param name="spacer"				type="spacer"										label="Counter MAX VISITORS OF A DAY" />
+    <param name="v_maxaday_label"		type="text" 			default="Max.daily visits:" label="___Label"	description="Display the Label of the Counter." />
+    <param name="v_maxaday_ordering"	type="text" size="3"	default="5"					label="___Ordering" description="Displays the Counter in given order." />
+    <param name="v_maxaday_showdate"	type="radio"			default="1"					label="___ShowDay"	description="Also displays when the max. visitors occured.">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    <param name="v_maxaday_published"	type="radio"			default="0"					label="___Published" description="Display the highest unique visitors Counter for a day">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    
+    <param name="spacer"				type="spacer"										label="Counter MAX VISITORS OF A MONTH" />
+    <param name="v_maxamonth_label"		type="text"				default="Max.monthly visits:" label="___Label" description="Display the Label of the Counter." />
+    <param name="v_maxamonth_ordering"	type="text" size="3"	default="6"					label="___Ordering" description="Displays the Counter in given order." />
+    <param name="v_maxamonth_showdate"	type="radio"			default="1"					label="___ShowMonth" description="Also displays when the max. visitors occured.">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    <param name="v_maxamonth_published"	type="radio"			default="1"					label="___Published" description="Display the highest unique visitors Counter for a month">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    
+    
+    <param name="spacer"				type="spacer"										label="Counter PAGES TODAY" />
+    <param name="p_today_label"			type="text" 			default="Pages today:"		label="___Label" description="Display the Label of the Counter." />
+    <param name="p_today_ordering"		type="text" size="3"	default="7"					label="___Ordering" description="Displays the Counter in given order." />
+    <param name="p_today_published"		type="radio"			default="0"					label="___Published" description="Display Pages Counter for today">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    
+    <param name="spacer"				type="spacer"										label="Counter PAGES YESTERDAY" />
+    <param name="p_yesterday_label"		type="text" 			default="Pages yesterday:"	label="___Label" description="Display the Label of the Counter." />
+    <param name="p_yesterday_ordering"	type="text" size="3"	default="8"					label="___Ordering" description="Displays the Counter in given order." />
+    <param name="p_yesterday_published"	type="radio"			default="0"					label="___Published" description="Display Pages Counter for yesterday">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+    <param name="spacer"				type="spacer"										label="Counter PAGES THIS MONTH" />
+    <param name="p_month_label"			type="text" 			default="Pages this month:"	label="___Label" description="Display the Label of the Counter." />
+    <param name="p_month_ordering"		type="text" size="3"	default="9"					label="___Ordering" description="Displays the Counter in given order." />
+    <param name="p_month_published"		type="radio"			default="1"					label="___Published" description="Display Pages Counter for this month">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    
+    <param name="spacer"				type="spacer"										label="Counter PAGES TOTAL" />
+    <param name="p_total_label"			type="text"				default="Pages total:"		label="___Label" description="Display the Label of the Counter." />
+    <param name="p_total_ordering"		type="text" size="3"	default="10" 				label="___Ordering" description="Displays the Counter in given order." />
+    <param name="p_counter_offset"		type="text"				default="0" 				label="___Offset" description="Add this number to total counter and show the sum of both. This won\'t change the JoomlaStats - Database or any JoomlaStats - Data." />
+    <param name="p_total_published"		type="radio"			default="1"					label="___Published" description="Display total unique page visits">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>    
+    
+
+    <param name="spacer"				type="spacer"										label="Counter ROBOTS/SPIDER" />
+    <param name="bots_label"			type="text"				default="Bots today:"		label="___Label" description="Display the Label of the Counter." />
+    <param name="bots_ordering"			type="text" size="3"	default="11"				label="___Ordering" description="Displays the Counter in given order." />
+    <param name="bots_published"		type="radio"			default="0"					label="___Published" description="Display Robots/Spider Counter for today">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+    
+
+    <param name="spacer"				type="spacer"										label="Counter PAGES YESTERDAY" />
+    <param name="data_since_label"		type="text" 			default="Data since:"		label="___Label" description="Display the Label of the Data Since Counter." />
+    <param name="data_since_ordering"	type="text" size="3"	default="12"				label="___Ordering" description="Displays the Counter in given order." />
+    <param name="data_since_published"	type="radio"			default="1"					label="___Published" description="Display the Data Since Counter">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </param>
+
+    
+  </params>
+</mosinstall>
