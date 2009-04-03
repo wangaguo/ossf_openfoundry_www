@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Wrapper Module</name>
+	<author>Joomla! Project</author>
+	<creationDate>October 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>这个模块显示特定位置的IFrame窗口</description>
+	<files>
+		<filename module="mod_wrapper">mod_wrapper.php</filename>
+	</files>
+	<params>
+	<param name="moduleclass_sfx" type="text" default="" label="模块CSS字尾" description="一个应用于模块CSS的字尾(table.moduletable)，可以让这页面有独立风格" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="url" type="text" size="30" default="" label="网址" description="指向您想要显示在Iframe中的网站/档案网址" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="scrolling" type="radio" default="auto" label="卷动轴" description="显示/隐藏水平&垂直卷动轴。">
+			<option value="no">否</option>
+			<option value="yes">是</option>
+			<option value="auto">自动</option>
+		</param>
+		<param name="width" type="text" size="5" default="100%" label="宽度" description="IFrame窗口的宽度，您可以输入像素绝对值或是加上%符号的百分比的相对值" />
+		<param name="height" type="text" size="5" default="500" label="高度" description="IFrame窗口的高度" />
+			<param name="height_auto" type="radio" default="0" label="自动高度" description="高度将会根据外部网页的大小自动设定。这个设定只会在这些网页和本网站是在同一网域时才有作用。如果您看到有javascript错误，确定这个参数是被关闭的。这个设定也会打破这页的XHTML的相容性。">
+		<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="add" type="radio" default="1" label="自动增加" description="http://预设将会自动被加上，除非侦测到您在网址连结有加上http://或https://。这个设定让您可以切换这个功能。">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+	</params>
+</mosinstall>

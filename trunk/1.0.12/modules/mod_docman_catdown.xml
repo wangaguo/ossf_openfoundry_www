@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+    <mosinstall type="module" version="4.5.1">
+    <name>DOCman Category</name>
+    <creationDate>September 2007</creationDate>
+  	<author>DOCman Development Team</author>
+  	<copyright>This extension is released under the GNU/GPL License</copyright>
+  	<authorEmail>support@joomlatools.org</authorEmail>
+  	<authorUrl>www.joomlatools.org</authorUrl>
+  	<version>1.4.0rc2</version>
+    <description>Shows the documents from one specific category</description>
+    <files>
+      <filename module="mod_docman_catdown">mod_docman_catdown.php</filename>
+    </files>
+	<params>
+      <param name="catid" type="text" default="" label="CategoryID" description="Category ID of the downloads" />
+      <param name="limits" type="text" default="3" label="Limits" description="number of downloads to display " />
+      <param name="show_icon" type="radio" default="1" label="Show icon" description="displays a generic icon near the name of the document">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+	  </param>
+	  <param name="show_category" type="radio" default="1" label="Show category" description="displays the category of the document">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+	  </param>
+	  <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+    </params>
+  </mosinstall>

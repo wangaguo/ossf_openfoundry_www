@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="component" version="1.0.0">
+	<name>Weblinks</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>This component shows a listing of Weblinks</description>
+	<params>
+		<param name="target" type="list" default="0" label="目標視窗" description="當連結被點下時的目標視窗">
+			<option value="0">帶有瀏覽列的父視窗</option>
+			<option value="1">帶有瀏覽列的新視窗</option>
+			<option value="2">沒有瀏覽列的新視窗</option>
+		</param>
+	</params>
+</mosinstall>

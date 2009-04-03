@@ -1,0 +1,46 @@
+<?php
+defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+
+/**
+ * Format embedded markup in the given string according
+ * to settings specified in site admin (no markup, bbcode or
+ * raw html
+ */
+class textMarkUp{
+	var $check = false;
+	/**
+	 * Construct
+	 *
+	 * @return textMarkUp
+	 */
+	function textMarkUp(){
+		global $g2Config;
+		if(file_exists($g2Config['path'].'lib/smarty_plugins/modifier.markup.php')){
+			require_once( $g2Config['path'].'lib/smarty_plugins/modifier.markup.php' );
+			$this->check = true;
+		}
+	}
+	
+	/**
+	 * Format embedded markup in the given string according
+ 	 * to settings specified in site admin (no markup, bbcode or
+ 	 * raw html
+	 *
+	 * @param string $text
+	 * @return string
+	 */
+	function parse($text, $cached=false){
+		global $g2Cache;
+		static $cacheGroup = 'expiresShort';
+		if(!$this->check){
+			
+		}
+		if(!$cached){
+			return $g2Cache->getCachedFunction($cacheGroup, 'smarty_modifier_markup', $text);
+		}
+		
+		return smarty_modifier_markup($text);
+	}
+}
+
+?>

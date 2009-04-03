@@ -1,0 +1,297 @@
+<?php
+/* ensure this file is being included by a parent file */
+defined('_VALID_MOS') or die ('Direct Access to this location is not allowed.');
+
+/* we don't now if joomla is incluing it by default or if it will stay */
+global $mosConfig_absolute_path;
+require_once($mosConfig_absolute_path.'/includes/Cache/Lite.php');
+
+/**
+ * cache class
+ * 
+ * @package com_gallery2
+ * @subpackage Classes
+ */
+class g2cache extends Cache_Lite {
+	/**
+	 * defines also the type and location of the cache
+	 *
+	 * @var string
+	 */
+	var $cacheGroup = 'default';
+	
+	/**
+	 * Id of current cache item
+	 *
+	 * @var unknown_type
+	 */
+	var $cacheId = null;
+	
+	/**
+	 * If we are caching a guest
+	 *
+	 * @var boolean
+	 */
+	var $cacheGuest = true;
+	
+	/**
+	 * Userid where we are caching for
+	 *
+	 * @var null or integer
+	 */
+	var $userId = null;
+	
+	/**
+	 * Arguments from the function call
+	 *
+	 * @var mixed
+	 */
+	var $arguments = null;
+	
+	/* public functions */
+	/**
+	 * Set the default cache settings
+	 *
+	 * @param array $options
+	 */
+	function g2Cache($options = array(NULL)){
+		global $mosConfig_absolute_path, $g2Config, $my;
+		/* set the user vars */
+		if(empty($my->usertype)){
+			$this->cacheGuest = true;
+		} else {
+			$this->cacheGuest = false;
+			$this->userID = $my->id;
+		}
+		/* now add the default com_gallery2 values */
+		if (!isset($options['automaticCleaningFactor'])){
+        	$options['automaticCleaningFactor']= 0;
+        }
+		
+        $this->Cache_Lite($options);
+	}
+	
+	/**
+	 * Get the cache or the output of a function
+	 *
+	 * @return data
+	 */
+	function getCachedFunction(){
+		$this->arguments = func_get_args();
+		$cacheGroup = array_shift($this->arguments);
+		$id = serialize($this->arguments);
+		$data = $this->getCache($id, $cacheGroup, null, true);
+		return $data;
+	}
+	
+	/**
+	 * This will get the cache and is the main switch for type and storage(time)
+	 *
+	 * @param mixed $id
+	 * @param string $cacheGroup
+	 * @param boolean $function
+	 * @return cache data
+	 */
+	function getCache($id, $cacheGroup=false, $lastchanged=null, $function=false ){
+		global $g2Config;
+		/* we have to set the cache group and cache id now */
+		$this->cacheId = $id;
+		if(!$cacheGroup){
+			/* we have to decide if we are going to cache long or not */
+			$cacheGroup = $this->cacheGuest ? 'expiresLong' : 'expiresShort';
+		}
+		$this->cacheGroup = $cacheGroup;
+		
+		/* based on group and guest we are setting the time out and storage path */
+		switch ($cacheGroup){	
+			case 'expiresLong':
+				/* lifetime */
+				$this->setLifeTime($g2Config['cacheFileLong']);
+				/* storage path */
+				$this->_cacheDir = BaseUrl.'/cache/fileCache/expires/long/';
+			break;
+			case 'expiresShort':
+				/* lifetime */
+				$this->setLifeTime($g2Config['cacheFileShort']);
+				/* storage path */
+				$this->_cacheDir = BaseUrl.'/cache/fileCache/expires/short/';
+			break;
+			case 'lastChanged':
+				/* lifetime */
+				if($this->lastModified() > $lastchanged){
+					return false;
+				}
+				$this->setLifeTime($g2Config['cacheObsolete']);
+				/* storage path */
+				$this->_cacheDir = BaseUrl.'/cache/fileCache/lastChanged/';
+			break;
+		}
+		
+		/* now switch function call or data call */
+		if($function){
+			$return = $this->_call();
+			return $return;
+		} else {
+			$return = $this->get($this->cacheId, $this->cacheGroup);
+			return $return;
+		}
+	}
+	
+	/**
+	 * This will put the data into cache item
+	 *
+	 * @param string $data
+	 * @param mixed $id
+	 */
+	function saveCache($data, $id=false){
+		if($id){
+			$this->cacheId = $id;
+		}
+		$this->save($data, $this->cacheId, $this->cacheGroup);
+	}
+	
+	/**
+     * Will walk through a directory and count files and size
+     *
+     * @param string $dir
+     * @return array($count, $size)
+     */
+    function cacheCount ($dir){
+    	clearstatcache();
+    	error_reporting(E_ALL ^ E_NOTICE);
+    	$count = array();
+    	$size = array();
+    	if ($handle = opendir(BaseUrl.'/'.$dir)) {
+			while (false !== ($file = readdir($handle))) {
+				if ($file != '.' && $file != '..' && $file !='index.html') {
+					if(is_dir(BaseUrl.'/'.$dir.'/'.$file)){
+						list ($countadd, $sizeadd) = g2cache::cacheCount($dir.'/'.$file);
+						$count = array_merge($count, $countadd);
+						$size = array_merge($size, $sizeadd);
+					} else {
+						$count[$dir]++;
+						$size[$dir] = $size[$dir] + filesize(BaseUrl.'/'.$dir.'/'.$file);
+					}
+				}
+			}
+		closedir($handle);
+		}
+	return array($count, $size);	
+    }
+    
+    /**
+	 * Cleans the cache
+	 *
+	 * Removes files older then a certain time
+	 *
+	 * @param string $dir
+	 * @param integer $timeout
+	 */
+	function cleanCache($dir, $timeout){
+		clearstatcache();
+    	if ($handle = opendir(BaseUrl.'/'.$dir)) {
+			while (false !== ($file = readdir($handle))) {
+				if ($file != '.' && $file != '..' && $file !='index.html'
+					&& strpos($file, '.') != 0) {
+					if(is_dir(BaseUrl.'/'.$dir.'/'.$file)){
+						g2cache::cleanCache($dir.'/'.$file, $timeout);
+					} else {
+						if (time () - filemtime (BaseUrl.'/'.$dir.'/'.$file) > $timeout) {
+							unlink(BaseUrl.'/'.$dir.'/'.$file);	
+						}
+					}
+				}
+			}
+		closedir($handle);
+		}	
+	}
+	
+	/**
+	 * Remove all cache file in Directory
+	 *
+	 * @param string $dir
+	 */
+	function removeCache($dir){
+		clearstatcache();
+    	if ($handle = opendir(BaseUrl.'/'.$dir)) {
+			while (false !== ($file = readdir($handle))) {
+				if ($file != '.' && $file != '..' && $file !='index.html'
+					&& strpos($file, '.') != 0) {
+					if(is_dir(BaseUrl.'/'.$dir.'/'.$file)){
+						g2cache::removeCache($dir.'/'.$file);
+					} else {
+						unlink(BaseUrl.'/'.$dir.'/'.$file);
+					}
+				}
+			}
+		closedir($handle);
+		}
+	}
+	
+	/* none public functions */
+	/**
+    * Calls a cacheable function or method (or not if there is already a cache for it)
+    *
+    * Arguments of this method are read with func_get_args. So it doesn't appear
+    * in the function definition. Synopsis : 
+    * call('functionName', $arg1, $arg2, ...)
+    * (arg1, arg2... are arguments of 'functionName')
+    *
+    * @return mixed result of the function/method
+    * @access public
+    */
+    function _call(){
+        if (!$this->_fileNameProtection) {
+            $this->cacheId = md5($this->cacheId);
+        }
+        $data = $this->get($this->cacheId, $this->cacheGroup);
+        /* if a function that use cache is called $id and $group are lost */
+        $storeId = $this->cacheId;
+        $storeGroup = $this->cacheGroup;
+        if ($data !== false) {
+            $result = unserialize($data);
+        } else {
+            $target = array_shift($this->arguments);
+            if (strstr($target, '::')) { // classname::staticMethod
+                list($class, $method) = explode('::', $target);
+                $result = call_user_func_array(array($class, $method), $this->arguments);
+            } else if (strstr($target, '->')) { // object->method
+                // use a stupid name ($objet_123456789 because) of problems when the object
+                // name is the same as this var name
+                list($object_123456789, $method) = explode('->', $target);
+                global $$object_123456789;
+                $result = call_user_func_array(array($$object_123456789, $method), $this->arguments);
+            } else { // function
+                $result = call_user_func_array($target, $this->arguments);
+            }
+            /* check if id and group are correct */
+            if($this->cacheId != $storeId){
+	            $this->cacheId = $storeId;
+	            if($this->cacheGroup != $storeGroup ){
+	            	$this->cacheGroup = $storeGroup;
+	            	/* we have to set the storage directory again!!*/
+	            	return $result;
+	            }
+            }
+            $this->save(serialize($result), $this->cacheId, $this->cacheGroup);
+        }
+        return $result;
+    }
+    
+       /**
+	* Make a file name (with path)
+	*
+	* @param string $id cache id
+	* @param string $group name of the group
+	* @access private
+	*/
+	function _setFileName($id)
+	{
+		if ($this->_fileNameProtection) {
+			$this->_file = ($this->_cacheDir.'g2Cache_'.md5($id));
+		} else {
+			$this->_file = $this->_cacheDir.'g2Cache_'.$id;
+		}
+	}
+}
+?>

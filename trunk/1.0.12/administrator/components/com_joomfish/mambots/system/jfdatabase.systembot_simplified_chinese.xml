@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mosinstall version="1.0.0" type="mambot" group="system">
+	<name>Multi lingual abstraction layer bot</name>
+	<license>Think Network, Open Source License</license>
+	<author>Think Network</author>
+	<authorEmail>JoomFish@ThinkMatrix.net</authorEmail>
+	<authorUrl>http://www.joomfish.net</authorUrl>
+	<creationDate>2006-05-03</creationDate>
+	<copyright>2003 - 2006, Think Network GmbH, Munich</copyright>
+	<version>1.7</version>
+	<description>当这个自动化程式启动后才能够自动地从资料库进行语言转换.</description>
+	<files>
+		<filename mambot="jfdatabase.systembot">jfdatabase.systembot.php</filename>
+	</files>	
+	<params>
+		<param name="determitLanguage" type="radio" default="1" label="启动语言判断" description="当未知的访客前往您的网站 - 尝试以浏览器的设定来判断语系的转换.">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+        <param name="newVisitorAction" type="list" default="browser" label="访客预设语系?"
+       description="针对新访客所显示的语系 (当启动语言判断为“是”时才有作用" >
+        <option value="joomfish">依照 Joom!fish 元件的排序</option>
+        <option value="browser">浏览器预设编码</option>
+        <option value="site">网站所定义的语言</option>
+      </param>
+
+	</params>
+</mosinstall>

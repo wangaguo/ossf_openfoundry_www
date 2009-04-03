@@ -1,0 +1,153 @@
+<?php 
+defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+
+/**
+ * Class for creating a google siteMap.
+ *
+ * @package com_gallery2
+ * @subpackage Class files
+ */
+class siteMap{
+	
+	/**
+	 * Fetches the album list and makes it ready.
+	 *
+	 * @return array
+	 */
+	function fetchAlbumList(){
+		list(, $info) = core::albumTree(null, null, 5);
+		$return = array();
+		if(is_array($info)){
+			foreach($info as $itemId => $data){
+				$return[$itemId]['date'] = siteMap::dateFormat($data['lastmodified']);
+				$return[$itemId]['modified'] = siteMap::changeFreq($data['lastmodified']);
+				$return[$itemId]['URL'] = siteMap::confertURL($data['url']);	
+			}
+		}
+		return $return;
+	}
+	
+	
+	/**
+	 * Update the siteMap File.
+	 *
+	 * @param array $albumList
+	 * @return boolean
+	 */
+	function buildXML($force = false){
+		global $mosConfig_absolute_path, $g2Config, $database;
+		/* intercept auto generation, check if we need to build */
+		if(!$force){
+			$time = time();
+			if($time - $g2Config['siteMapUpdate'] > 14400){
+				$database->setQuery("UPDATE `#__gallery2` SET `value` = '$time' WHERE `key`='siteMapLastUpdate'");
+				$database->query();
+			} else {
+				return true;
+			}
+		}
+		/* check if the file exitst */
+		if(!siteMap::existsXMLFile()){
+			return false;
+		}
+		$albumList = siteMap::fetchAlbumList();
+		$xmlContent = "<?xml version =\"1.0\" encoding=\"UTF-8\"?>\n";
+		$xmlContent .= "  <urlset xmlns=\"http://google.com/schemas/siteMap/0.84\">\n";
+			
+		foreach($albumList as $itemId => $val){
+			$xmlContent .= "   	<url>\n";
+		   	$xmlContent .= "       	<loc>".$val['URL']."</loc>\n";
+		   	$xmlContent .= "		<lastmod>".$val['date']."</lastmod>\n";
+			$xmlContent .= "        <changefreq>".$val['modified']."</changefreq>\n";
+			$xmlContent .= "		<priority>0.8</priority>\n";
+			$xmlContent .= "   	</url>\n";
+		}
+		
+		$xmlContent .= "  </urlset>\n";
+		
+		$xmlfile = $mosConfig_absolute_path."/".$g2Config['sitemapFilename'];
+	    if(is_writable($xmlfile)){
+	    	if ($fp = fopen("$xmlfile", "w")) {
+	    		fputs($fp, $xmlContent, strlen($xmlContent));
+	    		fclose ($fp);
+	    		return true;
+	    	}
+	    }
+	return false;
+	}
+	
+	
+	/**
+	 * Derives the change freq from last modified timestamp.
+	 *
+	 * @param intger $time
+	 * @return string
+	 */
+	function changeFreq($time){
+		$time = time()- $time;
+		if(round($time / 86400) < 1){ 
+			return 'hourly';
+		}else if(round($time / 86400) < 7){ 
+			return 'daily';
+		}else if(round($time / 86400) < 30){ 
+		 	return 'weekly';
+		} else if(round($time / 2592000) < 6){
+			return 'monthly';
+		} else {
+			return 'yearly';
+		}
+	}
+	
+	/**
+	 * conferts Unix Timestamp into google date
+	 *
+	 * @param integer $date
+	 * @return string
+	 */
+	function dateFormat($date){
+		$date = date("Y-m-d", $date);
+		return $date;
+	}
+	
+	/**
+	 * Conferts Urls to certain format
+	 *
+	 * @param string $url
+	 * @return string
+	 */
+	function confertURL($url){
+		return $url;
+	}
+	
+	/**
+	 *	Checks if the file exists.
+	 *
+	 * @return boolean
+	 */
+	function existsXMLFile(){
+		global $mosConfig_absolute_path, $g2Config;
+		if(file_exists($mosConfig_absolute_path.'/'.$g2Config['sitemapFilename'])){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Check if the xml file is still up to date.
+	 *
+	 * @return boolean
+	 */
+	function isXMLFileCorrect(){
+		global $g2Config;
+		list(, $info) = core::albumTree(null, null, 5);
+		$fileDate = $g2Config['sitemapLastUpdate'];
+		foreach($info as $itemId => $data){
+			if($data['lastmodified'] > $fileDate){
+				return false;
+			}	
+		}
+		return true;
+	}
+
+}
+?>

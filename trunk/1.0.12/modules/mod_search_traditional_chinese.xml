@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Search Module</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>這個模組將會顯示搜尋對話盒</description>
+	<files>
+		<filename module="mod_search">mod_search.php</filename>
+	</files>
+	<params>
+		<param name="moduleclass_sfx" type="text" default="" label="模組CSS字尾" description="一個應用於模組CSS的字尾(table.moduletable)，可以讓這頁面有獨立風格" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="cache" type="radio" default="0" label="開啟快取" description="選擇是否要快取這個模組的內容">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="set_itemid" type="text" default="" label="設定Itemid" description="允許設定Itemid連到搜尋連結去" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="width" type="text" default="20" label="對話盒寬度" description="搜尋文字對話盒的寬度" />
+		<param name="text" type="text" default="" label="文字" description="搜尋文字對話盒中顯示的文字，不輸入任何文字會載入在您語言檔案中的_SEARCH_BOX" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="button" type="radio" default="" label="搜尋按鈕" description="顯示搜尋按鈕">
+			<option value="">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="button_pos" type="list" default="right" label="按鈕位置" description="按鈕相對於搜尋對話盒的位置">
+			<option value="right">右</option>
+			<option value="left">左</option>
+			<option value="top">上</option>
+			<option value="bottom">下</option>
+		</param>
+		<param name="button_text" type="text" default="" label="按鈕文字" description="顯示於按鈕上的文字，不輸入任何文字會載入您語言檔案中的_SEARCH_TITLE" />
+	</params>
+</mosinstall>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="menu" version="1.0.0">
+	<name>清單 - 內容單元</name>
+	<group>Content</group>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>顯示來自特定分類的內容分類清單表格</description>
+	<params>
+	<param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default="" label="選單圖片" description="一個放在您選單項目左邊或右邊的小圖示，圖片必須位於images/stories/" />
+		<param name="page_title" type="radio" default="1" label="單元標題" description="顯示/隱藏單元標題">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="pageclass_sfx" type="text" size="20" default="" label="頁面CSS字尾" description="一個應用於頁面CSS的字尾，可以讓這頁面有獨立風格" />
+		<param name="back_button" type="list" default="" label="返回按鈕" description="顯示/隱藏返回按鈕，這個可以讓您返回上一個觀看的頁面">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+			<param name="description_sec" type="radio" default="1" label="單元說明" description="顯示/隱藏單元說明">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="description_sec_image" type="radio" default="1" label="單元說明圖片" description="顯示/隱藏單元說明圖片">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="orderby" type="list" default="" label="排序依照" description="這會覆蓋項目的原排序">
+			<option value="">預設</option>
+			<option value="alpha">標題的字母由小至大</option>
+			<option value="ralpha">標題的字母由大至小</option>
+			<option value="order">排序</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="other_cat_section" type="radio" default="1" label="分類清單 - 單元" description="顯示/隱藏分類清單在觀看清單時">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+<param name="empty_cat_section" type="radio" default="0" label="空白分類於單元" description="顯示/隱藏空白（沒有項目）的分類在觀看單元時">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="description_cat" type="radio" default="0" label="分類說明" description="顯示/隱藏分類說明">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="description_cat_image" type="radio" default="0" label="分類說明圖片" description="顯示/隱藏分類說明圖片">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="other_cat" type="radio" default="1" label="分類清單 - 分類" description="顯示/隱藏分類的清單在觀看表格時">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="empty_cat" type="radio" default="0" label="空白分類" description="顯示/隱藏空白（沒有項目）的分類">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="cat_items" type="radio" default="1" label="分類項目的個數" description="顯示/隱藏每個分類裡的項目個數">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="cat_description" type="radio" default="1" label="分類說明" description="顯示/隱藏分類的說明，這個會顯示在分類名稱的下方處">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="date_format" type="text" size="15" default="" label="日期格式" description="被顯示出來的日期格式，請使用PHP的strftime指令格式 - 如果空白會載入目前語言檔的日期格式" />
+		<param name="date" type="list" default="" label="日期欄位" description="顯示/隱藏日期欄位">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="author" type="list" default="" label="作者欄位" description="顯示/隱藏作者欄位">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="hits" type="list" default="" label="點擊數欄位" description="顯示/隱藏點擊數欄位">
+			<option value="">使用全域</option>
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="headings" type="radio" default="1" label="表格標題" description="顯示/隱藏表格標題">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="navigation" type="radio" default="1" label="瀏覽列" description="顯示/隱藏瀏覽列">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="order_select" type="radio" default="1" label="排序選單" description="顯示/隱藏排序下拉選單">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="display" type="radio" default="1" label="顯示選單" description="顯示/隱藏顯示下拉選單">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="display_num" type="list" default="50" label="顯示項目" description="預設要顯示多少個項目">
+			<option value="5">5</option>
+			<option value="10">10</option>
+			<option value="15">15</option>
+			<option value="20">20</option>
+			<option value="25">25</option>
+			<option value="30">30</option>
+			<option value="50">50</option>
+		</param>
+		<param name="filter" type="radio" default="1" label="關鍵字過濾" description="顯示/隱藏關鍵字過濾功能">
+			<option value="0">隱藏</option>
+			<option value="1">顯示</option>
+		</param>
+		<param name="filter_type" type="list" default="title" label="關鍵字欄位" description="關鍵字要對應到那個欄位">
+			<option value="title">標題</option>
+			<option value="author">作者</option>
+			<option value="hits">點擊</option>
+		</param>
+			<param name="@spacer" type="spacer" default="" label="" description="" />
+ 		<param name="unpublished" type="radio" default="1" label="未發佈的項目" description="顯示/隱藏未發佈的項目（發佈者以上權限有用）">
+ 			<option value="0">隱藏</option>
+ 			<option value="1">顯示</option>
+ 		</param>
+	</params>
+</mosinstall>

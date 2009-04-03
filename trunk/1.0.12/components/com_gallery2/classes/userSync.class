@@ -1,0 +1,122 @@
+<?php
+class userSync{
+	/* loading functions */
+
+	/* helper functions */
+	
+	/**
+     * Compare a G2 user with an integration app user by user properties.
+     * 
+     * Set any or all of the array params to true to compare by those properties.
+     * If 'case' is true, then compare will be case-sensitive. 'case' is determined within this
+     * function by calling UserSynchronizationInterface_1_0::isCompareCaseSensitive().
+     * 
+     * @param object GalleryUser
+     * @param array ('userName' => string the user name, 'fullName' => string full name,
+     *              'email' => string user's e-mail, 'language' => string user's language,
+     *              'hashedPassword' => string user's hashed password)
+     * @return array('userName' => 1, 'email' => 1, etc.) Any conflicts are entered here.
+     */
+    function compareUsers($g2User, $emAppUser, $params = false) {
+        $conflicts = array();
+        if(!$params){
+        	$g2Config = core::loadConfig();
+            $params = $g2Config['userCheckParams'];
+            $params['case'] = $g2Config['userCheckCase'];
+        }
+
+        /*
+         * This needs to be done for highest compatibility, otherwise may spew errors on certain
+         * PHP configurations
+         */
+        foreach (array('byUserName', 'byEmail', 'byLanguage', 'byFullName',
+                'byHashedPassword', 'case') as $key) {
+            if (!isset($params[$key])) {
+                $params[$key] = false;
+            }
+        }
+    
+        if ($params['byUserName']) {
+            $cmpResult = ($params['case'])
+                        ? strcmp($g2User->getuserName(), $emAppUser['username'])
+                        : strcasecmp($g2User->getuserName(), $emAppUser['username']);
+            if ($cmpResult != 0) {
+                $conflicts['userName'] = 1;
+            }
+        }
+        
+        if ($params['byEmail']) {
+            if (strcasecmp($g2User->getEmail(), $emAppUser['email']) != 0) {
+                $conflicts['email'] = 1;
+            }
+        }
+        
+        
+        if ($params['byFullName']) {
+            $cmpResult = ($params['case'])
+                        ? strcmp($g2User->getfullName(), $emAppUser['fullname'])
+                        : strcasecmp($g2User->getfullName(), $emAppUser['fullname']);
+            if ($cmpResult != 0) {
+                $conflicts['fullName'] = 1;
+            }
+        }
+        
+        /* If everything is true, $conflicts will simply return an empty array. */        
+        return $conflicts;
+    }
+    
+    function timeLimit($time=30){
+    	ini_set('max_execution_time', $time);	
+    }
+    
+    function progressUpdate($title, $description, $complete, $startTime){
+    	if($complete > 0 && $complete < 100 &&
+    	time() > $startTime){
+    		$elapsed = (int)(time() - $startTime);
+    		$timeRemaining = ($elapsed / ($complete / 100)) - $elapsed;
+    		$timeRemaining = sprintf('Estimate time remaining: %d:%02d', (int)($timeRemaining/60), $timeRemaining % 60);
+    	} else {
+    		$timeRemaining='';
+    	} 	
+    	return sprintf( '<script type="text/javascript">updateProgressBar("%s", "%s", "%s", "%s", "%s")</script>', $title, $description, $complete, $timeRemaining, $memoryInfo);	
+    }
+    
+    /**
+     * Create a Joomla User.
+     *
+     * @param array("name"=> "name" ,"username" => "username", "email" => "email", "password" => "123456", "id" => "0", "gid" => "0", "useractivation" => "1")
+     * @return integer, id off created user
+     */
+    function createJoomlaUser($g2User){
+    	global $database, $acl; 
+    	
+    	$userData = array('id' => 0, 'gid' => 0, 'useractivation' => 1);
+    	$userData['name'] = $g2User->getfullName();
+    	$userData['username'] = $g2User->getuserName();
+    	$userData['email'] = $g2User->getEmail();
+    	$userData['password'] = $g2User->gethashedPassword();
+    	
+    	
+    	$row = new mosUser( $database );
+    	if (!$row->bind( $userData, 'usertype' )) {
+    		return false;
+    	}
+    	mosMakeHtmlSafe($row);
+    	$row->id = 0;
+		$row->usertype = '';
+		$row->gid = $acl->get_group_id( 'Registered', 'ARO' );
+		if (!$row->check()) {
+			return false;
+		}
+		$row->registerDate 	= date('Y-m-d H:i:s');
+		if (!$row->store()) {
+			return false;
+		}
+		$row->checkin();
+		
+		$id = $row->id;
+		
+		return $id;
+    }
+}
+?>

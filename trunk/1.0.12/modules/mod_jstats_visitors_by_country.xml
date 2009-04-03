@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<mosinstall type="module">
+    <name>JoomlaStats Visitors by Country</name>
+    <creationDate>2006-11-26</creationDate>
+    <author>JoomlaStats Team</author>
+    <copyright>This template is released under the GNU/GPL License</copyright>
+    <authorEmail>info@JoomlaStats.org</authorEmail>
+    <authorUrl>www.JoomlaStats.org</authorUrl>
+    <version>2.3</version>
+    <description>Display the percentage of visitors by country using JoomlaStats data.</description>
+     <files>
+         <filename module="mod_jstats_visitors_by_country">mod_jstats_visitors_by_country.php</filename>
+     </files>
+	 <params>
+	 	<param name="visitors" type="list" default="" label="show country statistics for" description="with this option you can choose for what periode to show country statistics for">
+		<option value="">total</option>
+		<option value="today">today</option>
+		<option value="thisweek">this week</option>
+		<option value="thismonth">this month</option>
+		</param>
+	 	<param name="top" type="list" default="" label="number of items" description="with this option you can choose the number of items in the list">
+		<option value="5">5</option>
+		<option value="10">10</option>
+		<option value="15">15</option>
+		<option value="20">20</option>
+		<option value="25">25</option>
+		</param>
+	 </params>	 
+</mosinstall>

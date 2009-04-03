@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>Mtree Links</name>
+  <author>Ivo Apostolov</author>
+  <version>1.7</version>
+  <description>Joom!Fish definition for Mtree Links</description>
+  <reference>
+     <table name="mt_links">
+        <field type="referenceid" name="link_id" translate="0">ID</field>
+        <field type="titletext" name="link_name" translate="1">Name</field>
+        <field type="htmltext" name="link_desc" translate="1">Description</field>
+        <field type="textarea" name="metakey" translate="1">Meta Keywords</field>
+        <field type="textarea" name="metadesc" translate="1">Meta Description</field>
+        <field type="textarea" name="address" translate="1">Address</field>
+        <field type="text" name="city" translate="1">City</field>
+        <field type="text" name="state" translate="1">State</field>
+        <field type="text" name="country" translate="1">Country</field>
+        <field type="text" name="postcode" translate="1">Postcode</field>
+        <field type="text" name="telephone" translate="1">Telephone</field>
+        <field type="text" name="fax" translate="1">Fax</field>
+        <field type="text" name="email" translate="1">E-mail</field>        
+        <field type="text" name="website" translate="1">Web Site</field>     
+        <field type="text" name="price" translate="1">Price</field>     
+        <field type="text" name="cust_1" translate="1">Custom Field 1</field>     
+        <field type="text" name="cust_2" translate="1">Custom Field 2</field>     
+        <field type="text" name="cust_3" translate="1">Custom Field 3</field>     
+        <field type="text" name="cust_4" translate="1">Custom Field 4</field>     
+        <field type="text" name="cust_5" translate="1">Custom Field 5</field>     
+        <field type="text" name="cust_6" translate="1">Custom Field 6</field>     
+        <field type="text" name="cust_7" translate="1">Custom Field 7</field>     
+        <field type="text" name="cust_8" translate="1">Custom Field 8</field>     
+        <field type="text" name="cust_9" translate="1">Custom Field 9</field>     
+        <field type="text" name="cust_10" translate="1">Custom Field 10</field>     
+        <field type="text" name="cust_11" translate="1">Custom Field 11</field>     
+        <field type="text" name="cust_12" translate="1">Custom Field 12</field>     
+        <field type="text" name="cust_13" translate="1">Custom Field 13</field>     
+        <field type="text" name="cust_14" translate="1">Custom Field 14</field>     
+        <field type="text" name="cust_15" translate="1">Custom Field 15</field>     
+        <field type="text" name="cust_16" translate="1">Custom Field 16</field>     
+        <field type="text" name="cust_17" translate="1">Custom Field 17</field>     
+        <field type="text" name="cust_18" translate="1">Custom Field 18</field>     
+        <field type="text" name="cust_19" translate="1">Custom Field 19</field>     
+        <field type="text" name="cust_20" translate="1">Custom Field 20</field>     
+        <field type="text" name="cust_21" translate="1">Custom Field 21</field>     
+        <field type="text" name="cust_22" translate="1">Custom Field 22</field>     
+        <field type="text" name="cust_23" translate="1">Custom Field 23</field>     
+        <field type="text" name="cust_24" translate="1">Custom Field 24</field>     
+        <field type="text" name="cust_25" translate="1">Custom Field 25</field>     
+        <field type="text" name="cust_26" translate="1">Custom Field 26</field>     
+        <field type="text" name="cust_27" translate="1">Custom Field 27</field>     
+        <field type="text" name="cust_28" translate="1">Custom Field 28</field>     
+        <field type="text" name="cust_29" translate="1">Custom Field 29</field>     
+        <field type="text" name="cust_30" translate="1">Custom Field 30</field>     
+        </table>
+  </reference>
+</joomfish>

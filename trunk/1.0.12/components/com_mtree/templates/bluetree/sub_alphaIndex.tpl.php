@@ -1,0 +1,27 @@
+<?php echo $this->plugin('listalpha', '0') ?> | 
+<?php echo $this->plugin('listalpha', 'A') ?> | 
+<?php echo $this->plugin('listalpha', 'B') ?> | 
+<?php echo $this->plugin('listalpha', 'C') ?> | 
+<?php echo $this->plugin('listalpha', 'D') ?> | 
+<?php echo $this->plugin('listalpha', 'E') ?> | 
+<?php echo $this->plugin('listalpha', 'F') ?> | 
+<?php echo $this->plugin('listalpha', 'G') ?> | 
+<?php echo $this->plugin('listalpha', 'H') ?> | 
+<?php echo $this->plugin('listalpha', 'I') ?> | 
+<?php echo $this->plugin('listalpha', 'J') ?> | 
+<?php echo $this->plugin('listalpha', 'K') ?> | 
+<?php echo $this->plugin('listalpha', 'L') ?> | 
+<?php echo $this->plugin('listalpha', 'M') ?> | 
+<?php echo $this->plugin('listalpha', 'N') ?> | 
+<?php echo $this->plugin('listalpha', 'O') ?> | 
+<?php echo $this->plugin('listalpha', 'P') ?> | 
+<?php echo $this->plugin('listalpha', 'Q') ?> | 
+<?php echo $this->plugin('listalpha', 'R') ?> | 
+<?php echo $this->plugin('listalpha', 'S') ?> | 
+<?php echo $this->plugin('listalpha', 'T') ?> | 
+<?php echo $this->plugin('listalpha', 'U') ?> | 
+<?php echo $this->plugin('listalpha', 'V') ?> | 
+<?php echo $this->plugin('listalpha', 'W') ?> | 
+<?php echo $this->plugin('listalpha', 'X') ?> | 
+<?php echo $this->plugin('listalpha', 'Y') ?> | 
+<?php echo $this->plugin('listalpha', 'Z') ?> 

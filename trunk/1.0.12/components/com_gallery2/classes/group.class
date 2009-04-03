@@ -1,0 +1,136 @@
+<?php 
+defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+/**
+ * Group class file
+ *
+ * @package com_gallery2
+ * @subpackage Class files
+ */
+
+/**
+ * This class holds all group functions
+ *
+ * @package com_gallery2
+ * @subpackage Classes
+ */
+class group {
+	
+	/**
+	 * Add a group to Gallery2
+	 *
+	 * @param integer $id
+	 * @param string $name
+	 * @return boolean
+	 */
+	function newGroup($id, $name){
+		$ret = GalleryEmbed::createGroup($id, $name);
+		if ($ret){ 
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Remove a group from Gallery2
+	 *
+	 * @param integer $id
+	 * @return boolean
+	 */
+	function removeGroup($id){
+			$ret = GalleryEmbed::deleteGroup($id);
+		if ($ret){ 
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Update a group name
+	 *
+	 * @param integer $id
+	 * @param string $newName
+	 * @return boolean
+	 */
+	function updateGroupName($id, $newName){
+		$ret = GalleryEmbed::updateGroup($id, array('groupname' => $newName));
+		if ($ret){ 
+			return false;
+		}
+		return true;
+	}
+	
+
+	/**
+	 * Function will return a list of users belongening to a group
+	 *
+	 * @param integer $groupId
+	 * @param integer $count
+	 * @param integer $offset
+	 * @param boolean $mamboId
+	 * @return array 
+	 */
+	function getUsersFromGroup($groupId, $count=null, $offset=null, $mamboId=false){
+		list($ret, $userList) = GalleryCoreApi::fetchUsersForGroup($groupId, $count, $offset);
+		if ($ret){ 
+			return false;
+		}
+		if($mamboId){
+			$idArray = utility::getMamboId();
+			foreach($userList as $g2Id => $userName){
+				$conferted[$idArray[$g2Id]['externalId']] = $userName;
+			}
+			ksort($conferted);
+			return $conferted;
+		} else {
+			ksort($userList);
+			return $userList;
+		}	
+	}
+	
+
+	/**
+	 * Returns a list groups where user belongs to
+	 *
+	 * @param integer $userId
+	 * @param integer $type
+	 * @param integer $count
+	 * @param integer $offset
+	 * @return array
+	 */
+	function getGroupsForUser($userId, $type=null, $count=null, $offset=null){
+		if($type){
+			$userId = utility::getG2Id($userId);
+			list($ret, $groupList) = GalleryCoreApi::fetchGroupsForUser($userId[0], $count, $offset);
+			if ($ret){ 
+				return false;
+			}
+			ksort($groupList);
+			return $groupList;
+		} else {
+			list($ret, $groupList) = GalleryCoreApi::fetchGroupsForUser($userId, $count, $offset);
+			if ($ret){ 
+				return false;
+			}
+			ksort($groupList);
+			return $groupList;
+		}	
+	}
+	
+	/**
+	 * fetch a group lsit by username.
+	 *
+	 * @return array( id => groupname, ..)
+	 */
+	function getGroupsByUsername(){
+		core::initiatedG2();
+		list(, $fetch) = GalleryCoreApi::fetchGroupNames();
+		$groups= array();
+		foreach( $fetch as $groupname){
+			list(, $group ) = GalleryCoreApi::fetchGroupByGroupName($groupname);
+			$groups[$group->getid()] = $groupname;
+		}
+		return $groups;
+	}
+	
+}
+?>

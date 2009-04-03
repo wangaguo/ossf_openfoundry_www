@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<mosinstall type="module" client="administrator" version="4.5.2">
+    <name>JoomlaStats</name>
+    <creationDate>May 2006</creationDate>
+    <author>JoomlaStats Team</author>
+    <copyright>This template is released under the GNU/GPL License</copyright>
+    <authorEmail>info@JoomlaStats.org</authorEmail>
+    <authorUrl>www.JoomlaStats.org</authorUrl>
+    <version>2.0</version>
+    <description>JoomlaStats Admin Statistics</description>
+     <files>
+         <filename module="mod_jstats_admin">mod_jstats_admin.php</filename>
+     </files>
+	 <params>
+	 	<param name="period" type="list" default="" label="show browser statistics for" description="with this option you can choose for what periode to show statistics for">
+		<option value="">total</option>
+		<option value="today">today</option>
+		<option value="thisweek">this week</option>
+		<option value="thismonth">this month</option>
+		</param>
+	 	<param name="top" type="list" default="" label="number of items" description="with this option you can choose the number of items in the list">
+		<option value="5">5</option>
+		<option value="10">10</option>
+		<option value="15">15</option>
+		<option value="20">20</option>
+		<option value="25">25</option>
+		</param>
+	 </params>
+</mosinstall>

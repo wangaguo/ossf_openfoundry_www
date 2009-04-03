@@ -1,0 +1,27 @@
+<?php
+defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined( 'BaseUrl' ) or die( 'Direct Access to this location is not allowed.' );
+
+class g2Curl{
+	
+	function g2Curl(){}
+	
+	function sendStats(){
+		core::classRequireOnce('serverapi');
+		$options = serverapi::getDefaultData();
+		$url = 'http://opensource.4theweb.nl/curl/main.php';
+		$object = new serverapi($url, $options);
+		$ret = $object->sendStats();
+ 		return $ret;
+	}
+	
+	function getLatestVersion(){
+		core::classRequireOnce('serverapi');
+		$options = serverapi::getDefaultData();
+		$url = 'http://opensource.4theweb.nl/curl/main.php';
+		$object = new serverapi($url, $options);
+		$ret = $object->sendRequest(array('task' => 'latestVersion'));
+ 		return $ret;
+	}
+}
+?>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="menu" version="1.0.0">
+	<name>表格 - 网站链接分类</name>
+	<group>Component</group>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>显示某个特定网站链接分类中的网站链接项目表格</description>
+	<params>
+	<param name="menu_image" type="imagelist" directory="/images/stories" hide_default="1" default="" label="菜单图片" description="一个放在您菜单项目左边或右边的小图示，图片必须位于images/stories/" />
+		<param name="pageclass_sfx" type="text" size="20" default="" label="页面CSS字尾" description="一个应用于页面CSS的字尾，可以让这页面有独立风格" />
+		<param name="back_button" type="list" default="" label="返回按钮" description="显示/隐藏返回按钮，这个可以让您返回上一个观看的页面">
+			<option value="">使用全域</option>
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="page_title" type="radio" default="1" label="页面标题" description="显示/隐藏页面标题">
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="header" type="text" size="30" default="" label="页面标题" description="显示在网页最上方的文字。如果是空白的话，菜单的名称将会被显示" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="headings" type="radio" default="1" label="表格标题" description="显示/隐藏表格的标题">
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="hits" type="list" default="" label="点击" description="显示/隐藏点击栏目">
+			<option value="">使用全域</option>
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="item_description" type="radio" default="1" label="链接说明" description="显示/隐藏链接的说明文字">
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="other_cat" type="radio" default="1" label="其它分类" description="当观看分类时，显示/隐藏其它分类的清单">
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+     <param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="weblink_icons" type="imagelist" directory="/images/M_images" default="" label="图示" description="在表格观看时使用于网址链接左方的图示" />
+	</params>
+</mosinstall>

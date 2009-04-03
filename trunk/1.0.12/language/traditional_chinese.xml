@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall version="1.0.0" type="language">
+	<name>TraditionalChinese</name>
+	<version>1.0.0</version>
+	<creationDate>2004-09-27</creationDate>
+	<author>EddyChang</author>
+	<authorEmail>eddy@joomla.com.tw</authorEmail>
+	<files>
+		<filename>traditional_chinese.php</filename>
+	</files>
+</mosinstall>

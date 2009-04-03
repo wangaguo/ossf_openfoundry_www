@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<joomfish type="contentelement">
+  <name>投票 : 选项</name>
+  <author>A. Kempkens</author>
+  <version>1.7</version>
+  <description>定義投票的选项</description>
+  <reference>
+  	<table name="poll_data">
+  		<field type="referenceid" name="id" translate="0">ID</field>
+  		<field type="titletext" name="text" translate="1">选项</field>
+  	</table>
+  </reference>
+  <translationfilters>
+  	  <polloptions_empty>text</polloptions_empty>
+  	  <pollname>pollid</pollname>
+  </translationfilters>  	  
+</joomfish>

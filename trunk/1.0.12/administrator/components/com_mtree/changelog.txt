@@ -1,0 +1,288 @@
+/***
+* Mosets Tree CHANGELOG
+*
+* @package Mosets Tree 1.5
+* @copyright (C) 2005-2006 Mosets Consulting
+* @url http://www.Mosets.com/
+* @author Lee Cher Yeong <mtree@mosets.com>
+*/
+
+Legend:
+
+# -> Bug Fix
++ -> Addition
+^ -> Change
+- -> Removed
+! -> Note
+
+version 1.59 - July 2006 ------------------------------------------------------------------------------
+# Prevent Savant2 files from being accesses directly
+# Fixed 'Go' button in editlink back-end for not return full URL after the first ampersand.
+# mod_mt_dtree - Current category or listing is highlighted when browsing within MT
+# mod_mt_dtree - Fixed listings not showing in root when parent cat is set to non 0
+# stripslashes for search text in search results
+^ Increased the text box size in back-end's editreview
+# Fixed html entities corrections in editlink's admin note
+# Revert support to MySQL 4.0.x in listpopular SQL query
+# mod_mt_search: now escape instead of encodeURI search text to support non-english characters
+# Fixed submission form to support Open-SEF in page_recommend, page_contactOwner, page_report, page_rating, page_addCategory, page_claim, page_confirmDelete, page_writeReview
+
+version 1.58 - June 2006 ------------------------------------------------------------------------------
++ E-mail notification for new reviews
++ Adds http:// prefix to website field if it is not entered
+^ Updated notification e-mail on reviews & listings. Includes e-mail address now.
+# Make sure Root's cat_id is set to 0 during installation
+# Top rated & Most rated ordering is tallied between the module and page by using seconding ordering based on number of votes or rating
+# Fixed listmostreview SQL query to be compatible with MySQL 5
++ mod_mt_dtree - Ability to show listings.
+# Fixed report list's URL to open Edit Listing page
+# Back-end Advanced Search is not returning the correct category
+# Fixed bug where approved review's e-mails are not sent to reviewer
++ Added internal notes for Pending Claims, Pending Reports and Pending Reviews
++ NO_REVIEW_FOUND, TOTAL_OF_NEW, PERFORM_FULL_RECOUNT, PERFORM_FAST_RECOUNT, PRODUCT_DETAILS, LOCATION, MIN_VOTES_FOR_TOPRATED, CATS_IN_BRACKETS_DOES_NOT_ACCEPT_NEW_LISTINGS, MIN_VOTES_TO_SHOW_RATING, USE_OWNER_EMAIL, CATEGORY_DETAILS
++ Allows pagination in Latest Listings
+^ Review date now includes time
+^ mod_mt_search - Default search text is empty instead of 'search...'
+# Fixed showing of htmlspecial chars in reviews
+^ When configured not to accept HTML, newlines are converted to HTML breaks
+# Undefined mt_show_email in listalpha
+# mod_mt_menu - undefined moduleclass variable. Added new param called linksclass to allow styling to the links.
+^ While clicking next(ignore) on pending listing, data is saved.
+^ listpending_listings are now sorted by link_created first instead of link_modified.
+^ Approving a listing reset the created date so that it shows properly in Latest Listings
++ Make available pathWay object in mylisting
++ Added an option to require a listing to have a minimum number of votes before being considered as Top Rated.
+^ mod_mt_listing updated to support minimum votes.
+^ mod_mt_listing_wpic updated to support minimum votes.
++ Displays custom fields in bluetree_business template
++ Add Listing page now ignore category selection that does not accept listings. These categories are displayed in brackets.
+^ Owner's Listings: Pagination is hidden when listings does not span more than 1 page
+# Hardcoded text in bluetree_classifieds/sub_listings.tpl.php
+# Fixed showing of htmlspecial chars in listing description
+# Changes not saved when approving reviews from back-end
+^ Changes made to sef_ext.php to support Open-SEF RC5
+^ Changes made to show listings even when assigned user_id does not exists in #__users
++ Added `count_listfeatured`, `count_viewowner`, `mylisting` index to #__mt_links
++ Added `func_getPathWay` index to #__mt_cats
++ Added an option to require a listing to have a minimum number of votes before a rating is shown.
++ Added 'None' as an option to who can add a listing
+# Fixed dtree.js for not highlighting the correct active category.
+# Links count is not updated correctly when deleting a listing with cross-category
++ Listing image now contains alternate attribute
++ mod_mt_listings & mod_mt_listings_wpic now capable of showing top listings from a fixed category
+# Fix non-SEF URL in Add Listing page
+# Fixed searchbot bug when sorting by section/category. Now compatible with MySQL 5
++ Option to append Listing ID to URL to solve issues where 2 listing having the same name in a category
++ mod_mt_menu - additional parameter to force show 'Add Listing' link
+# Fixed "Perform Full/Fast Recount" function where expired listings (publish_down) is counted
+# Fixed by where Publish & Feature toggle icon does not work in search result in back-end
++ Option to use user's e-mail address as a destination in Contact form when listing's email is not available
+# SQL error in listmostreviewed under MySQL 5.x
+# Convert link_name to html entities in editlisting frontend
++ Added a history back link when advanced search does not return result
+# Remove ordering when counting total number of advanced search result
+^ Advanced search results ordering now follows configuration
+# Includes absolute path when 'require_once' pageNavigation.php in front-end
+
+version 1.57 - March 2006 ------------------------------------------------------------------------------
+# Fixed >visit link to hide when there is no website entered
+^ Changed all page_index template to remove the spacing between category names and comma
+# Fixed mod_mt_listing_wpic for not showing non-shuffling featured listings
+# Fixed send_report for blocking reports when 'contact' is disabled
+# Fixed searchbot to return Itemid
++ Updated all modules to support moduleclass_sfx
+^ Rename getChildren function to mt_getChildren to avoid clashing with mosDirectory's same name function
++ Added mosce plugin & content mambot to allow inclusion of MT's link
++ Added mod_mt_categories_expanding
+# Review text, title and guest name are converted to html entities and stripped of tags
++ Added Itemid field to bluetree/page_writeReview.tpl.php
+# Unable to remove image from front-end when auto-approved is enabled
+# Convert desc field to htmlentities when HTML is not allowed
+# Fixed listing now showing in the front end caused by assignment of user id '0'. user id now defaults to 'Super Administrator'
+# Checkbox values now seperated by commas without spaces
+# NEW_LISTING_EMAIL_MSG_WAITING_APPROVAL: Listing's link from Waiting approval for new listing's e-mail is removed
++ mod_mt_menu - Added option 'Home'
+# Ability to edit listings not owned by a registered user
++ Option to specify more than one admin e-mail seperated by commas
++ REPORTS, NO_REPORT_FOUND, CLAIM, CLAIMS, CLAIM_LISTING, PLEASE_LOGIN_BEFORE_CLAIM, CLAIM_EMAIL, CLAIM_HAVE_BEEN_SENT, HOME, APPROVE, REJECT, CLAIM_APPROVED_SUBJECT, CLAIM_APPROVED_MSG, SHOW_LISTINGS, SHOW_LISTING_COUNT_IN_ROOT_CAT, SHOW_CAT_COUNT_IN_ROOT_CAT, SHOW_LISTING_COUNT_IN_SUBCAT, SHOW_CAT_COUNT_IN_SUBCAT, SHOW_LISTINGS_IN_ROOT_CAT
++ page_claim.tpl.php
+# Missing space in Review & Recommend's page title
+# Not being able to save Related Categories when used with Joomla
++ Option to toggle Alpha Index
++ Option to show category & listing's count
++ Option to hide listings in a category
+# Copying category without copying listing does not works. Listings are still copied to the new category.
+^ Simple search now search for ANY words when presented with more than one keyword.
+# Simple search now works properly with UTF-8 encoding
++ New Claims & Reports page to list unresolved reports and claims
++ Allows users to claim ownership of listings owned by Administrators
+^ Pagination will not be shown when the number of listings or reviews does not requires more than one page
+
+version 1.56 - November 2005 ------------------------------------------------------------------------------
+# Fixed mod_mt_menu missing show_browse parameter in xml file 
+# Fixed hard coded reference to localhost machine
+# Fixed invalid link in recommend e-mail when not using SEF URLs
+# Fixed bug in removing unapproved categories
+# Fixed bug in mod_mt_categories - failure to load mtCats class
+# Fixed duplicates entry showing when viewing advanced search results
+# Fixed the publish_up and publish_down bug not being saved when users modified an existing listing
+# Added support for owner name in listing summary and details page
+# Rephrase SECONDS_NEXTVOTE to "Number of seconds before next hits is counted from the same visitor"
+# Removed unsed codes that causes unlimited loops - mosGetOrderingList
+# Fixed non-update of lft & rgt fields when submitting new categories from the front-end which is auto approved
+^ REVIEW_TITLE to show 'Review Title' instead of 'Title' which can be misleading
++ ADD_YOUR_LISTING_HERE
+# sub_listings.tpl.php - move "Add listing here" to language file
++ mod_mt_menu - Added new parameters to control the top listings from entire directory or sub-categories only
+# "Show E-mail" options does not disabled display of e-mail address
+# Fixed most mt modules to retrieve Itemid from published menu items only
++ FAST_ADD
+
+version 1.55 - August 2005 ------------------------------------------------------------------------------
+# Fixed bugs for searching two word while using Mambo SEF
+# Fixed bugs showing duplicate listings when viewing top list
+# Fixed mod_mt_listing and mod_mt_listing_wpic for listing duplicate listing caused by cross categorization
+# Fixed bluetree_classifieds - not showing "Add Listing" link when category is empty
+# Fixed mod_mt_listing_wpic for not shuffling featured listings properly
+# Fixed mod_mt_random for not choosing from the correct population
+# Fixed mod_mt_browse to query mos_mt_cl for category ID
+# Fixed encoding issue while searching with simple search 
+# Fixed hardcoded Root in function:printPathWayWithCurrentCat
+# Fixed IE issue for not being able to save a listing after performing a "change cat" in "Categories" tab. Modified the layout to move the description textarea out of tab
+# Fixed IE issue for not being able to save a category after performing a "change cat" in "Related" tab. Modified the layout to move the description textarea out of tab
+^ Updated bluetree_business's address format to display postcode after city
+# Fixed missing overlib library in editcat
+^ Removed htmlspecialchars() function in Savant2_Plugin_listingname & Savant2_Plugin_ahreflisting to show foreign characters properly
+# Fixed bug where a category goes to unapproved when added a related category for a approved category
+^ Root category title now refers to language file's Root rather than database's root category's name
+
+version 1.54 - August 2005 ------------------------------------------------------------------------------
+^ Remove the approve option when a category is approved. 
+# Fixed category count issue. Now category count is more precise
+# Fixed undefined var and invalid SQL query which still look for #__mt_links for cat_id
+# Fixed missing default value Allow Submission when adding category
+
+version 1.53 - August 2005 ------------------------------------------------------------------------------
+# Fixed error while editing A-Z template
+# Fixed SEF URL in recommend friend's e-mail
+# Remove unused <tr><td> tag in bluetree/sub_reviews.tpl.php
+# Fixed query error in mod_mt_menu when page cat_id is empty
+# Fixed simple search to return main listing instead of duplicates of the same listing when cross category
+# Fixed wrong id appended to uploaded image name
+# Fixed corruption of Tree's lft & rgt values caused by non-existent Root category.
+# Fixed some grammar/spelling errors in english.php
+
+version 1.52 - July 2005 ------------------------------------------------------------------------------
+# Fixed redeclare error in language file - $ADVANCED_SEARCH_REDIRECT, $RECOMMEND
++ Language - ADVANCED_SEARCH_REDIRECT1
+
+version 1.51 - July 2005 ------------------------------------------------------------------------------
+# Fixed redeclare error in language file - $REVIEW
+
+version 1.50 - July 2005 ------------------------------------------------------------------------------
++ Now use Modified Preorder Tree Traversal Algorithm to store hierarchical data in categories. Greatly improve performance.
++ Allows cross categorization. Having a listing appears in multiple categories.
+# Not able to search more than one words when SEF enabled
+# Fixed price not copied when copying listing
+# Fixed image bugs when uploaded image's filename with space
+# Fixed mod_mt_listing for not being able to redirect Show More to appropirate category
+# Fixed caching problem where category and listing's title are not displayed
+# Fixed open echo in mod_mt_dtree
+# Fixed template bug - Related categories now shown when there is no categories
++ Recommend page now check valid e-mail addresses in client's browser
+# Firefox user not able to save category's description. Removed initEditor()
++ Allow searching for meta tags
++ Added "Browse" link in mod_mt_menu
+# Fixed Advance SEF .html bug
++ Added option to set search results sorting
+^ Improve mod_mt_random's behaviour when there is clone published. Does not show same listing across multiple clones
+# mod_mt_pathway: Renamed showPathway function to showMtPathway
++ Language - WRITE_REVIEW_FOR, BROWSE, REPORT2, RATE, RECOMMEND, ALSO_APPEAR_IN_THESE_CATEGORIES, REMOVE_RELATED_CATEGORY, REMOVE_CATEGORY, NOT_ALLOWED_TO_ADD_OWN_CAT_AS_OTHERCAT, YOU_HAVE_ALREADY_ADD_THIS_CAT, PERFORM_FULLTEXT_SEARCH, ADVANCED_SEARCH_REDIRECT, ADVANCED_SEARCH_REDIRECT2, OPERATIONS, CLOSE_THIS_WINDOW, PLEASE_WAIT_RECOUNT_IN_PROGRESS, DONE, CLOSE_THIS_WINDOW, CONTACT2, POPULAR_LISTING2, MOST_RATED_LISTING2, TOP_RATED_LISTING2, MOST_REVIEWED_LISTING2, NEW_LISTING2, FEATURED_LISTING2, ADD_LISTING2, ADD_CAT2, LISTING_INFORMATION, ALLOW_SUBMISSION, ADVANCED_SEARCH_REDIRECT
++ Support Google Maps
++ Improved presentation of reviews in front-end. Added Alternate background color and anchor tag for individual review
+# Listing not recognizing custom template assigned to it
+^ Default Tree level for fullmenu and explorer increased to 4
++ Added a confirmation page before deleting categories
++ Allow visitor to select category in Add Listing page
++ Added Gif support for GD2
+# Fixed searching for 2 words with SEF Advance enabled
+^ MetaTags are now prepended instead of appended to Global Meta Tags
++ Allow simple search to perform using MySQL Full-Text search
++ More display options for mod_mt_listing, mod_mt_listing_wpic & mod_mt_random
++ mod_mt_listing_wpic now allows showing listings from current categories only
+# Fixed "[Delete]" bugs in listingname Savant2 Plugin
+^ Improved approval process. Allow approving listings sequentially
++ Searchbot now search for categories
+^ Change Advanced Search behaviour by adding an intermediate page to redirect visitors to a permanent URL with search_id. Solves IE's expired warning
++ Template - page_advSearchRedirect.tpl.php
++ Added recount function for each individual category
++ mod_mt_listing now support Top List from custom fields
++ Added cat_allow_submission option to show or hide "Add listing to here" link in category page
+
+version 1.03 - Feb 2004 ------------------------------------------------------------------------------
+# Searchbot to include Itemid.
+# Changing category does not shows uploaded image
+# Copying listing does not copy custom fields
+# Listing duplicated after approving a listing
+! Preview Image disabled by default
++ Language - IMAGE_REMOVED
+# Error when approving new updated photo from owner
+# Prevent public from editing listing
+# Add Itemid to "Recommend" and "Report" email's link
+# Execution timeout bug in mod_mt_random
+# Added ID prefix to all uploaded images for listing and category
+# Fix bug on handling/copy images for listing and category
+
+version 1.02 - 31 Jan 2004 ------------------------------------------------------------------------------
++ Added support for custom field's caption
++ Added more custom fields to total of 30
++ Added support for checkbox input in page_addlisting.tpl.php template
++ New Savant Plugin - mt_checkboxes
+# Fixed missing image after a listing is approved
+! All HTML tags are stripped before passing it to sub_listingSummary.tpl.php. Allowed tags = <h1><b><i><a><ul><li><pre><hr><blockquote><img>
+# Fixed mod_mt_search not returning proper search results when using Mambo's built-in SEF
+# Fixed Typo - REPORT_PROBLEM_3
+# Fixed problem displaying listing starting with numbers in listalpha
+# Fixed problem with pagination in back-end
+! Rearranged Publishing tab's item in edit link page
+# Prevent unauthorized user from accessing deletelisting page
+# Fixed bug not sending notification email to owner upon listing's approval
++ List Pending Listing - Bold listing name when it is a new listing
++ Simple search now allow search for current and its sub categories only
++ Added a new module called "Tree Search: Fixed Catgories" that is similar to Tree Search module but with additional drop down box for categories
++ Added <br /> breaks to all new lines in review text
+# Fixed Explorer's invalid css path in back-end
+# Fixed missing </div> tag in mod_mt_pathway
++ Language - ALL_CATEGORIES
+! Language - Remove URL at NEW_LISTING_EMAIL_MSG_WAITING_APPROVAL
+! Language - NEW_LISTING_EMAIL_MSG_WAITING_APPROVAL - remove the URL when a new listing is pending approval
+# "Root" appears in Category name when adding categories in Root directory
+# Remove "index.html" in list of templates
+# Remove border in edit icon
+# Fixed URL bug when using sefRelToAbs function
+# Fixed error when back-end's advanced search return large number of results
+# Fixed error returning unpublished listing in back-end's advanced search
+! Initialize visited field to 0 when adding new listing
+
+version 1.01 - 31 Dec 2004 ------------------------------------------------------------------------------
++ Now all "Top" page (Featured, Most Reviewed, Popular etc.) only show listing from their own categories
+# Fixed [Delete] option appearing on all listing
+# Fixed mod_mt_fullmenu - Not able to click and goto childless categories
+# Fixed mod_mt_search - width too wide, breaking the layout on some IE browser
+# Fixed page_errorListing.tpl.php undefined link_id and Itemid variable
+# Fixed problem submitting reviews using Firefox
+# Fixed inconsistent font size in p and td tags
+# Fixed bug when viewing print link in IE - Savant2_Plugin_ahrefprint.php
+# Fixed typos - hp_version exists in installation routine
++ Added VISITED counter to bluetree_business template
+# Fixed duplicate language
+# Fixed duplicate declaration of $size in admin.mtree.class.php
+# Fixed errors when searching for non-existent items using Quick Go
+! Shows image in print view
+! Only shows approved reviews when showing reviews for a particular listing.
++ Added Copy Listing function
+- Removed unused ordering option in edit listing
+! Only shows categories in first page of listalpha
+
+version 1.00 - 1 Dec 2004 ------------------------------------------------------------------------------
+! Version 1.00 released

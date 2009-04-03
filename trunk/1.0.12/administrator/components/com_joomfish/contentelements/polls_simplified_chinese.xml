@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<joomfish type="contentelement">
+  <name>投票</name>
+  <author>A. Kempkens</author>
+  <version>1.7</version>
+  <description>定义核心程式的投票元件</description>
+  <reference>
+  	<table name="polls">
+  		<field type="referenceid" name="id" translate="0">ID</field>
+  		<field type="titletext" name="title" translate="1">标题</field>
+  		<field type="checked_out_by" name="checked_out" translate="0">检视人</field>
+  		<field type="checked_out_date" name="checked_out_time" translate="0">检视日期</field>
+  	</table>
+  	<subtable name="poll_data">
+  		<field type="referenceid" name="id" translate="0">ID</field>
+  		<field type="titletext" name="text" translate="1">Option</field>
+  	</subtable>
+  </reference>
+</joomfish>

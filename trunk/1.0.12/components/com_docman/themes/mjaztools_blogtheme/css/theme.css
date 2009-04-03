@@ -1,0 +1,122 @@
+/**
+ * MjazTools BlogTheme for DOCMan
+ * @version      $Id: theme.css 32 2007-11-06 11:40:26Z mjaz $
+ * @package      mjaztools_blogtheme
+ * @copyright    Copyright (C) 2007 MjazTools. All rights reserved.
+ * @license      GNU/GPL
+ * @link 		 http://www.mjaztools.com/ MjazTools Official Site
+ */
+
+img  		  { border: 0 none;
+}
+
+.clr 		  { clear: both;    }
+
+
+
+.dm_cat 			  			{ padding: 3px; }
+.dm_cat .dm_name 			{ float: left; font-size: 14px; font-weight: bold; color: #666; margin-bottom: 3px; }
+.dm_cat .dm_description { float: left; clear: left;  }
+.dm_cat .dm_thumb       { float: right; margin-top: -15px; }
+
+.dm_unpublished 		   { background-color: #FFCCCC;}
+.dm_unapproved 		   {background-color: #CCFFCC;}
+
+#dm_tooltip caption
+{ margin: auto; padding: 5px 0 5px 0; font-weight: bold; }
+
+#dm_tooltip table {
+	border-top: 1px solid gray;
+	border-left: 1px solid gray;
+	border-collapse: collapse;
+}
+
+#dm_tooltip td {
+	border-right: 1px solid gray;
+	border-bottom: 1px solid gray;
+}
+
+#dm_tooltip thead       { background-color: #FFCC00; font-weight: bold; }
+
+#dm_tooltip thead td { text-align: center; }
+
+#dm_tooltip td, #dm_tooltip thead { padding: 2px; }
+
+/* ---------- Taskbar styles ---------------------------------------- */
+
+
+table.dm_taskbar {
+	border:none;
+	width:100%;
+	background-color:#CCFFCC;
+	font-size:13px;
+}
+.dm_taskbar td  {
+
+	padding: 0 0 0 3px;
+   width:  20px;
+	font-size: 13px;
+}
+.dm_taskbar  a {
+
+ }
+.dm_taskbar  a:link,
+.dm_taskbar  a:visited,
+.dm_taskbar  a:hover {
+
+ }
+.dm_taskbar  a:link,
+ .dm_taskbar  a:visited {
+
+ }
+ .dm_taskbar  a:hover {
+
+ }
+
+ .approve { background-color: #CCFFCC; }
+ .publish{ background-color: #FFCCCC; }
+
+ /* ---------- Toolbar styles --------------------------------------- */
+
+ .dm_toolbar    { list-style: none; height: 32px; margin-right: 25px; }
+ .dm_toolbar li { float: right; background-image: none; }
+
+ .dm_toolbar .dm_btn        { text-indent: -5000px; height: 32px; width: 32px; display: block;}
+ .dm_toolbar #dm_btn_save         { background-image: url(../images/save.png)   }
+ .dm_toolbar #dm_btn_cancel       { background-image: url(../images/cancel.png) }
+ .dm_toolbar #dm_btn_save:hover   { background-image: url(../images/save-over.png)   }
+ .dm_toolbar #dm_btn_cancel:hover { background-image: url(../images/cancel-over.png) }
+
+ /* ---------- Form styles ------------------------------------------ */
+
+.dm_form {
+	margin: 0 auto;
+ 	width: 35em;
+	padding: 1em 1em 1em 1em;
+	border: 1px solid #cecece;
+ }
+.dm_form fieldset { border: 0 none; margin: 0; padding: 0.5em;}
+
+/* This line causes the "To wide editor problem" When set to none */
+.dm_form br       { display: block; }
+/* End */
+
+.dm_form label    { display: block; width: 100px; font-weight: bold; float: left; }
+.dm_form label.nofloat { float: none; }
+.dm_form p        { text-align: left; }
+.dm_form fieldset.dm_button    { border-top: 1px solid Gray; }
+.dm_form select option.label { background-color: #EEE; border: 1px solid #DDD; color : #333; }
+.dm_form .editor { float: none;  }
+
+#dm_frmupload label { width: 100px; padding-right: 10px;}
+#dm_frmupload #dm_btn_back   { float: left;  }
+#dm_frmupload #dm_btn_submit { float: right; }
+
+#dm_frmedit { width: 90%; border: 0 none; }
+#dm_frmedit #dmthumbnail_preview { float: right; margin-right: 30px; height: 80px; width: 80px; padding: 3px; border: 1px solid silver; }
+#dm_frmedit #license-page label  { width: 250px; }
+
+/* ---------- Nav styles ------------------------------------------ */
+
+#dm_nav 	  { clear: both; padding-top: 15px; margin-top: 15px; border-top: 2px dotted #ddd;}
+#dm_nav div { margin-top: 10px; }

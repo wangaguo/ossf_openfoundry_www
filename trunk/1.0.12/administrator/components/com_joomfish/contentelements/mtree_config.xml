@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>Mtree Config</name>
+  <author>Ivo Apostolov</author>
+  <version>1.7</version>
+  <description>Joom!Fish definition for Mtree Config</description>
+  <reference>
+     <table name="mt_config">
+        <field type="referenceid" name="id" translate="0">ID</field>
+        <field type="titletext" name="name" translate="0">Name</field>
+        <field type="text" name="value" translate="1">Value</field>
+     </table>
+  </reference>
+</joomfish>

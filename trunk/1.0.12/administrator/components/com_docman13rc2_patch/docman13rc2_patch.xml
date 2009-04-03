@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<mosinstall type="component" version="1.0">
+  <name>docman13rc2_patch</name>
+  <creationDate>September 2007</creationDate>
+  <author>DOCman Project</author>
+  <copyright>This extension is released under the GNU/GPL License</copyright>
+  <authorEmail>support@joomlatools.org</authorEmail>
+  <authorUrl>www.joomlatools.org</authorUrl>
+  <version>1.3 RC2.1</version>
+  <description>This patch allows you to uninstall DOCman v1.3RC2 without losing your uploaded files or any data within DOCman.</description>
+  <installfile>install.docman13rc2_patch.php</installfile>
+  <administration>
+  	<menu>docman13rc2_patch</menu>
+    <files>
+    	<filename>admin.docman13rc2_patch.php</filename>
+    	<filename>patchfiles/docman.xml.~patch</filename>
+    	<filename>patchfiles/admin.docman.php.~patch</filename>
+    </files>
+  </administration>
+</mosinstall>

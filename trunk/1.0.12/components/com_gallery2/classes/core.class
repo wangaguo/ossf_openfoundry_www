@@ -1,0 +1,386 @@
+<?php 
+defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+/**
+ * core class file
+ *
+ * @package com_gallery2
+ * @subpackage Class files
+ */
+
+/**
+ * This is the core class for com_gallery2 component.
+ *
+ * @package com_gallery2
+ * @subpackage Classes
+ */
+class core {
+	
+
+	/**
+	 * Will call for the constuction of config array if needed
+	 *
+	 * @return array
+	 */
+	function loadConfig($force=false){
+		global $g2Config, $g2Cache;
+		static $isConfigInitiated;
+		if(empty($isConfigInitiated) || $force){
+			if($force){
+				$id = '7ded3fc2fda60294b41fb584d46342c1';
+				$file = BaseUrl.'/cache/fileCache/expires/long/g2Cache_'.$id;
+				$check = file_exists($file);
+				if (!@unlink($file) && $check){
+					/* problem, clean the entire cache if this happens */
+					$g2Cache->removeCache('cache');
+				}
+			}
+			
+		    $GLOBALS['g2Config'] = $g2Cache->getCachedFunction('expiresLong', 'core::g2Config');
+		    $isConfigInitiated = true;
+		}
+		return $g2Config;
+	}
+	
+	
+
+	/**
+	 * Constuctor of the config array
+	 *
+	 * @return array
+	 */
+	function g2Config(){
+
+			$g2Config=array();
+			global $Itemid, $database, $option, $act, $mosConfig_live_site, $mosConfig_absolute_path;
+			global $mosConfig_sef;
+			//config from database
+			$query = "SELECT * FROM #__gallery2";
+					$database->setQuery( $query );
+					$new_data = $database->query();
+					while ($row = mysql_fetch_assoc($new_data)) {
+						$key = $row['key'];
+						/* unserialize some fields first */ 
+						if($key == 'userAlbumView' || $key == 'userAlbumComment'
+							|| $key == 'userAlbumExtra'){
+							$row['value'] = unserialize($row['value']);
+						}
+						$g2Config["$key"]=$row['value'];
+					}
+			/* userCheckParams unserialize */
+			$g2Config['userCheckParams'] = unserialize(base64_decode($g2Config['userCheckParams']));
+			//itemid
+			if($option != 'com_gallery2' OR $act=='conf' OR $Itemid ==0){
+				$query = "SELECT id"
+				. "\n FROM #__menu"
+				. "\n WHERE link = 'index.php?option=com_gallery2'"
+				. "\n AND published = '1'"
+				. "\n ORDER BY `access`, `parent`, `ordering` ASC LIMIT 1";
+				$database->setQuery( $query );
+				$pageId = $database->loadResult();		
+			} else {
+				$pageId = $Itemid;
+			}
+			
+			/* make sure we have sefRelToAbs */
+			if(!function_exists('sefRelToAbs')){
+				core::requireOnce($mosConfig_absolute_path.'/includes/sef.php');
+			}
+									
+			$g2Config['embedUri'] = parse_url(sefRelToAbs('index.php?option=com_gallery2&amp;Itemid='.$pageId));			
+			
+			$parse = parse_url(rtrim($mosConfig_live_site, '/'));
+			$g2Config['embedPath'] 	= empty($parse['path']) ? '/' : $parse['path'].'/';
+	
+			if(empty($mosConfig_sef)){
+				$g2Config['embedUri'] = $g2Config['embedPath'].'index.php?'.$g2Config['embedUri']['query'];
+			} else {
+				/* str_replace for user with mosConfig_live_site ending with slash */
+				$g2Config['embedUri'] = str_replace('//', '/', $g2Config['embedUri']['path']);
+			}
+	
+		return $g2Config;
+	}
+	
+
+	/**
+	 * Will start a Gallery2 session, use param false if handel_request is called.
+	 *
+	 * @param boolean $fullInit
+	 * @return boolean
+	 */
+	function initiatedG2($fullInit = true){
+		static $isInitiated;
+		if(empty($isInitiated)){
+			//the actual code
+			global $my;
+			$g2Config = core::loadConfig();
+			$lang = core::switchLang();
+			core::embed();
+			//userid
+			if ($g2Config['mirrorUsers'] == 1){
+				$userId = $my->id;
+			 } else {
+				$userId = '';
+			 }
+			if($userId == 0){ $userId = ''; }
+			if($userId == '-1'){ $userId = ''; }
+			//gogo
+			$isInitiated = GalleryEmbed::init(array(
+				   'embedPath' => $g2Config['embedPath'],
+				   'g2Uri' => $g2Config['g2Uri'],
+				   'loginRedirect' => $g2Config['loginredirect'],
+				   'embedUri' => $g2Config['embedUri'],
+				   'activeUserId' => $userId,
+				   'fullInit' => $fullInit,
+				   'activeLanguage' => $lang,
+				   'apiVersion' => array(1,0)
+				   )); 
+		}
+		$g2Config = core::loadConfig();
+		if ($g2Config['mirrorUsers'] == 1 && $isInitiated && !empty($my->username)) {
+			core::classRequireOnce('user');
+			$my->load($userId);
+			$joomlaUser = array('username' => $my->username, 'email' => $my->email, 
+								'fullname' => $my->name, 'hashedpassword' => $my->password, 
+								'hashmethod' => 'md5');
+	        if ($isInitiated->getErrorCode() & ERROR_MISSING_OBJECT){
+	            // check if there's no G2 user mapped to the activeUserId
+	            $ret = GalleryEmbed::isExternalIdMapped($my->id, 'GalleryUser');
+	            if ($ret->getErrorCode() & ERROR_MISSING_OBJECT){
+	                // user not mapped, create G2 user now
+	                $ret = user::newUser($my->id, $joomlaUser);
+	                if ($ret){
+	                    if ($ret->getErrorCode() & ERROR_COLLISION) {
+	                        list ($ret, $g2user) = GalleryCoreApi::fetchUserByUserName($my->username);
+	                        if (!$ret){
+	                        	/* check if users are the same */
+		                   		core::classRequireOnce('userSync');
+	    	               		$ret = userSync::compareUsers(	$g2user, $joomlaUser,
+	        	           										$g2Config['userCheckParams']);
+	            	       		if (count($ret) > 0){
+	                	   			/* we can't make user the check failed */
+	                   				/* TODO error report here or send msg to admin */
+	                   				print 'sync error: We can sync your account to G2, ask webmaster to'
+	                   				 	 .'lower security settings or look up what the problem is.<br />';
+	   	                		} else {
+	                            	GalleryEmbed::addExternalIdMapEntry($my->id, $g2user->getId(), 'GalleryUser');
+	   	                		}
+	   	                	}
+	                    } else {
+	                        print $ret->getAsHtml();
+	                        print 'marker 3';
+	                    }
+	                }
+	                
+	            } else {
+	                /* senario: map is there but corrupt on g2 side */
+	                GalleryCoreApi::relativeRequireOnce('modules/core/classes/ExternalIdMap.class');
+	                ExternalIdMap::removeMapEntry(array('externalId' => $my->id, 'entityType' => 'GalleryUser'));
+	                $ret = user::newUser($my->id, array('username' => $my->username, 
+	                                                'email' => $my->email, 'fullname' => $my->name, 
+	                                                'hashedpassword' => $my->password, 'hashmethod' => 'md5'));
+	            }
+	        } else {
+	            print $ret->getAsHtml();
+	            print 'marker 5';
+	        }
+	    GalleryEmbed::checkActiveUser($my->id);
+	    }
+		return $isInitiated;
+	}	
+	
+	
+	/**
+	 * include embed.php
+	 *
+	 * @return boolean(true)
+	 */
+	function embed(){
+		static $setEmbed;
+		if(empty($setEmbed)){
+			$g2Config = core::loadConfig();
+			require_once( $g2Config['path'] . 'embed.php');
+			$setEmbed = true;
+		}
+		return true;
+	}
+	
+
+	/**
+	 * Will switch language to mambo language or mambelfish
+	 *
+	 * @return string
+	 */
+	function switchLang(){
+		global $iso_client_lang, $mosConfig_locale;
+		if(!empty($iso_client_lang)){
+			return $iso_client_lang;
+		}
+		return $mosConfig_locale;	
+	}
+
+	/**
+	 * pathway function, now includes title changes and keywords
+	 *
+	 * @param integer $g2_itemId
+	 * @param string $headHtml
+	 * @return boolean
+	 */
+	function pathWay($g2itemId, $headHtml){
+	
+		global $mainframe, $g2Config, $gallery;
+		
+		list ($ret, $parents) = GalleryCoreApi::fetchParentSequence($g2itemId);
+		if ($ret){ 
+			return false;
+		}
+		
+		$count = count($parents);
+		if($count > 0){
+			$urlGenerator = $gallery->getUrlGenerator();
+			foreach($parents as $itemId){
+				list ($ret,	$item) = GalleryCoreApi::loadEntitiesById($itemId);
+				$title = $item->getTitle() ? $item->getTitle() : $item->getPathComponent();
+				$title = preg_replace('/\r\n/', ' ', $title);
+				$url = $urlGenerator->generateUrl(array('view' => 'core.ShowItem', 'itemId' => $itemId));
+				$mainframe->AppendPathway(' <a href="'.$url.'" class="pathway">'.$title.'</a>');
+			}
+		}
+		/* now add active item as no link */
+		list ( $title, $css, $js) = GalleryEmbed::parseHead($headHtml);
+		list ($ret,	$item) = GalleryCoreApi::loadEntitiesById($g2itemId);
+		$mainframe->AppendPathway(' '.$title);
+		
+		$mainframe->setPageTitle($title);
+		$mainframe->appendMetaTag( 'description', $item->getSummary());
+		$mainframe->appendMetaTag( 'keywords', $item->getKeywords());
+		
+		foreach($css as $cssFile){
+			$mainframe->addCustomHeadTag( $cssFile );
+		}
+		
+		foreach($js as $javascript){
+			$mainframe->addCustomHeadTag( $javascript );
+		}
+			
+		return true;		
+	}
+	
+	/**
+     * Require a file, but only once.
+     *
+     * @param the file name
+     */
+    function requireOnce($file) {
+		static $loaded;
+		if (!isset($loaded[$file])) {
+			require_once($file);
+			$loaded[$file] = 1;
+		}
+    }
+
+    /**
+     * Like requireOnce, but use a path relative from the com_gallery2 directory.
+     *
+     * @param the file name
+     */
+    function relativeRequireOnce($file) {
+		static $loaded;
+		if (!isset($loaded[$file])) {
+			$loaded[$file] = 1;
+			require_once(dirname(__FILE__) . '/../' . $file);
+		}
+    }
+	
+	 /**
+     * Like requireOnce, but includes class file.
+     *
+     * @param the file name
+     */
+    function classRequireOnce($file) {
+		static $loaded;
+		if (!isset($loaded[$file])) {
+			$loaded[$file] = 1;
+			require_once(dirname(__FILE__) . '/'.$file.'.class');
+		}
+    }
+	
+     /**
+     * Will return a album tree array, and a info array containing info about the albums
+     *
+     * @param integer $depth
+     * @param intger $itemId
+     * @param integer $userId use 5 for guest and 6, these are G2 userIds
+     * @return array($tree, $info)
+     */
+    function albumTree($depth=null, $itemId=null, $userId=null){
+    	core::initiatedG2();
+    	if(isset($userId)){
+    		core::classRequireOnce('utility');
+    		$userId = utility::getG2Id($userId);
+    	}
+	    list ($ret, $tree) = GalleryCoreApi::fetchAlbumTree($itemId, $depth, $userId);
+		if ($ret) {
+			if ($ret->getErrorCode() & ERROR_PERMISSION_DENIED) {
+			   $tree = null;
+			} else {
+				return false;
+			}
+		}
+		list ($ret, $items) = GalleryCoreApi::loadEntitiesById(GalleryUtilities::arrayKeysRecursive($tree));
+		if ($ret) {
+			return false;
+		}
+		global $gallery;
+		$urlGenerator = $gallery->getUrlGenerator();
+		foreach ($items as $item) {
+			$title = $item->getTitle() ? $item->getTitle() : $item->getPathComponent();
+			$currentId = $item->getId();
+			$info[$currentId]['title'] = preg_replace('/\r\n/', ' ', $title);
+			$info[$currentId]['summary']= $item->getsummary();
+			$info[$currentId]['description']= $item->getdescription();
+			$info[$currentId]['creationDate']= $item->getcreationTimestamp();
+			$info[$currentId]['lastmodified']= $item->getmodificationTimestamp();
+			$info[$currentId]['parentid']= $item->getparentId();
+			if($info[$currentId]['parentid'] != 0){
+				list ($ret, $parent) = GalleryCoreApi::loadEntitiesById($info[$currentId]['parentid']);
+				$parent = $parent->getTitle() ? $parent->getTitle() : $parent->getPathComponent();
+				$info[$currentId]['parentname'] = preg_replace('/\r\n/', ' ', $parent);
+			}
+			$info[$currentId]['ownerid']= $item->getownerId();
+		   	$info[$currentId]['viewedsince']= $item->getviewedSinceTimestamp();
+			$info[$currentId]['keywords']= $item->getkeywords();
+			list ($ret, $info[$currentId]['views']) = GalleryCoreApi::fetchItemViewCount($currentId);
+			$info[$currentId]['url'] = $urlGenerator->generateUrl(array('view' => 'core.ShowItem', 'itemId' => $currentId));
+		}
+		unset($items, $item, $currentId, $urlGenerator, $gallery);
+		return array($tree, $info);
+    }
+    
+    /**
+     * Get all ids for current user
+     *
+     * @param array('view.comment', 'core.view')
+     * @param integer gallery2 userid
+     * @return array
+     */
+    function getAclIds($permissions = array('core.view'), $g2UserId){
+    	core::initiatedG2();
+    	global $gallery;
+	    if(!is_array($permissions)){
+	    	$permissions = array($permissions);
+	    }
+		$aclIds = 0;
+		foreach($permissions as $permission){
+			list (, $idArray) = GalleryCoreApi::fetchAccessListIds($permission, $g2UserId);
+			if(aclIds ==0){
+				$aclIds = $idArray;
+			} else {
+				$aclIds = array_intersect($aclIds, $idArray);
+			}
+		}
+		return $aclIds;
+    }
+}
+
+?>

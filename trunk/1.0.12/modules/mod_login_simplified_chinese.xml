@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Login Form</name>
+	<author>Joomla! Project</author>
+	<creationDate>July 2004</creationDate>
+	<copyright>(C) 2005 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>admin@joomla.org</authorEmail>
+	<authorUrl>www.joomla.org</authorUrl>
+	<version>1.0.0</version>
+	<description>This module displays a Username and Password login form. It also displays a link to retrieve a forgotten password. If user registration is enabled, (refer to the Configuration settings), then another link will be shown to invite users to self-register.</description>
+	<files>
+		<filename module="mod_login">mod_login.php</filename>
+	</files>
+	<params>
+	<param name="moduleclass_sfx" type="text" default="" label="模块CSS字尾" description="一个应用于模块CSS的字尾(table.moduletable)，可以让这页面有独立风格" />
+		<param name="pretext" type="textarea" cols="20" rows="5" default="" label="前说明文字" description="这是显示在登录表单上方的文字或HTML内容" />
+		<param name="posttext" type="textarea" cols="20" rows="5" label="后说明文字" description="这是显示在登录表单下方的文字或HTML内容" />
+		<param name="login" type="text" default="" label="登录导向网址" description="在登录后要导向那个页面，如果没有填入则会导向首页" />
+		<param name="logout" type="text" default="" label="退出导向网址" description="在退出后要导向那个页面，如果没有填入则会导向首页" />
+		<param name="login_message" type="radio" default="0" label="Login Message" description="显示/隐藏 the javascript Pop-up indicating Login Success">
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="logout_message" type="radio" default="0" label="退出讯息" description="显示/隐藏javascript跳出视窗，表示退出成功">
+			<option value="0">隐藏</option>
+			<option value="1">显示</option>
+		</param>
+		<param name="greeting" type="radio" default="1" label="欢迎词" description="显示/隐藏简单的欢迎字词">
+			<option value="0">否</option>
+			<option value="1">是</option>
+		</param>
+		<param name="name" type="list" default="0" label="名字/帐号">
+			<option value="0">帐号</option>
+			<option value="1">名字</option>
+		</param>
+	</params>
+</mosinstall>
