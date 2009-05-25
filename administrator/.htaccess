@@ -1,4 +1,0 @@
-AuthName "Please input password"
-AuthType Basic
-AuthUserFile /usr/local/etc/apache22/.htpasswd
-Require valid-user

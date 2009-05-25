@@ -1,4 +1,0 @@
-<div class="commentBlogView"> 
-	    	<div class="show-linkmore"> <a href="%LINK_READMORE%"> Read More </a> </div>
-    	        	<div class="show-hit"><a href="%LINK_COMMENT%">Hits: %HITS%</a></div>
-    </div>
