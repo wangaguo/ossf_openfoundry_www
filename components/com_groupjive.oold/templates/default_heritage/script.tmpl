@@ -1,0 +1,17 @@
+<mos:tmpl name="javascript">
+<script type="text/javascript">
+function setTypes() {
+  var typeName=new Array('<mos:translate>GJ_OPEN</mos:translate>', '<mos:translate>GJ_APREQUIRED</mos:translate>', '<mos:translate>GJ_PRIVATE</mos:translate>' );
+  var typeCat = new Array();
+  {GJ_TYPECAT}
+  var cat=document.getElementById("category"); 
+  var gj_type=document.getElementById("type");
+  gj_type.length=0;
+  for( var i=0; i<3; i++ ) {
+    if( typeCat[cat.value][i] ) {
+      gj_type[gj_type.length]=new Option( typeName[i], i+1 );
+    }
+  }
+}
+</script>
+  </mos:tmpl>

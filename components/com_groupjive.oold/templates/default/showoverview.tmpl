@@ -1,0 +1,65 @@
+<!-- ======================================
+showoverview = lists all Categories in GroupJive
+-------------------------------------------
+The showoverview.tmpl displays a list of all
+Categories in GroupJive.
+
+showoverview.tmpl is also the page that Joomla!
+links to when a Menu link is created in Joomla!
+for the GroupJive component.
+
+The list displays only two items
+CATNAME (the name of the category)
+CAT_IMAGE (the category logo image)the Category
+=========================================== -->
+
+<mos:tmpl name="showoverview">
+	<div id="showoverview-tmpl-wrapper">
+	
+		<div class="sectiontableheader">
+			<div id="showoverview-title">
+				<mos:translate>GJ_GROUP_CATEGORY</mos:translate>
+			</div>
+		</div>
+		
+		<mos:tmpl name="list_overview" type="oddeven">
+		
+			<mos:sub condition="__odd">
+				<div class="categorylist-wrapper">
+					<div class="categorylist-catimage-odd" width="100px">
+						{CAT_IMAGE}
+					</div>
+					<div class="categorylist-catlink-odd">&nbsp; 
+						<a href="<mos:sef>index.php?option=com_groupjive&task=showcat&id={ID}&Itemid={ITEMID}</mos:sef>" class="category" >
+							{CATNAME} ({CAT_ISONLINE})
+						</a>
+					</div>
+				<div class="clearfloat"></div>
+				</div>
+
+				<div class="listborderbottom"></div>
+			</mos:sub>
+			
+			
+			<mos:sub condition="__even">
+				<div class="categorylist-wrapper">
+					<div class="categorylist-catimage-even" width="100px">
+						{CAT_IMAGE}
+					</div>
+					<div class="categorylist-catlink-even">&nbsp;
+						<a href="<mos:sef>index.php?option=com_groupjive&task=showcat&id={ID}&Itemid={ITEMID}</mos:sef>" class="category" >
+							{CATNAME} ({CAT_ISONLINE})
+						</a>
+					</div>
+					<div class="clearfloat"></div>				
+				</div>
+
+				<div class="listborderbottom"></div>
+			</mos:sub>
+			
+		</mos:tmpl>
+	<div class="clearfloat"></div>
+	</div>
+	<!-- end showoverview-tmpl-wrapper -->
+	
+</mos:tmpl>

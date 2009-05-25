@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall version="4.5.2" type="mambot" group="content">
+  <name>Jom Comment</name>
+  <author></author>
+  <creationDate>04.11.2007</creationDate>
+  <copyright>Copyright 2006. All rights reserved!</copyright>
+  <license>Copyrighted </license>
+  <authorEmail></authorEmail>
+  <authorUrl></authorUrl>
+  <version>2.0</version>
+  <description>Ajax Comment System</description>
+  <files>
+    <filename mambot="jom_comment_bot">jom_comment_bot.php</filename>    
+  </files>
+  <install>
+    <queries>
+    </queries>
+  </install>
+  <params></params>
+</mosinstall>

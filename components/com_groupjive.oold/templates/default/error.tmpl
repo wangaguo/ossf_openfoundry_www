@@ -1,0 +1,125 @@
+<mos:tmpl name="errorpage">
+	<mos:tmpl name="errortype" type="condition" conditionvar="GJ_MESSAGE_TYPE" varscope="errorpage">
+		<mos:sub condition="error">
+			<div class="errorpage-tmpl-wrapper">
+				<div class="errorpage-main-container">
+					<div class="errorpage-inner-container">
+					
+						<div id="err_error-intro">
+							<mos:translate>GJ_ERROR_INTRO</mos:translate>
+						</div>
+						<div class="clearfloat"></div>
+						
+						<div class="error-msg-container">
+							<div id="err_error-intromessage">
+								{GJ_ERROR_INTROMESSAGE}
+							</div>
+							<br />
+							<div id="err_error-message">
+								{GJ_ERROR_MESSAGE}
+							</div>
+							<br />
+						</div>
+						<!-- end error-msg-container -->
+						<div class="clearfloat"></div>
+						
+						<mos:tmpl name="hidemaillinkerror" type="condition" conditionvar="GJ_SHOWEMAIL" varscope="errorpage">
+							<mos:sub condition="0"></mos:sub>
+							
+							<mos:sub condition="__default">
+								<div class="error-email-moderator">
+									<a href="<mos:sef>index.php?option=com_groupjive&task=mailowner&groupid={ID}&Itemid={ITEMID}</mos:sef>">
+										<img src="images/M_images/emailButton.png" border="0" alt="<mos:translate>GJ_MAIL_OWNER</mos:translate>"/>&nbsp;
+										<mos:translate>GJ_MAIL_OWNER</mos:translate>
+									</a>
+								</div>
+							</mos:sub>
+						</mos:tmpl>
+						<!-- end hidemaillinkerror template -->
+						
+						<div class="errorlink-goback">{GJ_ERROR_LINK}</div>
+					</div>
+					<!-- errorpage-inner-container -->
+				</div>
+				<!-- end errorpage-main-container -->
+			</div>
+			<!-- end errorpage-tmpl-wrapper -->
+		</mos:sub>
+
+		<mos:sub condition="info">
+			<div class="errorpage-tmpl-wrapper">
+				<div class="errorpage-main-container">
+					<div class="errorpage-inner-container">
+						<div id="def_error-intro">
+							<mos:translate>GJ_ERROR_INTRO</mos:translate>
+						</div>
+						<div class="clearfloat"></div>
+						
+						<div class="error-msg-container">
+							<div id="def_error-intromessage">
+								{GJ_ERROR_INTROMESSAGE}
+							</div>
+							<br />
+							<div id="def_error-message">
+								{GJ_ERROR_MESSAGE}
+							</div>
+							<br />
+						</div>
+						<div class="clearfloat"></div>
+						<div class="errorlink-goback">{GJ_ERROR_LINK}</div>
+					</div>
+					<!-- errorpage-inner-container -->
+				</div>
+				<!-- end errorpage-main-container -->
+			</div>
+			<!-- end errorpage-tmpl-wrapper -->
+		</mos:sub>
+
+		<mos:sub condition="__default">
+			<div class="errorpage-tmpl-wrapper">
+				<div class="errorpage-main-container">
+					<div class="errorpage-inner-container">
+						<div id="def_error-intro">
+							<mos:translate>GJ_ERROR_INTRO</mos:translate>
+						</div>
+						<div class="clearfloat"></div>
+						
+						<div class="error-msg-container">
+							<div id="def_error-intromessage">
+								{GJ_ERROR_INTROMESSAGE}
+							</div>
+							<br />
+							<div id="def_error-message">
+								{GJ_ERROR_MESSAGE}
+							</div>
+							<br />
+						</div>
+						<div class="clearfloat"></div>
+						
+						<mos:tmpl name="hidemaillinkdefault" type="condition" conditionvar="GJ_SHOWEMAIL" varscope="errorpage">
+						
+							<mos:sub condition="0"></mos:sub>
+							
+							<mos:sub condition="__default">
+								<div class="error-email-moderator">
+									<a href="<mos:sef>index.php?option=com_groupjive&task=mailowner&groupid={ID}&Itemid={ITEMID}</mos:sef>">
+										<img src="images/M_images/emailButton.png" border="0" alt="<mos:translate>GJ_MAIL_OWNER</mos:translate>"/>&nbsp;
+										<mos:translate>GJ_MAIL_OWNER</mos:translate>
+									</a>
+								</div>
+							</mos:sub>
+						</mos:tmpl>
+						<!-- end hidemaillinkdefault -->
+						
+						<div class="errorlink-goback">{GJ_ERROR_LINK}</div>
+					</div>
+					<!-- errorpage-inner-container -->
+				</div>
+				<!-- end errorpage-main-container -->
+			</div>
+			<!-- end errorpage-tmpl-wrapper -->
+		</mos:sub>
+		
+	</mos:tmpl>
+
+</mos:tmpl>

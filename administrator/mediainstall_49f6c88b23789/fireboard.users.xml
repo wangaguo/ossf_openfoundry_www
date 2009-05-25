@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>Fireboard:Users</name>
+  <author>Ivo Apostolov</author>
+  <version>1.0</version>
+  <description>Definition for Fireboard Users</description>
+  <primarykey>userid</primarykey>
+  <reference>
+    <table name="fb_users">
+      <field type="referenceid" name="userid" translate="0">User ID</field>
+      <field type="titletext" name="signature" translate="0">Signature - Title</field>
+      <field type="htmltext" name="signature" translate="1">Signature</field>
+    </table>
+  </reference>
+</joomfish>

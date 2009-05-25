@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall type="module">
+	<name>Random Listing</name>
+	<author>Mosets Consulting</author>
+	<creationDate>February 2008</creationDate>
+	<copyright>(C) 2005-2008 Mosets Consulting http://www.mosets.com/</copyright>
+	<authorEmail>mtree@mosets.com</authorEmail>
+	<authorUrl>www.mosets.com</authorUrl>
+	<version>2.0.6</version>
+	<description>Mosets Tree Random Listing displays a random listing.</description>
+	<files>
+		<filename module="mod_mt_random">mod_mt_random.php</filename>
+	</files>
+	<params>
+		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />
+		<param name="listingclass" type="text" default="" label="Listing Class" />
+		<param name="show_image" type="radio" default="1" label="Show Image">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="has_image_only" type="radio" default="1" label="Show Listing With Image only">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="show_website" type="radio" default="1" label="Show Website">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="show_category" type="radio" default="1" label="Show Category Name">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="show_rating" type="radio" default="1" label="Show Rating">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="show_hits" type="radio" default="0" label="Show Hits">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="show_votes" type="radio" default="0" label="Show Votes">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="show_reviews" type="radio" default="0" label="Show Reviews">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="show_created" type="radio" default="0" label="Show Created">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>	
+	</params>
+</mosinstall>

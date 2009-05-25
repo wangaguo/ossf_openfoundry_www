@@ -1,0 +1,115 @@
+<!-- ======================================
+member_list = Group Members
+-------------------------------------------
+member_list.tmpl displays a list of Group Members
+- - - - - 
+The top container holds pagenavigation
+- - - - - 
+The list_members template displays:
+USERNAME displays member profiles link
+ONLINESTATUS displays member presence
+- - - - - 
+If the user viewing this content is a Moderator
+the following functions also appear:
+DATE added indicates when the user was added
+MAKE_INACTIVE inactivates the user
+DELETE deletes the user
+=========================================== -->
+
+<mos:tmpl name="member_list">
+	<div id="member_list-tmpl-wrapper">
+
+		<div class="sectiontableheader">
+			<div id="member_list-title">
+				<mos:translate>GJ_MEMBERS</mos:translate>
+			</div>
+		</div>
+
+		<div id="member_list-main-container">
+		
+			<div class="current_user-count">
+				<mos:translate>GJ_CURRENT_USER</mos:translate> : {GJ_COUNT}
+			</div>
+			<div class="clearfloat"></div>
+			
+			<div id="member_list-pagenav-container">
+				<div class="pagecounter">
+					{PAGE_COUNTER}
+				</div>
+				<div class="pagelistoptions">
+					{PAGE_LIST_OPTIONS}
+				</div>
+				<div class="pagelinks">
+					{PAGE_LINKS}
+				</div>
+				<div class="clearfloat"></div>
+			</div>
+			<!-- end member_list-pagenav-container -->
+
+			<div id="member-list-headers-wrap">
+				<div id="member-list-headers">
+					<div class="member-name-left-header">
+						<mos:translate>GJ_USERNAME</mos:translate>
+					</div>
+					
+					<div class="member-presence-right-header">
+						<mos:translate>GJ_REGISTERED</mos:translate>
+					</div>
+					<div class="clearfloat"></div>
+				</div>				
+			</div>
+			<!-- end member-list-headers-wrap -->			
+			
+			<mos:tmpl name="list_members">
+			
+				<div class="member-name-left">
+					<img src="{IMAGE}" alt="{USERNAME}" />
+					<br />
+					<a href="<mos:sef>index.php?option=com_comprofiler&task=userProfile&user={ID_USER}</mos:sef>">
+						{USERNAME}
+					</a>
+				</div>
+				
+				<div class="member-presence-right">
+					<div class="presence">
+						<mos:tmpl name="onlineindicator" type="condition" conditionvar="ISONLINE" varscope="list_members">
+							<mos:sub condition="0">
+								<span style="color:red">{ONLINESTATUS}</span>
+							</mos:sub>
+							<mos:sub condition="__default">
+								<span style="color:green">{ONLINESTATUS}</span>
+							</mos:sub>
+						</mos:tmpl>
+					</div>
+					
+					<div class="date">{DATE}</div>
+					
+					<div class="moderate-member_list">
+						<mos:tmpl name="cond_show_moder_links" type="condition" conditionvar="ISMODER" varscope="list_members">
+							<mos:sub condition="yes">&nbsp;&nbsp;
+								<a href="<mos:sef>index.php?option=com_groupjive&task=delete&groupid={ID_GROUP}&userid={ID_USER}&Itemid={ITEMID}</mos:sef>"
+								onclick="return confirm('<mos:translate>GJ_DELETE_U_CONFIRM</mos:translate>')">
+									<mos:translate>GJ_DELETE</mos:translate>
+								</a>&nbsp;&nbsp;
+								<a href="<mos:sef>index.php?option=com_groupjive&task=makeinactive&groupid={ID_GROUP}&userid={ID_USER}&Itemid={ITEMID}</mos:sef>">
+									<mos:translate>GJ_MAKE_INACTIVE</mos:translate>
+								</a>
+							</mos:sub>
+							
+							<mos:sub condition="no"></mos:sub>
+						</mos:tmpl>
+					</div>
+				</div>
+				<div class="clearfloat"></div>
+				<!-- end member-presence-right -->
+				
+			</mos:tmpl>
+			<!-- end list_members -->
+			
+		</div>
+		<!-- end member_list-main-container -->
+		
+	</div>
+	<!-- end member_list-template -->
+	
+</mos:tmpl>

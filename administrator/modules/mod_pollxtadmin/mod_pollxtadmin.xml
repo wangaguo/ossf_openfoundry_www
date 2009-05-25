@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall client = "administrator" type="module">
+	<name>PollXT</name>
+	<author>Oli Merten</author>
+	<creationDate>2005/06/16</creationDate>
+	<copyright>(C) 2004 - 2005 Oli Merten</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>webmaster@mamboxt.com</authorEmail>
+	<authorUrl>www.mamboxt.com</authorUrl>
+	<version>1.20</version>
+	<description>This module shows a list of your PollXT-Polls</description>
+	<files>
+		<filename module="mod_pollxtadmin">mod_pollxtadmin.php</filename>
+	</files>
+</mosinstall>

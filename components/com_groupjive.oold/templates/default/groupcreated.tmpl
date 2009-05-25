@@ -1,0 +1,33 @@
+
+<!-- TODO ???? THIS TEMPLATE DOES NOT APPEAR TO BE CURRENTLY USED
+OR ever called by GroupJive GroupCreate. PLEASE CONFIRM USER AND/OR DELETE ???? -->
+
+<!-- ======================================
+groupcreated = group was created successfully
+-------------------------------------------
+This template is the result page upon executing
+the Create your OWN Group function. This displays a
+confirmation the Group was successfully created.
+IF administrator approval is required for Group Creation,
+the template displays the NEEDAPPROVAL variable.
+=========================================== -->
+
+<mos:tmpl name="groupcreated">
+	<div style="text-align:center">
+		<h3 class="componentheading">
+			<mos:translate>GJ_GROUP_WAS_CREATED</mos:translate>
+			<mos:tmpl name="cond_groupcreated" type="condition" conditionvar="GJ_NEEDAPPROVAL" varscope="groupcreated">
+				<mos:sub condition="yes">
+					<br />
+					<div class="gj-needapproval">
+						<mos:translate>GJ_GROUP_APPROVAL</mos:translate>
+					</div>
+				</mos:sub>
+			</mos:tmpl>
+		</h3>
+		<br />
+		<a href="<mos:sef>index.php?option=com_groupjive</mos:sef>">
+			<mos:translate>GJ_SHOWALL</mos:translate>
+		</a>
+	</div>
+</mos:tmpl>

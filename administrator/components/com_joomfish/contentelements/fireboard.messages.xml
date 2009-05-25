@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>Fireboard:Messages_Texts</name>
+  <author>Ivo Apostolov</author>
+  <version>1.0</version>
+  <description>Definition for Fireboard Message Text</description>
+  <primarykey>mesid</primarykey>
+  <reference>
+    <table name="fb_messages_text">
+       <field type="referenceid" name="mesid" translate="0">MesID</field>
+       <field type="titletext" name="message" translate="0">Message Text - Title</field>
+       <field type="htmltext" name="message" translate="1">Message Text</field>
+    </table>
+  </reference>
+</joomfish>

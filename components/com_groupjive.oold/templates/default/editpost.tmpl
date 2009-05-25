@@ -1,0 +1,47 @@
+<!-- ======================================
+editpost = Edit Bulletin Post
+-------------------------------------------
+editpost.tmpl is a FORM used to edit a
+Bulletin's Subject INPUTBOX_SUBJECT and a
+Bulletins's Content INPUTBOX
+=========================================== -->
+
+<mos:tmpl name="editpost">
+	<div id="editpost-tmpl-wrapper">
+		<div id="editpost-form-container">
+			<h3><mos:translate>GJ_EDIT</mos:translate></h3>
+			<div class="gj-message">{GJ_MESSAGE}</div>			
+			<form action="<mos:sef>index.php?option=com_groupjive&task=savepost&Itemid={ITEMID}</mos:sef>" method="POST">
+				<div class="gj_form-text">
+					<div class="subject-desc">
+						<mos:translate>GJ_SUBJECT_TITLE</mos:translate> <span class="asterisk"> * </span> :
+					</div>
+					{GJ_INPUTBOX_SUBJECT}
+					<br />
+					<br />
+					<div class="gj_leave_message-desc">
+						<mos:translate>GJ_LEAVE_MESSAGE</mos:translate> <span class="asterisk"> * </span> :
+					</div>
+					{GJ_INPUTBOX}
+					<div>
+						<div class="submit-spacerleft">&nbsp;</div>
+						<div class="submit-position">
+							<input type="submit" name="p" value='<mos:translate>GJ_SUBMIT</mos:translate>' class="button" />
+						</div>
+					</div>
+					<div>
+					<div class="submit-spacerleft">&nbsp;</div>
+						<div class="submit-position">
+							{GJ_NOTE}
+						</div>
+					</div>
+					<input type="hidden" name="_g" value="{GJ_GROUP}" />
+					<input type="hidden" name="_i" value="{GJ_ID}" />
+				</div>
+				
+			</form>
+		</div>
+		<!-- end editpost-form-container -->
+	</div>
+	<!-- end editpost-tmpl-wrapper -->
+</mos:tmpl>

@@ -1,0 +1,2295 @@
+/*---------------------------------------------------------
+===========================================================
+===========================================================
+==========
+GroupJive
+==========
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+==========
+SUPERCHARGED HEMI
+==========
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===========================================================
+=================
+Anna Micha Mark
+===================
+======== Original design by Micha Perthel(stiggi) =========
+=========
+CSS refactor by mark raborn (wwvine)
+==========
+============= HEMI TEMPLATE BY JASON BERRY ================
+===========================================================
+----------------------------------------------------------- */
+/* !!!!!!!!!!!!!!!!!!!!!IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!
+NOTE: see "stiggi-menu" section below (and the .toggleMenuBox)
+to adjust javascript menu placement. javascript menu's display very
+differently depending on the Joomla! template you have installed.
+!!!!!!!!!!!!!!!!!!!!!!!!IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!! */
+/* --------------------------------------------------------
+===========================================================
+ALL - showgroup.tmpl - (for css_plus-js ONLY)
+===========================================================
+----------------------------------------------------------- */
+/*
+NOTE: showgroup.tmpl CSS moved to top of page here and NOT
+spearated into TYPOGRAPHY, COLOR, POSITIONING.
+*** Please look down page at beginning comments for notes on GroupJive CSS.
+*/
+#showgroup-tmpl-wrapper {
+/* wrapper for showgroup template */
+margin: 0 0 0 0;
+padding: 0 0 0 0;
+}
+#showgroup-tmpl-wrapper h2{
+/* h2 styles Group name */
+/*margin:20px 0 15px 0;*/
+text-indent:25px;
+font-size:12px;
+font-family:Verdana, Arial;
+text-transform:uppercase;
+margin-top:5px;}
+#showgroup-main-container {
+width:95%;
+/* main container for Group Header */
+}
+/*
+Left column
+*/
+#main-float-left {
+/* Group LOGO wrapper for header */
+float:left;
+width:210px;
+padding-left:6px;
+}
+.grouplogo {
+/* LOGO positioning inside container */
+margin-right: 5px;
+text-align:center;
+float:right;
+}
+.grouplogo img{
+text-align:center;
+background:#ffffff;
+border: 1px solid #e5e5e5;
+padding-left:6px;
+padding-top:6px;
+padding-right:6px;
+padding-bottom:18px;
+}
+/*
+Center column
+*/
+#main-float-center {
+/* wrapper for group INFO and Moderator Contact (anchors) */
+float:left;
+/*width:240px;*/
+padding:6px;
+}
+/*
+Right column
+*/
+#main-float-right {
+/* wrapper for group MODERATOR */
+float:left;
+text-align:center;
+/*width:120px;*/
+width:25%;
+}
+#creator-wrapper {
+/* wrapper for MODERATOR/Creator links */
+width:auto;
+padding:6px;
+margin-top:3px;
+}
+#creator-wrapper img {
+padding:4px;
+border:1px solid #e5e5e5;
+background: #eeeeee;
+}
+.creator-name-link {
+/* link (ANCHOR) to MODERATOR Profile */
+margin: 2px 0;
+text-align:center;
+}
+#stiggi-menu-wrap {
+margin-top:2px;
+height:24px;
+padding-top:6px;
+background:url('images/tz_topnav_bg.png') #333333 repeat-x;
+border: 1px solid #333333;
+font-weight:bold;
+}
+#stiggi-menu-wrap a{
+color:#eeeeee;
+margin-top:4px;
+font-weight:bold;
+font-family: Arial, Verdana;
+font-size:12px;
+text-decoration:none;
+}
+#stiggi-menu-wrap a:hover{
+color:#ffffff;
+text-decoration:underline;
+margin-top:4px;
+font-weight:bold;
+font-family: Arial, Verdana;
+font-size:12px;
+}
+.stiggi-menu-clear {
+clear:both;
+}
+#stiggi-menu-wrap .lightline-hr {
+border-top: 1px solid #CCCCCC;
+}
+.stiggi-menu-container {
+float:left;
+width:28%;
+text-align:center;
+font-weight:bold;
+vertical-align:middle;
+}
+.MenuBox {
+width:200px;
+margin:0 0 0 0;
+padding:0 0 0 0;
+}
+.MenuBox a{
+color:#f4f4f4;
+}
+.stiggi-dropdown {
+text-align:left;
+width:200px;
+padding-left:4px;
+}
+.toggleMenuBox {
+display:inline;
+position:absolute ;
+visibility:hidden;
+z-index:1000;
+width:200px;
+text-indent:5px;
+background-color:#000000;
+margin-top:6px;
+margin-left:0px;
+filter:alpha(opacity=90);
+-moz-opacity:.90;
+opacity:.90;
+padding-left:4px;
+/* Opera renders this differently (not as well) */
+}
+#gj_list_standard_funcs li {
+list-style:none;
+padding:1px 0;
+text-align:left;
+background-image:none;
+}
+#func-inc_function_links li {
+list-style-type:none;
+padding:1px 0;
+text-align:left;
+background-image:none;
+}
+#moder_functions-wrapper li {
+list-style:none;
+}
+.menu-empty-manager {
+color:#999999;
+font-style:bold;
+padding:3px 0;
+text-align:center;
+}
+#func-inc_moderator_func li {
+list-style:none;
+padding:1px 0;
+text-align:left;
+background-image:none;
+}
+#func-inc_newest_member li {
+list-style-type:none;
+text-align:center;
+background-image:none;
+float:left;
+position: center center;
+padding-left: 10px;
+}
+#showgroup-outer-container {
+text-align:center;
+}
+#logo-wrap {
+padding: 10px 10px;
+background-color:;
+margin: 2px 2px;
+}
+#group-menu-header {
+/* Group MENU wrapper for header
+*/
+width:auto;
+background-color:#FFFFFF;
+margin: 2px 2px 2px 0;
+}
+.gj_group_menu {
+/* MENU Header class */
+text-align:center;
+}
+#links-and-actions-wrap {
+/* wrapper for grouplinks and groupactions and moderator funtions */
+padding: 10px 10px;
+background-color:;
+margin: 2px 2px;
+}
+#group-info-header {
+/* Group INFO wrapper for header
+*/
+width:auto;
+background-color:#FFFFFF;
+margin: 2px 2px;
+}
+.gj_group_info {
+/* INFO Header class */
+text-align:center;
+}
+#info-wrap {
+/* wrapper for INFO, moderator profile link and email moderator*/
+padding: 10px 10px;
+background-color:;
+margin: 2px 2px;
+}
+.groupinfo {
+/* INFO positioning inside container */
+padding: 5px 0 10px 0px;
+}
+/*
+#group-logo-header {
+/* NOT USED
+width:auto;
+background-color:#FFFFFF;
+margin: 2px 0 2px 2px;
+}
+*/
+/*
+Newest Members
+*/
+#columnSmall2 {
+vertical-align: top;
+width: 85%;
+/*clear:both;*/
+background:#eeeeee;
+border:1px solid #cccccc;
+padding:15px;
+text-align:center;
+margin-left:50px;
+height:190px;
+}
+#columnSmall2 h3 {
+text-align:left;
+text-indent: 10px;
+/*background:#666666;*/
+background:url('images/tz_topnav_bg.png') #333333 repeat-x;
+color:#eeeeee;
+font-family:Arial, Verdana;
+font-size:12px;
+font-weight:bold;
+padding:5px 0 5px;
+margin: 0 0 0 0px;
+}
+#columnSmall2 img {
+background-color:#ffffff;
+border: 1px solid #CCCCCC;
+padding:4px 4px 4px 4px;
+}
+#columnSmall2 li {
+position: center center;
+padding:10px;
+width:15%;
+}
+/*
+Latest Bulletin
+*/
+#columnSmall3 {
+vertical-align: top;
+width: 85%;
+margin-top:20px;
+margin-left:50px;
+clear:both;
+background:#eeeeee;
+border:1px solid #e5e5e5;
+padding:15px;
+}
+#columnSmall3 .componentheading {
+margin-left:0px;
+/*background: #666666;*/
+background:url('images/tz_topnav_bg.png') #333333 repeat-x;
+color: #eeeeee;
+padding: 5px;
+font-family:Arial, Verdana;
+font-size:12px;
+font-weight:bold;
+}
+#columnSmall3 h4 {
+padding:5px 0 5px;
+margin: 0 0 0 20px;
+}
+/*
+Latest Forum Posts
+*/
+#columnSmall4 {
+vertical-align: top;
+width: 85%;
+margin-top:20px;
+margin-left:50px;
+clear:both;
+background:#eeeeee;
+border:1px solid #e5e5e5;
+padding:15px;
+}
+#columnSmall4 .componentheading {
+margin-left:0px;
+/*background: #666666;*/
+background:url('images/tz_topnav_bg.png') #333333 repeat-x;
+color: #eeeeee;
+padding: 5px;
+font-family:Arial, Verdana;
+font-size:12px;
+font-weight:bold;
+}
+#columnSmall4 li {
+margin-left:15px;
+}
+/*-----------------------------------------------
+About AJAX styling
+NOTE: AJAX functionality located in groupjive.html.php
+*** AJAX CSS is active "only when" AJAX enabled in Admin (backend)
+------------------------------------------------*/
+#gjsearchbox {
+position:absolute;
+margin-top:10px;
+margin-left:100px;
+width:245px;
+height:165px;
+z-index:200;
+background-image: url(../../images/bubble.png);
+display: none;
+}
+.gjclose a {
+text-decoration: none;
+font-size: 0.8em;
+font-weight: bold;
+color: #666666;
+border: 2px solid #cccccc;
+padding: 2px 4px 2px 4px;
+width: 5px;
+position: absolute;
+top: 25px;
+right: 25px;
+}
+.gjclose2 {
+text-decoration: none;
+font-size: 0.8em;
+font-weight: bold;
+color: #666666;
+border: 2px solid #cccccc;
+padding: 1px 2px 1px 2px;
+width: 5px;
+float:right;
+}
+#gjinviteresults {
+padding:25px;
+}
+/*
+#columnBig1 {
+vertical-align: top;
+float: left;
+width: 75%;
+}
+#columnMain {
+float: left;
+width: 75%;
+}
+#columnSmall1 {
+width: 24%;
+padding-left:1%;
+float:right;
+}
+.MenuBox li{
+list-style: none;
+}
+*/
+/*--------------------- END STIGGI VARIANT HERE !!! --------------------- */
+/* PLEASE READ THESE DESIGN NOTES. WE HAVE MADE AN EFFORT TO
+SIMPLIFY THE TEMPLATING IN GROUPJIVE SO THAT IT IS EASILY
+MODIFIED. THESE NOTES WILL ASSIST YOU IN BECOMING FAMILIAR
+WITH THE CSS and patTemplate (.tmpl) FILES IN GROUPJIVE.
+PLEASE INFORM US HOW WE CAN IMPROVE THIS EFFORT ON YOUR BEHALF.
+Thank you.
+******
+CSS is divided into 3 main areas
+******
+1.) TYPOGRAPHY
+2.) COLOR
+3.) POSITIONING
+the same ID's, CLASSES's and Specificity are used over and
+over again in each of the main areas with the specifics
+of TYPOGRAPHY, COLOR and POSITIONING re-stated in CSS rules
+within the appropriate design category.
+------------------ about SHOWGROUP.TMPL -------------------
+The showgroup TEMPLATE (showgroup.tmpl) and showgroup CSS here
+are the most prominent in GroupJive!!showgroup is consistantly
+in the users viewport.
+-----
+------
+SHOWGROUP = info about group, links, actions, moderator, etc...
+where?: displays at top of all groupjive pages (except some forms)
+-----
+------
+The showgroup Header contains GROUPNAME, GROUPLOGO, GROUPINFO,
+group LINKS, group ACTIONS, group CREATORIMAGE, group MODERATOR_FUNC
+Suggestions for design are to place showgroup elements at the top
+of the page and bring groupjive.tmpl in underneath it.
+-OR-
+float showgroup.tmpl using CSS and design other templates to become
+place by design around, between and next to the floated showgroup elements.
+-----------------------------------------------------------
+REMOVING MODERATOR FROM VIEW: some community members have requested the
+"highly prominent" Moderator elements in the showgroup page be minimized.
+-----
+------
+To accomplish this view rename the showgroup.tmpl file to showgroup.orig.tmpl
+Find the showgroup_min-mod.tmpl file
+Rename this file to showgroup.tmpl
+---------------- end about SHOWGROUP.TMPL ----------------- */
+/* ------------- about NATIVE JOOMLA! CLASSES -------------
+/* GroupJive uses two native joomla CSS classes in styling GroupJive
+so that GroupJive will be rendered with some similiarities to its
+surrounding Joomla! installationl. These two native classes are:
+componentheading
+sectiontableheader
+To change this rending you must go into each patTemplate where they
+exist and place a new class attribute in the elements that contain them.
+Please note that the CLASS componenteading is also located in some functions
+are contained in groupjive_func.inc
+A pre-styled substitue exists (.gj-heading) in the CSS directly below).
+If (componentheading) in your template is rendered in a way that does not
+render well (ex. VERY LARGE TEXT) then follow the next set of directions to
+apply a different rule to (componentheading).
+---------------- end about Joomla! classes ---------------- */
+/* IF YOUR GROUPJIVE COMPONENT HEADINGS DO NOT RENDER WELL WITH
+YOUR JOOMLA! TEMPLATE... FOLLOW THESE DIRECTIONS. THIS BASIC
+CSS CLASS CAN BE *STYLED* TO IMPROVE CERTAIN HEADINGS (<h3> in GroupJive)
+*/
+/*
+.gj-heading {
+display:;
+text-indent:4px;
+font-size:;
+font-style:;
+color:;
+margin:4px 0;
+padding:5px 0;
+border-bottom:1px solid #666666;
+border-top:1px solid #666666;
+background-color:;
+background-image:none;
+}
+*/
+/*
+** UNCOMMENT THE ABOVE CSS CLASS
+** THEN SEARCH AND REPLACE THE componentheading CLASS where ever you find it in GroupJive
+** NOTES: gj-heading replaces the componentheading class which master CSS in Joomla! CSS file
+** This class does not render well in GroupJive for all Joomla! templates.
+** Open each groupjive patTemplate ( there have the .tmpl extension ~> i.e groupjive.tmpl)
+** then Search
+and replace the CSS class. This is simple using (CTRL+F)
+** Locate the class (componentheading) for any headers <h3> in groupjive
+**
+** You will also need to Search (CTRL+F) the file groupjive_fund.inc for the class (componentheading)
+** and replace there when found.
+**
+** Please note that you can also change the CSS class componentheading in the master Joomla!
+** CSS file to fit better with Groupjive
+*/
+/*
+-
+-
+-
+-
+-
+CSS begins here
+-
+-
+-
+-
+-
+*/
+/* ********************************************************
+***********************************************************
+===========================================================
+======================= TYPOGRAPHY ========================
+====================
+TYPOGRAPHY
+=====================
+======================= TYPOGRAPHY ========================
+===========================================================
+***********************************************************
+*********************************************************** */
+/* --------------------------------------------------------
+===========================================================
+TYPOGRAPHY showgroup.tmpl - MULTIPART MASTER for GroupJive
+-----------------------------------------------------------
+Displays at top of all groupjive pages (except some forms)
+Renders info about group, links, actions, moderator, etc...
+===========================================================
+----------------------------------------------------------- */
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Hello :D
+SHOWGROUP MOVED TO TOP OF PAGE
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+/* --------------------------------------------------------
+===========================================================
+TYPOGRAPHY showmenu.tmpl - displays GJ SimpleDescription and Search
+===========================================================
+----------------------------------------------------------- */
+#simpledesc-wrapper{
+margin: 0 0 0 0;
+}
+#simplewelcome h3 {
+/* Simple Welcome Header */
+margin: 0 0 0 0;
+padding: 0 0 0 0;
+font-size:1.4em;
+}
+#simpledesc {
+/* Simple Description text */
+text-indent:7px;
+font-size:small;
+font-style:italic;
+}
+#showmenusearch-container .creategroup-link a {
+/* styles creategroup link specifically in showmenusearch */
+font-size:larger;
+}
+/* --------------------------------------------------------
+===========================================================
+TYPOGRAPHY showcat.tmpl - Show Category Contents (which is Groups)
+===========================================================
+----------------------------------------------------------- */
+#showcat-pagenav-container .pagecounter {
+/* positions pagecounter
+*/
+font-size:small;
+font-weight:bold;
+font-variant:small-caps;
+}
+/* --------------------------------------------------------
+===========================================================
+TYPOGRAPHY newgroup.tmpl - FORM to Create New Group
+===========================================================
+----------------------------------------------------------- */
+#newgroup-form-container h3 {
+margin: 0 0 0 0;
+padding: 4px 0 20px 0;
+}
+#newgroup-form-container .gj_form-text {
+}
+/* --------------------------------------------------------
+===========================================================
+TYPOGRAPHY editgroup.tmpl - FORM to Edit Existing Group
+===========================================================
+----------------------------------------------------------- */
+#editgroup-form-container h3 {
+margin: 0 0 0 0;
+padding: 4px 0 20px 0;
+}
+#editgroup-form-container .gj_form-text {
+}
+/* --------------------------------------------------------
+===========================================================
+TYPOGRAPHY invite.tmpl - FORM to Invite People to a Group
+===========================================================
+----------------------------------------------------------- */
+#invite-form-container h4 {
+margin: 0 0 0 0;
+padding: 4px 0 20px 0;
+}
+#invite-form-container .gj_form-text {
+}
+/* --------------------------------------------------------
+===========================================================
+TYPOGRAPHY inactive.tmpl - Lists of Inactive Users
+and Functions in which to Activate or Delete these users.
+===========================================================
+----------------------------------------------------------- */
+#inactive-tmpl-wrapper h3 {
+}
+/* --------------------------------------------------------
+Headers
+*/
+.inactive-name {
+font-weight:bold;
+font-size:small;
+font-variant:small-caps;
+}
+.inactive-status {
+font-weight:bold;
+font-size:small;
+font-variant:small-caps;
+}
+.inactive-actions {
+font-weight:bold;
+font-size:small;
+font-variant:small-caps;
+}
+/* --------------------------------------------------------
+the List
+*/
+.gj_realname {
+/* Name LINK to UserProfile in Pending Inactive list */
+font-size:;
+font-weight:bold;
+font-style:italic;
+}
+.gj_status {
+/* Status in in Pending Inactive list */
+font-size:;
+font-weight:bold;
+}
+.gj_activate-or-delete {
+/* Moderator Actions in Pending Inactive list */
+font-size:;
+font-weight:bold;
+}
+/* --------------------------------------------------------
+===========================================================
+TYPOGRAPHY transfer.tmpl - FORM to Transfer Group Ownership
+===========================================================
+----------------------------------------------------------- */
+#transfer-form-container h4 {
+margin: 0 0 0 0;
+padding: 4px 0 20px 0;
+}
+#transfer-form-container .gj_form-text {
+}
+/* --------------------------------------------------------
+===========================================================
+TYPOGRAPHY editpost.tmpl - FORM to Edit Bulletin Posts
+===========================================================
+----------------------------------------------------------- */
+#editpost-form-container h3 {
+margin: 0 0 0 0;
+padding: 15px 0 15px 0;
+}
+#editpost-form-container .gj_form-text {
+}
+/* --------------------------------------------------------
+===========================================================
+TYPOGRAPHY bulletin.tmpl - Most Recent Bulletins / Create Bulletin FORM
+===========================================================
+----------------------------------------------------------- */
+/* --------------------------------------------------------
+continuing... TYPOGRAPHY the List of Recent Bulletins
+----------------------------------------------------------- */
+/* --------------------------------------------------------
+Headers
+*/
+.bulletin-subject-header {
+/* Header gj_bulletin-subject */
+font-variant:small-caps;
+}
+.gj_bulletin-subject {
+font-weight:bold;
+font-size:small;
+}
+.bulletin-createddate-header {
+/* Header gj_bulletin-createdate */
+font-variant:small-caps;
+}
+.gj_bulletin-createddate {
+font-weight:bold;
+font-size:small;
+}
+.bulletin-username-header {
+/* Header gj_username */
+font-variant:small-caps;
+}
+.gj_username {
+font-weight:bold;
+font-size:small;
+}
+/* --------------------------------------------------------
+the List
+*/
+.recent-bulletin-subject {
+font-weight:bold;
+color:#333333;
+}
+.recent-bulletin-createddate {
+font-weight:bold;
+color:#333333;
+}
+.recent-username {
+font-weight:bold;
+color:#333333;
+}
+#gj_bulletin-archive {
+/* LINK to Bulletin Archive */
+font-weight:bold;
+font-size:small;
+color:#333333;
+}
+/* --------------------------------------------------------
+continuing... TYPOGRAPHY the FORM for creating Bulletin Messages
+----------------------------------------------------------- */
+#bulletin-form-container h4 {
+margin: 0 0 0 0;
+padding: 15px 0 25px 0;
+}
+#bulletin-form-container .gj_form-text {
+}
+/* --------------------------------------------------------
+===========================================================
+TYPOGRAPHY archive.tmpl - List of all Archived Bulletins
+===========================================================
+----------------------------------------------------------- */
+#archive-pagenav-container .pagecounter {
+font-size:small;
+font-weight:bold;
+font-variant:small-caps;
+}
+/* --------------------------------------------------------
+Headers
+*/
+#archive-bulletin-headers {
+display:block;
+padding:4px 0 5px 0;
+border-top: 1px solid #e5e5e5;
+border-right: 1px solid #e5e5e5;
+border-bottom: 1px solid #eeeeee;
+border-left: 1px solid #eeeeee;
+background-color:#f4f4f4;
+text-indent:10px;
+text-align:left;
+color:#333333;
+}
+#archive-bulletin-subject-header .bulletin-subject {
+font-weight:bold;
+font-size:small;
+font-variant:small-caps;
+}
+#archive-bulletin-createddate-header .bulletin-createddate {
+font-weight:bold;
+font-size:small;
+font-variant:small-caps;
+}
+#archive-username-header .username {
+font-weight:bold;
+font-size:small;
+font-variant:small-caps;
+}
+/* --------------------------------------------------------
+the List
+*/
+.archive-bulletin-subject {
+/* Bulletin Subject in Archive bulletin LIST */
+font-size:small;
+font-weight:bold;
+border:1px solid #e5e5e5;
+background:#eeeeee;
+padding:3px;
+}
+.archive-bulletin-createddate {
+/* CreateDate Subject in Archive bulletin LIST */
+font-size:x-small;
+font-weight:bold;
+border:1px solid #e5e5e5;
+background:#eeeeee;
+padding:3px;
+}
+.archive-username {
+/* UserName Subject in Archive bulletin LIST */
+font-size:x-small;
+font-weight:bold;
+border:1px solid #e5e5e5;
+background:#eeeeee;
+padding:3px;
+}
+.archive-mod-edit-post {
+/* LINK Edit this Bulletin */
+font-weight:normal;
+font-size: xx-small;
+}
+.archive-mod-delete-post {
+/* LINK Delete this Bulletin */
+font-weight:normal;
+font-size: xx-small;
+}
+/* --------------------------------------------------------
+===========================================================
+TYPOGRAPHY showfullmessage.tmpl = Shows single Bulletin Message (complete)
+===========================================================
+----------------------------------------------------------- */
+/* --------------------------------------------------------
+Header
+*/
+.gj_showfull-bulletin-subject {
+/* Bulletin Title Subject in showfullmessage */
+font-weight:bold;
+font-variant:small-caps;
+}
+.gj_showfull-bulletin-createddate {
+/* CreateDate of showfullmessage */
+font-weight:bold;
+font-variant:small-caps;
+}
+.gj_showfull-username {
+/* UserName in showfullmessage */
+font-weight:bold;
+font-variant:small-caps;
+}
+.gj_showfull-mod-edit-post {
+/* Edit this Bulletin LINK */
+font-weight:normal;
+font-size: xx-small;
+}
+.gj_showfull-mod-delete-post {
+/* Delete this Bulleting LINK */
+font-weight:normal;
+font-size: xx-small;
+}
+.gj_showfull-mod-author-name {
+font-weight:normal;
+font-size: xx-small;
+}
+/* --------------------------------------------------------
+Bulletin Title
+*/
+.showfull-bulletin-content h3 {
+display:block;
+width:auto;
+margin: 2px 2px;
+padding: 5px 3px;
+border-top: 1px solid #ffffff;
+border-bottom: 1px solid #C0C0C0;
+background-color:#FFFFFF;
+color:#333333;
+}
+----------------------------------------------------------- */
+===========================================================
+TYPOGRAPHY showmailform.tmpl -
+FORM to edit Group Details
+===========================================================
+----------------------------------------------------------- */
+#showmailform-form-container h4 {
+margin: 0 0 0 0;
+padding: 15px 0 25px 0;
+}
+#showmailform-form-container .gj_form-text {
+}
+----------------------------------------------------------- */
+===========================================================
+TYPOGRAPHY error.tmpl - error messaging for all of GroupJive
+There are two types of messages 1.) Error 2.) Default
+===========================================================
+----------------------------------------------------------- */
+/* --------------------------------------------------------
+ERROR Messaging Detail
+*/
+#err_error-intro {
+/* style of Intro language constant */
+font-weight:bold;
+}
+#err_error-intromessage
+{
+/* style of ErrorIntro Message */
+font-size: larger;
+font-weight:bolder;
+font-family: Verdana, "Lucida Sans Unicode" ;
+line-height:1.25;
+}
+#err_error-message
+{
+/* style of Error Message */
+font-size: larger;
+font-weight:bolder;
+font-family: Verdana, "Lucida Sans Unicode" ;
+line-height:1.25;
+}
+/* --------------------------------------------------------
+DEFAULT Messaging Details
+*/
+#def_error-intro
+{
+/* style of Default Intro language constant */
+font-weight:bold;
+}
+#def_error-intromessage {
+/* style of Default ErrorIntro Message */
+font-size: larger;
+font-weight:bolder;
+font-family: Verdana, "Lucida Sans Unicode" ;
+line-height:1.25;
+}
+/* style of Default Message */
+#def_error-message {
+font-size: larger;
+font-weight:bolder;
+font-family: Verdana, "Lucida Sans Unicode";
+line-height:1.25;
+}
+/* ********************************************************
+***********************************************************
+===========================================================
+=======================
+COLOR
+========================
+====================
+COLOR
+=====================
+=======================
+COLOR
+========================
+===========================================================
+***********************************************************
+*********************************************************** */
+/* --------------------------------------------------------
+===========================================================
+COLOR error.tmpl - error messaging for all of GroupJive
+There are two types of messages 1.) Error 2.) Default
+===========================================================
+----------------------------------------------------------- */
+.errorpage-main-container {
+background-color:#F4f4f4;
+}
+.errorpage-inner-container {
+background-color:#FFFFFF;
+}
+/* --------------------------------------------------------
+===========================================================
+COLOR showcat.tmpl - Show Category Contents (which is Groups)
+===========================================================
+----------------------------------------------------------- */
+.groupdescription {
+/* description of Group */
+color:#808080;
+}
+/* --------------------------------------------------------
+===========================================================
+COLOR showfullmessage.tmpl = Shows single Bulletin Message (complete)
+===========================================================
+----------------------------------------------------------- */
+#showfull-bulletin-header-pane {
+background-color:#E5E5E5;
+}
+/* ********************************************************
+***********************************************************
+===========================================================
+=====================
+POSITIONING
+======================
+====================
+POSITIONING
+=====================
+=====================
+POSITIONING
+======================
+===========================================================
+***********************************************************
+*********************************************************** */
+/* --------------------------------------------------------
+===========================================================
+POSITIONING showgroup.tmpl - MULTIPART MASTER for GroupJive
+-----------------------------------------------------------
+Displays at top of all groupjive pages (except some forms)
+Renders info about group, links, actions, moderator, etc...
+===========================================================
+----------------------------------------------------------- */
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Hello :D
+SHOWGROUP MOVED TO TOP OF PAGE ^
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+/* --------------------------------------------------------
+===========================================================
+POSITIONING showmenu.tmpl - displays GJ SimpleDescription and Search
+===========================================================
+----------------------------------------------------------- */
+#showmenusearch-tmpl-wrapper {
+margin: 0 0 0 0;
+padding: 0 0 0 0;
+}
+#showmenusearch-container {
+/* a container for showmenu content */
+margin: 5px 0 4px 0;
+}
+#simpledesc-wrapper {
+/* Simple Welcome and Description text */
+float:left;
+padding: 0 0 3px 10px;
+}
+#searchbox {
+/* positions searchbox on right side of show menu */
+float:right;
+padding: 0 10px 0 0 ;
+}
+#showmenusearch-container .creategroup-link a {
+/* styles creategroup link specifically in showmenusearch */
+margin: 0 0 0 0;
+padding: 0 0 0 0;
+}
+/* --------------------------------------------------------
+===========================================================
+POSITIONING showoverview.tmpl - Category List Template
+===========================================================
+----------------------------------------------------------- */
+#showoverview-tmpl-wrapper {
+margin: 0 0 0 0;
+padding:0 0 0 0;
+}
+#showoverview-title {
+margin: 0 0 2px 0;
+text-indent:15px;
+}
+.categorylist-wrapper {
+/* container for Category List */
+padding: 10px 0;
+}
+.categorylist-catimage-odd {
+/* ODD positions Category Image for each list item*/
+float:left;
+margin: 0 0 0 45px;
+width:110px;
+}
+.categorylist-catlink-odd {
+/* ODD positions Category Link for each list item */
+float:none;
+padding: 20px 0 0 0;
+}
+.categorylist-catimage-even {
+/* EVEN positions Category Image for each list item*/
+float:left;
+margin: 0 0 0 45px;
+width:110px;
+}
+.categorylist-catlink-even {
+/* EVEN positions Category Link for each list item */
+float:none;
+padding: 20px 0 0 0;
+}
+/* --------------------------------------------------------
+===========================================================
+POSITIONING showcat.tmpl - Show Category Contents (which is Groups)
+===========================================================
+----------------------------------------------------------- */
+#showcat-tmpl-wrapper {
+margin: 0 0 0 0;
+padding: 0 0 0 0;
+}
+/*
+...
+showcat continued - (Navigation of Groups)
+*/
+#showcat-title-container {
+padding: 10px 0 4px 0;
+}
+#showcat-pagenav-container {
+padding: 10px 0 10px 0;
+vertical-align:middle;
+}
+#showcat-pagenav-container .pagecounter {
+/* positions pagecounter
+*/
+float:left;
+width:30%;
+text-indent:20px;
+}
+#showcat-pagenav-container .pagelistoptions {
+/* positions pagelist dropdown*/
+float:left;
+width:15%;
+}
+#showcat-pagenav-container .pagelinks {
+/* positions <<Start <Prev Next> End>> navigation */
+float:left;
+width:55%;
+}
+/* --------------------------------------------------------
+showcat - (the Groups)
+*/
+#showcat-grouplist-wrapper {
+}
+#showcat-title {
+margin: 0 0 0 0;
+text-indent:15px;
+}
+.grouplist-wrapper {
+/* wrapper for the entire Group List */
+padding: 15px 0;
+}
+.grouplist-leftcontainer {
+/* This container holds the Group Image on left side */
+float:left;
+min-height:40px;
+}
+.grouplist-groupimage {
+/* positions the Group Image inside the left container and sets container size for image */
+float:left;
+vertical-align:middle;
+margin: 0 0 0 45px;
+width:110px;
+}
+grouplist-rightcontainer {
+/* hold details about group on right side */
+float: right;
+}
+.group-created-date {
+/* positions the Group Create Date on right */
+float:right;
+margin: 0 5px 0 0;
+}
+.group-members-count {
+/* positions Members Account next to Create Date on right */
+float:right;
+margin: 0 15px 0 0;
+}
+.group-privacy-status {
+/* positions privacy status next to Members Account on right */
+float:right;
+margin: 0 15px 0 0;
+}
+.grouplist-showgroupanddesc {
+/* wrapper for showgrouplink and groupdescription */
+margin: 0 0 0 0;
+}
+.grouplist-showgrouplink {
+/* Link to Group Details and ShowGroup Functions */
+margin: 20px 0 0px 0px;
+}
+.groupdescription {
+/* description of Group */
+color:#808080;
+padding: 5px 5px 5px 0;
+}
+/* --------------------------------------------------------
+===========================================================
+POSITIONING newgroup.tmpl - FORM to Create New Group
+===========================================================
+----------------------------------------------------------- */
+#newgroup-tmpl-wrapper {
+text-align: left;
+margin: 0 10px 0 10px;
+padding: 20px 0 0 0;
+/* 20px is to be nice to Opera */
+}
+#newgroup-form-container {
+margin: 0 0 0 0;
+padding: 25px 55px;
+border-top: 1px solid #E5E5E5;
+border-left: 1px solid #E5E5E5;
+border-bottom: 1px solid #E5E5E5;
+border-right: 1px solid #E5E5E5;
+}
+#newgroup-form-container .submit-position {
+margin: 10px 0;
+}
+/* --------------------------------------------------------
+===========================================================
+POSITIONING editgroup.tmpl - FORM to Edit Existing Group
+===========================================================
+----------------------------------------------------------- */
+#editgroup-tmpl-wrapper {
+text-align: left;
+margin: 0 10px 0 10px;
+padding: 20px 0 0 0;
+/* 20px is to be nice to Opera */
+}
+#editgroup-form-container {
+margin: 0 0 0 0;
+padding: 25px 55px;
+border-top: 1px solid #E5E5E5;
+border-left: 1px solid #E5E5E5;
+border-bottom: 1px solid #E5E5E5;
+border-right: 1px solid #E5E5E5;
+}
+#editgroup-form-container .submit-position {
+margin: 10px 0;
+}
+/* --------------------------------------------------------
+===========================================================
+POSITIONING invite.tmpl - Invite People to a Group
+===========================================================
+----------------------------------------------------------- */
+#invite-tmpl-wrapper {
+text-align: left;
+margin: 0 10px 0 10px;
+padding: 20px 0 0 0;
+/* 20px is to be nice to Opera */
+}
+#invite-form-container {
+margin: 0 0 0 0;
+padding: 10px 10px 15px 35px;
+border-top: 1px solid #E5E5E5;
+border-left: 1px solid #E5E5E5;
+border-bottom: 1px solid #E5E5E5;
+border-right: 1px solid #E5E5E5;
+}
+#invite-form-container .submit-position {
+margin: 10px 0;
+}
+/* --------------------------------------------------------
+===========================================================
+POSITIONING inactive.tmpl - Lists of Inactive Users
+and Functions in which to Activate or Delete these users.
+===========================================================
+----------------------------------------------------------- */
+#inactive-tmpl-wrapper {
+/* Wrapper for inactive template */
+margin: 0 10px 0 10px;
+padding: 20px 0 0 0;
+/* 20px is to be nice to Opera */
+}
+#inactive-form-container {
+float:left;
+width:100%;
+margin: 0 0 0 0;
+padding: 0 0 20px 0 ;
+border-top: 1px solid #E5E5E5;
+border-left: 1px solid #E5E5E5;
+border-bottom: 1px solid #E5E5E5;
+border-right: 1px solid #E5E5E5;
+}
+#inactive-tmpl-wrapper h3 {
+margin: 0 0 0 0;
+padding: 25px 0 20px 35px;
+}
+/* --------------------------------------------------------
+Headers
+*/
+#inactive-header-container {
+/* Container for gj_intactive_name Header */
+}
+#inactive-name-header {
+float:left;
+width: 33%;
+}
+#inactive-status-header {
+/* Container for gj_intactive_status Header */
+float:left;
+width: 34%;
+}
+#inactive-actions-header {
+/* Container for gj_intactive_actions Header */
+float:left;
+width: 33%;
+}
+.inactive-name {
+text-align:center;
+}
+.inactive-status {
+text-align:center;
+}
+.inactive-actions {
+text-align:center;
+}
+/* --------------------------------------------------------
+the List
+*/
+#inactive-list-container {
+/* LIST Wrapper for inactive-name */
+margin:;
+padding: 10px 0 10px 0;
+}
+.inactive-name-listwrap {
+float:left;
+width: 33%;
+}
+.inactive-status-listwrap {
+/* LIST Wrapper for inactive-status */
+float:left;
+width: 34%;
+}
+.inactive-actions-listwrap {
+/* LIST Wrapper for inactive-actions */
+float:left;
+width: 33%;
+}
+.gj_realname {
+/* Name LINK to UserProfile in Pending Inactive list */
+text-align:center;
+font-size:;
+}
+.gj_status {
+/* Status in in Pending Inactive list */
+text-align:center;
+}
+.gj_activate-or-delete {
+/* Moderator Actions in Pending Inactive list */
+text-align:center;
+padding: 0 5px 0 5px;
+}
+/* --------------------------------------------------------
+===========================================================
+POSITIONING transfer.tmpl - FORM to Transfer Group Ownership
+===========================================================
+----------------------------------------------------------- */
+/* Wrapper for transfer template */
+#transfer-tmpl-wrapper {
+text-align: left;
+margin: 0 10px 0 10px;
+padding: 20px 0 0 0; /* 20px is to be nice to Opera */
+}
+#transfer-form-container {
+margin: 0 0 0 0;
+padding: 10px 10px 15px 35px;
+border-top: 1px solid #E5E5E5;
+border-left: 1px solid #E5E5E5;
+border-bottom: 1px solid #E5E5E5;
+border-right: 1px solid #E5E5E5;
+}
+#transfer-form-container .submit-position {
+margin: 10px 0;
+}
+/* --------------------------------------------------------
+===========================================================
+POSITIONING editpost.tmpl - FORM to Edit Bulletin Posts
+===========================================================
+----------------------------------------------------------- */
+#editpost-tmpl-wrapper {
+/* Wrapper for editpost template */
+text-align: left;
+margin: 0 10px 0 10px;
+padding: 20px 0 0 0;
+/* 20px is to be nice to Opera */
+}
+#editpost-form-container {
+margin: 0 0 0 0;
+padding: 10px 10px 15px 55px;
+border-top: 1px solid #E5E5E5;
+border-left: 1px solid #E5E5E5;
+border-bottom: 1px solid #E5E5E5;
+border-right: 1px solid #E5E5E5;
+}
+#editpost-form-container .submit-position {
+margin: 2px 0;
+}
+/* --------------------------------------------------------
+===========================================================
+POSITIONING bulletin.tmpl = Most Recent Bulletins / Create Bulletin FORM
+===========================================================
+----------------------------------------------------------- */
+#bulletin-tmpl-wrapper {
+/* Wrapper for bulletin template */
+margin: 0 0 0 0;
+padding: 0 0 0 0;
+}
+#bulletin-main-container {
+margin: 10px 4px 0 5px;
+padding: 8px 0 0 0;
+/* this 8px for Opera */
+}
+#bulletin-tmpl-wrapper h3 {
+display:block;
+margin: 0px 0 7px 0;
+padding: 3px 0px 4px 0px;
+border-top: 1px solid #999999;
+border-bottom: 1px solid #999999;
+background-color:#E5E5E5;
+text-align:center;
+}
+/* --------------------------------------------------------
+continuing... POSITIONING the List of Recent Bulletins
+----------------------------------------------------------- */
+#recent-bulletin-container {
+/* ------- Container ------- */
+padding: 5px 0;
+}
+/* --------------------------------------------------------
+Headers
+*/
+.bulletin-subject-header {
+/* Header gj_bulletin-subject in recent bulletin list */
+float:left;
+width: 34%;
+padding: 0 0 5px 0;
+}
+.gj_bulletin-subject {
+text-align:center;
+padding: 0px 0 2px 0;
+}
+.bulletin-createddate-header {
+/* Header gj_bulletin-createdate in recent bulletin list */
+float:left;
+width: 33%;
+padding: 0 0 5px 0;
+}
+.gj_bulletin-createddate {
+text-align:center;
+padding: 0px 0 2px 0;
+}
+.bulletin-username-header {
+/* Header gj_username in recent bulletin list */
+float:left;
+width: 33%;
+padding: 0 0 5px 0;
+}
+.gj_username {
+text-align:center;
+padding: 0px 0 2px 0;
+}
+/* --------------------------------------------------------
+the List
+*/
+.bulletin-subject-wrapper {
+/*
+Bulletin Links function for recent-bulletin-subject*/
+float:left;
+width: 34%;
+}
+.recent-bulletin-subject {
+text-align:center;
+}
+.bulletin-createddate-wrapper {
+/*
+Create Date function for recent-bulletin-createdate*/
+float:left;
+width: 33%;
+}
+.recent-bulletin-createddate {
+text-align:center;
+}
+.username-wrapper {
+/* User Profile Link function for recent-username*/
+float:left;
+width: 33%;
+}
+.recent-username {
+text-align:center;
+}
+#gj_bulletin-archive {
+/* LINK to Bulletin Archive */
+text-align:right;
+margin: 0 50px 0 0;
+padding: 1px 0 0 0; /* 1px top pad for Opera */
+}
+/* --------------------------------------------------------
+continuing... POSITIONING the FORM for creating Bulletin Messages
+----------------------------------------------------------- */
+#bulletin-form-wrapper {
+/* container for bulletin FORM */
+text-align: left;
+margin: 0 10px 0 10px;
+padding: 3px 0 0 0;
+}
+#bulletin-form-container {
+margin: 0 0 0 0;
+padding: 10px 10px 15px 55px;
+border-top: 1px solid #E5E5E5;
+border-left: 1px solid #E5E5E5;
+border-bottom: 1px solid #E5E5E5;
+border-right: 1px solid #E5E5E5;
+}
+#bulletin-form-wrapper .submit-position {
+margin: 2px 0;
+}
+/* ------------------------------------
+- - TWO COLUMN LAYOUT FOR WYSIWYG EDITOR - -
+UNCOMMENT THIS SECTION IF YOU *DO NOT* USE THE
+WYSIWYG EDITOR AND CREATE TEXT ONLY BULLETINS.
+THIS css POSITIONS DESCRIPTIONS AND FIELDS
+SIDE BY SIDE USING CSS FLOAT
+!!! NOTE... THIS IS TOO SMALL AN AREA !!!
+!!!
+FOR A FULL SIZED WYSIWYG EDITOR
+!!!
+/* positions FORM subject desciption
+.gj_subject-desc {
+float: left;
+width: 25%;
+}
+/* positions SUBJECT FIELD next to subject description
+.gj_subject-field {
+float: none;
+}
+/* positions FORM message area description
+.gj_leave_message-desc {
+width: 25%;
+float: left;
+}
+/* positions FORM MESSAGE AREA next to area description
+.gj_leave_message-area {
+float: none;
+}
+/* creates space pushing SUBMIT button to the right
+#bulletin-form-wrapper .submit-spacerleft {
+float: left;
+width: 25%;
+}
+------------------------------------ */
+/* --------------------------------------------------------
+===========================================================
+POSITIONING archive.tmpl - List of all Archived Bulletins
+===========================================================
+----------------------------------------------------------- */
+#archive-tmpl-wrapper {
+/* Wrapper for archive template */
+margin: 0 0 0 0;
+padding: 20px 0 0 0;
+/* top pad here is to be nice to Opera */
+}
+#archive-tmpl-wrapper .sectiontableheader {
+margin: 0 10px;
+}
+#archive-title {
+text-indent:15px;
+}
+#archive-main-container {
+margin: 0 10px;
+}
+#archive-pagenav-container {
+padding: 15px 0 10px 0;
+border-left: 1px solid #E5E5E5;
+border-right: 1px solid #E5E5E5;
+}
+#archive-pagenav-container .pagecounter {
+float:left;
+width:30%;
+text-indent:20px;
+}
+#archive-pagenav-container .pagelistoptions {
+/* positions pagelist dropdown*/
+float:left;
+width:15%;
+}
+#archive-pagenav-container .pagelinks {
+/* positions <<Start <Prev Next> End>> navigation */
+float:left;
+width:55%;
+}
+/*
+.lightline-hr {
+border: 1px solid #CCCCCC;
+color:
+}
+*/
+/* --------------------------------------------------------
+POSITIONING the List of Archived Bulletins
+----------------------------------------------------------- */
+#archive-header-container {
+border-left: 1px solid #E5E5E5;
+border-right: 1px solid #E5E5E5;
+}
+/* --------------------------------------------------------
+Headers
+*/
+#archive-bulletin-subject-header {
+/*
+Archive Header Container for archive-bulletin-subject */
+float:left;
+width: 34%;
+text-align:center;
+}
+#archive-bulletin-subject-header .gj_bulletin-subject {
+}
+#archive-bulletin-createddate-header {
+/* Archive Header Container for archive-bulletin-createddate */
+float:left;
+width: 33%;
+text-align:center;
+}
+#archive-bulletin-createddate-header .gj_bulletin-createddate {
+}
+#archive-username-header {
+/* Archive Header Container for archive-username */
+float:left;
+width: 33%;
+text-align:center;
+}
+#archive-username-header .gj_username {
+}
+/* --------------------------------------------------------
+the List
+*/
+#archive-list-container {
+margin: 0 0 0 0;
+padding: 3px 0 3px 0 ;
+border-left: 1px solid #E5E5E5;
+border-bottom: 1px solid #E5E5E5;
+border-right: 1px solid #E5E5E5;
+}
+.archive-bulletin-subject-listwrap {
+/*
+Archive List Wrapper for archive-bulletin-subject */
+display:table;
+vertical-align:middle;
+position:static;
+float:left;
+width: 34%;
+height: 100%;
+}
+.archive-bulletin-createddate-listwrap {
+/* Archive List Wrapper for archive-bulletin-createddate */
+display:table;
+vertical-align:middle;
+position:static;
+float:left;
+width: 33%;
+height: 100%;
+}
+.archive-username-listwrap {
+/* Archive List Wrapper for archive-username */
+display:table;
+vertical-align:middle;
+position:static;
+float:left;
+width: 32%;
+height: 100%;
+}
+.archive-bulletin-subject {
+/* Bulletin Subject in Archive bulletin LIST */
+display:table-cell;
+margin: 4px 0;
+text-align:center;
+}
+.archive-bulletin-createddate {
+/* CreateDate Subject in Archive bulletin LIST */
+display:table-cell;
+margin: 4px 0;
+text-align:center;
+}
+.archive-username {
+/* UserName Subject in Archive bulletin LIST */
+display:table-cell;
+margin: 4px 0;
+text-align:center;
+}
+.archive-mod-wrap-left {
+/* container for Mod-Creator functions in Archive */
+float:left;
+width:34%;
+}
+.archive-mod-wrap-center {
+/* container for Mod-Creator functions in Archive */
+float:left;
+width:33%;
+}
+.archive-mod-wrap-right {
+/* container for Mod-Creator functions in Archive */
+float:left;
+width:32%;
+}
+.archive-mod-edit-post {
+/* LINK Edit this Bulletin */
+text-align:center;
+}
+.archive-mod-delete-post {
+/* LINK Delete this Bulletin */
+text-align:center;
+}
+/* --------------------------------------------------------
+===========================================================
+POSITIONING showfullmessage.tmpl = Shows single Bulletin Message (complete)
+===========================================================
+----------------------------------------------------------- */
+#showfullmessage-tmpl-wrapper {
+/* Wrapper for showfullmessage template */
+margin: 0 0 0 0;
+padding: 15px 0 0 0;
+/* 15px is to be nice to Opera */
+}
+#showfullmessage-main-container {
+margin: 10px 10px;
+}
+/* --------------------------------------------------------
+Headers
+*/
+#showfull-bulletin-header-pane {
+border: 1px solid #999999;
+padding: 3px 0 ;
+}
+#showfull-bulletin-subject-container {
+/* Container for gj_showfull-bulletin-subject */
+text-align:center;
+float:left;
+width: 50%;
+}
+#showfull-bulletin-author-container {
+/* Container for gj_showfull-bulletin-createdate */
+float:left;
+width: 25%;
+}
+#showfull-bulletin-created-container {
+/* Container for gj_showfull-username */
+float:left;
+width: 25%;
+}
+.gj_showfull-bulletin-subject {
+/* Bulletin Title Subject in showfullmessage */
+text-align:left;
+text-indent:20px;
+}
+.gj_showfull-bulletin-createddate {
+/* CreateDate of showfullmessage */
+text-align:center;
+}
+.gj_showfull-username {
+/* UserName in showfullmessage */
+text-align:center;
+}
+#gj_showfull-mod-wrap-left {
+/* container for Mod-Creator functions in showfullmessage*/
+float:left;
+max-width:100%;
+width:50%;
+}
+#gj_showfull-mod-wrap-center {
+/* container for Mod-Creator functions in showfullmessage*/
+float:left;
+max-width:100%;
+width:25%;
+}
+#gj_showfull-mod-wrap-right {
+/* container for Mod-Creator functions in showfullmessage*/
+float:left;
+max-width:100%;
+width:25%;
+}
+.gj_showfull-mod-edit-post {
+/* Edit this Bulletin LINK */
+text-align:left;
+text-indent:20px;
+}
+.gj_showfull-mod-delete-post {
+/* Delete this Bulleting LINK */
+text-align:center;
+}
+.gj_showfull-mod-author-name {
+text-align:center;
+}
+.showfull-bulletin-content {
+margin: 0 0px 15px 0px;
+padding: 10px 10px;
+border-left: 1px solid #E5E5E5;
+border-bottom: 1px solid #E5E5E5;
+border-right: 1px solid #E5E5E5;
+}
+/* --------------------------------------------------------
+===========================================================
+POSITIONING showmailform.tmpl -
+FORM to edit Group Details
+===========================================================
+----------------------------------------------------------- */
+#showmailform-tmpl-wrapper {
+/* Wrapper for showmailform template */
+text-align: left;
+margin: 0 10px 0 10px;
+padding: 20px 0 0 0;
+/* 20px is to be nice to Opera */
+}
+#showmailform-form-container {
+margin: 0 0 0 0;
+padding: 10px 10px 15px 35px;
+border-top: 1px solid #E5E5E5;
+border-left: 1px solid #E5E5E5;
+border-bottom: 1px solid #E5E5E5;
+border-right: 1px solid #E5E5E5;
+}
+#mailgroup-gj_message {
+/* mailgroup HEADER, headlines the showmailform template */
+color:#FF0000;
+}
+.gj_mail_subject-desc {
+/* FORM positions subject desciption */
+float: left;
+width: 25%;
+}
+.gj_mail_subject-field {
+/* FORM positions SUBJECT FIELD next to subject description */
+float: left;
+}
+.gj_mail_body-desc {
+/* FORM positions mail body area description */
+float: left;
+width: 25%;
+}
+.gj_mail_body-area {
+/* FORM positions MAIL BODY next to body area description */
+float: left;
+}
+.gj_mail_cc_mod-desc {
+/* FORM positions CC to Moderator checkbox description */
+float: left;
+width: 25%;
+}
+.gj_mail_cc_mod-checkbox {
+/* FORM positions MAIL BODY next to body area description */
+float: left;
+}
+#showmailform-tmpl-wrapper .submit-spacerleft {
+/* creates space pushing SUBMIT button to the right */
+float: left;
+width: 25%;
+}
+#showmailform-tmpl-wrapper .submit-position {
+/* positions the SUBMIT button */
+float: left;
+margin: 6px 0;
+}
+/* --------------------------------------------------------
+===========================================================
+POSITIONING error.tmpl - error messaging for all of GroupJive
+There are two types of messages 1.) Error 2.) Default
+===========================================================
+----------------------------------------------------------- */
+.errorpage-tmpl-wrapper {
+/* wrapper for both Error templates */
+}
+.errorpage-main-container {
+width:100%;
+text-align:center;
+margin:0 0 0 0;
+padding: 1px 0 10px 0;
+background-color:#e5e5e5;
+}
+.errorpage-inner-container {
+text-align:center;
+background-color:#FFFFFF;
+margin: 9px 10px 0px 10px;
+padding: 10px 10px;
+}
+.error-msg-container {
+width:100%;
+text-align:center;
+}
+.error-email-moderator {
+text-align:right;
+margin:7px 15px 7px 0;
+}
+.errorlink-goback {
+text-align:left;
+}
+.errorlink-goback a {
+text-align:left;
+margin:0 0;
+}
+/* --------------------------------------------------------
+ERROR Messaging Detail
+*/
+#err_error-intro {
+/* style of Intro language constant */
+text-indent:20px;
+text-align:left;
+padding:0 0 10px 0;
+margin:7px 0;
+}
+#err_error-intromessage
+{
+/* style of ErrorIntro Message */
+text-align:center;
+margin:7px 0;
+}
+#err_error-message
+{
+/* style of Error Message */
+text-align:center;
+}
+/* --------------------------------------------------------
+DEFAULT Messaging Details
+*/
+#def_error-intro
+{
+/* style of Default Intro language constant */
+text-indent:20px;
+text-align:left;
+padding:0 0 10px 0;
+margin:7px 0;
+}
+#def_error-intromessage {
+/* style of Default ErrorIntro Message */
+text-align:center;
+margin:7px 0;
+}
+/* style of Default Message */
+#def_error-message {
+text-align:center;
+}
+/* --------------------------------------------------------
+===========================================================
+classes - these classes used throughout GroupJive
+===========================================================
+----------------------------------------------------------- */
+.clearfloat {
+/* clear floated elements throughout template */
+clear:both;
+}
+.listborderbottom {
+/* provide bottom border for some lists
+*/
+border-bottom: solid #cccccc 1px;
+}
+.listborderbottom-w-pad {
+/* provide bottom border for some lists (with padding)
+*/
+border-bottom: solid #cccccc 1px;
+padding: 2px 0;
+}
+.gj-required {
+/* Used for (* Required) notices in Forms and Fields */
+font-size:x-small;
+}
+.asterisk {
+/* asterisk for (* Required) notices in Forms and Fields */
+font-size:small;
+color:#CC0000;
+}
+.gjloadmarker {
+/* Load Data marker for AJAX functionality */
+color: #FF0000;
+}
+/* TODO - - DISCOVER IF THESE MESSAGE CSS RULES ARE USED ?
+*/
+.gj-message {
+color:#FF0000;
+}
+.gj-needapproval {
+color:#FF0000;
+}
+/* --------------------------------------------------------
+===========================================================
+TYPOGRAPHY, COLOR AND POSITION are all here in this section
+member_list.tmpl - lists all members of a Group
+===========================================================
+----------------------------------------------------------- */
+#member_list-tmpl-wrapper {
+margin: 0 0 0 0;
+padding: 15px 3px;
+}
+#member_list-title {
+margin: 0 0 2px 0;
+text-indent:15px;
+}
+#member_list-main-container {
+width:85%;
+margin: 2px 2px;
+padding: 2px 2px 2px 2px;
+border-left: 1px solid #E5E5E5;
+border-bottom: 1px solid #E5E5E5;
+border-right: 1px solid #E5E5E5;
+border-top: 1px solid #e5e5e5;
+color:#333333;
+}
+#member_list-main-container .current_user-count {
+float:left;
+margin: 15px 0 2px 0;
+text-indent:20px;
+font-size:large;
+font-weight:bold;
+font-variant:small-caps;
+}
+#member_list-pagenav-container {
+padding: 10px 0 4px 0;
+}
+#member_list-pagenav-container .pagecounter {
+/* positions pagecounter */
+float:left;
+width:30%;
+text-indent:20px;
+font-size:small;
+font-weight:bold;
+font-variant:small-caps;
+}
+#member_list-pagenav-container .pagelistoptions {
+/* positions pagelist dropdown*/
+float:left;
+width:15%;
+}
+#member_list-pagenav-container .pagelinks {
+/* positions <<Start <Prev Next> End>> navigation */
+float:left;
+width:55%;
+}
+#member-list-headers-wrap {
+margin:3px 0 0 0;
+}
+#member-list-headers {
+/*
+Wrapper for Header for Member Name, Image and Presence */
+display:block;
+margin: 5px 5px 5px 5px;
+padding:2px 2px 2px 2px;
+border-top: 1px solid #999999;
+border-right: 1px solid #999999;
+border-bottom: 1px solid #C0C0C0;
+border-left: 1px solid #C0C0C0;
+background-color:#666666;
+text-indent:10px;
+text-align:left;
+width:95%;
+color:#f4f4f4;
+}
+.member-name-left-header {
+/*
+Header for Member Name and Image */
+float:left;
+width: 50%;
+margin:0px;
+text-indent: 35px;
+font-weight:bold;
+}
+.member-presence-right-header {
+/*
+Header for Presence info */
+float:left;
+width: 50%;
+margin: 0 0 0 0px;
+text-indent: 20px;
+font-weight:bold;
+}
+.member-name-left {
+/* Container for Member Name and Image */
+float:left;
+margin-top: 4px;
+margin-bottom: 8px;
+padding-left:30px;
+padding-bottom:7px;
+width: 48%;
+border-bottom:1px solid #eeeeee;
+}
+.member-presence-right {
+/* Container for member Presence information */
+float:left;
+width: 47%;
+margin-top:4px;
+padding-left:-15px;
+padding-bottom:7px;
+}
+.member-presence-right .presence {
+/* Positions ONline/OFFline status of Members */
+float:left;
+padding: 35px 0 0 20px;
+text-decoration:none;
+font-size:small;
+font-weight:bold;
+border-bottom: #eeeeee;
+}
+/* TODO
+check if the functionality is working??
+Could not confirm that date is ever displayed! */
+.member-presence-right .date {
+/* Positions the Date member was last online */
+float:left;
+padding: 35px 0 0 20px;
+text-decoration:none;
+font-size:small;
+font-weight:bold;
+}
+.member-presence-right .moderate-member_list {
+/* Positions Moderartor Functions in member list */
+float:left;
+margin: 35px 0 0 20px;
+text-decoration:none;
+font-size:small;
+font-weight:bold;
+}
+/* --------------------------------------------------------
+===========================================================
+LEGACY CSS
+-
+groupjive_func.inc
+-
+LEGACY CSS
+===========================================================
+NOTE: see groupjive_func.inc for XHTML
+NOTE: DO NOT RENAME these CSS rules! (reference groupjive_func.inc)
+----------------------------------------------------------- */
+/*-----------------------------------------------
+LatestMember Function - Displays newest members of Groups
+*** functions in groupjive_func.inc call this design
+------------------------------------------------*/
+/* STIGGI WAS HERE !!
+#columnSmall2 {
+margin: 10px 0 0 0;
+padding:2px 0 0 0;
+width: 30%;
+float: left;
+}
+#columnSmall2 h3 {
+text-align:left;
+text-indent: 25px;
+}
+#columnSmall2 ul {
+padding: 0 0 0 35px;
+list-style-type:none;
+}
+#columnSmall2 ul li {
+margin-top: 20px;
+margin-bottom: 20px;
+}
+STIGGI left here
+*/
+/*-----------------------------------------------
+LatestBulletin - Displays latest bulletins in Groups
+*** functions in groupjive_func.inc call this design
+------------------------------------------------*/
+/* STIGGI WAS HERE !!
+#columnSmall3 {
+margin: 10px 0 0 0;
+padding: 2px 0 0 0;
+float: left;
+width: 35%;
+}
+#columnSmall3 h3 {
+text-align:left;
+text-indent: 10px;
+}
+STIGGI left here
+*/
+/*-----------------------------------------------
+LatestForumPosts - Displays latest forum posts in Groups
+*** functions in groupjive_func.inc call this design
+------------------------------------------------*/
+/* STIGGI WAS HERE !!
+#columnSmall4 {
+margin: 10px 0 0 0;
+padding:2px 0 0 0;
+float: left;
+width: 35%;
+}
+#columnSmall4 h3 {
+text-align:left;
+text-indent: 20px;
+}
+#columnSmall4 ul {
+padding: 0 5px 0 27px;
+list-style-type:none;
+}
+#columnSmall4 ul li {
+margin-top: 5px;
+margin-bottom: 8px;
+}
+STIGGI LEFT HERE
+*/
+/* --------------------------------------------------------
+===========================================================
+LIST AND ANCHOR CSS -
+LIST AND ANCHOR CSS - LIST AND ANCHOR CSS
+===========================================================
+NOTE: This code is unique to GroupJive and notates the locations
+of xhtml tags and ID's in ***UNUSUAL PLACES***
+EACH OF THE FOLLOWING SECTIONS NOTATES THE GROUPJIVE FILE NAME
+WHERE THE <ul> OR <a> CAN BE FOUND.
+----------------------------------------------------------- */
+/*-----------------------------------------------
+groupjive.core.groups.php
+<ul id="gj_list_standard_funcs">
+------------------------------------------------*/
+/*
+#gj_list_standard_funcs li {
+list-style:none;
+text-align:left;
+background-image:url();
+}
+*/
+/*-----------------------------------------------
+groupjive_func.inc
+<ul id="func-inc_*name*of*function*here*">
+------------------------------------------------*/
+/*
+#func-inc_newest_member li {
+list-style-type:none;
+text-align:left;
+background-image:url();
+}
+#func-inc_latest_forum li {
+list-style-type:none;
+text-align:left;
+background-image:url();
+}
+*/
+/* ----------------------------------------- */
+/*
+#func-inc_group_info li {
+list-style-type:none;
+text-align:left;
+background-image:url();
+}
+*/
+/* NOTE: in func-inc_group_info
+the DESCRIPTION of each link
+has been styled <strong> in the xhtml
+in the file groupjive_func.inc
+You must edit there to change and not in CSS */
+/* ----------------------------------------- */
+/*-----------------------------------------------
+groupjive_jb.php (ANCHOR for Return to Group)
+<a class="events_returntogroup">
+------------------------------------------------*/
+.events_returntogroup {
+display:block;
+padding: 12px 0;
+font-size:1.2em;
+}
+/*-----------------------------------------------
+groupjive_eventlist.php (ANCHOR for Return to Group)
+<a class="forum_returntogroup">
+------------------------------------------------*/
+.forum_returntogroup {
+display:block;
+padding: 12px 0;
+font-size:1.2em;
+}
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-------------------- end CSS ---------------------
+=== not quite yet...let's style the overview ====
+************************************************** */
+div.catcontainer {
+border: 1px solid #999999;
+padding: 15px;
+margin-left:auto;
+margin-right:auto;
+width:75%;
+text-align: left;
+}
+div.catcontainer h3 {
+text-align:left;
+text-indent: 10px;
+/*background:#666666;*/
+background:url('images/tz_topnav_bg.png') #333333 repeat-x;
+color:#eeeeee;
+font-family:Arial, Verdana;
+font-size:12px;
+font-weight:bold;
+padding:5px 0 5px;
+margin: 0 0 0 0px;
+border:2px solid #333333;
+width:100%;
+}
+div.catspacer {
+clear: both;
+}
+div.catfloat {
+float: left;
+padding:5px;
+width:45%;
+}
+div.catfloat p {
+}
+/*=======================================
+====Let's style the showcat page a little more=====
+=========================================*/
+.hemibg {
+text-align:left;
+text-indent:10px;
+background:#333333 url('images/tz_topnav_bg.png') repeat-x;color:#eeeeee;
+font-family:Arial, Verdana;
+font-size:12px;
+font-weight:bold;
+margin-left:0px;
+margin-right:0;
+margin-top:0;
+margin-bottom:0;
+padding-left:0;
+padding-right:0;
+padding-top:5px;
+padding-bottom:5px;
+}
+/*========================================
+========================================
+======= CSS SEO FRIENDLY MENU ==========
+========================================
+========================================*/

@@ -1,0 +1,64 @@
+<!-- ======================================
+newgroup = create new group
+-------------------------------------------
+newgroup.tmpl is a multipart FORM page to
+create a Group for the first time.
+
+newgroup's contain Category OPTIONS_CAT,
+GroupType OPTIONS_TYPE, GROUPNAME (text field),
+GROUPDESCR (text area), and LOGO (image upload).
+=========================================== -->
+
+<mos:tmpl name="newgroup">
+	<div id="newgroup-tmpl-wrapper">
+		<div id="newgroup-form-container">
+			<h3><mos:translate>GJ_CREATEGROUP</mos:translate></h3>
+			
+			<div class="gj-message">{GJ_MESSAGE}</div>
+			
+				<form action="<mos:sef>index.php</mos:sef>" enctype="multipart/form-data" name="adminForm" method="post" class="adminForm">
+					<div class="gj_form-text">
+						<br />
+						<mos:translate>GJ_CATEGORY_GR</mos:translate> <span class="asterisk">*</span> :
+						<br />
+						<select name="category" size="1" class="input" onchange="setTypes();" id="category" />
+							{GJ_OPTIONS_CAT}
+						</select>
+						<br />
+						<mos:translate>GJ_TYPE</mos:translate> <span class="asterisk">*</span> :
+						<br />
+						<select name="type" size="1" class="input" id="type">
+							{GJ_OPTIONS_TYPE}
+						</select>
+						<br />
+						<br />
+						<mos:translate>GJ_GROUPNAME</mos:translate> <span class="asterisk">*</span> :
+						<br />
+						<input type="text" name="gj_groupname" id="gj_groupname" size="53" maxlength="255" value="{GJ_GROUPNAME}" class="inputbox" />
+						<br />
+						<mos:translate>GJ_GROUPDESCR</mos:translate> :
+						<br />
+						<textarea name="gj_aboutgroup" id="gj_aboutgroup" cols="40" rows="4" class="inputbox">{GJ_DESCR}</textarea>
+						<br />
+						<br />
+						<mos:translate>GJ_LOGO</mos:translate> :
+						<br />
+						<input type="file" name="image_file" size="20" />
+						<br />
+						<input type="hidden" name="option" value="com_groupjive" />
+						<input type="hidden" name="Itemid" value="{ITEMID}" />
+						<input type="hidden" name="task" value="addgroup" />
+						<div class="submit-position">
+							<input type="button" name="gj_cr" value="<mos:translate>GJ_SUBMIT</mos:translate>" class="button" onClick="submitbutton('addgroup');"/>
+						</div>	
+						<div class="gj-required">
+							<span class="asterisk"> * </span> = <mos:translate>GJ_REQ</mos:translate>
+						</div>					
+					</div>
+				</form>
+			
+		</div>
+		<!-- end newgroup-form-container -->
+	</div>
+	<!-- end newgroup-tmpl-wrapper -->
+</mos:tmpl>
