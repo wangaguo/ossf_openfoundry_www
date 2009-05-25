@@ -1,0 +1,13 @@
+<mos:tmpl name="groupcreated">
+  <div style="text-align:center">
+    <h3 class="componentheading"><mos:translate>GJ_GROUP_WAS_CREATED</mos:translate>
+    <mos:tmpl name="cond_groupcreated" type="condition" conditionvar="GJ_NEEDAPPROVAL" varscope="groupcreated">
+      <mos:sub condition="yes">
+        <br /><mos:translate>GJ_GROUP_APPROVAL</mos:translate>
+      </mos:sub>
+    </mos:tmpl>
+    </h3>
+    <br />
+    <a href="<mos:sef>index.php?option=com_groupjive</mos:sef>"><mos:translate>GJ_SHOWALL</mos:translate></a>
+  </div>
+</mos:tmpl>

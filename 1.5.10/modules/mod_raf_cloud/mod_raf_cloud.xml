@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall type="module" version="1.0.0">
+	<name>Raf Cloud</name>
+	<author>Rafal Blachowski</author>
+	<creationDate>September 2008</creationDate>
+	<copyright>(C) 2008 Skorp</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>skorp@royy.net</authorEmail>
+	<authorUrl>www.joomla.royy.net</authorUrl>
+	<version>2.0.2</version>
+	<description><![CDATA[
+	<p>Raf Cloud module v 2.0.2</p>
+	<p>Check for updates: <a target="_blank" href="http://www.joomla.royy.net">www.joomla.royy.net</a></p>
+	<p>Install and configure <a target="_blank" href="http://www.joomla.royy.net"> Raf Cloud component</a> first.</p> 
+	<p>Important note:</p>
+<p>	SEF Urls:Custom(deprecated) - add this line to .htaccess :</p><p> RewriteRule ^searchword/(.*)/ index.php?searchword=$1&option=com_search [QSA,NC]</p>
+	]]>
+	</description>
+	<files>
+		<filename module="mod_raf_cloud">mod_raf_cloud.php</filename>
+	</files>
+	<params>
+		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="rafCloudSef" type="list" default="2" label="SEF Urls:" description="Joomla Search Engine Friendly URLs must be enabled. Check your Joomla configuration first!">
+			<option value='0'>No</option>
+			<option value='2'>Internal link</option>
+			<option value='3'>Joomla built-in</option>
+			<option value='1'>Custom (deprecated)</option>
+	</param>
+	<param name="rafCloudSearch" type="list" default="0" label="Integrate with search" description="Initializing this option will limit the word list only to those exist in search table. Log Search Strings must be enabled in Joomla configuration.">
+		 <option value="1">Yes</option>
+		 <option value="0">No</option>
+	 </param>
+	 <param name="rafCloudArticle" type="list" default="0" label="Integrate with content" description="Initializing this option will limit the word list only to those present in the articles/categories. If there is no article/category open all published words will be shown">
+		 <option value="1">Yes</option>
+		 <option value="0">No</option>
+	 </param>
+	 <param name="rafCloudArticleKey" type="list" default="0" label="Integrate with content metakey" description="Initializing this option will limit the word list only to those present in the article metakey. If there is no article/category open all published words will be shown">
+		 <option value="1">Yes</option>
+		 <option value="0">No</option>
+	 </param>
+	 <param name="rafCloudDocman" type="list" default="0" label="Integrate with Docman" description="Initializing this option will limit the word list only to those present in the document. If there is no document/category open all published words will be shown">
+		 <option value="1">Yes</option>
+		 <option value="0">No</option>
+	 </param>
+	 <param name="rafCloudMojoblog" type="list" default="0" label="Integrate with Mojoblog" description="Initializing this option will limit the word list only to those present in the post. If there is no post open all published words will be shown">
+		 <option value="1">Yes</option>
+		 <option value="0">No</option>
+	 </param>
+	 <param name="rafCloudSobi2" type="list" default="0" label="Integrate with SOBI2" description="Initializing this option will limit the word list only to those present in the items. If there is no item/category open all published words will be shown">
+		 <option value="1">Yes</option>
+		 <option value="0">No</option>
+	 </param>
+	 <param name="rafCloudSort" type="list" default="0" label="Sorting" description="">
+		 <option value="0">Counter (words unsorted)</option>
+		 <option value="2">Counter (words ascending)</option>
+		 <option value="3">Counter (words descending)</option>
+		 <option value="1">Words</option>
+		 <option value="4">Unsorted</option>
+		 <option value="5">Random</option>
+		</param>
+	<param name="rafCloudType" type="list" default="0" label="Filter " description="">
+			<option value="0">Words and Tags</option>
+			<option value="1">Words</option>
+			<option value="2">Tags</option>
+	</param>
+
+	<param name="rafCloudOrder" type="radio" default="0" label="Ordering" description="">
+			<option value="0">Descending</option>
+			<option value="1">Ascending</option>
+	 </param>
+	 <param name="rafAlign" type="list" default="justify" label="Alignment" description="Alignment of words.">
+		 <option value="justify">Justify</option>
+		 <option value="center">Center</option>
+		 <option value="left">Left</option>
+		 <option value="right">Right</option>
+		</param>
+		
+		<param name="rafString" type="list" default="original" label="String" description="Original is recommended">
+			<option value="lowercase">Lowercase</option>
+			<option value="uppercase">Uppercase</option>
+			<option value="mb_lowercase">Lowercase (binary-safe)</option>
+			<option value="mb_uppercase">Uppercase (binary-safe)</option>
+			<option value="original">Original</option>
+		</param>
+	<param name="rafFormat" type="list" default="0" label="Format">
+		<option value="0">Cloud</option>
+		<option value="1">List</option>
+	</param>
+	<param name="rafCloudHeight" type="text" size="6" default="20" label="Line height (px)" description=""/>	
+	<param name="rafCloudLimit" type="text" size="6" default="0" label="Word/Key limit" description="0 - no limit. Limit the amount of words and keys."/>	
+	<param name="rafCounter" type="list" default="0" label="Show counter">
+		<option value="0">No</option>
+		<option value="1">Yes</option>
+	</param>
+	<param name="@spacer" type="spacer" default="" label="Author info:" />
+	<param name="rafCloudInfo" type="radio" default="1" label="Show info" description="It's open source software under GPL licence and you can disable it. If my software is useful for you and you would like me to continue my work, make me a donation, link to my site from yours or write a review about my project on extensions.joomla.org.">
+		 <option value="1">yes</option>
+		 <option value="0">no</option>
+	 </param>
+	 <param name="@spacer" type="spacer" default="" label="Joomla search:" description="Set SEF Urls : Internal link"/>
+	 <param name="rafSearchOrder" type="list" default="newest" label="Search order">
+		 <option value="newest">Newest firs</option>
+		 <option value="oldest">Oldest first</option>
+		 <option value="popular">Most popular</option>
+		 <option value="alpha">Alphabetical</option>
+		 <option value="category">Section/Category</option>
+	 </param>
+	 <param name="rafSearchPhrase" type="list" default="any" label="Search phrase">
+		 <option value="any">Any words</option>
+		 <option value="all">All words</option>
+		 <option value="exact">Exact phrase</option>
+	 </param>
+	 <param name="@spacer" type="spacer" default="" label="Custom search:" />
+	 <param name="rafSearch" type="text" size="50" default="" label="Search link" description="Set your own search link, %1 will be replaced with search string, %2 will be replaced with sid and %3 will be replaced with Itemid. Example: index.php?searchword=%1&#038;option=com_search%3">
+	</param>
+	<param name="rafSearchConnector" type="text" size="5" default="" label="Search connector" description="">
+	</param>
+	<param name="@spacer" type="spacer" default="" label="" />
+	 <param name="cache" type="radio" default="0" label="Enable Cache" description="Select whether to cache the content of this module">
+		 <option value="0">No</option>
+		 <option value="1">Yes</option>
+	</param>
+	<param name="rafItemid" type="text" default="" label="Set Itemid" description="Allow setting of the Itemid for the link" />
+ </params>	
+ </mosinstall>

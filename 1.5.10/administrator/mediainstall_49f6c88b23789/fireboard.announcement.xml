@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>Fireboard:Announcement</name>
+  <author>Ivo Apostolov</author>
+  <version>1.0</version>
+  <description>Definition for Fireboard Announcements</description>
+  <primarykey>id</primarykey>
+  <reference>
+    <table name="fb_announcement">
+       <field type="referenceid" name="id" translate="0">Announcement ID</field>
+       <field type="titletext" name="title" translate="1">Title</field>
+       <field type="htmltext" name="sdescription" translate="1">Short Description</field>
+       <field type="htmltext" name="description" translate="1">Description</field>
+       <field type="text" name="created " translate="0">Date Created</field>
+       <field type="text" name="published" translate="0">Published</field>
+       <field type="text" name="ordering" translate="0">Ordering</field>
+       <field type="text" name="showdate" translate="0">Show Date</field>
+    </table>
+  </reference>
+</joomfish>

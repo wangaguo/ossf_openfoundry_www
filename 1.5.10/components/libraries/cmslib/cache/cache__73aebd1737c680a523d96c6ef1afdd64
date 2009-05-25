@@ -1,0 +1,17 @@
+<div class="jomentry2" id="pc_23" > <a name="comment-23" id="comment-23"></a> <div class="avatarImg"><img src="http://whoswho.openfoundry.org/components/com_jomcomment/smilies/guest.gif" height="40" width="40" border="0" /></div><b>QGIS Going Closed Source</b><br />
+	<span class="small">_JC_TPL_WRITTEN_BY
+	Arphen Lin	, April 13, 2009 </span><br />
+	<div class="comment-text" id="comment-text-container-23"> QGIS Going Closed Source | Quantum GIS Blog <br />http://blog.qgis.org/qgis_going_closed_source		
+				<div style="clear: both;"></div>
+		<div style="position:relative;padding 8px">
+			<div style="float:right; position:absolute; right:0px">
+				<div class="show-report" onclick="jcRpt('23');">_JC_TPL_ABUSE_REPORT</div>
+				<div class="show-votedown" onclick="jcVt('23', -1)">_JC_TPL_DOWN_VOTE</div>
+				<div class="show-voteup" onclick="jcVt('23', 1)">_JC_TPL_UP_VOTE</div>
+			</div>
+			<div style="float:left;position:absolute; left:0px" class="small">
+				_JC_TPL_DISPLAY_VOTES <span id="cvote-23">+0</span>
+			</div>
+		</div>
+			</div>
+</div>

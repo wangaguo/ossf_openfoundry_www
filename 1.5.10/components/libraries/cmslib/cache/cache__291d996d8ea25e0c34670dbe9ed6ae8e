@@ -1,0 +1,51 @@
+<div class="jomentry2" id="pc_4" > <a name="comment-4" id="comment-4"></a> <div class="avatarImg"><img src="http://whoswho.openfoundry.org/images/comprofiler/1231_49d1b1b10a125.jpg" height="40" width="40" border="0" /></div><b>...</b><br />
+	<span class="small">_JC_TPL_WRITTEN_BY
+	ally	, August 14, 2008 </span><br />
+	<div class="comment-text" id="comment-text-container-4"> 請問有你們的公司網址嗎?		
+				<div style="clear: both;"></div>
+		<div style="position:relative;padding 8px">
+			<div style="float:right; position:absolute; right:0px">
+				<div class="show-report" onclick="jcRpt('4');">_JC_TPL_ABUSE_REPORT</div>
+				<div class="show-votedown" onclick="jcVt('4', -1)">_JC_TPL_DOWN_VOTE</div>
+				<div class="show-voteup" onclick="jcVt('4', 1)">_JC_TPL_UP_VOTE</div>
+			</div>
+			<div style="float:left;position:absolute; left:0px" class="small">
+				_JC_TPL_DISPLAY_VOTES <span id="cvote-4">+0</span>
+			</div>
+		</div>
+			</div>
+</div>
+<div class="jomentry1" id="pc_2" > <a name="comment-2" id="comment-2"></a> <div class="avatarImg"><img src="http://whoswho.openfoundry.org/images/comprofiler/80_48a40ee2e9e7a.jpg" height="40" width="40" border="0" /></div><b>...</b><br />
+	<span class="small">_JC_TPL_WRITTEN_BY
+	marr	, August 16, 2008 </span><br />
+	<div class="comment-text" id="comment-text-container-2"> <a rel="nofollow" href='http://www.ematters.com.tw'>http://www.ematters.com.tw</a>		
+				<div style="clear: both;"></div>
+		<div style="position:relative;padding 8px">
+			<div style="float:right; position:absolute; right:0px">
+				<div class="show-report" onclick="jcRpt('2');">_JC_TPL_ABUSE_REPORT</div>
+				<div class="show-votedown" onclick="jcVt('2', -1)">_JC_TPL_DOWN_VOTE</div>
+				<div class="show-voteup" onclick="jcVt('2', 1)">_JC_TPL_UP_VOTE</div>
+			</div>
+			<div style="float:left;position:absolute; left:0px" class="small">
+				_JC_TPL_DISPLAY_VOTES <span id="cvote-2">+0</span>
+			</div>
+		</div>
+			</div>
+</div>
+<div class="jomentry2 jomauthor" id="pc_5" > <a name="comment-5" id="comment-5"></a> <div class="avatarImg"><img src="http://whoswho.openfoundry.org/images/comprofiler/1418_48bca51c819fe.png" height="40" width="40" border="0" /></div><b>...</b><br />
+	<span class="small">_JC_TPL_WRITTEN_BY
+	ematters	, August 29, 2008 </span><br />
+	<div class="comment-text" id="comment-text-container-5"> 不好意思，目前本公司網頁尚未對外開放 <br /> <br />謝謝你！		
+				<div style="clear: both;"></div>
+		<div style="position:relative;padding 8px">
+			<div style="float:right; position:absolute; right:0px">
+				<div class="show-report" onclick="jcRpt('5');">_JC_TPL_ABUSE_REPORT</div>
+				<div class="show-votedown" onclick="jcVt('5', -1)">_JC_TPL_DOWN_VOTE</div>
+				<div class="show-voteup" onclick="jcVt('5', 1)">_JC_TPL_UP_VOTE</div>
+			</div>
+			<div style="float:left;position:absolute; left:0px" class="small">
+				_JC_TPL_DISPLAY_VOTES <span id="cvote-5">+0</span>
+			</div>
+		</div>
+			</div>
+</div>

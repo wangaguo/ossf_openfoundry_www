@@ -1,0 +1,33 @@
+<mos:tmpl name="showgroup">
+  <p>&nbsp;</p>
+  <h2>{GJ_GROUPNAME}</h2>
+	<div id="columnMain">
+		<div style="float:left;">{GJ_GROUPLOGO}</div>
+		<div style="float:left;padding-left:5px;">{GJ_GROUPINFO}</div>    
+  </div>
+  <div id="columnSmall1">
+    <h3 class="componentheading"><mos:translate>GJ_CREATOR</mos:translate></h3>
+    <p>
+      {GJ_CREATORIMAGE}
+			<mos:tmpl name="hidemaillink" type="condition" conditionvar="SHOWMAILLINK" varscope="showgroup">
+					<mos:sub condition="1">
+				<a href="<mos:sef>index.php?option=com_groupjive&task=mailowner&groupid={GJ_GROUPID}&Itemid={ITEMID}</mos:sef>">
+					<img src="images/M_images/emailButton.png" border="0" align="top"/>
+				</a>
+					</mos:sub>
+				</mos:tmpl>
+      <br />
+      <a href="<mos:sef>index.php?option=com_comprofiler&task=userProfile&user={GJ_GROUPCREATORID}</mos:sef>">{GJ_GROUPCREATOR}</a>
+    </p>
+    <p>&nbsp;</p>
+    <p>
+      {GJ_ACTIONS}
+    </p>
+    <p>&nbsp;</p>
+    	<h3 class="componentheading"><mos:translate>GJ_MODER_FUNCTION</mos:translate></h3>
+      {GJ_MODERATOR_FUNC}
+    <p>&nbsp;</p>
+		<h3 class="componentheading"><mos:translate>GJ_GROUP_FUNCTIONS</mos:translate></h3>
+      {GJ_LINKS}
+  </div>
+</mos:tmpl>

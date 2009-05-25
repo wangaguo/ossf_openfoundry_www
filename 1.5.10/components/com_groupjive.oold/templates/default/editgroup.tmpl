@@ -1,0 +1,57 @@
+<!-- ======================================
+editgroup = edit Group Settings
+-------------------------------------------
+editgroup.tmpl is a FORM which allows the
+Group Moderator to edit Groups Settings.
+
+The FORM edits GROUPNAME (text), GROUPDESCR (textarea),
+GROUPTYPE (select), GROUPLOGO (image).
+=========================================== -->
+
+<mos:tmpl name="editgroup">
+	<div id="editgroup-tmpl-wrapper">
+		<div id="editgroup-form-container">
+			<h3><mos:translate>GJ_EDIT_GROUP_INFO</mos:translate></h3>
+			<div class="gj-message">{GJ_MESSAGE}</div>
+			
+				<form action ="index.php?option=com_groupjive" enctype="multipart/form-data" method="post" name="adminForm" id="adminForm">
+					<div class="gj_form-text">
+						<br />
+						<mos:translate>GJ_TYPE</mos:translate><span class="asterisk"> * </span> :
+						<br />
+						<select name="type" size="1" class="inputbox">
+							{GJ_OPTIONS}
+						</select>
+						<br />
+						<br />
+						<mos:translate>GJ_GROUPNAME</mos:translate><span class="asterisk">  * </span> :
+						<br />
+						<input type="text" name="gj_groupname" size="50" maxlength="255" value="{GJ_GROUPNAME}" />
+						<br />
+						<mos:translate>GJ_GROUPDESCR</mos:translate> :
+						<br />
+						<textarea name="gj_aboutgroup" cols="40" rows="4" class="inputbox">{GJ_GROUPDESCR}</textarea>
+						<br />
+						<br />
+						<mos:translate>GJ_LOGO</mos:translate> :
+						<br />
+						<input type="file" name="image_file" size="20" />
+						<br />						
+						<input type="hidden" name="_i" value="{GJ_ID}" />
+						<input type="hidden" name="task" value="eg" />
+						<br />
+						<br />
+						<div class="submit-position">
+							<input type="button" name="buttonsubmit" value="<mos:translate>GJ_SUBMIT</mos:translate>" class="button" onClick="submitbutton('eg');" />
+						</div>
+						<div class="gj-required">
+							<span class="asterisk"> * </span> = <mos:translate>GJ_REQ</mos:translate>
+						</div>
+					</div>
+				</form>
+				
+		</div>
+		<!-- end editgroup-form-container -->
+	</div>
+	<!-- end editgroup-tmpl-wrapper -->
+</mos:tmpl>

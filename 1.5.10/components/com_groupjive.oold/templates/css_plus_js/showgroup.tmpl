@@ -1,0 +1,108 @@
+<mos:tmpl name="showgroup">
+	<div id="showgroup-tmpl-wrapper">
+
+		<div id="stiggi-menu-wrap" class="sectiontableheader">
+			
+			<div class="stiggi-menu-container">
+				<div class="MenuBox">
+					<a href="javascript:void(0)" onMouseOver="toggleVisibility('gj_groups_funcs')" >
+						<mos:translate>GJ_GROUP_FUNCTIONS</mos:translate>
+					</a>
+					<br />
+					<div class="stiggi-dropdown">
+						<div class="toggleMenuBox" id="gj_groups_funcs" onMouseOut="if (checkMouseLeave(this, event)) { this.style.visibility = 'hidden'; }">
+							{GJ_LINKS}
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- end group functions -->
+			
+		
+			<div class="stiggi-menu-container">	
+				<div class="MenuBox">
+					<a href="javascript:void(0)" onMouseOver="toggleVisibility('gj_standard_funcs')" >
+						<mos:translate>GJ_STANDARD_FUNCTION</mos:translate>
+					</a>
+					<br />
+					<div class="stiggi-dropdown">
+						<div class="toggleMenuBox" id="gj_standard_funcs" name="gj_standard_funcs" onMouseOut="if (checkMouseLeave(this, event)) { this.style.visibility = 'hidden'; }">
+							{GJ_ACTIONS}
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- end standard functions -->
+			
+
+			<div class="stiggi-menu-container">
+				<div class="MenuBox">
+						<a href="javascript:void(0)" onMouseOver="toggleVisibility('gj_moder_funcs')" >
+							<mos:translate>GJ_MODER_FUNCTION</mos:translate>
+						</a>
+						<br />
+						<div class="stiggi-dropdown">	
+
+						<div class="toggleMenuBox" id="gj_moder_funcs" name="gj_moder_funcs" onMouseOut="if (checkMouseLeave(this, event)) { this.style.visibility = 'hidden'; }">
+							<div class="menu-empty-manager">
+								<mos:translate>GJ_MODER_FUNC_BLANK</mos:translate>
+							</div>
+							{GJ_MODERATOR_FUNC}
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- end moderator functions -->
+			<div class="stiggi-menu-clear"></div>
+
+									
+		<!-- <div class="lightline-hr">&nbsp;</div> -->
+
+		<div class="clearfloat"></div>
+		</div>
+
+		<!-- end stiggi-menu-wrap-->
+	
+		<div id="showgroup-main-container">
+			<h2>{GJ_GROUPNAME}</h2>
+			
+			<div id="main-float-left">
+				<div class="grouplogo">
+					{GJ_GROUPLOGO}
+				</div>
+			</div>
+			
+			<div id="main-float-center">
+				<div>
+					{GJ_GROUPINFO}
+					<br/>
+					{GJ_NEWUSERS}
+				</div>
+			</div>
+			
+			<div id="main-float-right">
+				<div id="creator-wrapper">
+					{GJ_CREATORIMAGE}
+						<div class="creator-name-link">
+						<a href="<mos:sef>index.php?option=com_comprofiler&task=userProfile&user={GJ_GROUPCREATORID}</mos:sef>">
+							{GJ_GROUPCREATOR}
+						</a>&nbsp;
+						<mos:tmpl name="hidemaillink" type="condition" conditionvar="SHOWMAILLINK" varscope="showgroup">
+					<mos:sub condition="1">
+				<a href="<mos:sef>index.php?option=com_groupjive&task=mailowner&groupid={GJ_GROUPID}&Itemid={ITEMID}</mos:sef>">
+					<img src="images/M_images/emailButton.png" border="0" align="top"/>
+				</a>
+					</mos:sub>
+				</mos:tmpl>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfloat">&nbsp;</div>
+
+		<!--end showgroup-main-container -->
+		
+		
+	</div>
+	<!-- end showgroup-tmpl-wrapper -->
+</mos:tmpl>

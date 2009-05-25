@@ -1,0 +1,6 @@
+.conn_box .conn_name {
+	text-align:center;
+}
+.conn_box .conn_name a:link, .conn_box .conn_name a:visited {
+	font-size:10px;
+}

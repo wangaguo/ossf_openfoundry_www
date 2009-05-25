@@ -1,0 +1,312 @@
+#gj_header {
+ text-align: center;
+ width: 100%;
+ font-size: x-large;
+ clear: both;
+}
+#columnMain {
+ float: left;	
+ width: 75%;	
+}
+
+#columnSmall1 {
+ width: 24%;
+ padding-left:1%;
+ float:right;
+ }
+#columnSmall2 {
+ vertical-align: top;
+ width: 20%;
+ float: left; 	
+}
+#columnSmall3 {
+ vertical-align: top;
+ padding: 0 5px 0 5px;
+ float: left;
+ width: 50%;
+}
+#columnSmall4 {
+ width: 50%;
+ padding: 0 5px 0 5px;
+ vertical-align: top;
+ float: left;
+}
+#columnBig1{
+ vertical-align: top;
+ float: left;
+ width: 75%;
+}
+
+
+#gjsearchbox
+{
+position:absolute;
+margin-top:10px;
+margin-left:100px;
+width:245px;
+height:165px;
+z-index:200;
+background-image: url(../../images/bubble.png);
+display: none;
+}
+
+.gjclose a {
+	text-decoration: none;
+	font-size: 0.8em;
+	font-weight: bold;
+	color: #666666;
+	border: 2px solid #cccccc;
+	padding: 2px 4px 2px 4px;
+	width: 5px;
+	position: absolute;
+	top: 25px;
+	right: 25px;
+}
+
+#gjinviteresults{
+	padding:25px;
+}
+
+
+/* +_+_+_+ THE FOLLOWING ERROR CSS ADDED 2007-09-16 +_+_+_+ */
+
+/* ********************************************************
+===========================================================
+errorpage = (FOR error template file named error.tmpl)
+NOTE: this is a seperate .tmpl file in templates folder
+===========================================================
+*********************************************************** */
+
+/* ********************************************************
+===========================================================
+errorpage = (FOR error template file named error.tmpl)
+NOTE: this is a seperate .tmpl file in templates folder
+===========================================================
+*********************************************************** */
+
+/* wrapper for both Error templates */
+.errorpage-tmpl-wrapper {
+margin: 0 0 0 0;
+padding: 35px 35px;
+}
+
+.errorpage-main-container {
+float:left;
+width:100%;
+text-align:center;
+margin:0 0 0 0;
+padding: 1px 0 0 0;
+background-color:#FFCCCC;
+}
+
+.errorpage-inner-container {
+text-align:center;
+background-color:#FFFFFF;
+margin: 9px 10px 10px 10px;
+padding: 10px 10px;
+}
+
+.error-msg-container {
+width:100%;
+text-align:center;
+}
+
+
+.error-email-moderator {
+text-align:right;
+margin:7px 0;
+}
+
+.errorlink-goback {
+text-align:left;
+}
+
+.errorlink-goback a {
+text-align:left;
+color:#FF9900;
+margin:0 0;
+}
+
+
+/* ===== ERROR Messaging Detail ===== */
+
+/* style of Intro language constant */
+#err_error-intro {
+text-indent:20px;
+text-align:left;
+padding:0 0 10px 0;
+font-style:italic;
+margin:7px 0;
+}
+
+/* style of ErrorIntro Message */
+#err_error-intromessage  {
+text-align:center;
+font-size: larger;
+font-weight:bolder;
+font-family: Verdana, "Lucida Sans Unicode" ;
+line-height:1.25;
+margin:7px 0;
+}
+
+/* style of Error Message */
+#err_error-message  {
+text-align:center;
+font-size: larger;
+font-weight:bolder;
+font-family: Verdana, "Lucida Sans Unicode" ;
+line-height:1.25;
+}
+
+/* style of Error Message LINK 
+#err_error-message a  {
+float:left;
+width:100%;
+
+text-align:center;
+font-size: larger;
+font-weight:bolder;
+font-family:Courier;
+clear:both;
+}
+*/
+
+/* ===== DEFAULT Messaging Details ===== */
+
+/* style of Default Intro language constant */
+#def_error-intro  {
+text-indent:20px;
+text-align:left;
+padding:0 0 10px 0;
+font-style:italic;
+margin:7px 0;
+}
+
+/* style of Default ErrorIntro Message */
+#def_error-intromessage {
+text-align:center;
+font-size: larger;
+font-weight:bolder;
+font-family: Verdana, "Lucida Sans Unicode" ;
+line-height:1.25;
+margin:7px 0;
+}
+
+/* style of Default Message */
+#def_error-message {
+text-align:center;
+font-size: larger;
+font-weight:bolder;
+font-family: Verdana, "Lucida Sans Unicode";
+line-height:1.25;
+}
+
+/*-----------------------------------------------
+groupjive_jb.php (ANCHOR for Return to Group)
+<a class="events_returntogroup">
+------------------------------------------------*/
+
+.events_returntogroup {
+display:block;
+padding: 12px 0;
+font-size:1.2em;
+font-style:italic;
+}
+
+/*-----------------------------------------------
+groupjive_eventlist.php (ANCHOR for Return to Group)
+<a class="forum_returntogroup">
+------------------------------------------------*/
+
+.forum_returntogroup {
+display:block;
+padding: 12px 0;
+font-size:1.2em;
+font-style:italic;
+}
+
+
+/* --------------------------------------------------------
+===========================================================
+ALL - showgroupmini.tmpl - (for css_showgroupmini ONLY)
+===========================================================
+----------------------------------------------------------- */
+
+
+#showgroupmini-tmpl-wrapper {				/* wrapper for showgroup template */
+margin: 0 0 0 0;
+padding: 0 0 0 0;
+}
+
+#showgroupmini-main-container {
+width:100%;
+margin: 0 0 0 0;
+padding: 0 0 0 0;
+}
+
+.sgmini-groupname {							/* container for GroupName Header Element */
+width:100%;
+padding: 0 0 0 0;
+}
+.sgmini-groupname .miniheader{				/* GroupName Header Element */
+padding: 8px 0 12px 0;
+text-indent:25px;
+font-weight:bold;
+font-size:1.4em;
+}
+
+
+
+
+#sgmini-logoandlinks-container {			/* this container floats LOGO and LINKS to left */
+float:left;
+width:47%;
+}
+
+#sgmini-grouplogo {							/* container for Group LOGO */
+}
+.sgmini-grouplogo {							/* positions LOGO inside container */
+padding: 0 10px 0 25px;
+}
+
+#sgmini-grouplinks {						/* container for Group LINKS */
+}
+.sgmini-grouplinks {						/* positions LINKS inside container */
+float:left;
+padding: 0 0 0 25px;
+}
+.sgmini-grouplinks ul li{
+}
+
+
+
+
+#sgmini-infoandmodfuncs-container {			/* this container floats INFO and MOD FUNCTIONS to left */
+float:left;
+width:52%;
+}
+
+#sgmini-mod-functions {						/* container for Group MODERATOR FUNCTIONS */
+float:right;
+min-width:20%;
+}
+.sgmini-mod-functions {						/* positions MODERATOR FUNCTIONS inside container */
+padding: 0 10px 0 10px;
+}
+
+
+
+#sgmini-groupinfo {						/* container for Group INFO */
+text-align:left;
+width:auto;				
+}
+.sgmini-groupinfo {							/* positions INFO inside container */
+padding: 0 10px 0 10px;
+}
+
+
+
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-------------------- end CSS ---------------------
+************************************************** */

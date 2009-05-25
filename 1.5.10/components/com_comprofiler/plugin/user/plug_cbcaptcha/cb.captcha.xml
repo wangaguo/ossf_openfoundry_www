@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cbinstall version="1.0.3" type="plugin" group="user">
+	<name>CB Captcha</name>
+	<author>Beat and Nant</author>
+	<creationDate>2007-02-12</creationDate>
+	<copyright>(C) 2007 joomlapolis.com</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>beat@joomlapolis.com</authorEmail>
+	<authorUrl>www.joomlapolis.com</authorUrl>
+	<version>1.0.2</version>
+	<description>Provides CB with a Captcha Tab that during the registration process generates a security image and an input field along with verification logic.</description>
+	<files>
+		<filename plugin="cb.captcha">cb.captcha.php</filename>
+		<filename>captchasecurityimages.php</filename>
+		<filename>fonts/index.html</filename>
+		<filename>fonts/monofont.ttf</filename>
+		<filename>fonts/stilltim.ttf</filename>
+		<filename>fonts/sayso chic.ttf</filename>
+		<filename>fonts/EARWIGFA.ttf</filename>
+		<filename>fonts/CUOMOTYP.ttf</filename>
+		<filename>fonts/PRIMER.ttf</filename>
+		<filename>fonts/PRIMERB.ttf</filename>
+		<filename>fonts/INTERPLA.ttf</filename>
+		<filename>fonts/monofont_read_me.txt</filename>
+		<filename>index.html</filename>
+	</files>
+    <params>
+    	<param name="@spacer" type="spacer" default="1.0 (compatible with CB 1.0.2 and above)" label="Version:" description="" />
+    	<param name="@spacer" type="spacer" default="14.Feb.2007" label="Release Date:" description="" />
+    	<param name="@spacer" type="spacer" default="This plugin was created by Beat and Nant." label="Credits:" description="" />
+		<param name="@spacer" type="spacer" default="This plugin is distributed under a limited GNU/GPL license and cannot be modified to work with anything else outside of the Community Builder suite supported by the Joomlapolis.com site" label="License:" description="" />
+        <param name="@spacer" type="spacer" default="" label=" " description="" />
+        <param name="@spacer" type="spacer" default="Captcha Image Generation Parameters" label=" " description="" />
+
+		<param name="captchaWidth" type="text" size="25" default="150" label="Captcha Width" description="Enter width in pixels for the captcha image (Default is 150)" />
+		<param name="captchaHeight" type="text" size="25" default="40" label="Captcha Height" description="Enter height in pixels for captcha image (Default is 40)" />
+		<param name="captchaChars" type="text" size="25" default="5" label="Captcha Characters" description="Enter number of captcha characters to generate (Default is 5)" />
+
+		<param name="captchaFont" type="list" default="0" label="Captcha Font" description="Font to use for Captcha (default: monofont)">
+			<option value="0">monofont</option>
+			<option value="1">EARWIGFA</option>
+			<option value="2">stilltim</option>
+			<option value="3">sayso chic</option>
+			<option value="4">CUOMOTYP</option>
+			<option value="5">PRIMER</option>
+			<option value="6">PRIMERB</option>
+			<option value="7">INTERPLA</option>                                     
+		</param>
+
+		<param name="captchaBackgroundRGB" type="text" size="25" default="255,255,255" label="Captcha Background Color" description="Enter color composition (in Red, Green, Blue dimensions - 0 to 255) for captcha image background (Default is 255,255,255)" />
+		<param name="captchaTextRGB" type="text" size="25" default="20,40,100" label="Captcha Text Color" description="Enter color composition (in Red, Green, Blue dimensions - 0 to 255) for captcha image text (Default is 20,40,100)" />
+		<param name="captchaNoiseRGB" type="text" size="25" default="100,120,180" label="Captcha Noise Color" description="Enter color composition (in Red, Green, Blue dimensions - 0 to 255) for captcha image noise (Default is 100,120,180)" />
+		
+        <param name="@spacer" type="spacer" default="" label=" " description="" />
+        <param name="@spacer" type="spacer" default="Captcha Placement Parameters" label=" " description="" />
+		<param name="captchaRegistration" type="radio" default="1" label="Include Captcha in Registration Process" description="Specify Yes to include Captcha image during registration.">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="captchaNewPassword" type="radio" default="1" label="Include Captcha in New Password Request Process" description="Specify Yes to include Captcha image during registration.">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="captchaEmailUser" type="radio" default="1" label="Include Captcha in User Emailing Process" description="Specify Yes to include Captcha image during user emailing process.">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+
+	</params>
+    <tabs>
+    	<tab name="CB Captcha" description="This CB Captcha Tab placeholder is used to move captcha image placement in relation to other CB tabs that contain registration fields." class="getcaptchaTab" fields="0">
+			<params>
+			</params>
+			<fields>
+			</fields>
+		</tab>
+    </tabs>   
+    <install>
+    	<queries>
+    	</queries>
+    </install>
+    <uninstall>
+        <queries>
+    	</queries>
+    </uninstall>       
+</cbinstall>
