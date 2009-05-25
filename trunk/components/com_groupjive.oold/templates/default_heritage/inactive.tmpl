@@ -1,0 +1,21 @@
+<mos:tmpl name="inactive">
+  <h4><mos:translate>GJ_INACTIVE_USERS</mos:translate></h4>
+  <table style="width:100%">
+  	<tr>
+		<th><mos:translate>GJ_INACTIVE_NAME</mos:translate></th>
+		<th><mos:translate>GJ_INACTIVE_STATUS</mos:translate></th>
+		<th><mos:translate>GJ_INACTIVE_ACTIONS</mos:translate></th>
+	</tr>
+	<mos:tmpl name="list_inactive">
+	<tr><td>
+    <a href="<mos:sef>index.php?option=com_comprofiler&task=userProfile&user={ID_USER}</mos:sef>">{REALNAME}</a>
+    </td>
+    <td>{STATUS}</td>
+    <td>
+    <a href="<mos:sef>index.php?option=com_groupjive&task=makeactive&userid={ID_USER}&groupid={ID_GROUP}&Itemid={ITEMID}</mos:sef>"><mos:translate>GJ_MAKE_ACTIVE</mos:translate></a>&nbsp;&nbsp;&nbsp; 
+    <a href="<mos:sef>index.php?option=com_groupjive&task=delete&groupid={ID_GROUP}&userid={ID_USER}&Itemid={ITEMID}</mos:sef>" onclick="return confirm('<mos:translate>GJ_DELETE_U_CONFIRM</mos:translate>')"><mos:translate>GJ_DELETE</mos:translate></a>
+    </td>
+    </tr>	 
+	</mos:tmpl>
+	</table>
+</mos:tmpl>

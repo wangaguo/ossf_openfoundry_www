@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5" type="plugin" group="content">
+	<name>EasyTube</name>
+	<author>Paul Bain</author>
+	<creationDate>April 2007</creationDate>
+	<copyright>(C) 2000 - 2007 Paul Bain</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorUrl>paulbain.co.uk</authorUrl>
+	<authorEmail>paul@accessdesigns.org.uk</authorEmail>
+	<version>0.2</version>
+	<description>Easily embed YouTube and GoogleVideo players in your website</description>
+	<files>
+		<filename plugin="easytube">easytube.php</filename>
+	</files>
+	<params/>
+</install>

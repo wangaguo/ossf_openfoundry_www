@@ -1,0 +1,18 @@
+<mos:tmpl name="showoverview">
+	<div align="center" class="catcontainer">
+		<h3><mos:translate>GJ_GROUP_CATEGORY</mos:translate></h3>
+		<div align="center" class="catspacer">
+			<center>&nbsp;</center>
+		</div>
+		<mos:tmpl name="list_overview">
+			<div class="catfloat">
+				<a href="<mos:sef>index.php?option=com_groupjive&task=showcat&id={ID}&Itemid={ITEMID}</mos:sef>">
+					<div class="gjimg">{CATNAME}
+				</a>  ({CAT_ISONLINE} Groups)
+				
+				</div></div>
+				
+		</mos:tmpl>
+		<div class="catspacer">&nbsp;</div>
+	</div>
+</mos:tmpl>

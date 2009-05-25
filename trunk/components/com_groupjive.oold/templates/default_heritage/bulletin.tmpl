@@ -1,0 +1,71 @@
+<mos:tmpl name="bulletin">
+<div id="columnBig1">
+  <div style="text-align: center; padding: 10px;">
+    <h2><mos:translate>GJ_GROUP_BUL</mos:translate></h2>
+  	<h4><a href="<mos:sef>index.php?option=com_groupjive&task=archive&groupid={GJ_ID_GROUP}&Itemid={ITEMID}</mos:sef>"><mos:translate>GJ_ARCHIVE</mos:translate></a> <mos:translate>GJ_GROUP_BUL</mos:translate></h4>
+	  <table width="100%" cellpadding="0" cellspacing="0" border="0" class="contentpane">
+		  <tr>
+  		  <td width="30%" height="20">
+          <b><mos:translate>GJ_USERNAME</mos:translate></b>
+        </td>
+        <td>
+          <b><mos:translate>GJ_SUBJECT</mos:translate></b>
+        </td>
+        <td>
+          <b><mos:translate>GJ_CREATED</mos:translate></b>
+        </td>
+  		</tr>
+  		
+  		<mos:tmpl name="cond_messages" type="condition" conditionvar="GJ_SHOWMESSAGES" varscope="bulletin">
+        <mos:sub condition="yes">
+          <mos:tmpl name="list_messages">
+            <tr>
+              <td valign="top" height="20">
+                <a href="<mos:sef>index.php?option=com_comprofiler&task=userProfile&user={AUTHOR_ID}</mos:sef>">{AUTHOR_NAME}</a>
+              </td>
+              <td>
+                <a href="<mos:sef>index.php?option=com_groupjive&task=showfullmessage&idm={ID}&groupid={GROUP_ID}&Itemid={ITEMID}</mos:sef>">{SUBJECT}</a>
+              </td>
+              <td>{DATE_BUL}</td>
+            </tr>
+          </mos:tmpl>
+        </mos:sub>
+        <mos:sub condition="no">
+          <tr>
+            <td colspan="2" width="100%" height="20" class="contentpane">
+              <center><mos:translate>GJ_NO_MESSAGE</mos:translate></center>
+            </td>
+          </tr>
+        </mos:sub>
+      </mos:tmpl>
+ 
+      <mos:tmpl name="cond_form" type="condition" conditionvar="GJ_SHOWFORM" varscope="bulletin">
+        <mos:sub condition="yes">
+          <tr>
+  				  <td colspan="3">
+      			  <form action="index.php?option=com_groupjive" name="adminForm" enctype="multipart/form-data" method="post" />
+              <b><mos:translate>GJ_SUBJECT</mos:translate></b>*:<br/>
+      			  <input type="text" name="subject" size="50" maxlength="255" class="inputbox" /><br /><br />
+      			  <b><mos:translate>GJ_LEAVE_MESSAGE</mos:translate></b>*:<br/>
+            
+              {GJ_INPUTBOX}
+      		    <input class="button" type="submit" name="buttonsubmit" value="<mos:translate>GJ_SUBMIT</mos:translate>" />
+      		    
+      		    <input type="hidden" name="group_id" value="{GJ_ID_GROUP}" />
+      		    <input type="hidden" name="task" value="addpost" />
+							<input type="hidden" name="Itemid" value="{ITEMID}" />
+      			  <input type="hidden" name="action" value="save" />
+              </form>        
+            </td>
+          </tr>
+        </mos:sub>
+        <mos:sub condition="no">
+          
+        </mos:sub>
+      </mos:tmpl>
+        
+			{GJ_NOTE}
+		</table>
+	</div>
+	</div>
+</mos:tmpl>

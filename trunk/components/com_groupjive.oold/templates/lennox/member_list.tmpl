@@ -1,0 +1,66 @@
+<mos:tmpl name="member_list">
+	<div id="columnBig1">
+		<h2><mos:translate>GJ_MEMBERS</mos:translate></h2>
+			<h4>
+				<mos:translate>GJ_CURRENT_USER</mos:translate>: {GJ_COUNT}
+			</h4>
+			<table width="100%" class="contentpane">
+				<tr>
+					<td>
+						{PAGE_LINKS}
+					</td>
+					<td>
+						{PAGE_LIST_OPTIONS}
+					</td>
+					<td>
+						{PAGE_COUNTER}
+					</td>
+				</tr>
+			</table>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" class="contentpane">
+      <tr>
+        <td height="20" class="sectiontableheader">
+          <b><mos:translate>GJ_USERNAME</mos:translate></b>
+        </td>
+        <td class="sectiontableheader">
+          <b><mos:translate>GJ_REGISTERED</mos:translate></b>
+        </td>
+      </tr>
+      
+      <mos:tmpl name="list_members">
+      <tr>
+        <td>
+          <div id=contentpane class=contentpane>
+          <img src="{IMAGE}" alt="{USERNAME}" />
+          <br/>
+          <a href="<mos:sef>index.php?option=com_comprofiler&task=userProfile&user={ID_USER}</mos:sef>">{USERNAME}</a>
+          <mos:tmpl name="cond_show_moder_links" type="condition" conditionvar="ISMODER" varscope="list_members">
+            <mos:sub condition="yes">
+              &nbsp;&nbsp; <small>
+              <a href="<mos:sef>index.php?option=com_groupjive&task=delete&groupid={ID_GROUP}&userid={ID_USER}&Itemid={ITEMID}</mos:sef>"
+onclick="return confirm('<mos:translate>GJ_DELETE_U_CONFIRM</mos:translate>')"><mos:translate>GJ_DELETE</mos:translate></a>&nbsp;&nbsp; 
+              <a href="<mos:sef>index.php?option=com_groupjive&task=makeinactive&groupid={ID_GROUP}&userid={ID_USER}&Itemid={ITEMID}</mos:sef>"><mos:translate>GJ_MAKE_INACTIVE</mos:translate></a>
+            </mos:sub>
+            <mos:sub condition="no">
+            </mos:sub>
+          </mos:tmpl>
+    
+          </div>
+        </td>
+			  <td>
+          {DATE}<br/>
+			<mos:tmpl name="onlineindicator" type="condition" conditionvar="ISONLINE" varscope="list_members">
+				<mos:sub condition="0">
+					<span style="color:red">{ONLINESTATUS}</span>
+				</mos:sub>
+				<mos:sub condition="__default">
+					<span style="color:green">{ONLINESTATUS}</span>
+				</mos:sub>
+			</mos:tmpl>
+        </td>
+      </tr>
+      </mos:tmpl>
+      
+		</table>
+  </div>
+</mos:tmpl>

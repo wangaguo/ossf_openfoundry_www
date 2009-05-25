@@ -1,0 +1,119 @@
+<!-- ======================================
+archive = show the complete bulletin library
+-------------------------------------------
+Groups can post Bulletins inside their Group.
+The archive.tmpl template displays a list of all
+Bulletins created by the Group.
+
+archive.tmpl contains Bulletin details including
+SUBJECT, CREATED, USERNAME as well as the ability
+to EDIT or DELETE each Bulletin.
+PAGE_LINKS, PAGE_LIST_OPTIONS and a PAGE_COUNTER
+
+cond_arch_is_moder displays Moderator functions
+IF the user is the Group Owner/Moderator or Admin.
+These Edit and Delete functions will appear.
+=========================================== -->
+
+<mos:tmpl name="archive">
+	<div id="archive-tmpl-wrapper">
+		<div class="sectiontableheader">
+			<div id="archive-title">
+				<mos:translate>GJ_GROUP_BUL</mos:translate>:
+			</div>
+		</div>
+		
+		<div id="archive-main-container">
+		
+			<div id="archive-pagenav-container">
+				<div class="pagecounter">
+					{PAGE_COUNTER}
+				</div>
+				<div class="pagelistoptions">
+					{PAGE_LIST_OPTIONS}
+				</div>
+				<div class="pagelinks">
+					{PAGE_LINKS}
+				</div>
+				<div class="clearfloat"></div>
+			</div>
+			<!-- end archive-pagenav-container -->
+			
+			<div id="archive-header-container">
+				<div id="archive-bulletin-headers">
+					<div id="archive-bulletin-subject-header">
+						<div class="bulletin-subject">
+							<mos:translate>GJ_SUBJECT</mos:translate>
+						</div>
+					</div>
+					<div id="archive-bulletin-createddate-header">
+						<div class="bulletin-createddate">
+							<mos:translate>GJ_CREATED</mos:translate>
+						</div>
+					</div>
+					<div id="archive-username-header">
+						<div class="username">
+							<mos:translate>GJ_USERNAME</mos:translate>
+						</div>
+					</div>
+					<div class="clearfloat"></div>
+				</div>
+			</div>
+			<!-- end archive-header-container -->
+			
+			<mos:tmpl name="list_archive">
+				<div id="archive-list-container">
+				
+					<div class="archive-bulletin-subject-listwrap">
+						<div class="archive-bulletin-subject">
+							<a href="<mos:sef>index.php?option=com_groupjive&task=showfullmessage&idm={ID}&groupid={GJ_GROUP}</mos:sef>">
+								{SUBJECT}
+							</a>
+						</div>
+					</div>
+					<div class="archive-bulletin-createddate-listwrap">
+						<div class="archive-bulletin-createddate">
+							{DATE_BUL}
+						</div>
+					</div>
+					<div class="archive-username-listwrap">
+						<div class="archive-username">
+							<a href="<mos:sef>index.php?option=com_comprofiler&task=userProfile&user={AUTHOR_ID}</mos:sef>">
+								{AUTHOR_NAME}
+							</a>
+						</div>
+					</div>
+					<div class="clearfloat"></div>
+
+					
+					<mos:tmpl name="cond_arch_is_moder" type="condition" conditionvar="GJ_IS_MODER" varscope="list_archive">
+						<mos:sub condition="yes">
+							<div class="archive-mod-wrap-left">
+								<div class="archive-mod-edit-post">
+									<a href="<mos:sef>index.php?option=com_groupjive&task=editpost&groupid={GJ_GROUP}&postid={ID}</mos:sef>">
+										<mos:translate>GJ_EDIT</mos:translate>
+									</a>
+								</div>
+							</div>
+							<div class="archive-mod-wrap-center">
+								<div class="archive-mod-delete-post">
+									<a href="<mos:sef>index.php?option=com_groupjive&task=deletepost&groupid={GJ_GROUP}&postid={ID}</mos:sef>">
+										<mos:translate>GJ_DELETE</mos:translate>
+									</a>
+								</div>
+							</div>
+							<div class="archive-mod-wrap-right"></div>
+						</mos:sub>
+					</mos:tmpl>
+					<!-- end cond_arch_is_moder -->
+	      			<div class="clearfloat"></div>
+					
+				</div>
+				<!-- end archive-list-container -->
+			</mos:tmpl>
+			<!-- end tmpl list_archive -->
+		</div>
+		<!-- end archive-main-container -->
+	</div>
+	<!-- end archive-tmpl-wrapper -->
+</mos:tmpl>

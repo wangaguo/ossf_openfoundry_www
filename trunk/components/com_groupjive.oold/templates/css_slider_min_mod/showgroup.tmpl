@@ -1,0 +1,98 @@
+<!-- ===========================================================
+showgroup = (shows info about group, links, actions, moderator, etc...)
+DISPLAY: displays at top of all groupjive pages (except some forms)
+================================================================
+REMOVING MODERATOR FROM VIEW: some community members have requested the 
+"highly prominent" Moderator elements in the showgroup page be minimized.
+================================================================
+The showgroup Header contains GROUPNAME, GROUPLOGO, GROUPINFO,
+group LINKS, group ACTIONS, group CREATORIMAGE, group MODERATOR_FUNC
+
+SPECIAL NOTE: showgroup.tmpl and the CSS here is likely the
+most important template in GroupJive because showgroup is consistantly
+in the users viewport.
+
+Suggestions for design are to place showgroup elements at the top
+of the page and bring groupjive.tmpl in underneath it.
+-OR-
+float showgroup.tmpl using CSS and design other templates to become
+place by design around, between and next to the floated showgroup elements.
+================================================================ -->
+
+<mos:tmpl name="showgroup">
+	<div id="showgroup-tmpl-wrapper">
+		<div id="showgroup-slider-main-container">
+			<h3 class="componentheading">
+				<mos:translate>GJ_GROUP_FUNCTIONS</mos:translate>
+			</h3>
+			
+			<div class="groupname">
+				<h2>{GJ_GROUPNAME}</h2>
+			</div>
+			
+			<div id="slider-logoandlinks-container">
+				<div id="slider-grouplogo">
+					<div class="grouplogo">
+						{GJ_GROUPLOGO}
+					</div>
+				</div>			
+				<div id="slider-grouplinks">
+					<div class="grouplinks">
+						{GJ_LINKS}
+					</div>
+				</div>
+			</div>
+			<!-- end minmod-logoandlinks-container -->
+			
+			
+			<div id="slider-infoandmodfuncs-container">
+				
+				<div id="slider-mod-functions">
+					<div class="mod-functions">
+						{GJ_MODERATOR_FUNC}
+					</div>
+				</div>
+				
+				<div id="slider-groupinfo">
+					<div class="groupinfo">
+						{GJ_GROUPINFO}
+					</div>
+				</div>
+			</div>
+			<div class="clearfloat"></div>
+
+
+			<div id="inline-actions-wrapper">
+		
+				<div class="inline-tasks">
+					{GJ_ACTIONS}
+				</div>
+				<div class="inline-moder-actions">
+					<ul>
+						<li>
+							<strong><mos:translate>GJ_MODER_PROFILE</mos:translate></strong>
+							<br />
+							<a href="<mos:sef>index.php?option=com_comprofiler&task=userProfile&user={GJ_GROUPCREATORID}</mos:sef>">
+								{GJ_GROUPCREATOR}
+							</a>
+							&nbsp;<mos:tmpl name="hidemaillink" type="condition" conditionvar="SHOWMAILLINK" varscope="showgroup">
+					<mos:sub condition="1">
+				<a href="<mos:sef>index.php?option=com_groupjive&task=mailowner&groupid={GJ_GROUPID}&Itemid={ITEMID}</mos:sef>">
+					<img src="images/M_images/emailButton.png" border="0" align="top"/>
+				</a>
+					</mos:sub>
+				</mos:tmpl>
+						</li>
+					</ul>
+				</div>
+				<div class="clearfloat"></div>
+			</div>
+
+		</div>
+		<!-- end main float left -->
+
+	</div>
+	<div class="clearfloat"></div>
+	<!-- end showgroup-wrapper -->
+	
+</mos:tmpl>

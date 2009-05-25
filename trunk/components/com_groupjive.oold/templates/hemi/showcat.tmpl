@@ -1,0 +1,54 @@
+<mos:tmpl name="showcat">
+  <div id="contentpane" class="contentpane">
+    	<div id="showcat-pagenav-container">
+			<div class="pagecounter">
+				{PAGE_COUNTER}
+			</div>
+			<div class="pagelistoptions">
+				{PAGE_LIST_OPTIONS}
+			</div>
+			<div class="pagelinks">
+				{PAGE_LINKS}
+			</div>
+		<div class="clearfloat"></div>
+		</div>
+		<!-- end showcat-pagenav-container -->
+		
+		<table width="100%" cellpadding="3">
+			<tr>
+				<td class="hemibg" colspan="5">
+					<mos:translate>GJ_CUR_GROUPS</mos:translate>
+				</td>
+			</tr>
+			<mos:tmpl name="list_entry">
+			<tr>
+				<td align="center" valign="middle" style="width:120px;line-height:135px;background:#f4f4f4;border:1px solid #e5e5e5;">
+					<center><img src="{GJ_CATIMAGE}" alt="{GJ_LINKNAME_SHOWGROUP}" style="border:1px solid #e5e5e5;padding:4px;background:#ffffff;" /></center>
+				</td>
+				<td class="sectiontableentry1" style="border:1px solid #e5e5e5;padding-left:4px;" valign="middle">
+				<b>
+					<mos:tmpl name="cond_show_url" type="condition" conditionvar="GJ_SHOWURL_SHOWGROUP" varscope="list_entry">
+						<mos:sub condition="yes">
+							<a href="{GJ_URL_SHOWGROUP}">
+								{GJ_LINKNAME_SHOWGROUP}
+							</a>
+							<br />
+							<font style="font-weight:normal;"><b>Description:</b> {GJ_DESCRIPTION}</font>
+						</mos:sub>
+						<mos:sub condition="no">
+							{GJ_LINKNAME_SHOWGROUP}
+						</mos:sub>
+					</mos:tmpl>
+				</b>
+				</td>
+				<td valign="middle" class="sectiontableentry1" style="width:180px;background:#f4f4f4;border:1px solid #e5e5e5;">
+					{GJ_PRIVACY_STATUS}<br />
+					<mos:translate>GJ_CREATED</mos:translate>:{GJ_CREATED_DATE}<br />
+					<mos:translate>GJ_MEMBERS</mos:translate>:{GROUPUSERCOUNT}
+				</td>
+			</tr>
+		</mos:tmpl>
+		</table>
+	</div>
+	<!-- end content pane -->
+</mos:tmpl>

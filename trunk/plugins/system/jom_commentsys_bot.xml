@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mosinstall version="4.5.2" type="mambot" group="system">
+	<name>Jom Comment Sys</name>
+	<author></author>
+	<creationDate>11.14.2006</creationDate>
+	<copyright>Copyright 2006. All rights reserved!</copyright>
+	<license>Copyrighted </license>
+	<authorEmail></authorEmail>
+	<authorUrl></authorUrl>
+	<version>2.0</version>
+	<description>Ajax Comment System Hack</description>
+	<files>
+		<filename mambot="jom_commentsys_bot">jom_commentsys_bot.php</filename>
+	</files>
+	<queries>
+		<query>
+			UPDATE `#__mambots`
+			set published=1 WHERE
+			element=`jom_commentsys_bot`;
+		</query>
+	</queries>
+	<params/>
+</mosinstall>

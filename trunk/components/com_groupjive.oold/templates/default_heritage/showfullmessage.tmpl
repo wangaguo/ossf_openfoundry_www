@@ -1,0 +1,42 @@
+<mos:tmpl name="showfullmessage">
+  <div id="columnBig1">
+    <h2>{GJ_SUBJECT}</h2>
+    <div id="contenpane" class="contentpane">
+      <table width="100%" class="contentpane">
+        <tr>
+          <td class="sectiontableheader" width="45%">
+            <mos:translate>GJ_SUBJECT</mos:translate>: {SUBJECT}
+          </td>
+          <td width="*" class="sectiontableheader">
+            <mos:translate>GJ_AUTHOR</mos:translate>: <a href="<mos:sef>index.php?option=com_comprofiler&task=userProfile&user={AUTHOR_ID}</mos:sef>">{AUTHOR_NAME}</a>
+             
+          </td>
+			    <td width="*" class="sectiontableheader">
+            <p><mos:translate>GJ_CREATED</mos:translate>: {DATE_BUL}</p>
+          </td>
+        </tr>
+		<mos:tmpl name="cond_can_edit_post_fullmessage" type="condition" conditionvar="GJ_IS_OWNER" varscope="showfullmessage">
+			<mos:sub condition="yes">
+				<tr>
+					<td colspan="2"></td>
+					<td>
+						<small>
+							<a href="<mos:sef>index.php?option=com_groupjive&task=editpost&groupid={GROUP_ID}&postid={ID}&Itemid={ITEMID}</mos:sef>"><mos:translate>GJ_EDIT</mos:translate></a> &nbsp;&nbsp;<a href="<mos:sef>index.php?option=com_groupjive&task=deletepost&groupid={GROUP_ID}&postid={ID}&Itemid={ITEMID}</mos:sef>"><mos:translate>GJ_DELETE</mos:translate></a><br /><br />
+						</small>
+					</td>
+				</tr>
+			</mos:sub>
+		</mos:tmpl>
+        <tr>
+          <td colspan="3" class="sectiontableentry1">
+            <p>{POST}</p>
+          </td>
+
+        </tr>
+		<tr>
+			<td colspan="3">{GJ_JOMCOMMENT}</td>
+		</tr>
+      </table>
+    </div>
+  </div>
+</mos:tmpl>
