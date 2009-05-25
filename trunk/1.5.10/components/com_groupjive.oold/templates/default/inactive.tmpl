@@ -1,0 +1,75 @@
+<!-- ======================================
+inactive = Activate pending users
+-------------------------------------------
+inactive.tmpl displays a list of inactive users.
+
+list_inactive.tmpl gives the Moderator access to
+the inactive users NAME, STATUS, MAKE_ACTIVE function
+and DELETE function.
+=========================================== -->
+
+<mos:tmpl name="inactive">
+	<div id="inactive-tmpl-wrapper">
+		<div id="inactive-form-container">
+			<h3><mos:translate>GJ_INACTIVE_USERS</mos:translate></h3>
+			
+			<div id="inactive-header-container" class="sectiontableheader">
+				<div id="inactive-name-header">
+					<div class="inactive-name">
+						<mos:translate>GJ_INACTIVE_NAME</mos:translate>
+					</div>
+				</div>
+				<div id="inactive-status-header">
+					<div class="inactive-status">
+						<mos:translate>GJ_INACTIVE_STATUS</mos:translate>
+					</div>
+				</div>
+				<div id="inactive-actions-header">
+					<div class="inactive-actions">
+						<mos:translate>GJ_INACTIVE_ACTIONS</mos:translate>
+					</div>
+				</div>
+				<div class="clearfloat"></div>	
+			</div>
+			<div class="clearfloat"></div>
+	
+		
+			<mos:tmpl name="list_inactive">
+				<div id="inactive-list-container">
+				
+					<div class="inactive-name-listwrap">
+						<div class="gj_realname">&nbsp;
+							<a href="<mos:sef>index.php?option=com_comprofiler&task=userProfile&user={ID_USER}</mos:sef>">
+								{REALNAME}
+							</a>
+						</div>
+					</div>
+					
+					<div class="inactive-status-listwrap">
+						<div class="gj_status">&nbsp;
+							{STATUS}
+						</div>
+					</div>
+					
+					<div class="inactive-actions-listwrap">
+						<div class="gj_activate-or-delete">&nbsp;
+							<a href="<mos:sef>index.php?option=com_groupjive&task=makeactive&userid={ID_USER}&groupid={ID_GROUP}&Itemid={ITEMID}</mos:sef>">
+								<mos:translate>GJ_MAKE_ACTIVE</mos:translate>
+							</a>
+							&nbsp; &nbsp; &nbsp;
+							<a href="<mos:sef>index.php?option=com_groupjive&task=delete&groupid={ID_GROUP}&userid={ID_USER}&Itemid={ITEMID}</mos:sef>" onclick="return confirm('<mos:translate>GJ_DELETE_U_CONFIRM</mos:translate>')">
+								<mos:translate>GJ_DELETE</mos:translate>
+							</a>
+						</div>
+					</div>
+					<div class="clearfloat"></div>
+				</div>
+				<div class="clearfloat"></div>
+				<!-- end inactive-list-container -->
+			</mos:tmpl>
+			<!-- end list_inactive template -->
+		</div>
+		<!-- end inactive-form-container -->		
+	</div>
+	<!-- end inactive-tmpl-wrapper -->
+</mos:tmpl>

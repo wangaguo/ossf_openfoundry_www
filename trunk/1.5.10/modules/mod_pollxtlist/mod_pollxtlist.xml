@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<mosinstall type="module">
+        <name>PollXT-List</name>
+        <creationDate>24/08/2005</creationDate>
+        <author>Oli Merten</author>
+        <copyright>This Module is released under the GNU/GPL License</copyright>
+        <authorEmail>pollXT@mamboXT.com</authorEmail>
+        <authorUrl>http://www.mamboXT.com</authorUrl>
+        <version>1.21.05</version>
+        <description>Module for PollXT-Component</description>
+        <files>
+                <filename module="mod_pollxtlist">mod_pollxtlist.php</filename>
+    </files>
+<params>
+		<param name="pageclass_sfx" type="text" default="" label="Page Class Suffix" description="A suffix to be applied to the css classes of the page, this allows individual page styling" />
+		<param name="maxPolls" type="text" default="" label="Max. Polls" description="The maximum number of polls to be displayed in the module. Leave empty to display all" />
+
+</params>
+
+</mosinstall>

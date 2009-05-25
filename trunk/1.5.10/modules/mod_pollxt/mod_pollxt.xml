@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<mosinstall type="module">
+        <name>PollXT</name>
+        <creationDate>24/05/2005</creationDate>
+        <author>Oli Merten</author>
+        <copyright>This Module is released under the GNU/GPL License</copyright>
+        <authorEmail>pollXT@mamboXT.com</authorEmail>
+        <authorUrl>http://www.mamboXT.com</authorUrl>
+        <version>1.21.00</version>
+        <description>Module for PollXT-Component</description>
+        <files>
+                <filename module="mod_pollxt">mod_pollxt.php</filename>
+    </files>
+<params>
+		<param name="pageclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css classes of the page, this allows individual module styling" />
+		<param name="modulewidth" type="text" default="" label="Module width" description="Width of the Module in Pixels, if left blank, width will be 100%" />
+		<param name="mod_pollid" type="text" default="" label="PollID" description="ID of the Poll to be displayed in the module, if left blank, global settings will be applied" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+
+		<param name="mod_disp" type="list" default="" label="Polls to Display" description="Defines which polls should be displayed in the Polls Module">
+			<option value="">Use Global</option>
+            <option value="1">all published</option>
+            <option value="2">only one </option>
+            <option value="3">only where voting is possible </option>
+        </param>
+		<param name="mod_order" type="list" default="" label="Order to display Polls" description="Defines the order in which Polls are displayed (or the first if only one)">
+			<option value="">Use Global</option>
+            <option value="1">in sequence</option>
+            <option value="2">random</option>
+        </param>
+		<param name="mod_hide" type="list" default="" label="Initially hide options" description="Use this option if you have a lot of questions/polls, then initially only Poll titles are displayed, questions/options hidden">
+			<option value="">Use Global</option>
+            <option value="1">yes</option>
+            <option value="2">no</option>
+        </param>
+		<param name="mod_selpo" type="list" default="" label="Show Select-Box" description="If you display only one poll, the user has the possibility to choose the others">
+			<option value="">Use Global</option>
+            <option value="2">yes</option>
+            <option value="1">no</option>
+        </param>
+
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="mod_imgvote" type="imagelist" directory="/images/stories" hide_default="1" default="" label="Image for voting button" description="Select an image from /images/stories, if you prefer to have a picture instead of the voting-button" />
+		<param name="mod_imgresult" type="imagelist" directory="/images/stories" hide_default="1" default="" label="Image for results button" description="Select an image from /images/stories, if you prefer to have a picture instead of the results-button" />
+
+</params>
+
+</mosinstall>

@@ -1,0 +1,29 @@
+<mos:tmpl name="showoverview">
+	<table width="100%" class="contentpane">
+		<tr>
+			<td class="sectiontableheader" colspan="2"><mos:translate>GJ_GROUP_CATEGORY</mos:translate></td>
+		</tr>
+		<mos:tmpl name="list_overview" type="oddeven">
+			<mos:sub condition="__odd">
+			<tr>
+				<td class="sectiontableentry1" width="100px">
+					{CAT_IMAGE}
+				</td>
+				<td class="sectiontableentry1">&nbsp; 
+					<a href="<mos:sef>index.php?option=com_groupjive&task=showcat&id={ID}&Itemid={ITEMID}</mos:sef>" class="category" >{CATNAME} ({CAT_ISONLINE})</a>
+				</td>
+			</tr>
+			</mos:sub>
+			<mos:sub condition="__even">
+			<tr>
+				<td class="sectiontableentry2" width="100px">
+					{CAT_IMAGE}
+				</td>
+				<td class="sectiontableentry2">&nbsp; 
+					<a href="<mos:sef>index.php?option=com_groupjive&task=showcat&id={ID}&Itemid={ITEMID}</mos:sef>" class="category" >{CATNAME} ({CAT_ISONLINE})</a>
+				</td>
+			</tr>
+			</mos:sub>
+		</mos:tmpl>
+	</table>
+</mos:tmpl>

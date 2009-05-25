@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>DOCman:licenses</name>
+  <author>Jozsef Tamas Herczeg</author>
+  <version>1.0</version>
+  <description>DOCman Licenses Definition for Joom!Fish 1.8</description>
+  <reference>
+  	<table name="docman_licenses">
+  		<field type="referenceid" name="id" translate="0">ID</field>
+    	<field type="titletext" name="name" translate="1">Name</field>
+  		<field type="htmltext" name="license" translate="1">License</field>
+	  </table>
+  </reference>
+</joomfish>
