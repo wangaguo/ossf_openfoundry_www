@@ -479,6 +479,9 @@ form.form-login span.username-label, form.form-login span.password-label {displa
 .dark input.button {background: #666 url(../images/main/main-dark-readon-bg.png) 0 0 repeat-x;border: 1px solid #555;color: #fff;}
 .promo input.button {background: #666 url(../images/main/main-dark-readon-bg.png) 0 0 repeat-x;border: 1px solid #777;color: #fff;}
 
+#login-module {display: none;padding: 10px;}
+
+
 /* RokFeature */
 
 #rows-1.rokfeature-mod {height:95px;}
