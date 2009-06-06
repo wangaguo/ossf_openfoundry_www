@@ -64,7 +64,8 @@ $template_real_width = $template_width;
 $template_width = 'margin: 0 auto; width: ' . $template_width . 'px;';
 $template_path = $this->baseurl . "/templates/" . $this->template;
 $fullpath = 'http://'.JRequest::getVar('SERVER_NAME','','SERVER','STRING').$_SERVER['REQUEST_URI'];
-									
+$user =& JFactory::getUser();
+
 function rok_isIe($version = false) {   
 
 	$agent=$_SERVER['HTTP_USER_AGENT'];  
