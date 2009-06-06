@@ -16,23 +16,24 @@ if (!defined('MININEWS_JS')) {
 					<div class="mininews-headline">
 						<div class="mover"><span><?php echo JText::_('Move'); ?></span></div>
 						<div class="counter"><span><?php echo JText::_('Display'); ?> <a href="#" class="mininews-stories-0">0</a> | <a href="#" class="mininews-stories-5">5</a> | <a href="#" class="mininews-stories-10">10</a> | <a href="#" class="mininews-stories-15">15</a> <?php echo JText::_('Stories'); ?></span></div>
-						<h2><?php echo $section->title; ?></h2>
+						<h2>&nbsp;<?php //echo $section->title; ?></h2>
 					</div>
 					<div class="mininews-inner">
 						<div class="mininews-wrapper">
 							<div class="mininews-titles">
-								<div class="topic-names"><?php echo JText::_('Topics'); ?></div>
+								<!--<div class="topic-names"><?php //echo JText::_('Topics'); ?></div>-->
 								<div class="top-story"><?php echo JText::_('Top Story'); ?></div>
 								<div class="other-stories"><?php echo JText::_('Other Stories'); ?></div>
 							</div>			
-
+<!--
 							<div class="sub-categories">
-								<?php foreach ($categories as $category) :  ?>
+								<?php //foreach ($categories as $category) :  ?>
 									<div>
-										<a href="<?php echo JRoute::_(ContentHelperRoute::getCategoryRoute($category->id, $section->id)); ?>"><?php echo $category->title;?></a>
+										<a href="<?php echo JRoute::_(ContentHelperRoute::getCategoryRoute($category->id, $section->id)); ?>"><?php //echo $category->title;?></a>
 									</div>
-								<?php endforeach; ?>
+								<?php //endforeach; ?>
 							</div>
+-->
 			
 							<div class="lead-articles">
 							<?php for ($i=0; $i<$num_lead; $i++) : ?>
