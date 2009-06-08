@@ -41,6 +41,12 @@ h1.componentheading span.bg2 {padding: 2px 0 2px 0;}
 .cols2 {width: 48.6%;float: left;}
 .cols3 {width: 32.3%;float: left;}
 
+/* rok newspager */
+.roknewspager-pages {zoom: 1;}
+.roknewspager-numbers {display: inline;}
+.roknewspager-prev, .roknewspager-next, .roknewspager-prev-disabled, .roknewspager-next-disabled {margin-top: 1px;}
+
+
 /* ie6 warning */
 #iewarn {background: #C6D3DA url(../images/error.png) 10px 20px no-repeat;position: relative;z-index: 1;opacity: 0;margin: -150px auto 0;font-size: 110%;color: #001D29;z-index: 8000;}
 #iewarn div {position: relative;border-top: 5px solid #95B8C9;border-bottom: 5px solid #95B8C9;padding: 10px 80px 10px 220px;}
