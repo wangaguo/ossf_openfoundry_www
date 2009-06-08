@@ -48,7 +48,7 @@
 			<option value="15">15</option>
 		</param>
 		<param name="secid" type="section" default="1" label="Section" description="A Joomla Section" />
-		<param name="catid" type="category" default="" label="Category" description="A Joomla Cataegory" />
+		<param name="catid" type="category" default="1" label="Category" description="A Joomla Cataegory" />
 		<param name="@spacer" type="spacer" default="" label="" description="" />
 		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="module class suffix" />
 		<param name="cssclass" type="text" default="" label="Extra Module CSS Class" description="module CSS class" />
