@@ -41,7 +41,9 @@ a:hover {text-decoration: underline;}
 
 #top-bar {padding: 2px 0;overflow: hidden;}
 #top-bar .links-block {width: 30%;float: left; font-size:11px;}
-#top-bar .right-module-block {width: 70%;float: right;text-align: right;}
+#top-bar .login-module-block {width: 30%;float: left; font-size:11px;}
+#top-bar .login-module-block h3 {margin: 0;}
+#top-bar .right-module-block {width: 40%;float: right;text-align: right;}
 #top-bar .right-module-block h3 {margin: 0;}
 #top-bar ul.menu {margin: 0;padding: 0 10px;overflow: hidden;}
 #top-bar ul.menu li {list-style: none;float: left;border: 0;margin: 0 18px 0 0;font-size: 100%;height: auto;padding: 0;line-height: 100%;}
@@ -381,6 +383,81 @@ img#rocket {background: url(../images/main/rocket.png) 0 0 no-repeat;}
 .rokmodtools div {padding: 2px;cursor: pointer;}
 .rokmodtools input {margin: 0 5px 0 0; float: left;}
 .rokmodtools span {float: left;}
+
+/* RokNewsPager */
+ul.roknewspager {margin: 0;padding: 0;}
+/* RokNewsPager */
+ul.roknewspager {margin: 0;padding: 0;}
+ul.roknewspager li {list-style: none;padding-left: 12px;margin-bottom: 12px;}
+ul.roknewspager .roknewspager-title {display: block;font-size: 120%;font-weight: bold;cursor: pointer;}
+ul.roknewspager .roknewspager-div {display: block;padding-bottom: 12px;}
+.roknewspager-wrapper {position:relative;overflow:hidden;}
+.roknewspager-pages {margin: 0 -15px -15px -15px;padding: 8px 15px;overflow: hidden;}
+.roknewspager-pages2 {float: right;width: auto;height: 18px;text-align: center;position: relative;padding: 0;}
+.roknewspager-spinner {width: 16px; height: 16px; background: transparent url(../images/spinner_small.gif) no-repeat scroll 100% 50%; float: lef    t;display: none;}
+ul.roknewspager-numbers {margin: 0;padding: 0 24px;text-align: right;overflow: hidden;height: 18px;text-align: center;}
+ul.roknewspager-numbers li {list-style: none;display: inline;padding: 0 2px;cursor: pointer;}
+ul.roknewspager-numbers li.active {cursor: default;}
+.roknewspager-prev, .roknewspager-prev-disabled {width: 16px;height: 18px;position: absolute;top: 0;left: 0;cursor: pointer;}
+.roknewspager-next, .roknewspager-next-disabled {width: 16px;height: 18px;position: absolute;top: 0;right: 0;cursor: pointer;}
+.roknewspager-prev-disabled, .roknewspager-next-disabled {cursor: default;}
+ul.roknewspager-numbers li.active {font-weight: bold;}
+
+
+/* RokMicroNews */
+#main-body .rokmicronews-surround {margin-bottom: 5px;padding-bottom: 5px;}
+.micronews {margin-bottom: 0;}
+.micronews-drop {margin-bottom: 10px;}
+.micronews-headline {margin: 0;padding: 8px 10px 30px 5px;position: relative;}
+.micronews-headline h2 {font-size: 110%;font-weight: bold;margin: 0;padding: 3px 10px 9px 10px;text-transform: uppercase;display: inline;t    ext-align: center;}
+.micronews-controls {float: right;width: 55px;}
+.micronews-controls2 {height: 20px;padding: 0 8px;}
+#rokmicronews .mover, #rokmicronews .collapse, #rokmicronews .expand {float: right;width: 15px;height: 19px;}
+#rokmicronews .collapse, #rokmicronews .expand {margin-right: 6px;cursor: pointer;}
+#rokmicronews .mover span, #rokmicronews .expand span, #rokmicronews .collapse span {display: none;}
+.micronews-headline .counter {float: right;margin-right: 150px;line-height: 180%;padding-right: 15px;}
+.micronews-headline .counter span {padding-left: 15px;display: block;}
+.micronews-headline .counter a {font-weight: bold;margin: 0 10px;}
+.micronews-headline .counter a.active {text-decoration: underline;color: red;}
+.micronews-inner {overflow: hidden;}
+.micronews-wrapper {padding: 0;margin: 0 5px 5px 5px;}
+.micronews-articles {padding: 15px;position: relative;}
+.micronews-right .micronews-articles {margin-right: 200px;}
+.micronews-left .micronews-articles {margin-left: 200px;}
+.micronews-article-wrapper {position: relative;}
+.micronews-titles {padding: 5px 0;font-weight: bold;margin: 0;text-transform: uppercase;font-size: 90%;overflow: hidden;}
+.micronews-titles .top-story {width: 180px;padding: 0 10px;}
+.micronews-right .top-story {float: left;}
+.micronews-left .top-story {float: right;}
+.micronews-right .other-stories {float: right;margin-right: 50px;}
+.micronews-left .other-stories {float: left;margin-left: 40px;}
+.micronews h4 a {font-weight: bold;}
+.micronews-thumb {float: left;margin-right: 10px;}
+.micronews .entry h4 {font-size: 120%;line-height: 120%;margin: 5px 0 10px;}
+.micronews .micronews-list {width: 200px;position: absolute;top: 0;}
+.micronews-right .micronews-list {right: 0;}
+.micronews-left .micronews-list {left: 0;}
+.micronews .micronews-list ul {margin: 15px 0 0 0;padding: 0;list-style: none;}
+.micronews .micronews-list ul li {padding: 10px 15px;}
+.micronews-list ul li a {padding-left: 12px;font-weight: bold;display: block;}
+
+
+/* RokNewsflash */
+#newsflash-bar {overflow: hidden;font-size: 12px;}
+#newsflash {position:relative;line-height: 26px;height: 26px;}
+#newsflash ul {margin:0 0 0 95px;list-style:none;padding:0;}
+#newsflash li {padding-bottom:100px;font-weight: bold;}
+#newsflash .readon {
+    clear:none;display:inline;float:none;height:auto;width:auto;line-height:100%;font-size:100%;margin:0;padding:0;background:none;}
+#newsflash .flashing {display:block;position:absolute;left:0;font-weight:bold;text-transform: uppercase;font-size: 11px;height: 26px;width    : 88px;line-height: 26px;padding-left: 15px;}
+#newsflash .controls img {cursor:pointer;height:18px;width:18px;}
+#newsflash .control-prev {background-position:0 0;}
+#newsflash .control-prev:hover {background-position: -36px 0;}
+#newsflash .control-next {background-position:-18px 0px;}
+#newsflash .control-next:hover {background-position: -54px 0px;}
+#newsflash .controls {position:absolute;right:10px;top: 4px;}
+
+
 
 /* Extra Joomla Elements */
 

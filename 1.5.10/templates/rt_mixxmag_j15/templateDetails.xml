@@ -62,6 +62,7 @@
 		<position>top</position>
 		<position>toolbar</position>
 		<position>logo</position>
+		<position>login</position>
 		<position>featured</position>
 		<position>rokmininews</position>
 		<position>search</position>
