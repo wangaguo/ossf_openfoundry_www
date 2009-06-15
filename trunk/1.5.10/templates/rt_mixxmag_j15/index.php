@@ -93,13 +93,15 @@ $moo_sub_offsets_left		= $this->params->get("moo_sub_offsets_left", "5");
 						<jdoc:include type="modules" name="top" style="xhtml" />
 					</div>
 					<?php endif; ?>
-                                                <?php if ($this->countModules('login')) : ?>
-						    <?php if ($user->guest) : ?>
-                                                     <a href="#" id="lock-button" class="login" rel="rokbox[240 310][module=login-module]"><span><?php echo JText::_('LOGIN'); ?></span></a>
-						    <?php else : ?>
-                                                     <a href="#" id="lock-button" rel="rokbox[240 310][module=login-module]"><span><?php echo JText::_('LOGOUT'); ?></span></a>
-                                                    <?php endif; ?>
-                                                <?php endif; ?>
+					<?php if ($this->countModules('login')) : ?>
+					<div class="login-module-block">
+					    <?php if ($user->guest) : ?>
+                                                    <a href="#" id="lock-button" rel="rokbox[240 310][module=login-module]"><span><?php echo JText::_('LOGIN'); ?></span></a>
+					    <?php else : ?>
+                                                    <a href="#" id="lock-button" rel="rokbox[240 310][module=login-module]"><span><?php echo JText::_('LOGOUT'); ?></span></a>
+					    <?php endif; ?>
+					</div>
+                                        <?php endif; ?>
 
 				</div>
 			</div>
