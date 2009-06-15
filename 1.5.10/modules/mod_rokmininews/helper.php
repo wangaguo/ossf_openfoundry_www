@@ -45,11 +45,10 @@ class modRokMiniNewsHelper
 		$db			=& JFactory::getDBO();
 		$user		=& JFactory::getUser();
 		$userId		= (int) $user->get('id');
-		
 		$count 		= trim( $params->get('category_count', 10));
 		$secid		= trim( $params->get('secid') );
+		$catid		= trim( $params->get('catid') );
 		$aid		= $user->get('aid', 0);
-		
 		$contentConfig = &JComponentHelper::getParams( 'com_content' );
 		$access		= !$contentConfig->get('shownoauth');
 		
@@ -57,11 +56,11 @@ class modRokMiniNewsHelper
 			' FROM #__categories AS c' .
 			' WHERE c.id > 0 ' .
 			($access ? ' AND c.access <= ' .(int) $aid : '').
-			' AND c.published = 1 AND c.section = ' . $secid .
+			' AND c.published = 1 AND c.id = ' . $catid .
 			' ORDER BY c.ordering';
-
 		$db->setQuery($query, 0, $count);	
-		$categories = $db->loadObjectList();
+		$categories = $db->loadObject();
+		//$categories = $db->loadObjectList();
 
 		return ($categories);
 
