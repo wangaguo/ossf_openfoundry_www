@@ -306,7 +306,7 @@ span.readon-full {background: #F0F0F0 url(../images/main/readon-bg.png) 0 0 repe
 .mainblock-mod-bottom, .mainblock-mod-bottom2, .mainblock-mod-bottom3 {height: 6px;}
 .mainblock-mod ul, .side-mod ul {margin: 0 -10px;padding: 0;}
 .blog_more ul {margin: 0;padding: 0;}
-.mainblock-mod ul li, .side-mod ul li, .blog_more ul li {list-style: none;padding: 4px 5px 4px 0;margin-bottom: 2px;}
+.mainblock-mod ul li, .side-mod ul li, .blog_more ul li {list-style: none;padding: 4px 5px 4px 0;margin: 5px 5px 5px 5px;}
 .mainblock-mod ul li a, .side-mod ul li a, .blog_more ul li a {display: block;padding-left: 28px;}
 .mainblock-mod ul li a:hover, .side-mod ul li a:hover, .blog_more ul li a:hover {text-decoration: none;}
 #mainmodules, #mainmodules2, #mainmodules3, #mainmodules4 {overflow: hidden;}
