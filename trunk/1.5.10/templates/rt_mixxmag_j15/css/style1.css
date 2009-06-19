@@ -72,7 +72,7 @@ h1.componentheading span.bg {background: url(../images/style1/component-head.png
 
 /* Main Body Modules */
 
-.mainblock-mod a, .light .mainblock-mod a, .mainblock-mod .separator, .light .mainblock-mod .separator {color: #cc0000;}
+.mainblock-mod a, .light .mainblock-mod a, .mainblock-mod .separator, .light .mainblock-mod .separator {color: #000000;}
 .mainblock-mod ul li a:hover, .side-mod ul li a:hover, .mainblock-mod ul li .separator:hover, .side-mod ul li .separator:hover, #main-content .blog_more ul li a:hover {color: #cc0000;background: url(../images/style1/mainblock-arrow-hover.png) 8px 4px no-repeat;}
 .medium .mainblock-mod a, .medium .mainblock-mod .separator {color: #cc0000;}
 .medium .mainblock-mod ul li a:hover, .medium .side-mod ul li a:hover, .medium .mainblock-mod ul li .separator:hover, .medium .side-mod ul li .separator:hover {color: #cc0000;background: url(../images/style1/mainblock-arrow-hover.png) 8px 4px no-repeat;}
