@@ -58,12 +58,12 @@ a:hover {text-decoration: underline;}
 #main-header {position: relative;padding-bottom: 20px;z-index:2;}
 #header-tools {padding: 10px 10px 0 10px;overflow: hidden;}
 .header-spacer {height: 30px;}
-#logo-surround {height: 71px;top:37px;;margin-left: -7px;position: absolute;}
+#logo-surround {height: 71px;top:0px;;margin-left: -7px;position: absolute;}
 #logo-banner {height: 71px;float: left;background: url(../images/main/logo-banner-l.png) 0 0 no-repeat; width: 100%;}
 #logo-banner2 {height: 71px;background: url(../images/main/logo-banner-r.png) 100% 0 no-repeat;}
 #logo-banner3 {height: 71px;margin-left:35px;margin-right: 26px;background: url(../images/main/logo-banner-m.png) 0 0 repeat-x;}
 .logo-module {width: 330px;float: left;overflow: hidden;padding: 15px 0;}
-#logo-bg-area {width: 299px;height: 99px;position: absolute;top: 0;left: 10px;}
+#logo-bg-area {width: 299px;height: 79px;position: absolute;top: 0;left: 10px;}
 #searchmod {padding: 0;float: right;text-align: right;width: 283px;}
 #searchmod .search {border: 0;padding: 0;}
 #searchmod .inputbox {background: none;border: 0;padding: 3px 0 3px 6px;font-size: 100%;float: left;width: 200px;margin-right: 5px;background: #fff;border: 1px solid #ccc;color: #666;}
@@ -71,9 +71,9 @@ a:hover {text-decoration: underline;}
 
 /* Top Main Menu */
 
-#horiz-menu {height: 40px;margin-top: 12px;padding: 0;display: block;}
+#horiz-menu {height: 40px;margin-top: 12px;padding: 0;display: block; }
 #menu-spacer {height: 55px;float: right;}
-ul#horiznav.menutop, #horiz-menu ul.menutop {padding: 8px 0 3px 0;margin: 0;position: relative;z-index:120;float: right;}
+ul#horiznav.menutop, #horiz-menu ul.menutop {padding: 8px 0 3px 0;margin: 0 12px;position: relative;z-index:120;float: left;}
 #horiz-menu li, #horiz-menu li a, #horiz-menu li .separator {z-index:200;position:relative;display: block;}
 #horiz-menu span {height: 29px;}
 #horiz-menu a, #horiz-menu .separator {white-space: nowrap;display: block;float: left;height: 29px;line-height: 26px;font-weight: normal;font-size: 100%;text-decoration: none;z-index: 100;cursor: pointer;padding: 0 6px;color: #fff;text-transform: uppercase;}
