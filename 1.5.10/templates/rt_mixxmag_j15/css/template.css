@@ -324,7 +324,7 @@ span.readon-full {background: #F0F0F0 url(../images/main/readon-bg.png) 0 0 repe
 #rokmininews .rokmininews-surround {margin-bottom: 10px;}
 #rokmininews .module {padding: 0;}
 
-.mainblock-mod {background: #E7E7E7 url(../images/main/side-light-mod-bg.png) 0 0 repeat-x;border-top: 1px solid #CFCFCF;border-right: 1px solid #CFCFCF;border-left: 1px solid #CFCFCF;}
+.mainblock-mod {/*background: #E7E7E7 url(../images/main/side-light-mod-bg.png) 0 0 repeat-x;*/border-top: 1px solid #CFCFCF;border-right: 1px solid #CFCFCF;border-left: 1px solid #CFCFCF;}
 .mainblock-mod h3.module-title, .light .mainblock-mod h3.module-title {background: #DFDFDF url(../images/main/content-header-bg.png) 0 0 repeat-x;border-bottom: 1px solid #CFCFCF;}
 .mainblock-mod h3.module-title span.bg, .light .mainblock-mod h3.module-title span.bg {background: #444;color: #fff;}
 .mainblock-mod ul li, .light .mainblock-mod ul li, .light .side-mod ul li, .blog .blog_more ul li {background: #F0F0F0 url(../images/main/readon-bg.png) 0 0 repeat-x;border: 1px solid #c7c7c7;}
