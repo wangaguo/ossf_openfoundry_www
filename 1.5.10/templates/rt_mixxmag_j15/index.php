@@ -143,7 +143,8 @@ $moo_sub_offsets_left		= $this->params->get("moo_sub_offsets_left", "5");
 				<div id="menu-spacer"></div>
 				<?php endif; ?>
 
-				<div class="clr"></div>
+				<div class="clr">
+				</div>
 			</div>
 			<!--End Main Header-->
 			<!--Begin Main Content Area-->
