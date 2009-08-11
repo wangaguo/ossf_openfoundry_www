@@ -1,0 +1,77 @@
+/* font tweaking */
+#ff-optima h1, #ff-optima h2, #ff-optima h3, #ff-optima h4, #ff-optima h5, #ff-optima h6, #ff-lucida h1, #ff-lucida h2, #ff-lucida h3, #ff-lucida h4, #ff-lucida h5, #ff-lucida h6 {letter-spacing: -0.07em;}
+body#ff-optima, body#ff-lucida {letter-spacing: -0.05em;}
+body#ff-georgia, body#ff-georgia.f-default {font-size: 12px;}
+body#ff-trebuchet.f-large {font-size: 13px;}
+#ff-nexus .roksearch_results h3 {font-family: Helvetica,Arial,sans-serif;}
+#header, ul.menutop {zoom:1;}
+ul.menutop {float:none;}
+#horiz-menu li.parent.sfHover, .menutop .drop-wrap {z-index:800 !important;}
+
+/* horizmenu */
+#horiz-menu {position:relative;z-index:140;zoom: 1;}
+#horiz-menu li.parent-sfHover, .menutop .drop-wrap {z-index:800 !important;}
+
+#horizmenu-surround, #horizmenu-surround2, .iteminfo {zoom: 1;}
+.iteminfo {display: inline-block;}
+
+#horizmenu-surround2, #horizmenu-surround3, #horizmenu-surround4, #horizmenu-surround5 {display:block;z-index:200;zoom:1;}
+
+/* main layout */
+.componentheading {width:100%;}
+h1.componentheading {width:auto;}
+#maincontent-block {position: relative;zoom: 1;}
+
+.body-dark hr {height: 1px;border-style: solid;border-width: 1px 0 0 0;border-color: #444;}
+.body-light hr {height: 1px;border-style: solid;border-width: 1px 0 0 0;border-color: #ddd;}
+
+/* have to hard-code these widths */
+#buttons {width:35px;}
+
+.side-mod .module {position:relative;zoom:1;}
+.side-mod, .module-tr {zoom: 1;}
+.module-surround, #featuremodules, .article-info-left, .article-info-surround, .article-info-surround2 {zoom: 1;}
+ul.frontpage {margin: auto;}
+.article-info-right {width: 200px;}
+#top-bar .date1 {line-height: 22px;}
+.clr {line-height: 0;font-size: 0;}
+blockquote {position: relative;}
+#top-bar .date1 {line-height: 22px;}
+#top-bar .date2, #top-bar .date3, #top-bar .date4 {line-height: 22px;}
+#showmodules .feature-desc {font-weight: bold;}
+.menutop li.active, .menutop li:hover, .menutop li.sfHover  {padding-bottom: 1px;}
+
+/* readon buttons */
+
+
+/* rok module fixes */
+.roktabs-wrapper {zoom:1;}
+.roktabs-links ul.roktabs-top,.roktabs-links ul.roktabs-bottom {zoom:1;position:relative;}
+#roksearch_results .container-wrapper {position:relative;zoom:1;}
+#roksearch_results .container-scroller {position:relative;zoom:1;}
+.roktabs-wrapper .roktabs-links li.active span {zoom:1;}
+
+/* rok stories */
+.feature-block .image-container { zoom:1;position:relative;padding-bottom:35px;}
+.feature-block .labels-title {position:absolute;bottom:0;left:0;width:100%;}
+
+/* default joomla layout fixes */
+.article_row {zoom: 1;}
+.cols1 {display: block !important;width: 100%;}
+.article_column {position: relative;}
+.cols2 {width: 49%;overflow: hidden;}
+
+.clr {line-height:0;height:0;}
+
+#searchmod-surround .inputbox {padding-top: 2px;line-height: 16px;height: 20px;}
+#roksearch_search_str.loading {background-position: 95% 30% !important}
+#roksearch_results .small .small {margin: 0;}
+div.important, div.important-red, div.important-blue, div.important-green, div.important-purple, div.important-brown, div.important-orange, div.important-grey {zoom:1;}
+form.search_result button.button {padding-top: 0;line-height: 130%;}
+form.search_result fieldset.word label {line-height: 22px;}
+form.form-login input.button, form.log input.button {line-height: 18px;}
+form.form-login .inputbox {line-height: 16px;}
+
+
+
+#bottom-main, #mainmodules3 {zoom: 1;}

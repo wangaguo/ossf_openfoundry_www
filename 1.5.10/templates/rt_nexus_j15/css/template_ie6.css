@@ -1,0 +1,257 @@
+/** IE6 is a hunk of crap!!! due to limitations in the CSS capabilities of IE, these hacks are required **/
+body.ie-please-wait {background:#000 url(../images/ie_loading.png) 50% 300px no-repeat;}
+
+/* font tweaking */
+#ff-optima h1, #ff-optima h2, #ff-optima h3, #ff-optima h4, #ff-optima h5, #ff-optima h6, #ff-lucida h1, #ff-lucida h2, #ff-lucida h3, #ff-lucida h4, #ff-lucida h5, #ff-lucida h6 {letter-spacing: -0.07em;}
+body#ff-optima, body#ff-lucida {letter-spacing: -0.05em;}
+body#ff-georgia, body#ff-georgia.f-default {font-size: 12px;}
+
+/* topbar */
+#accessibility {width: 130px;}
+#logo {position: relative;}
+
+/* horizmenu */
+#horiz-menu {position:relative;z-index:140;float:right;}
+#horiz-menu li.parent-sfHover {z-index:800 !important;}
+#menu-spacer {line-height: 0;font-size: 0;}
+
+/* Horizmenu Text - Light */
+body.head-light #horiz-menu li.sfHover .item span,
+body.head-light #horiz-menu li.sfHover li.sfHover .item span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover .item span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover .item span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .item span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .item span,
+body.head-light #horiz-menu li.active-sfHover .item span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover .item span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover .item span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover .item span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover li.sfHover .item span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .item span {color: #333;}
+
+body.head-light #horiz-menu li.sfHover li .item span,
+body.head-light #horiz-menu li.sfHover li.sfHover li .item span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li .item span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li .item span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li .item span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li .item span,
+body.head-light #horiz-menu li.active-sfHover li .item span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li .item span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover li .item span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover li .item span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover li.sfHover li .item span {color: #666;}
+
+/* Horizmenu Text - Dark */
+body.head-dark #horiz-menu li.sfHover .item span,
+body.head-dark #horiz-menu li.sfHover li.sfHover .item span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover .item span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover .item span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .item span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .item span,
+body.head-dark #horiz-menu li.active-sfHover .item span,
+body.head-dark #horiz-menu li.active-sfHover li.sfHover .item span,
+body.head-dark #horiz-menu li.active-sfHover li.sfHover li.sfHover .item span,
+body.head-dark #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover .item span,
+body.head-dark #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover li.sfHover .item span,
+body.head-dark #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .item span {color: #333;}
+
+body.head-dark #horiz-menu li.sfHover li .item span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li .item span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li .item span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li .item span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li .item span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li .item span,
+body.head-dark #horiz-menu li.active-sfHover li .item span,
+body.head-dark #horiz-menu li.active-sfHover li.sfHover li .item span,
+body.head-dark #horiz-menu li.active-sfHover li.sfHover li.sfHover li .item span,
+body.head-dark #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover li .item span,
+body.head-dark #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover li.sfHover li .item span {color: #999;}
+
+/* Standard State Bullet - Light */
+body.head-light #horiz-menu li.sfHover li.sfHover li .bullet,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li .bullet,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li .bullet,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li .bullet {background: url(../images/header/light/drop-bullet.png) 7px 10px no-repeat;}
+
+/* Hover State Bullet  - Light */
+body.head-light #horiz-menu li.sfHover li.sfHover .bullet,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover .bullet,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover .bullet,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .bullet,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .bullet,
+body.head-light #horiz-menu li li.active-sfHover .bullet,
+body.head-light #horiz-menu li li li.active-sfHover .bullet,
+body.head-light #horiz-menu li li li li.active-sfHover .bullet,
+body.head-light #horiz-menu li li li li li.active-sfHover .bullet,
+body.head-light #horiz-menu li li li li li li.active-sfHover .bullet {background: url(../images/header/light/drop-bullet.png) 7px -123px no-repeat;}
+
+/* Active State Bullet - Light */
+body.head-light #horiz-menu li li.sfHover li.active .bullet,
+body.head-light #horiz-menu li li.sfHover li.sfHover li.active .bullet,
+body.head-light #horiz-menu li li.sfHover li.sfHover li.sfHover li.active .bullet,
+body.head-light #horiz-menu li li.sfHover li.sfHover li.sfHover li.sfHover li.active .bullet {background: url(../images/header/light/drop-bullet.png) 7px -267px no-repeat;}
+
+/* Standard State Daddy Arrow - Light */
+body.head-light #horiz-menu li.sfHover li .daddy span,
+body.head-light #horiz-menu li.sfHover li.sfHover li .daddy span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li .daddy span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li .daddy span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li .daddy span, 
+body.head-light #horiz-menu li.active-sfHover li .daddy span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li .daddy span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover li .daddy span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover li .daddy span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover li.sfHover li .daddy span {background: url(../images/header/light/horizmenu-arrow.png) 100% -281px no-repeat;}
+
+/* Hover State Daddy Arrow - Light */
+body.head-light #horiz-menu li.sfHover li.sfHover .daddy span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover .daddy span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover .daddy span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .daddy span,
+body.head-light #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .daddy span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover .daddy span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover .daddy span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover .daddy span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover li.sfHover .daddy span,
+body.head-light #horiz-menu li.active-sfHover li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .daddy span {background:url(../images/header/light/horizmenu-arrow.png) 100% -337px no-repeat;}
+
+/* Standard State Bullet - Dark */
+body.head-dark #horiz-menu li.sfHover li.sfHover li .bullet,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li .bullet,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li .bullet,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li .bullet {background: url(../images/header/dark/drop-bullet.png) 7px 10px no-repeat;}
+
+/* Hover State Bullet  - Dark */
+body.head-dark #horiz-menu li.sfHover li.sfHover .bullet,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover .bullet,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover .bullet,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .bullet,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .bullet,
+body.head-dark #horiz-menu li li.active-sfHover .bullet,
+body.head-dark #horiz-menu li li li.active-sfHover .bullet,
+body.head-dark #horiz-menu li li li li.active-sfHover .bullet,
+body.head-dark #horiz-menu li li li li li.active-sfHover .bullet,
+body.head-dark #horiz-menu li li li li li li.active-sfHover .bullet {background: url(../images/header/dark/drop-bullet.png) 7px -123px no-repeat;}
+
+/* Active State Bullet - Dark */
+body.head-dark #horiz-menu li li.sfHover li.active .bullet,
+body.head-dark #horiz-menu li li.sfHover li.sfHover li.active .bullet,
+body.head-dark #horiz-menu li li.sfHover li.sfHover li.sfHover li.active .bullet,
+body.head-dark #horiz-menu li li.sfHover li.sfHover li.sfHover li.sfHover li.active .bullet {background: url(../images/header/dark/drop-bullet.png) 7px -267px no-repeat;}
+
+/* Standard State Daddy Arrow - Dark */
+body.head-dark #horiz-menu li.sfHover li .daddy span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li .daddy span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li .daddy span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li .daddy span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li .daddy span, 
+body.head-dark #horiz-menu li.active-sfHover li .daddy span,
+body.head-dark #horiz-menu li.active-sfHover li.active-sfHover li .daddy span,
+body.head-dark #horiz-menu li.active-sfHover li.active-sfHover li.sfHover li .daddy span,
+body.head-dark #horiz-menu li.active-sfHover li.active-sfHover li.active-sfHover li.sfHover li .daddy span,
+body.head-dark #horiz-menu li.active-sfHover li.active-sfHover li.active-sfHover li.active-sfHover li.sfHover li .daddy span {background:url(../images/header/dark/horizmenu-arrow.png) 100% -281px no-repeat;}
+
+/* Hover State Daddy Arrow - Dark */
+body.head-dark #horiz-menu li.sfHover li.sfHover .daddy span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover .daddy span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover .daddy span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .daddy span,
+body.head-dark #horiz-menu li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover li.sfHover .daddy span,
+body.head-dark #horiz-menu li.active-sfHover li.active-sfHover .daddy span,
+body.head-dark #horiz-menu li.active-sfHover li.active-sfHover li.sfHover .daddy span,
+body.head-dark #horiz-menu li.active-sfHover li.active-sfHover li.active-sfHover li.sfHover .daddy span,
+body.head-dark #horiz-menu li.active-sfHover li.active-sfHover li.active-sfHover li:active:hover li.sfHover .daddy span,
+body.head-dark #horiz-menu li.active-sfHover li.active-sfHover li.active-sfHover li.active-sfHover li.active-sfHover li.sfHover .daddy span {background:url(../images/header/dark/horizmenu-arrow.png) 100% -337px no-repeat;}
+
+
+/* main layout */
+#body-left, #header, #header-bar, #top-bar, .col3, ul.menutop, #bottom, #bottom2, #mainmodules4, #footer, #footer2, #footer3, #footerbar2, #footerbar3, #bottom-menu, #leftcol, #leftcol-bg, #rightcol, #maincol, #maincol2, #main-body, .side-mod, #breadcrumbs, #breadcrumbs-home, .breadcrumbs, .pathway, ul.menu, .module, #showmodules, #maincontent-block, #mainmodules, #mainmodules2, #mainmodules3, #mainmodule4, #bottom-main, #inset-block-left, #inset-block-right, #inset-block-right .right-padding, #inset-block-left .left-padding, #main-content, #main-content-block, .wrapper, .feature-module, .article-info-surround, .article-info-surround2, .roktabs-wrapper, ul.bullet-3 li, #bottom ul li a, .topbar-strip {zoom: 1;}
+
+.module-surround, #horizmenu-surround, #featuremodules, .article-info-left, #showcase-section {zoom: 1;}
+#horizmenu-surround {height:42px;position:relative;}
+#horizmenu-surround2, #horizmenu-surround3, #horizmenu-surround4, #horizmenu-surround5, .module-surround2, .module-surround3, .module-surround4, .module-surround5 {font-size: 0;line-height: 0;}
+
+
+
+.module-surround3, .module-surround5 {right: -1px !important;}
+#leftcol .module-surround3, #leftcol .module-surround5, #rightcol .module-surround3, #rightcol .module-surround5 {right: 0 !important;}
+#leftcol .module-surround4, #leftcol .module-surround5, #rightcol .module-surround4, #rightcol .module-surround5 {bottom: -1px !important;}
+
+#main-background {position: relative;}
+#inset-block-right {margin-left:0px;}
+#inset-block-left {margin-right:0px;}
+#header-bar {width: 96.9%;}
+.article-info-right {width: 200px;}
+.clr {line-height: 0;font-size: 0;}
+#showmodules .feature-desc {font-weight: bold;}
+
+#showcase-section .feature-block .readon-wrap1 {display: block;}
+#showcase-section .feature-block .readon-wrap1 .readon1-m {margin-left:0px;}
+#showcase-section .feature-block .readon-wrap1 .readon1-l,
+#showcase-section .feature-block .readon-wrap1 .readon1-m,
+#showcase-section .feature-block .readon-wrap1 .readon1-r {float:left;white-space:nowrap;}
+#showcase-section .feature-block .readon-wrap1 .readon1-l {width: 9px;}
+.showcase-dc .readon-wrap1 {width: 100px;}
+.readon-wrap1 span {display:inline-block;line-height: 24px;}
+.readon-wrap1 {padding-left:9px;}
+.readon-wrap1, a.readon-main,.readon1-m,.readon1-r {position:relative;}
+
+div.important, div.important-red, div.important-blue, div.important-green, div.important-purple, div.important-brown, div.important-orange, div.important-grey {zoom:1;}
+
+#main-content-surround {zoom: 1;}
+.showcase-surround {zoom: 1;}
+.article_row {zoom: 1;}
+.cols1 {display: block !important;width: 100%;}
+.article_column {position: relative;}
+.cols2 {width: 49%;overflow: hidden;}
+h1.componentheading {width:auto;}
+#breadcrumbs-home {margin-right: -3px;}
+
+form.search_result button.button {padding-top: 0;line-height: 130%;}
+form.search_result fieldset.word label {line-height: 22px;}
+#searchmod-surround .inputbox {padding-top: 2px;line-height: 16px;height: 20px;}
+
+form.form-login input.button, form.log input.button {line-height: 18px;}
+form.form-login .inputbox {line-height: 16px;}
+#top-bar .date1 {line-height: 22px;}
+#top-bar {position: relative;}
+
+ul.frontpage {margin: auto;}
+
+/* rok stories */
+.feature-block {zoom: 1;}
+.labels-title {position: absolute;width:95%;}
+.rokstories-tip {padding: 0px 10px 25px;}
+.feature-block .feature-arrow-l, .feature-block .feature-arrow-r, .feature-block .image-full {zoom:1;}
+.feature-block .image-container { zoom:1;position:relative;padding-bottom:35px;overflow:hidden;}
+.feature-block .labels-title {position:absolute;bottom:0;left:0;width:100%;}
+
+/* rok tabs */
+.roktabs-wrapper {width:auto;}
+.roktabs-links ul.roktabs-top,.roktabs-links ul.roktabs-bottom {zoom:1;position:relative;}
+#ff-nexus .roktabs-links, #ff-nexus #horiz-menu li span, #ff-nexus #top-bar .date-block {font-family: Helvetica,Arial,sans-serif;font-weight: bold;}
+#top-bar .date1 {line-height: 20px;}
+
+/* rokfonts */
+h3.module-title span {display:inline;}
+
+/* rok module fixes */
+#roksearch_results .roksearch_even {zoom:1;}
+#roksearch_results .container-wrapper {position:relative;zoom:1;width:400px;}
+#roksearch_results .container-scroller {position:relative;zoom:1;}
+#roksearch_results .container-scroller .page .roksearch_odd, #roksearch_results .container-scroller .page .roksearch_even {zoom:1;z-index:1000;}
+#roksearch_results .container-scroller span.small { bottom:6px;right:10px}
+.roktabs-wrapper .roktabs-links ul li {white-space: nowrap;}
+.roktabs-wrapper .arrow-prev {background-position: 0 0;}
+.roktabs-wrapper .roktabs-links ul li {line-height: 40px;}
+
+/* ie6 warning */
+#iewarn {background: #C6D3DA url(../images/error.png) 10px 20px no-repeat;position: relative;z-index: 1;opacity: 0;margin: -150px auto 0;font-size: 110%;color: #001D29;z-index: 8000;}
+#iewarn div {position: relative;border-top: 5px solid #95B8C9;border-bottom: 5px solid #95B8C9;padding: 10px 80px 10px 220px;}
+#iewarn h4 {color: #900;font-weight: bold;line-height: 120%;}
+#iewarn a {color: #296AC6;font-weight: bold;}
+#iewarn_close {background: url(../images/close.png) 50% 50% no-repeat;display: block;cursor: pointer;position: absolute;width: 61px;height: 21px;top: 25px;right: 12px;}
+#iewarn_close.cHover {background: url(../images/close_hover.png) 50% 50% no-repeat;}
+
+/* page peel overrides for demo site */
+a.fliptip {display: block;z-index: 100000;position: relative;}

@@ -1,0 +1,29 @@
+/* Showcase */
+
+/* Text Colors - Light Style */
+.show-light #showmodules {color: #000;}
+.show-light #showmodules a {color: #DE9300;}
+.show-light #showmodules h3 span {color: #fff;}
+.show-light span.created-date, .show-light span.feature-title {color: #fff;}
+.show-light .feature-desc {text-shadow: #ccc 1px 1px 15px;}
+
+/* Text Colors - Dark Style */
+.show-dark #showmodules {color: #ccc;}
+.show-dark #showmodules a {color: #DE9300;}
+.show-dark #showmodules h3 span {color: #fff;}
+.show-dark span.created-date, .show-dark span.feature-title {color: #fff;text-shadow: #000 1px 1px 15px;}
+.show-dark .feature-desc {text-shadow: #000 1px 1px 15px;}
+
+/* Border Colors - Light Style */
+.show-light #showmodules h3.module-title {border-bottom: 2px solid #fff;}
+
+/* Border Colors - Dark Style */
+.show-dark #showmodules h3.module-title {border-bottom: 2px solid #fff;}
+
+/* Showcase Images - Light Style */
+.show-light #showcase-section {background: #fff url(../images/showcase/light/showcase-bg.png) 0 0 repeat-x;}
+.show-light #showcase-section2 {background: url(../images/showcase/light/showcase-overlay.png) 50% 0 no-repeat;}
+
+/* Showcase Images - Dark Style */
+.show-dark #showcase-section {background: #000 url(../images/showcase/dark/showcase-bg.png) 0 0 repeat-x;}
+.show-dark #showcase-section2 {background: url(../images/showcase/dark/showcase-overlay.png) 50% 0 no-repeat;}
