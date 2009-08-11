@@ -1,0 +1,38 @@
+/* Footer Styles */
+
+/* Text Colors - Dark */
+.foot-dark #mainmodules5 {color: #999;}
+.foot-dark #footer {color: #666;}
+
+/* Text Color -Light */
+.foot-light #mainmodules5 {color: #666;}
+.foot-light #footer {color: #666;}
+.foot-light #mainmodules5 h3 span {color: #333;}
+
+/* Dark */
+.foot-dark #footer {background: #292929;}
+.foot-dark .copyright-block {background: url(../images/footer/dark/footer-div.png) 0 0 repeat-x;}
+.foot-dark .copyright-block2 {background: url(../images/footer/dark/footer-div.png) 0 100% repeat-x;}
+.foot-dark #rocket {background: url(../images/footer/dark/rocket.png) 0 0 no-repeat;}
+.foot-dark #footer h3 span {color: #fff;}
+.foot-dark #footer h3.module-title {border-bottom: 2px solid #333;}
+.foot-dark #footer ul.roktabs-top li.active {background: url(../images/footer/dark/roktab-l.png) 0 2px no-repeat;}
+.foot-dark #footer ul.roktabs-top li.active span {background: url(../images/footer/dark/roktab-r.png) 100% 2px no-repeat;}
+.foot-dark #footer .roktabs-links li.active {color: #fff;}
+.foot-dark #footer .roktabs-wrapper .arrow-next {background: url(../images/footer/dark/roktab-r.png) -15px -46px no-repeat;right: 0;}
+.foot-dark #footer .roktabs-wrapper .arrow-next:hover {background: url(../images/footer/dark/roktab-r.png) -15px -46px no-repeat;}
+.foot-dark #footer .roktabs-wrapper .arrow-prev {background: url(../images/footer/dark/roktab-r.png) 0 -62px no-repeat;left: 0;}
+.foot-dark #footer .roktabs-wrapper .arrow-prev:hover {background: url(../images/footer/dark/roktab-r.png) 0 -62px no-repeat;}
+
+/* Light */
+.foot-light #footer {background: #fff;}
+.foot-light .copyright-block {background: url(../images/footer/light/footer-div.png) 0 0 repeat-x;}
+.foot-light .copyright-block2 {background: url(../images/footer/light/footer-div.png) 0 100% repeat-x;}
+.foot-light #footer #rocket {background: url(../images/footer/light/rocket.png) 0 0 no-repeat;}
+.foot-light #footer ul.roktabs-top li.active {background: url(../images/footer/light/roktab-l.png) 0 2px no-repeat;}
+.foot-light #footer ul.roktabs-top li.active span {background: url(../images/footer/light/roktab-r.png) 100% 2px no-repeat;}
+.foot-light #footer .roktabs-links li.active {color: #000;}
+.foot-light #footer .roktabs-wrapper .arrow-next {background: url(../images/footer/light/roktab-r.png) -15px -46px no-repeat;right: 0;}
+.foot-light #footer .roktabs-wrapper .arrow-next:hover {background: url(../images/footer/light/roktab-r.png) -15px -46px no-repeat;}
+.foot-light #footer .roktabs-wrapper .arrow-prev {background: url(../images/footer/light/roktab-r.png) 0 -62px no-repeat;left: 0;}
+.foot-light #footer .roktabs-wrapper .arrow-prev:hover {background: url(../images/footer/light/roktab-r.png) 0 -62px no-repeat;}

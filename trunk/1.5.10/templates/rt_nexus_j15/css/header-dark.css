@@ -1,0 +1,143 @@
+/* Header - Dark*/
+
+/* Text Colors*/
+#top-bar {color: #ccc;}
+#top-bar a {color: #fff;}
+#header {color: #ccc;}
+#header a {color: #fff;}
+#horiz-menu li .item {color: #999;}
+
+body #horiz-menu li:hover .item span,
+body #horiz-menu li:hover li:hover .item span,
+body #horiz-menu li:hover li:hover li:hover .item span,
+body #horiz-menu li:hover li:hover li:hover li:hover .item span,
+body #horiz-menu li:hover li:hover li:hover li:hover li:hover .item span,
+body #horiz-menu li:hover li:hover li:hover li:hover li:hover li:hover .item span,
+body #horiz-menu li.active:hover .item span,
+body #horiz-menu li.active:hover li:hover .item span,
+body #horiz-menu li.active:hover li:hover li:hover .item span,
+body #horiz-menu li.active:hover li:hover li:hover li:hover .item span,
+body #horiz-menu li.active:hover li:hover li:hover li:hover li:hover .item span, body #horiz-menu li.active:hover li:hover li:hover li:hover li:hover li:hover .item span {color: #333;}
+
+body #horiz-menu li:hover li .item span,
+body #horiz-menu li:hover li:hover li .item span,
+body #horiz-menu li:hover li:hover li:hover li .item span,
+body #horiz-menu li:hover li:hover li:hover li:hover li .item span,
+body #horiz-menu li:hover li:hover li:hover li:hover li:hover li .item span,
+body #horiz-menu li:hover li:hover li:hover li:hover li:hover li:hover li .item span,
+body #horiz-menu li.active li .item span,
+body #horiz-menu li.active:hover li .item span,
+body #horiz-menu li.active:hover li:hover li .item span,
+body #horiz-menu li.active:hover li:hover li:hover li .item span,
+body #horiz-menu li.active:hover li:hover li:hover li:hover li .item span, body #horiz-menu li.active:hover li:hover li:hover li:hover li:hover li .item span {color: #999;}
+
+#horiz-menu li li .item em {color:#666;}
+
+/* Top Bar */
+#top-bar {background: #3E3E3E;border-bottom: 3px solid #191919;}
+#searchmod-surround .input-field-l {background: #e9e9e9 url(../images/header/dark/surround-r.png) 100% -98px no-repeat;}
+#searchmod-surround .input-field-r {background: url(../images/header/dark/surround-l.png) 0 -98px no-repeat;}
+#top-bar #searchmod-surround .inputbox {color: #666;}
+#topwrap {background: #313131 url(../images/header/dark/surround-r.png) 100% -49px no-repeat;}
+#topwrap2 {background: url(../images/header/dark/surround-l.png) 0 -49px no-repeat;}
+a.large .button {background: url(../images/header/dark/font-buttons.png) 0 0 no-repeat;}
+a.small .button {background: url(../images/header/dark/font-buttons.png) 0 -11px no-repeat;}
+
+/* Header Bar */
+#header {background: #000 url(../images/header/dark/header-bg.png) 0 0 repeat-x;}
+#logo {background: url(../images/header/dark/logo.png) 0 0 no-repeat;}
+#menu-spacer {background: #323232;}
+#horizmenu-surround {background: #323232;}
+#horizmenu-surround2 {background: url(../images/header/dark/horizmenu-corners.png) 0 0 no-repeat;}
+#horizmenu-surround3 {background: url(../images/header/dark/horizmenu-corners.png) -12px 0 no-repeat;}
+#horizmenu-surround4 {background: url(../images/header/dark/horizmenu-corners.png) 0 -12px no-repeat;}
+#horizmenu-surround5 {background: url(../images/header/dark/horizmenu-corners.png) -12px -12px no-repeat;}
+
+/* Horizontal Menu */
+#horiz-menu {background: #000;}
+#horiz-menu li.active {background: #121212 url(../images/header/dark/horizmenu-states.png) 0 -317px repeat-x;border: 1px solid #393939;}
+#horiz-menu li:hover, #horiz-menu li.sfHover {background: #cbcbcb url(../images/header/dark/horizmenu-states.png) 0 0 repeat-x;border: 1px solid #fff;}
+#horiz-menu li .daddy span {background:url(../images/header/dark/horizmenu-arrow.png) 100% 12px no-repeat;}
+#horiz-menu li.active .daddy span {background:url(../images/header/dark/horizmenu-arrow.png) 100% -195px no-repeat;}
+#horiz-menu li:hover .daddy span, #horiz-menu li.sfHover .daddy span, #horiz-menu li.active:hover .daddy span, #horiz-menu li.active-sfHover .daddy span {background:url(../images/header/dark/horizmenu-arrow.png) 100% -89px no-repeat;}
+
+/** Horizontal Menu Dropdowns **/
+#horiz-menu ul ul {background: #2E2E2E url(../images/header/dark/menudrop-bg.png) 0 0 repeat-x;border: 1px solid #222;border-top: 0;}
+#horiz-menu ul ul ul {border-top: 1px solid #222;}
+#horiz-menu li li:hover, #horiz-menu li li.sfHover {background: #cbcbcb url(../images/header/dark/horizmenu-states.png) 0 0 repeat-x;border: 1px solid #fff;}
+
+/* Standard State Bullet */
+#horiz-menu li li .bullet,
+#horiz-menu li:hover li:hover li .bullet,
+#horiz-menu li:hover li:hover li:hover li .bullet,
+#horiz-menu li:hover li:hover li:hover li:hover li .bullet,
+#horiz-menu li:hover li:hover li:hover li:hover li:hover li .bullet {background: url(../images/header/dark/drop-bullet.png) 7px 10px no-repeat;}
+
+/* Hover State Bullet */
+#horiz-menu li:hover li:hover .bullet,
+#horiz-menu li:hover li:hover li:hover .bullet,
+#horiz-menu li:hover li:hover li:hover li:hover .bullet,
+#horiz-menu li:hover li:hover li:hover li:hover li:hover .bullet,
+#horiz-menu li:hover li:hover li:hover li:hover li:hover li:hover .bullet,
+#horiz-menu li li.active:hover .bullet,
+#horiz-menu li li li.active:hover .bullet,
+#horiz-menu li li li li.active:hover .bullet,
+#horiz-menu li li li li li.active:hover .bullet,
+#horiz-menu li li li li li li.active:hover .bullet {background: url(../images/header/dark/drop-bullet.png) 7px -123px no-repeat;}
+
+/* Active State Bullet */
+#horiz-menu li li.active .bullet,
+#horiz-menu li li:hover li.active .bullet,
+#horiz-menu li li:hover li:hover li.active .bullet,
+#horiz-menu li li:hover li:hover li:hover li.active .bullet,
+#horiz-menu li li:hover li:hover li:hover li:hover li.active .bullet {background: url(../images/header/dark/drop-bullet.png) 7px -267px no-repeat;}
+
+/* Standard State Daddy Arrow */
+#horiz-menu li:hover li .daddy span,
+#horiz-menu li:hover li:hover li .daddy span,
+#horiz-menu li:hover li:hover li:hover li .daddy span,
+#horiz-menu li:hover li:hover li:hover li:hover li .daddy span,
+#horiz-menu li:hover li:hover li:hover li:hover li:hover li .daddy span,
+#horiz-menu li.active:hover li .daddy span,
+#horiz-menu li.active:hover li:hover li .daddy span,
+#horiz-menu li.active:hover li:hover li:hover li .daddy span,
+#horiz-menu li.active:hover li:hover li:hover li:hover li .daddy span,
+#horiz-menu li.active:hover li:hover li:hover li:hover li:hover li .daddy span {background:url(../images/header/dark/horizmenu-arrow.png) 100% -281px no-repeat;}
+
+/* Hover State Daddy Arrow */
+#horiz-menu li:hover li:hover .daddy span,
+#horiz-menu li:hover li:hover li:hover .daddy span,
+#horiz-menu li:hover li:hover li:hover li:hover .daddy span,
+#horiz-menu li:hover li:hover li:hover li:hover li:hover .daddy span,
+#horiz-menu li:hover li:hover li:hover li:hover li:hover li:hover .daddy span,
+#horiz-menu li.active:hover li:hover .daddy span,
+#horiz-menu li.active:hover li:hover li:hover .daddy span,
+#horiz-menu li.active:hover li:hover li:hover li:hover .daddy span,
+#horiz-menu li.active:hover li:hover li:hover li:hover li:hover .daddy span,
+#horiz-menu li.active:hover li:hover li:hover li:hover li:hover li:hover .daddy span {background:url(../images/header/dark/horizmenu-arrow.png) 100% -337px no-repeat;}
+
+/* Active State Daddy Arrow */
+#horiz-menu li.active li.active .daddy span,
+#horiz-menu li.active li.active li.active .daddy span,
+#horiz-menu li.active li.active li.active li.active .daddy span,
+#horiz-menu li.active li.active li.active li.active li.active .daddy span,
+#horiz-menu li.active li.active li.active li.active li.active li.active .daddy span {background:url(../images/header/dark/horizmenu-arrow.png) 100% -401px no-repeat;}
+
+/* Search */
+#searchmod .search_options {color: #fff;}
+#roksearch_results .rokajaxsearch-overlay {background: #292929;}
+#roksearch_results {background: #353535;border: 1px solid #222;border-bottom: 0;}
+#roksearch_results a:hover {color: #fff;}
+#roksearch_results h3 {color: #fff;}
+#roksearch_results span {color: #999;}
+#roksearch_results span.highlight {background: #666;color: #fff;}
+#roksearch_results .roksearch_header, #roksearch_results .roksearch_row_btm {background: #292929;border-bottom: 1px solid #222;color: #fff;}
+#roksearch_results .roksearch_odd {background: #292929;border-bottom: 1px solid #222;}
+#roksearch_results .roksearch_even {border-bottom: 1px solid #222;}
+#roksearch_results .roksearch_odd-hover, #roksearch_results .roksearch_even-hover {background: #494949;}
+#roksearch_results .roksearch_odd-hover h3, #roksearch_results .roksearch_even-hover h3 {color: #fff;background: url(../images/header/dark/search-close.png) 0 -13px no-repeat;}
+#roksearch_results a#roksearch_link {background: url(../images/header/dark/search-close.png) 0 100% no-repeat;}
+#roksearch_results .arrow-left {background: url(../images/header/dark/search-close.png) 50% 1px no-repeat;}
+#roksearch_results .arrow-left-disabled {background: url(../images/header/dark/search-close.png) 50% -34px no-repeat;}
+#roksearch_results .arrow-right {background: url(../images/header/dark/search-close.png) 50% -16px no-repeat;}
+#roksearch_results .arrow-right-disabled {background: url(../images/header/dark/search-close.png) 50% -34px no-repeat;}

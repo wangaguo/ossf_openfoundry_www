@@ -1,0 +1,17 @@
+/* Feature */
+
+/* Top Feature */
+#featuremodules {background: #F4DF8E url(../images/feature/yellow/feature-bg.png) 0 0 repeat-x;border-bottom: 1px solid #F4BE41;}
+#tabs-bar {background: url(../images/feature/yellow/tabs-bar.png) 0 0 repeat-x;}
+
+/* Feature RokTabs */
+#featuremodules ul.roktabs-top li.active {background: #F3BE41 url(../images/feature/yellow/roktab-r.png) 100% 0 no-repeat;}
+#featuremodules ul.roktabs-top li.active span {background: url(../images/feature/yellow/roktab-l.png) 0 0 no-repeat;}
+#featuremodules .roktabs-links {color: #997B25;}
+#featuremodules .roktabs-links li.active {color: #fff;}
+#featuremodules ul.roktabs-top li {background: url(../images/feature/yellow/roktab-div.png) 100% 50% no-repeat;}
+#featuremodules .roktabs-wrapper .arrow-next {background-image: url(../images/feature/yellow/roktabs-arrow.png);right: 0;}
+#featuremodules .roktabs-wrapper .arrow-prev {background-image: url(../images/feature/yellow/roktabs-arrow.png);left: 0;}
+
+/* Bottom Feature */
+#bottom2 {background: #F4DF8E url(../images/feature/yellow/feature-bg.png) 0 0 repeat-x;}

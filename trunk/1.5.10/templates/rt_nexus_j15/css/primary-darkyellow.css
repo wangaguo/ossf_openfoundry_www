@@ -1,0 +1,102 @@
+/* Primary Style - Dark Yellow */
+
+/* Text Colors */
+a, .date1, .createdby, #horiz-menu li.active .item span {color: #f4ad00;}
+.head-light .date1 {color:#8b5300;}
+#mainmodules3 {color: #fff;}
+#mainmodules3 a {color: #F2DFB3;}
+#featuremodules {color: #fff;}
+#featuremodules a {color: #8b5300;}
+#featuremodules .roktabs-links {color: #fff;}
+#featuremodules .roktabs-links li.active {color: #fff;}
+.readon-wrap1 a, .readon-wrap1 button, .readon-wrap1 input.button {color: #fff !important;}
+#featuremodules .readon-wrap1 a, #featuremodules .readon-wrap1 button, #featuremodules .readon-wrap1 input.button, .hilite2 .readon-wrap1 a, .hilite2 .readon-wrap1 button, .hilite2 .readon-wrap1 input.button {color: #997B25 !important;}
+h3 span, .contentheading, .contentheading a, .blog_more h2 {color: #81A2AF;}
+#featuremodules h3 span, #mainmodules3 h3 span {color: #F2DFB3;}
+.hilite2 .moduletable, .hilite2 h3, .hilite2 a {color: #fff;}
+.hilite2 h3 span {color: #F2DFB3;}
+
+/* Border Colors */
+#footer {border-top: 4px solid #DEAA0E;}
+h3.module-title, .contentheading, .blog_more h2 {border-bottom: 2px solid #81A2AF;}
+.hilite2 h3.module-title, #featuremodules h3.module-title, #mainmodules3 h3.module-title {border-bottom: 2px solid #F2DFB3;}
+.featured-image {border: 10px solid #E8B410;}
+img.demo-tabs, img.demo-tabs2 {border: 5px solid #E8B410;}
+
+/* Top Feature */
+#featuremodules {background: #E8B410 url(../images/primary/darkyellow/feature-bg.png) 0 0 repeat-x;}
+#tabs-bar {background: url(../images/primary/darkyellow/tabs-bar.png) 0 0 repeat-x;}
+#featuremodules ul li a {background: url(../images/primary/darkyellow/hilite-typo.png) 0 0 no-repeat;}
+
+/* Feature RokTabs */
+#featuremodules .roktabs-links ul li.active, #main-content .hilite2 .roktabs-links ul li.active {background: url(../images/primary/darkyellow/roktab-l.png) 0 2px no-repeat;}
+#featuremodules .roktabs-links ul li.active span, #main-content .hilite2 .roktabs-links ul li.active span {background: url(../images/primary/darkyellow/roktab-r.png) 100% 2px no-repeat;}
+#featuremodules .roktabs-wrapper .arrow-next, #main-content .hilite2 .roktabs-wrapper .arrow-next {background: url(../images/primary/darkyellow/roktab-r.png) -15px -46px no-repeat;right: 0;}
+#featuremodules .roktabs-wrapper .arrow-next:hover, #main-content .hilite2 .roktabs-wrapper .arrow-next:hover {background: url(../images/primary/darkyellow/roktab-r.png) -15px -62px no-repeat;}
+#featuremodules .roktabs-wrapper .arrow-prev, #main-content .hilite2 .roktabs-wrapper .arrow-prev {background: url(../images/primary/darkyellow/roktab-r.png) 0 -46px no-repeat;left: 0;}
+#featuremodules .roktabs-wrapper .arrow-prev:hover, #main-content .hilite2 .roktabs-wrapper .arrow-prev:hover {background: url(../images/primary/darkyellow/roktab-r.png) 0 -62px no-repeat;}
+
+/* Bottom Feature */
+#bottom2 {background: #E8B410 url(../images/primary/darkyellow/feature-bg.png) 0 0 repeat-x;}
+#bottom2 ul li a {background: url(../images/primary/darkyellow/hilite-typo.png) 0 0 no-repeat;}
+
+/* Input Buttons */
+.body-light #main-content .rokradios, .head-light #top-bar .rokradios {background: url(../images/primary/darkyellow/inputs-1.png) 0 1px no-repeat;}
+.body-light #main-content .rokradios-active, .head-light #top-bar .rokradios-active {background: url(../images/primary/darkyellow/inputs-1.png) 0 -175px no-repeat;}
+.body-light #main-content .rokchecks {background: url(../images/primary/darkyellow/inputs-1.png) 0 -346px no-repeat;}
+.body-light #main-content .rokchecks-active {background: url(../images/primary/darkyellow/inputs-1.png) 0 -522px no-repeat;}
+.body-dark #main-content .rokradios, .head-dark #top-bar .rokradios {background: url(../images/primary/darkyellow/inputs-1-dark.png) 0 1px no-repeat;}
+.body-dark #main-content .rokradios-active, .head-dark #top-bar .rokradios-active {background: url(../images/primary/darkyellow/inputs-1-dark.png) 0 -175px no-repeat;}
+.body-dark #main-content .rokchecks {background: url(../images/primary/darkyellow/inputs-1-dark.png) 0 -346px no-repeat;}
+.body-dark #main-content .rokchecks-active {background: url(../images/primary/darkyellow/inputs-1-dark.png) 0 -522px no-repeat;}
+#featuremodules .rokradios, #bottom2 .rokradios, #main-content .hilite2 .rokradios {background: url(../images/primary/darkyellow/inputs-2.png) 0 1px no-repeat;}
+#featuremodules .rokradios-active, #bottom2 .rokradios-active, #main-content .hilite2 .rokradios-active {background: url(../images/primary/darkyellow/inputs-2.png) 0 -175px no-repeat;}
+#featuremodules .rokchecks, #bottom2 .rokchecks, #main-content .hilite2 .rokchecks {background: url(../images/primary/darkyellow/inputs-1.png) 0 -346px no-repeat;}
+#featuremodules .rokchecks-active, #bottom2 .rokchecks-active, #main-content .hilite2 .rokchecks-active {background: url(../images/primary/darkyellow/inputs-1.png) 0 -522px no-repeat;}
+
+/* Module Variations */
+/** Light Body **/
+.body-light #maincol .hilite2 .module-surround {background: #DEAA0E;}
+.body-light #maincol .hilite2 .module-surround2 {background: url(../images/primary/darkyellow/module-corners2.png) 0 -24px no-repeat;}
+.body-light #maincol .hilite2 .module-surround3 {background: url(../images/primary/darkyellow/module-corners2.png) 100% -24px no-repeat;}
+.body-light #maincol .hilite2 .module-surround4 {background: url(../images/primary/darkyellow/module-corners2.png) 0 -36px no-repeat;}
+.body-light #maincol .hilite2 .module-surround5 {background: url(../images/primary/darkyellow/module-corners2.png) 100% -36px no-repeat;}
+.body-light #leftcol .hilite2 .module-surround, .body-light #rightcol .hilite2 .module-surround {background: #DEAA0E;}
+.body-light #leftcol .hilite2 .module-surround2, .body-light #rightcol .hilite2 .module-surround2 {background: url(../images/primary/darkyellow/module-corners2.png) 0 0 no-repeat;}
+.body-light #leftcol .hilite2 .module-surround3, .body-light #rightcol .hilite2 .module-surround3 {background: url(../images/primary/darkyellow/module-corners2.png) 100% 0 no-repeat;}
+.body-light #leftcol .hilite2 .module-surround4, .body-light #rightcol .hilite2 .module-surround4 {background: url(../images/primary/darkyellow/module-corners2.png) 0 -12px no-repeat;}
+.body-light #leftcol .hilite2 .module-surround5, .body-light #rightcol .hilite2 .module-surround5 {background: url(../images/primary/darkyellow/module-corners2.png) 100% -12px no-repeat;}
+.body-light #bottom .hilite2 .module-surround {background: #DEAA0E;}
+.body-light #bottom .hilite2 .module-surround2 {background: url(../images/primary/darkyellow/module-corners2.png) 0 -48px no-repeat;}
+.body-light #bottom .hilite2 .module-surround3 {background: url(../images/primary/darkyellow/module-corners2.png) 100% -48px no-repeat;}
+.body-light #bottom .hilite2 .module-surround4 {background: url(../images/primary/darkyellow/module-corners2.png) 0 -60px no-repeat;}
+.body-light #bottom .hilite2 .module-surround5 {background: url(../images/primary/darkyellow/module-corners2.png) 100% -60px no-repeat;}
+
+/** Dark Body **/
+.body-dark #maincol .hilite2 .module-surround {background: #DEAA0E;}
+.body-dark #maincol .hilite2 .module-surround2 {background: url(../images/primary/darkyellow/module-corners2-dark.png) 0 -24px no-repeat;}
+.body-dark #maincol .hilite2 .module-surround3 {background: url(../images/primary/darkyellow/module-corners2-dark.png) 100% -24px no-repeat;}
+.body-dark #maincol .hilite2 .module-surround4 {background: url(../images/primary/darkyellow/module-corners2-dark.png) 0 -36px no-repeat;}
+.body-dark #maincol .hilite2 .module-surround5 {background: url(../images/primary/darkyellow/module-corners2-dark.png) 100% -36px no-repeat;}
+.body-dark #leftcol .hilite2 .module-surround, .body-dark #rightcol .hilite2 .module-surround {background: #DEAA0E;}
+.body-dark #leftcol .hilite2 .module-surround2, .body-dark #rightcol .hilite2 .module-surround2 {background: url(../images/primary/darkyellow/module-corners2-dark.png) 0 0 no-repeat;}
+.body-dark #leftcol .hilite2 .module-surround3, .body-dark #rightcol .hilite2 .module-surround3 {background: url(../images/primary/darkyellow/module-corners2-dark.png) 100% 0 no-repeat;}
+.body-dark #leftcol .hilite2 .module-surround4, .body-dark #rightcol .hilite2 .module-surround4 {background: url(../images/primary/darkyellow/module-corners2-dark.png) 0 -12px no-repeat;}
+.body-dark #leftcol .hilite2 .module-surround5, .body-dark #rightcol .hilite2 .module-surround5 {background: url(../images/primary/darkyellow/module-corners2-dark.png) 100% -12px no-repeat;}
+.body-dark #bottom .hilite2 .module-surround {background: #DEAA0E;}
+.body-dark #bottom .hilite2 .module-surround2 {background: url(../images/primary/darkyellow/module-corners2-dark.png) 0 -48px no-repeat;}
+.body-dark #bottom .hilite2 .module-surround3 {background: url(../images/primary/darkyellow/module-corners2-dark.png) 100% -48px no-repeat;}
+.body-dark #bottom .hilite2 .module-surround4 {background: url(../images/primary/darkyellow/module-corners2-dark.png) 0 -60px no-repeat;}
+.body-dark #bottom .hilite2 .module-surround5 {background: url(../images/primary/darkyellow/module-corners2-dark.png) 100% -60px no-repeat;}
+
+/* Typography */
+.readon1-l {background: url(../images/primary/darkyellow/readon-l.png) 0 0 no-repeat;}
+.readon1-m {background: url(../images/primary/darkyellow/readon-m.png) 0 0 repeat-x;}
+.readon1-r {background: url(../images/primary/darkyellow/readon-r.png) 100% 0 no-repeat;}
+#featuremodules .readon1-l, .hilite2 .readon1-l {background: url(../images/primary/darkyellow/readon-l.png) 0 -36px no-repeat;}
+#featuremodules .readon1-m, .hilite2 .readon1-m {background: url(../images/primary/darkyellow/readon-m.png) 0 -36px repeat-x;}
+#featuremodules .readon1-r, .hilite2 .readon1-r {background: url(../images/primary/darkyellow/readon-r.png) 100% -36px no-repeat;}
+.body-light .article-info-surround2 {background: url(../images/primary/darkyellow/article-icon.png) 0 2px no-repeat;}
+.body-dark .article-info-surround2 {background: url(../images/primary/darkyellow/article-icon-dark.png) 0 2px no-repeat;}
+.hilite2 .side-mod .poll-line:hover {background: #C99700;}
+.hilite2 .login-links a {background: url(../images/primary/darkyellow/hilite-typo.png) 0 -221px no-repeat;}

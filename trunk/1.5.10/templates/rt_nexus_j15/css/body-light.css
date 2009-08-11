@@ -1,0 +1,74 @@
+/* Body Style - Light */
+
+/* Text Colors */
+#maincol {color: #333;}
+#leftcol {color: #333;}
+#rightcol {color: #333;}
+#mainmodules4 {color: #333;}
+#main-body ul.menu a, #main-body ul.menu .separator, #main-body ul.menu .item {color: #666;}
+#main-body ul.menu li.active a, #main-body ul.menu li.active li.active a, #main-body ul.menu li.active li.active li.active a, #main-body ul.menu li.active .separator, #main-body ul.menu li.active li.active .separator, #main-body ul.menu li.active a.item, #main-body ul.menu li.active li.active .item, #main-body ul.menu li.active li.active li.active .item {color: #333}
+#main-body ul.menu li.active li a, #main-body ul.menu li.active li.active li a, #main-body ul.menu li.active li .separator, #main-body ul.menu li.active li.active li .separator, #main-body ul.menu li.active li .item, #main-body ul.menu li.active li.active li .item {color: #666;}
+#main-body ul.menu a:hover, #main-body ul.menu .separator:hover, #main-body ul.menu .item:hover {color: #333 !important;}
+
+/* Main Body */
+body {background: #fff;}
+.s-c-s .colmid {background: #eee;}
+.s-c-s .colright {background: #fff;}
+.s-c-x .colright {background: #eee;}
+.x-c-s .colright {background: #eee;}
+.x-c-x .colmask {background: #eee;}
+.side-mod .poll-line:hover {background: #eee;}
+.form-login .inputbox, input#search_searchword.inputbox, input#email, .register-page .inputbox, .contact_email .inputbox {border: 1px solid #dbdbdb;}
+.login-extras .login-links a {background: url(../images/body/light/list-arrows.png) 0 -219px no-repeat;}
+#breadcrumbs-home {background: url(../images/body/light/breadcrumb-home.png) 0 0 no-repeat;}
+#breadcrumbs span img {background: url(../images/body/light/list-arrows.png) 0 -215px no-repeat;}
+.date-div {color: #999;}
+tr.sectiontableentry1 {background: #ddd}
+p.pageinfo {background: #fff;border: 1px solid #ddd;}
+
+/* Module Variations */
+#maincol .hilite1 .module-surround, .leading .module-surround {background: #fff;}
+#maincol .hilite1 .module-surround2, .leading .module-surround2 {background: url(../images/body/light/module-corners.png) 0 -24px no-repeat;}
+#maincol .hilite1 .module-surround3, .leading .module-surround3 {background: url(../images/body/light/module-corners.png) 100% -24px no-repeat;}
+#maincol .hilite1 .module-surround4, .leading .module-surround4 {background: url(../images/body/light/module-corners.png) 0 -36px no-repeat;}
+#maincol .hilite1 .module-surround5, .leading .module-surround5 {background: url(../images/body/light/module-corners.png) 100% -36px no-repeat;}
+#leftcol .hilite1 .module-surround, #rightcol .hilite1 .module-surround {background: #e7e7e7;}
+#leftcol .hilite1 .module-surround2, #rightcol .hilite1 .module-surround2 {background: url(../images/body/light/module-corners.png) 0 -48px no-repeat;}
+#leftcol .hilite1 .module-surround3, #rightcol .hilite1 .module-surround3 {background: url(../images/body/light/module-corners.png) 100% -48px no-repeat;}
+#leftcol .hilite1 .module-surround4, #rightcol .hilite1 .module-surround4 {background: url(../images/body/light/module-corners.png) 0 -60px no-repeat;}
+#leftcol .hilite1 .module-surround5, #rightcol .hilite1 .module-surround5 {background: url(../images/body/light/module-corners.png) 100% -60px no-repeat;}
+
+/* Side Menu */
+#main-body ul.menu li a, #main-body ul.menu li .separator, #main-body ul.menu li .item {background: url(../images/body/light/list-arrows.png) 0 -555px no-repeat;}
+#main-body ul.menu li li span {background: url(../images/body/light/list-arrows.png) 0 -218px no-repeat;}
+#main-body ul.menu li.active, #main-body ul.menu li.active:hover, #main-body ul.menu li.active-sfHover {background: #eee;border: 1px solid #ddd;}
+#main-body ul.menu li:hover, #main-body ul.menu li.sfHover, #main-body ul.menu li.active li.active:hover, #main-body ul.menu li.active li.active-sfHover {background: #eee;}
+#main-body ul.menu li.active li:hover, #main-body ul.menu li.active li.sfHover {background: #ddd;}
+#main-body ul.menu li a:hover, #main-body ul.menu li .separator:hover, #main-body ul.menu li .item:hover {background: url(../images/body/light/list-arrows.png) 0 -1053px no-repeat;}
+#main-body #leftcol ul.menu li.active a.topdaddy, #main-body #leftcol ul.menu li.active a, #main-body #leftcol ul.menu li.active .separator.topdaddy, #main-body #leftcol ul.menu li.active .separator, #main-body #leftcol ul.menu li.active .item.topdaddy, #main-body #leftcol ul.menu li.active .item {background-position: 100% -1053px;}
+
+/* Bottom Panel */
+#bottom {background: #d9d9d9;border-top: 1px solid #c9c9c9;}
+#bottom .hilite1 .module-surround {background: #e8e8e8;}
+#bottom .hilite1 .module-surround2 {background: url(../images/body/light/module-corners.png) 0 0 no-repeat;}
+#bottom .hilite1 .module-surround3 {background: url(../images/body/light/module-corners.png) 100% 0 no-repeat;}
+#bottom .hilite1 .module-surround4 {background: url(../images/body/light/module-corners.png) 0 -12px no-repeat;}
+#bottom .hilite1 .module-surround5 {background: url(../images/body/light/module-corners.png) 100% -12px no-repeat;}
+
+/* RokTabs */
+#leftcol ul.roktabs-top li.active, #rightcol ul.roktabs-top li.active {background: url(../images/body/light/roktab2-l.png) 0 2px no-repeat;}
+#leftcol ul.roktabs-top li.active span, #rightcol ul.roktabs-top li.active span {background: url(../images/body/light/roktab2-r.png) 100% 2px no-repeat;}
+#leftcol .roktabs-wrapper .arrow-next, #rightcol .roktabs-wrapper .arrow-next {background: url(../images/body/light/roktab2-r.png) -15px -46px no-repeat;right: 0;}
+#leftcol .roktabs-wrapper .arrow-next:hover, #rightcol .roktabs-wrapper .arrow-next:hover {background: url(../images/body/light/roktab2-r.png) -15px -62px no-repeat;}
+#leftcol .roktabs-wrapper .arrow-prev, #rightcol .roktabs-wrapper .arrow-prev {background: url(../images/body/light/roktab2-r.png) 0 -46px no-repeat;left: 0;}
+#leftcol .roktabs-wrapper .arrow-prev:hover, #rightcol .roktabs-wrapper .arrow-prev:hover {background: url(../images/body/light/roktab2-r.png) 0 -62px no-repeat;}
+#maincol ul.roktabs-top li.active {background: url(../images/body/light/roktab2-l.png) 0 -90px no-repeat;}
+#maincol ul.roktabs-top li.active span {background: url(../images/body/light/roktab2-r.png) 100% -90px no-repeat;}
+#maincol .roktabs-links li.active {color: #fff;}
+#maincol .roktabs-wrapper .arrow-next {background: url(../images/body/light/roktab2-r.png) -15px -138px no-repeat;right: 0;}
+#maincol .roktabs-wrapper .arrow-next:hover {background: url(../images/body/light/roktab2-r.png) -15px -154px no-repeat;}
+#maincol .roktabs-wrapper .arrow-prev {background: url(../images/body/light/roktab2-r.png) 0 -138px no-repeat;left: 0;}
+#maincol .roktabs-wrapper .arrow-prev:hover {background: url(../images/body/light/roktab2-r.png) 0 -154px no-repeat;}
+
+/* Typography */
+ul.latestnews li a, ul.mostread li a, .blog_more ul li a, .block ul#mainlevel-nav li a, .featured-text-block li a {background: url(../images/body/light/list-arrows.png) 0 1px no-repeat;}

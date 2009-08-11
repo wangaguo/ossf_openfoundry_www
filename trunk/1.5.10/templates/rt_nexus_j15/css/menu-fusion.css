@@ -1,0 +1,48 @@
+/* Core */
+.menutop,.menutop * {margin: 0;padding: 0;}
+#horiz-menu {z-index: 50;}
+.menutop {line-height: 1.0;float: left;margin-bottom: 1.5em;position: relative;}
+.menutop ul {background: #fff;padding: 0;min-height: 20px;}
+.menutop em {font-size:80%;font-weight:normal;display:block;font-style:normal;}
+.menutop li {float: left;list-style: none;position: relative;}
+.menutop li .item {height:auto;}
+.menutop li li {position: relative;float: none;width: auto;}
+.menutop li#current {z-index: 199;}
+.menutop .sfHover {z-index: 700;}
+.menutop li li .item, .menutop li.active li .item {display: block;margin: 0;text-decoration: none;float: none;width: auto;}
+.menutop li ul {float: none;left: -999em;position: absolute;z-index: 500;}
+.menutop li:hover li ul, .menutop li.sfHover li ul, .menutop li li:hover li ul, .menutop li li.sfHover li ul, .menutop li li li:hover li ul, .menutop li li li.sfHover li ul {top: -999em;}
+.menutop li li:hover ul, .menutop li li.sfHover ul, .menutop li li li:hover ul, .menutop li li li.sfHover ul, .menutop li li li li:hover ul, .menutop li li li li.sfHover ul {top: 0;}
+
+/* Top Level */
+.menutop {padding: 4px 12px;margin: 0;position: relative;z-index:120;cursor:pointer;list-style: none;margin: 0;}
+.menutop li {display: block;float: left;margin: 1px 5px;padding: 0;position:relative;}
+.menutop li:hover .item, .menutop li.sfHover .item {z-index: 100;cursor: pointer;}
+.menutop .item {white-space: nowrap;display: block;float: left;height: 30px;line-height: 32px;font-weight: bold;font-size: 14px;text-decoration: none !important;z-index: 100;cursor: pointer;padding: 0;position:relative;margin: 0;}
+.menutop .subtext span {line-height: 18px;}
+.menutop .subtext em {line-height:14px;}
+.menutop li:hover .item, .menutop li.sfHover .item, .menutop li.active .item {z-index: 100;cursor: pointer;}
+.menutop li .item span {display: block;padding: 0 14px;}
+.menutop li.active, .menutop li:hover, .menutop li.sfHover {margin:0px 4px;}
+.menutop li li.active, .menutop li li:hover, .menutop li li.sfHover {padding:0;margin:0;}
+.menutop li .daddy {padding-right: 10px;}
+
+/* Dropdowns */
+.menutop ul {width:175px;padding: 2px 1px;}
+.menutop ul.columns2 {width:350px;}
+.menutop ul.columns2 li {width:173px;}
+.menutop li ul.columns2 li {float:left;}
+.menutop ul ul {padding:1px;}
+.menutop li li {height: auto;margin: 0px;padding:1px;}
+.menutop li li .item {padding: 0 0 0 25px;height: auto;line-height: 33px;display: block;font-size: 13px;}
+.menutop li li .item.image {padding:0 0 0 2px;}
+.menutop li li .item img {float:left;margin: 6px 5px 0 0;}
+.menutop li li .item span {display:block;padding: 0;width: 100%;}
+.menutop li:hover ul, .menutop li.sfHover ul {left: -3px;top:33px;}
+.menutop li li:hover ul, 
+.menutop li li.sfHover ul, 
+.menutop li li li:hover ul, 
+.menutop li li li.sfHover ul, 
+.menutop li li li li:hover ul, 
+.menutop li li li li.sfHover ul {left:174px;top: -3px;}
+#horiz-menu .menutop li.active li.active .orphan span {background: none;}
