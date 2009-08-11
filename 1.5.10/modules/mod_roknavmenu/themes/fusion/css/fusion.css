@@ -1,0 +1,84 @@
+body {font-family:Helvetica,Arial,sans-serif;font-size:12px;}
+
+/* CORE */
+
+.menutop,.menutop * {margin:0;padding:0;}
+.menutop {float:left;position:relative;padding-bottom:2px;}
+.menutop li {float:left;list-style:none;position:relative;}
+.menutop li.nolink {cursor:default;}
+.menutop li .item {display:block;float:left;}
+.menutop li li .item, 
+.menutop li.active li .item {display:block;margin:0;text-decoration:none;float:none;width:100%;}
+.menutop li ul{float:none;left:-999em;position:absolute;z-index:500;}
+.menutop li:hover li ul, 
+.menutop li.sfHover li ul, 
+.menutop li li:hover li ul, 
+.menutop li li.sfHover li ul, 
+.menutop li li li:hover li ul, 
+.menutop li li li.sfHover li ul{top:-999em;}
+.menutop li li {position:relative;float:none;width:100%;}
+
+/* top CUSTOM */
+
+.menutop.level1 li {height:30px;}
+.menutop.level1 li li {height:auto;}
+.menutop.level1 .item {padding: 0 15px; height:30px;line-height:30px;}
+
+/* top STYLE */
+
+.menutop li .item,
+.menutop li li .item,
+.menutop li li li .item,
+.menutop li li li li .item {background-image:none;}
+.menutop li .daddy,
+.menutop li:hover .daddy {background-image:url(../images/top-dark.png);background-repeat: no-repeat;background-position: 100% 100%; }
+.menutop li:hover .daddy:hover {background-image:url(../images/top-light.png);background-position: 100% 100%;}
+.menutop li li:hover .daddy:hover {background-position:100% 50%;}
+.menutop .item {color:#333;text-decoration:none;}
+.menutop li .item {background-color:#ddd;border-top:1px solid #eee;border-left:1px solid #eee;border-right:1px solid #ccc;border-bottom:1px solid #ccc;}
+.menutop li li .item,
+.menutop li:hover .item {background-color:#ccc;border-top:1px solid #ddd;border-left:1px solid #ddd;border-right:1px solid #bbb;border-bottom:1px solid #bbb;}
+.menutop li:hover li .daddy,
+.menutop li li .daddy {background-image:url(../images/level2-parent.png);background-repeat: no-repeat;background-position: 100% 50%; }
+.menutop li li li .item,
+.menutop li li:hover .item {background-color:#bbb;border-top:1px solid #ccc;border-left:1px solid #ccc;border-right:1px solid #aaa;border-bottom:1px solid #aaa;}
+.menutop li li li .daddy,
+.menutop li li:hover .daddy {background-image:url(../images/level3-parent.png);background-repeat: no-repeat;background-position: 100% 50%; }
+.menutop li li li li .item,
+.menutop li li li:hover .item {background-color:#aaa;border-top:1px solid #bbb;border-left:1px solid #bbb;border-right:1px solid #999;border-bottom:1px solid #999;}
+.menutop li li li li .daddy,
+.menutop li li li:hover .daddy {background-image:url(../images/level4-parent.png);background-repeat: no-repeat;background-position: 100% 50%; }
+
+/* regular hover */
+.menutop .item:hover,
+.menutop li:hover .item:hover {background-color:#2c87c0;border-top:1px solid #138fdc;border-left:1px solid #138fdc;border-right:1px solid #0d5f92;border-bottom:1px solid #0d5f92;color:#fff}
+.menutop li li:hover .daddy:hover {background-image:url(../images/hover-parent.png);background-repeat: no-repeat;background-position: 100% 50%;}
+
+/* seperator hover */
+.menutop span.item:hover,
+.menutop li:hover span.item:hover {background-color:#666;border-top:1px solid #777;border-left:1px solid #777;border-right:1px solid #555;border-bottom:1px solid #555;color:#fff}
+.menutop li li:hover span.daddy:hover {background-image:url(../images/sep-parent.png);background-repeat: no-repeat;background-position: 100% 50%;}
+
+/* active state */
+
+.menutop li.active > .item,
+.menutop li li.active > .item,
+.menutop li li li.active > .item,
+.menutop li li li li.active > .item {background-color: #ee501c;border-top:1px solid #f86134;border-left:1px solid #f86134;border-right:1px solid #d24916;border-bottom:1px solid #d24916;color:#fff}
+.menutop li.active > .daddy {background-image:url(../images/top-light.png);background-position: 100% 100%;}
+.menutop li li.active > .daddy,
+.menutop li li li.active > .daddy,
+.menutop li li li li.active > .daddy {background-image:url(../images/active-parent.png);background-repeat: no-repeat;background-position: 100% 50%;}
+
+/* dropdown CUSTOM */
+
+.menutop .level2 .item {padding:5px 0; text-indent:5px; height:auto;line-height:1em;}
+.menutop li:hover ul, 
+.menutop li.sfHover ul {left: 0;top:32px;}
+.menutop ul {width:175px;}
+.menutop li li:hover ul, 
+.menutop li li.sfHover ul, 
+.menutop li li li:hover ul, 
+.menutop li li li.sfHover ul, 
+.menutop li li li li:hover ul, 
+.menutop li li li li.sfHover ul {left:177px;top: 0;}
