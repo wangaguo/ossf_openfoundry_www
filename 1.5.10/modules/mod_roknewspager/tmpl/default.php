@@ -2,16 +2,12 @@
 defined('_JEXEC') or die('Restricted access'); ?>
 
 <div class="roknewspager-wrapper">
-	<ul class="roknewspager">
 	<?php foreach ($list as $item) :  ?>
-	    <li>
 	        <div class="roknewspager-div">
-	            <a href="<?php echo $item->link; ?>" class="roknewspager-title"><?php echo $item->title; ?></a>
+	            <a href="<?php echo $item->link; ?>" class="roknewspager-title"><?php echo $item->title; ?></a><br>
 	            <?php echo $item->introtext; ?>
 	        </div>
-	    </li>
 	<?php endforeach; ?>
-	</ul>
 </div>
 <?php
 	$disabled = ($pages == 1) ? " style='display: none;'" : '';
