@@ -60,7 +60,7 @@ RewriteEngine On
 #  is not directly related to physical file paths.
 #  Update Your Joomla!/MamboDirectory (just / for root)
 
-RewriteBase /
+RewriteBase /ossf3
 
 ########## Begin - Joomla! core SEF Section
 ############# Use this section if using ONLY Joomla! core SEF
