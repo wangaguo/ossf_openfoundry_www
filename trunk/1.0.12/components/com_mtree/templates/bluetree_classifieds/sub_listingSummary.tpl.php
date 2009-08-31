@@ -12,6 +12,7 @@
               <?php $this->plugin( 'ahrefcontact', $link, 'class="bulletData"') ?>
               <?php $this->plugin( 'ahrefreport', $link, 'class="bulletData"') ?>
               <?php //$this->plugin( 'ahrefweblink', $link, 'class="bulletData"') ?>
+              <?php $this->plugin( 'ahrefDownload', $link, 'class="bulletData"') ?>
               <?php $this->plugin( 'ahrefLicense', $link, 'class="bulletData"') ?>
               <?php $this->plugin( 'ahrefclaim', $link, 'class="bulletData"') ?>
               <?php $this->plugin( 'ahrefvisit', $link, '', 1, 'class="bulletData"') ?>

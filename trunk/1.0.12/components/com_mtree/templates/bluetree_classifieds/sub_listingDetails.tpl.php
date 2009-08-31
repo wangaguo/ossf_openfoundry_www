@@ -56,6 +56,7 @@ echo "<br />".$this->link->cust_1;
 		<?php //$this->plugin( 'ahrefcontact', $this->link, 'class="bulletData"') ?>
 		<?php //$this->plugin( 'ahrefreport', $this->link, 'class="bulletData"') ?>
                 <?php//// $this->plugin( 'ahrefweblink', $this->link, 'class="bulletData"') ?>
+                <?php //$this->plugin( 'ahrefDownload', $this->link, 'class="bulletData"') ?> 
                 <?php //$this->plugin( 'ahrefLicense', $this->link, 'class="bulletData"') ?>
 		<?php //$this->plugin( 'ahrefclaim', $this->link, 'class="bulletData"') ?>
 		<?php ////$this->plugin( 'ahrefownerlisting', $this->link, 'class="bulletData"') ?>
