@@ -32,7 +32,8 @@
 */
 // no direct access
 defined('_JEXEC') or die('Restricted access');
-$outString = '<div id="jflanguageselection"><div class="rawimages">';
+//$outString = '<div id="jflanguageselection"><div class="rawimages">';
+$outString = '';
 foreach( $langActive as $language )
 {
 	$langActive = '';
@@ -61,13 +62,14 @@ foreach( $langActive as $language )
 	}
 	else {
 		if( file_exists( JPATH_ROOT . $langImg ) ) {
-			$outString .= '<span' .$langActive. '><a href="' .$href. '"><img src="' .JURI::base(true) . $langImg. '" alt="' .$language->name. '" title="' .$language->name. '" /></a></span>';
+			$outString .= '<a href="' .$href. '"><img src="' .JURI::base(true) . $langImg. '" alt="' .$language->name. '" title="' .$language->name. '" /></a>';
 		} else {
-			$outString .= '<span' .$langActive. '><a href="' .$href. '">' .$language->name. '</a></span>';
+			$outString .= '<a href="' .$href. '">' .$language->name. '</a>';
 		}
 	}
 }
-$outString .= '</div></div>';
+//$outString .= '</div></div>';
+$outString .= '';
 
 echo $outString;
 
