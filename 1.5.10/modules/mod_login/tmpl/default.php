@@ -35,7 +35,7 @@ endif; ?>
 	<?php echo $params->get('pretext'); ?>
 	<fieldset class="input">
 	<p id="form-login-username">
-		<label for="modlgn_username"><?php echo JText::_('Username') ?></label>
+		<label for="modlgn_username"><?php echo JText::_('Username') ?></label><br />
 		<input id="modlgn_username" type="text" name="username" class="inputbox" alt="username" size="18" />
 	</p>
 	<p id="form-login-password">
@@ -63,7 +63,7 @@ endif; ?>
 		$usersConfig = &JComponentHelper::getParams( 'com_users' );
 		if ($usersConfig->get('allowUserRegistration')) : ?>
 		<li>
-			<a href="<?php echo JRoute::_( 'index.php?option=com_user&task=register' ); ?>">
+			<a href="<?php echo JRoute::_( 'index.php?option=com_user&view=register' ); ?>">
 				<?php echo JText::_('REGISTER'); ?></a>
 		</li>
 		<?php endif; ?>
