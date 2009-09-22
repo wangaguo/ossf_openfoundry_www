@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+  <name>Item Edit Form</name>
+  <params group="item-view-options-listings">
+    <param name="catItemTitle" type="list" default="" label="Show item title" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemFeaturedNotice" type="list" default="" label="Show item 'featured' notice" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemAuthor" type="list" default="" label="Show item author" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemDateCreated" type="list" default="" label="Show item created date and time" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemRating" type="list" default="" label="Show item rating (voting)" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemImage" type="list" default="" label="Show item image" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemIntroText" type="list" default="" label="Show item Introtext" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemExtraFields" type="list" default="" label="Show item extra fields" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemCategory" type="list" default="" label="Show item category" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemTags" type="list" default="" label="Show item tags" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemAttachments" type="list" default="" label="Show item attachments" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemAttachmentsCounter" type="list" default="" label="Show item attachments counter" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemVideo" type="list" default="" label="Show item video" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemImageGallery" type="list" default="" label="Show item image gallery" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemDateModified" type="list" default="" label="Show item modified date and time" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemReadMore" type="list" default="" label="Show item 'read more...' link" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="catItemCommentsAnchor" type="list" default="" label="Show anchor link (with comments counter) to comment form" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="@spacer" type="spacer" default="" label="" description="" />
+    <param name="catItemK2Plugins" type="list" default="" label="Enable K2 plugins" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+  </params>
+  <params group="item-view-options">
+    <param name="itemDateCreated" type="list" default="" label="Show item created date and time" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemTitle" type="list" default="" label="Show item title" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemFeaturedNotice" type="list" default="" label="Show item 'featured' notice" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemAuthor" type="list" default="" label="Show item author" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemFontResizer" type="list" default="" label="Show font resizer" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemPrintButton" type="list" default="" label="Show print link" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemEmailButton" type="list" default="" label="Show email link" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemSocialButton" type="list" default="" label="Display a 'social button' like ShareThis, AddThis etc." description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemVideoAnchor" type="list" default="" label="Show anchor link to item video" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemImageGalleryAnchor" type="list" default="" label="Show anchor link to item image gallery" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemCommentsAnchor" type="list" default="" label="Show anchor link (with comments counter) to comment form" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemRating" type="list" default="" label="Show item rating (voting)" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemImage" type="list" default="" label="Show item image" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemImgSize" type="list" default="" label="Item image size" description="">
+      <option value="">Inherit from category</option>
+      <option value="XSmall">XSmall</option>
+      <option value="Small">Small</option>
+      <option value="Medium">Medium</option>
+      <option value="Large">Large</option>
+      <option value="XLarge">XLarge</option>
+    </param>
+    <param name="itemImageMainCaption" type="list" default="" label="Show item Image Caption" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemImageMainCredits" type="list" default="" label="Show item Image Credits" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemIntroText" type="list" default="" label="Show item Introtext" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemFullText" type="list" default="" label="Show item Fulltext" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemExtraFields" type="list" default="" label="Show item extra fields" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemHits" type="list" default="" label="Show item hits (page views)" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemTwitterLink" type="list" default="" label="Show item 'Tweet this' link" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemDateModified" type="list" default="" label="Show item modified date and time" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="@spacer" type="spacer" default="" label="" description="" />
+    <param name="itemAuthorBlock" type="list" default="" label="Display extended author info" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemAuthorImage" type="list" default="" label="Show author image" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemAuthorDescription" type="list" default="" label="Show author description" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemAuthorURL" type="list" default="" label="Show author URL" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemAuthorEmail" type="list" default="" label="Show author e-mail" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemAuthorLatest" type="list" default="" label="Show latest articles from author" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemAuthorLatestLimit" type="text" default="" label="Latest articles from author limit" description="Leave blank to inherit from category" />
+    <param name="itemRelated" type="list" default="" label="Show related items" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemRelatedLimit" type="text" default="" label="Related items limit" description="Leave blank to inherit from category" />
+    <param name="@spacer" type="spacer" default="" label="" description="" />
+    <param name="itemCategory" type="list" default="" label="Show item category" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemTags" type="list" default="" label="Show item tags" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemShareLinks" type="list" default="" label="Show item share (social) links" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemAttachments" type="list" default="" label="Show item attachments" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemAttachmentsCounter" type="list" default="" label="Show item attachments counter" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemVideo" type="list" default="" label="Show item video" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemVideoCaption" type="list" default="" label="Show video caption" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemVideoCredits" type="list" default="" label="Show video credits" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemImageGallery" type="list" default="" label="Show item image gallery" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemNavigation" type="list" default="" label="Show item navigation" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemComments" type="list" default="" label="Show comments" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="@spacer" type="spacer" default="" label="" description="" />
+    <param name="itemMetaDescription" type="list" default="" label="Enable item meta description" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemMetaKeywords" type="list" default="" label="Enable item meta keywords" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemMetaRobots" type="list" default="" label="Enable item meta robots" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemMetaAuthor" type="list" default="" label="Enable item meta author" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="@spacer" type="spacer" default="" label="" description="" />
+    <param name="itemK2Plugins" type="list" default="" label="Enable K2 plugins" description="">
+      <option value="">Inherit from category</option>
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+  </params>
+</form>
