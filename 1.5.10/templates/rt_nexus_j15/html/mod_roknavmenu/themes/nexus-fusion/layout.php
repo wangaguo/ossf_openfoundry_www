@@ -85,7 +85,7 @@ if ( ! defined('modRokNavMenuShowItems') )
 {
 function showItem(&$item, &$menu) {
     
-   global $activeid;
+	global $activeid;
     
    $doc = &JFactory::getDocument();
    

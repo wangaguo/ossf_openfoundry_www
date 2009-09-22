@@ -130,9 +130,12 @@ require(YOURBASEPATH . "/rt_styleloader.php");
 				<?php endif; ?>
 				<!--End Logo-->
 				<!--Begin Banner Position-->
+				<div style="float:left;overflow:hidden;"><img src="http://whoswho.openfoundry.org/OpenFoundry/templates/rt_nexus_j15/images/header/dark/search.gif"></div>
 				<?php if ($this->countModules('banner')) : ?>
 				<div class="banner-module"><jdoc:include type="modules" name="banner" style="xhtml" /></div>
 				<?php endif; ?>
+<div style="float:right;overflow:hidden;">
+<a href="http://whoswho.openfoundry.org/OpenFoundry"><img border="0" src="http://whoswho.openfoundry.org/OpenFoundry/images/stories/login.gif"/></a></div>
 				<!--End Banner Position-->
 			</div>
 		</div>
@@ -231,7 +234,12 @@ require(YOURBASEPATH . "/rt_styleloader.php");
 												<a href="<?php echo $this->baseurl; ?>" id="breadcrumbs-home"></a>
 	    										<jdoc:include type="modules" name="breadcrumb" style="none" />
 	    									</div>
-	    									<?php endif; ?>
+										<?php endif; ?>
+                                        <?php if ($this->countModules('rokmininews')) : ?>
+                                        <div id="rokmininews-block"><div id="rokmininews">
+                                                <jdoc:include type="modules" name="rokmininews" style="rokmininews" />
+                                        </div></div>
+                                        <?php endif; ?>
 											<?php $mClasses = modulesClasses('case3'); if ($this->countModules('user1 or user2 or user3')) : ?>
 	    									<div id="mainmodules" class="spacer<?php echo $mainmod_width; ?>">
 	    										<?php if ($this->countModules('user1')) : ?>

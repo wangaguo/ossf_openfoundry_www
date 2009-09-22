@@ -45,7 +45,7 @@ a.small .button {background: url(../images/header/dark/font-buttons.png) 0 -11px
 
 /* Header Bar */
 #header {background: #000 url(../images/header/dark/header-bg.png) 0 0 repeat-x;}
-#logo {background: url(../images/header/dark/logo.png) 0 0 no-repeat;}
+#logo {background: url(../images/header/dark/logo.gif) 0 0 no-repeat;}
 #menu-spacer {background: #323232;}
 #horizmenu-surround {background: #323232;}
 #horizmenu-surround2 {background: url(../images/header/dark/horizmenu-corners.png) 0 0 no-repeat;}

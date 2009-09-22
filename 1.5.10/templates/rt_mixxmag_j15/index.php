@@ -129,6 +129,11 @@ $moo_sub_offsets_left		= $this->params->get("moo_sub_offsets_left", "5");
 				<?php else : ?>
 				<div class="header-spacer"></div>
 				<?php endif; ?>
+
+		                <?php if($mtype == "splitmenu" and $subnav != "0") : ?>
+			        <div id="submenu-container">
+		                <?php endif; ?>
+
 				<?php if($mtype != "none") : ?>
 				<div id="horiz-menu" class="<?php echo $mtype; ?>">
 					<div class="wrapper">
@@ -142,6 +147,20 @@ $moo_sub_offsets_left		= $this->params->get("moo_sub_offsets_left", "5");
 				<?php else : ?>
 				<div id="menu-spacer"></div>
 				<?php endif; ?>
+                		<?php if($mtype == "splitmenu" and $subnav != "0") : ?>
+			        <div id="sub-menu">
+			        <?php if($hwrap == "false") : ?>
+			            <div class="wrapper">
+			        <?php endif; ?>
+		                <?php echo $subnav; ?>
+		                <?php if($hwrap == "false") : ?>
+			        </div>
+			        <?php endif; ?>
+		                </div>
+			        <?php endif; ?>
+                		<?php if($mtype == "splitmenu" and $subnav != "0") : ?>
+			        </div>
+				<?php endif; ?>
 
 				<div class="clr">
 				</div>
@@ -151,24 +170,26 @@ $moo_sub_offsets_left		= $this->params->get("moo_sub_offsets_left", "5");
 			<div id="main-body-bg">
 			<div id="main-body">
 				<!--Begin Left Column-->
-				<?php if ($leftcolumn_width != 0) : ?>
+				<!--
+				<?php //if ($leftcolumn_width != 0) : ?>
 				<div id="leftcol">
 					<div class="padding">
-						<?php if ($subnav and $splitmenu_col=="leftcol") : ?>
+						<?php //if ($subnav and $splitmenu_col=="leftcol") : ?>
 						<div class="sidenav-block">
-							<?php echo $subnav; ?>
+							<?php// echo $subnav; ?>
 						</div>
-						<?php endif; ?>
-						<?php if ($this->countModules('advertisement1')) : ?>
+						<?php// endif; ?>
+						<?php// if ($this->countModules('advertisement1')) : ?>
 							<div class="ad-block"><jdoc:include type="modules" name="advertisement1" style="xhtml" /></div>
-						<?php endif; ?>
+						<?php //endif; ?>
 						<jdoc:include type="modules" name="left" style="sidebar" />
-						<?php if ($this->countModules('advertisement2')) : ?>
+						<?php //if ($this->countModules('advertisement2')) : ?>
 							<div class="ad-block"><jdoc:include type="modules" name="advertisement2" style="xhtml" /></div>
-						<?php endif; ?>
+						<?php //endif; ?>
 					</div>
 				</div>
-				<?php endif; ?>
+				<?php //endif; ?>
+				-->
 				<!--End Left Column-->
 				<!--Begin Main Column-->
 				<div id="maincol" style="width: <?php echo getMainWidth(); ?>px">
