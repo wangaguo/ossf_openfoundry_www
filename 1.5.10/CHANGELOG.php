@@ -1,6 +1,6 @@
 <?php
 /**
-* @version		$Id: CHANGELOG.php 11722 2009-03-27 21:56:05Z willebil $
+* @version		$Id: CHANGELOG.php 12584 2009-07-30 17:46:47Z ian $
 * @package		Joomla
 * @copyright	Copyright (C) 2005 - 2009 Open Source Matters. All rights reserved.
 * @license		GNU/GPL, see LICENSE.php
@@ -36,6 +36,127 @@ $ -> Language fix or change
 ^ -> Change
 - -> Removed
 ! -> Note
+
+-------------------- 1.5.14 Stable Release [30-July-2009] ------------------
+
+23-Jul-2009 Gergo Erdosi
+ # [#17319] Media Manager is broken
+ # [#17323] TinyMCE Editor $file_browser_callback error in 1.5.13
+
+-------------------- 1.5.13 Stable Release [22-July-2009] ------------------
+
+22-Jul-2009 Ian MacLennan
+ # [#15548] Plugin content/emailcloak: package oomla
+ # [#16073] Front End Account Creation does not save 'usertype' in jos_users table
+ # [#16726] Edit icon does not appear in correct area (buttonheading)
+ # [#17008] Untranslated error message in Media Manager
+ # [#17053] 1.5.12 Media Manager showing upload Error
+ # [#17101] Reversion of changes to Image Button in 1.5.12
+
+06-Jul-2009 Sam Moffatt
+ # [#17058] Incorrect _JEXEC check breaks TinyMCE JS when using compressed mode
+
+-------------------- 1.5.12 Stable Release [30-June-2009] ------------------
+
+29-Jun-2009 Ian MacLennan
+ # [#16977] Incomplete language definitions in TinyMCE 3.2
+ # [#17006] Revert escaping of html in contact miscellaneous information.
+
+28-Jun-2009 Ian MacLennan
+ + Added mk-MK installer language pack
+
+27-Jun-2009 Ian MacLennan
+ # [#17005] Installer SQL shows TinyMCE as version 2.0
+
+-------------------- 1.5.12 Release Candidate [24-June-2009] ------------------
+
+24-Jun-2009 Ian MacLennan
+ $ [#16950] Lots of missing language strings in TinyMCE v3
+ # [#16593] JFile::upload() uses chmod 777 in FTP mode
+ # [#15673] Different time create date and start publishing in beez
+ # [#16601] Section filter on article manager showing non content sections as well 
+ # [#16607] Mod Newsflash read more link broken with Beez template
+ # [#16719] JHTML::tooltip quote problem
+ # [#16753] CSS file is not updated when you edit the joomla
+ # [#16890] Page title isn't displayed at Default login page
+ # [#16896] Modified Date disappears in 1.5.11
+ $ Added language string for Toggle Editor
+ ^ Updated LICENSES.php and CREDITS.php to reflect library license changes and updates
+
+23-Jun-2009 Ian MacLennan
+ # [#12376] Update to TinyMCE 3.2.4.1
+
+22-Jun-2009 Ian MacLennan
+ # [#12886] PHPMailer version used in 1.5 does not allow secure connection to SMTP servers
+
+20-Jun-2009 Ian MacLennan
+ # [#14540] Component Contact at Beez
+ # [#16686] pagebreak - duplicate title, not respecting show titles
+ # [#16779] JA_Purity: Anchor tag for Category Title not closed in Front Page Blog Layout
+ # [#16820] Untranslated strings in Beez template
+ # [#15727] Module cache, id, Itemid - reverted
+
+14-Jun-2009 Ian MacLennan
+ # [#16235] mod_feed Tool tip is incorrect
+ # [#16511] Language date format isn't correct
+ # [#16595] Category table view output wrong due to error in file
+ # [#16597] Parameter "Minimum User Level for Media Manager" doesn't work
+ # [#16742] Wrong link to OpenID login-bg.gif in system.css
+
+09-Jun-2009 Ian MacLennan
+ # [#12746] Replace PEAR with a GPL compatible alternative
+ # [#15541] Article Catagory Layout incorrectly sorted
+
+-------------------- 1.5.11 Stable Release [03-June-2009] ------------------
+
+01-Jun-2009 Ian MacLennan
+ # [#16236] Legacy code in installer premigration system causes unrelated errors
+
+30-May-2009 Ian MacLennan
+ ^ [#16397] helpsites.xml update
+ # [#16500] offline.php with wrong stylesheet
+ ^ Updated de-DE installer language pack
+ + Added gl-ES installer language pack
+ ^ Updated it-IT installer language pack
+ ^ Updated mn-MN installer language pack
+ ^ Updated nl-NL installer language pack
+ ^ Updated sk-SK installer language pack
+ ^ Updated tr-TR installer language pack
+
+30-May-2009 Sam Moffatt
+ ^ Updated CREDITS.php with minor fixes from Ole Ottosen
+
+29-May-2009 Ian MacLennan
+ # [#15736] Moving $this->escape validation to files which can't be overridden
+
+13-May-2009 Ian MacLennan
+ # [#13898] There is no translated description for component/module/plugin/etc. after installation
+ # [#15417] db->updateObject function outdated
+ # [#15727] Module cache, id, Itemid
+ # [#16314] PHPDoc Comment for JFactory getDocument method Incorrect
+ # [#16349] Revert 16122 and Replace sr-ME language files
+
+09-May-2009 Kevin Devine
+ # [#15909] RSS 2.0 feeds try to turn mailto: links into absolute urls
+ # [#16211] Atom Link in RSS feed causes validation problems
+ # [#16007] JFile::getName() loses first character
+
+05-May-2009 Ian MacLennan
+ # [#15541] Article Catagory Layout incorrectly sorted
+ # [#15699] Global Configuration Undefined Variable warning
+ # [#15740] At login use of task=register instead of view=register
+ # [#15853] Search results pagination broken when two or more search terms, SEF enabled
+ # [#15912] Error in KEPRI Template, css for icon 'article'
+ # [#15963] The align attribute in mod_mainmenu helper causes problems with some templates
+
+24-Apr-2009 Kevin Devine
+ # [#15446] Atom feed does not validate for Contact Category and Weblinks Category Layouts
+ # [#13890] < Prev and Next > links do not follow SEF rules (duplicate content)
+ # [#15691] Need better control of who can upload files
+ # [#16112] Change in Montengrin Language ISO Code
+ # [#15551] Inconsistent prefix for index.php in com_user #2
+ # [#15913] Change in installation version display (patch included)
+ # [#15701] Joomla 1.5.10 breaks package installation due to new installer PHP code
 
 -------------------- 1.5.10 Stable Release [27-March-2009] ------------------
 
