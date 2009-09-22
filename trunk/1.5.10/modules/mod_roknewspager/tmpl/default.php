@@ -17,6 +17,7 @@ defined('_JEXEC') or die('Restricted access'); ?>
     <div class="roknewspager-pages2">
         <div class="roknewspager-prev"></div>
         <div class="roknewspager-next"></div>
+[readon1 url="#"]Read More[/readon1]
         <ul class="roknewspager-numbers">
             <?php for($x=1;$x<=$pages && $x < ($params->get('maxpages',8)+1);$x++):?>
             <li <?php if($x==$curpage):?>class="active"<?php endif; ?>><?php echo $x; ?></li>

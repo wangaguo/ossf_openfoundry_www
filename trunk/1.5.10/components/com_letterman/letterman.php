@@ -60,7 +60,7 @@ HTML_letterman::header();
 
 switch ($task) {
     case 'view':
-		showItem( $id, $gid, $is_editor, $pop, $option );
+		showItems( $id, $gid, $is_editor, $pop, $option );
         // showItem ( $id );
         break;
         
@@ -238,7 +238,7 @@ function listAll( $letterman_rights )
 
 }
 
-function showItem( $uid, $gid, $is_editor, $pop, $option ) {
+function showItems( $uid, $gid, $is_editor, $pop, $option ) {
 	global $database, $mainframe, $my;
 	global $mosConfig_offset, $mosConfig_live_site;
 	$gid=0;
@@ -269,7 +269,7 @@ function showItem( $uid, $gid, $is_editor, $pop, $option ) {
         if( $my->id > 0) {
         	$row->text = str_replace( "[NAME]", $my->name, $row->text );
         }
-		HTML_letterman::showItem( $row, $gid );
+		HTML_letterman::showItems( $row, $gid );
         
 	} 
     else {

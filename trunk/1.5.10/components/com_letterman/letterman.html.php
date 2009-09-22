@@ -26,9 +26,9 @@ class HTML_letterman {
         	<td colspan="4" class="componentheading"><?php echo $menuname; ?></td>
 			<td align="right" class="componentheading" nowrap="nowrap">
 				<?php
-				echo '&nbsp;&nbsp;&nbsp;'. _PN_DISPLAY_NR .'&nbsp;';
-				$link = 'index.php?option=com_letterman&amp;Itemid='. $Itemid;
-				echo $pageNav->getLimitBox( $link );
+				//echo '&nbsp;&nbsp;&nbsp;'. _PN_DISPLAY_NR .'&nbsp;';
+				//$link = 'index.php?option=com_letterman&amp;Itemid='. $Itemid;
+				//echo $pageNav->getLimitBox( $link );
 				?>
 			</td>
         </tr>
@@ -232,7 +232,7 @@ function editNewsletter( &$row, &$publist, $option , $glist ) {
 	<?php 
   }
   
-    function showItem( $row, $gid ) {
+    function showItems( $row, $gid ) {
       
       ?><div class="componentheading">Newsletter Item <a href="javascript: history.back()">&nbsp;[ back ]</a></div>
       <div align="right" class="createdate">Date: <?php echo $row->created ?></div>

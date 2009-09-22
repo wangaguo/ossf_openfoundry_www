@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: factory.php 11680 2009-03-08 20:51:13Z willebil $
+ * @version		$Id: factory.php 12389 2009-07-01 00:34:45Z ian $
  * @package		Joomla.Framework
  * @copyright	Copyright (C) 2005 - 2008 Open Source Matters. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
@@ -130,7 +130,7 @@ class JFactory
 	 * if it doesn't already exist.
 	 *
 	 * @access public
-	 * @return object JLanguage
+	 * @return object JDocument
 	 */
 	function &getDocument()
 	{
@@ -591,6 +591,8 @@ class JFactory
 		$smtpuser 	= $conf->getValue('config.smtpuser');
 		$smtppass  	= $conf->getValue('config.smtppass');
 		$smtphost 	= $conf->getValue('config.smtphost');
+		$smtpsecure	= $conf->getValue('config.smtpsecure');
+		$smtpport	= $conf->getValue('config.smtpport');
 		$mailfrom 	= $conf->getValue('config.mailfrom');
 		$fromname 	= $conf->getValue('config.fromname');
 		$mailer 	= $conf->getValue('config.mailer');
@@ -605,7 +607,7 @@ class JFactory
 		switch ($mailer)
 		{
 			case 'smtp' :
-				$mail->useSMTP($smtpauth, $smtphost, $smtpuser, $smtppass);
+				$mail->useSMTP($smtpauth, $smtphost, $smtpuser, $smtppass, $smtpsecure, $smtpport);
 				break;
 			case 'sendmail' :
 				$mail->useSendmail($sendmail);
@@ -655,7 +657,7 @@ class JFactory
 		}
 
 		$tmpl->addGlobalVar( 'option', 				$GLOBALS['option'] );
-		$tmpl->addGlobalVar( 'self', 				$_SERVER['PHP_SELF'] );
+		$tmpl->addGlobalVar( 'self', 				str_replace(array('"', '<', '>', "'"), '', $_SERVER["PHP_SELF"]) );
 		$tmpl->addGlobalVar( 'uri_query', 			$_SERVER['QUERY_STRING'] );
 		$tmpl->addGlobalVar( 'REQUEST_URI',			JRequest::getURI() );
 		if (isset($GLOBALS['Itemid'])) {

@@ -208,9 +208,10 @@ class JSite extends JApplication
 
 				$url  = 'index.php?option=com_user&view=login';
 				$url .= '&return='.base64_encode($return);;
+				$url = '/OpenFoundry/secure/login.php?return_url='.$return;
 
 				//$url	= JRoute::_($url, false);
-				$this->redirect($url, JText::_('You must login first') );
+				$this->redirect($url);
 			}
 			else
 			{

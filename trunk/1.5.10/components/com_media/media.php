@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		$Id: media.php 10381 2008-06-01 03:35:53Z pasamio $
+ * @version		$Id: media.php 12542 2009-07-22 17:40:48Z ian $
  * @package		Joomla
  * @subpackage	Massmail
  * @copyright	Copyright (C) 2005 - 2008 Open Source Matters. All rights reserved.
@@ -14,15 +14,12 @@
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
-
+$params =& JComponentHelper::getParams('com_media');
 // Make sure the user is authorized to view this page
 $user = & JFactory::getUser();
 if (!$user->authorize( 'com_media', 'popup' )) {
 	$mainframe->redirect('index.php', JText::_('ALERTNOTAUTH'));
 }
-
-// Get the media component configuration settings
-$params =& JComponentHelper::getParams('com_media');
 
 // Set the path definitions
 define('COM_MEDIA_BASE',    JPATH_ROOT.DS.$params->get('image_path', 'images'.DS.'stories'));
