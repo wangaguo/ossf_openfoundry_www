@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.0">
+  <name>K2 Comments</name>
+  <author>JoomlaWorks</author>
+  <creationDate>June 20th, 2009</creationDate>
+  <copyright>Copyright (c) 2006 - 2009 JoomlaWorks Ltd. All rights reserved.</copyright>
+  <authorEmail>contact@joomlaworks.gr</authorEmail>
+  <authorUrl>www.joomlaworks.gr</authorUrl>
+  <version>2.0</version>
+  <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+  <description>K2 Comments</description>
+  <files>
+    <filename module="mod_k2_comments">mod_k2_comments.php</filename>
+    <filename>index.html</filename>
+    <filename>helper.php</filename>
+    <folder>elements</folder>
+    <folder>tmpl</folder>
+  </files>
+  <languages>
+    <language tag="en-GB">en-GB.mod_k2_comments.ini</language>
+  </languages>
+  <params addpath="/modules/mod_k2_comments/elements/">
+    <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+    <param name="module_usage" type="list" default="" label="Select module functionality" description="">
+      <option value="0">Latest Comments</option>
+      <option value="1">Top Commenters</option>
+    </param>
+    <param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Latest Comments&lt;/div&gt;" label="" description="" />
+    <param name="catfilter" type="radio" default="0" label="Category filter">
+      <option value="0">All</option>
+      <option value="1">Select</option>
+    </param>
+    <param name="category_id" type="categories" default="" label="Filter comments by category" description="Select one ore more categories for which you want to filter the comments list. Select none to fetch comments from all categories."/>
+    <param name="comments_limit" type="text" size="4" default="5" label="Comments List limit" description="" />
+    <param name="commenterName" type="radio" default="1" label="Show commenter's name" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="commentAvatar" type="radio" default="1" label="Show commenter's avatar" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="commentText" type="radio" default="1" label="Show comment's text" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="commentDate" type="radio" default="1" label="Show comment's date" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="commentLink" type="radio" default="1" label="Show comment's link" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemTitle" type="radio" default="1" label="Show item's title" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemCategory" type="radio" default="1" label="Show item's category" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="comments_word_limit" type="text" size="4" default="10" label="Comment word limit" description="" />
+    <param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Top Commenters&lt;/div&gt;" label="" description="" />
+    <param name="commenters_limit" type="text" size="4" default="5" label="Commenters List limit" description="" />
+    <param name="commenterAvatar" type="radio" default="1" label="Show commenter's avatar" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="commenterLink" type="radio" default="1" label="Show commenter link" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="commentsCounter" type="radio" default="1" label="Show comments counter" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+  </params>
+  <params group="advanced">
+    <param name="cache" type="list" default="1" label="Caching" description="Select whether to cache the content of this module">
+      <option value="1">Use global</option>
+      <option value="0">No caching</option>
+    </param>
+    <param name="cache_time" type="text" default="900" label="Cache Time" description="The time before the module is recached" />
+  </params>
+</install>

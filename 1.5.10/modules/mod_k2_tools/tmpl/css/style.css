@@ -1,0 +1,113 @@
+/*
+// "K2 Tools" Module by JoomlaWorks for Joomla! 1.5.x - Version 2.0.0
+// Copyright (c) 2006 - 2009 JoomlaWorks Ltd. All rights reserved.
+// Released under the GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+// More info at http://www.joomlaworks.gr
+// Designed and developed by the JoomlaWorks team
+// *** Last update: June 20th, 2009 ***
+*/
+
+/* --- Archives --- */
+div.k2ArchiveListContainer {}
+div.k2ArchiveListContainer ul.k2ArchiveList {}
+div.k2ArchiveListContainer ul.k2ArchiveList li {}
+div.k2ArchiveListContainer ul.k2ArchiveList li a {}
+div.k2ArchiveListContainer ul.k2ArchiveList li a:hover {}
+div.k2ArchiveListContainer ul.k2ArchiveList li.clr {}
+
+
+/* --- Authors --- */
+div.k2AuthorsListContainer {}
+div.k2AuthorsListContainer ul.k2AuthorsList {}
+div.k2AuthorsListContainer ul.k2AuthorsList li {}
+div.k2AuthorsListContainer ul.k2AuthorsList li a {}
+div.k2AuthorsListContainer ul.k2AuthorsList li a:hover {}
+div.k2AuthorsListContainer ul.k2AuthorsList li a span {}
+div.k2AuthorsListContainer ul.k2AuthorsList li a:hover span {}
+div.k2AuthorsListContainer ul.k2AuthorsList li.lastAuthor {}
+div.k2AuthorsListContainer ul.k2AuthorsList li.clr {}
+
+
+/* --- Breadcrumbs --- */
+div.k2Breadcrumbs {}
+div.k2Breadcrumbs span.k2BreadcrumbsTitle {padding:0 4px 0 0;color:#999;}
+div.k2Breadcrumbs a {}
+div.k2Breadcrumbs span.k2BreadcrumbsSep {padding:0 4px;font-size:14px;}
+div.k2Breadcrumbs div.clr {}
+
+
+/* --- Calendar --- */
+div.k2CalendarContainer {}
+div#k2Calendar {height:170px;} /* use this height value so that the calendar height won't change on Month change via ajax */
+div#k2Calendar.k2CalendarLoader {background:#fff url(../images/k2CalendarLoader.gif) no-repeat 50% 50%;}
+	table.calendar {margin:0 auto;background:#fff;border-collapse:collapse;}
+	table.calendar tr td {text-align:center;vertical-align:middle;padding:2px;border:1px solid #f4f4f4;background:#fff;}
+	table.calendar tr td.calendarNavMonthPrev {background:#f3f3f3;text-align:left;}
+	table.calendar tr td.calendarNavMonthPrev a {font-size:20px;text-decoration:none;}
+	table.calendar tr td.calendarNavMonthPrev a:hover {font-size:20px;text-decoration:none;}
+	table.calendar tr td.calendarCurrentMonth {background:#f3f3f3;}
+	table.calendar tr td.calendarNavMonthNext {background:#f3f3f3;text-align:right;}
+	table.calendar tr td.calendarNavMonthNext a {font-size:20px;text-decoration:none;}
+	table.calendar tr td.calendarNavMonthNext a:hover {font-size:20px;text-decoration:none;}
+	table.calendar tr td.calendarDayName {background:#e9e9e9;font-size:11px;width:14.2%;}
+	table.calendar tr td.calendarDateEmpty {background:#fbfbfb;}
+	table.calendar tr td.calendarDate {}
+	table.calendar tr td.calendarDateLinked {padding:0;}
+	table.calendar tr td.calendarDateLinked a {display:block;padding:2px;text-decoration:none;}
+	table.calendar tr td.calendarDateLinked a:hover {display:block;background:#BFD9FF;padding:2px;text-decoration:none;}
+	table.calendar tr td.calendarToday {background:#135cae;color:#fff;}
+	table.calendar tr td.calendarTodayLinked {background:#135cae;color:#fff;padding:0;}
+	table.calendar tr td.calendarTodayLinked a {display:block;padding:2px;color:#fff;text-decoration:none;}
+	table.calendar tr td.calendarTodayLinked a:hover {display:block;background:#BFD9FF;padding:2px;text-decoration:none;}	
+
+
+/* --- Category Tree Select Box --- */
+form.k2SelectBox {}
+form.k2SelectBox select {width:auto;}
+form.k2SelectBox select option {}
+
+
+/* --- Category List/Menu --- */
+div.k2CategoryListContainer {}
+div.k2CategoryListContainer ul {}
+div.k2CategoryListContainer ul li {}
+div.k2CategoryListContainer ul li a {}
+div.k2CategoryListContainer ul li a:hover {}
+div.k2CategoryListContainer ul li a span {}
+div.k2CategoryListContainer ul li a:hover span {}
+div.k2CategoryListContainer ul li.activeCategory {}
+div.k2CategoryListContainer ul li.activeCategory a {font-weight:bold;}
+
+	/* Root level (0) */
+	ul.level0 {}
+	ul.level0 li {}
+	ul.level0 li a {}
+	ul.level0 li a:hover {}
+	ul.level0 li a span {}
+	ul.level0 li a:hover span {}
+		/* First level (1) */
+		ul.level1 {}
+		ul.level1 li {}
+		ul.level1 li a {}
+		ul.level1 li a:hover {}
+		ul.level1 li a span {}
+		ul.level1 li a:hover span {}
+			/* n level (n) - like the above... */
+
+
+/* --- Search Box --- */
+div.k2SearchBox {}
+div.k2SearchBox form {}
+div.k2SearchBox form input.inputbox {}
+div.k2SearchBox form input.button {}
+div.k2SearchBox form br {}
+
+
+/* --- Tag Cloud --- */
+div.k2TagCloud {padding:8px 0;}
+div.k2TagCloud a {padding:4px;float:left;display:block;}
+div.k2TagCloud a:hover {padding:4px;float:left;display:block;background:#135cae;text-decoration:none;color:#fff;}
+div.k2TagCloud div.clr {}
+
+
+/* END */

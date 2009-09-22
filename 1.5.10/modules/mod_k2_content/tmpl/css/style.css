@@ -1,0 +1,26 @@
+/*
+// "K2 Items" Module by JoomlaWorks for Joomla! 1.5.x - Version 2.0.0
+// Copyright (c) 2006 - 2009 JoomlaWorks Ltd. All rights reserved.
+// Released under the GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+// More info at http://www.joomlaworks.gr
+// Designed and developed by the JoomlaWorks team
+// *** Last update: June 20th, 2009 ***
+*/
+
+a:active,
+a:focus {outline:0;}
+img {border:none;}
+.clr {clear:both;height:0;line-height:0;display:block;float:none;}
+
+div.k2ItemsListContainer {}
+div.k2ItemsListContainer ul.k2ItemsList {padding:4px;margin:4px;list-style:square;}
+div.k2ItemsListContainer ul.k2ItemsList li {clear:both;padding:0 0 8px 0;}
+div.k2ItemsListContainer ul.k2ItemsList li a.k2ItemsTitle {font-size:15px;}
+div.k2ItemsListContainer ul.k2ItemsList li a.k2ItemsTitle:hover {font-size:15px;}
+div.k2ItemsListContainer ul.k2ItemsList li span.k2ItemsDate {color:#999;display:block;}
+div.k2ItemsListContainer ul.k2ItemsList li.clr {}
+div.k2ItemsListContainer ul.k2ItemsList li a.k2ItemsThumb {display:block;float:left;border:1px solid #ccc;padding:2px;margin:0 4px 4px 0;}
+div.k2ItemsListContainer ul.k2ItemsList li a.k2ItemsThumb img {border:none;width:100px;height:auto;}
+div.k2ItemsListContainer ul.k2ItemsList li p.k2ItemsIntrotext {}
+div.k2ItemsListContainer ul.k2ItemsList li p.k2ItemsTags {display:block;clear:both;}
+div.k2ItemsListContainer ul.k2ItemsList li p.k2ItemsTags a {margin:0 4px;}

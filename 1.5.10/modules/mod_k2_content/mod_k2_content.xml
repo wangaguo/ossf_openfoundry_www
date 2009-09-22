@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.0">
+  <name>K2 Content</name>
+  <author>JoomlaWorks</author>
+  <creationDate>June 20th, 2009</creationDate>
+  <copyright>Copyright (c) 2006 - 2009 JoomlaWorks Ltd. All rights reserved.</copyright>
+  <authorEmail>contact@joomlaworks.gr</authorEmail>
+  <authorUrl>www.joomlaworks.gr</authorUrl>
+  <version>2.0</version>
+  <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+  <description>K2 Content</description>
+  <files>
+    <filename module="mod_k2_content">mod_k2_content.php</filename>
+    <filename>index.html</filename>
+    <filename>helper.php</filename>
+    <folder>tmpl</folder>
+    <folder>elements</folder>
+  </files>
+  <languages>
+    <language tag="en-GB">en-GB.mod_k2_content.ini</language>
+  </languages>
+  <params addpath="/modules/mod_k2_content/elements/">
+    <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX"/>
+    <param name="@spacer" type="spacer" default="" label="" description=""/>
+    <param name="catfilter" type="radio" default="0" label="Category filter">
+      <option value="0">All</option>
+      <option value="1">Select</option>
+    </param>
+    <param name="category_id" type="categories" default="" label="Filter items by category" description="Select one ore more categories for which you want to filter an items list. Select none to fetch items from all categories."/>
+    <param name="FeaturedItems" type="list" default="1" label="Featured Items" description="">
+      <option value="0">Hide</option>
+      <option value="1">Show</option>
+      <option value="2">Show only Featured Items</option>
+    </param>
+    <param name="itemTitle" type="radio" default="1" label="Show item title" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemAuthor" type="radio" default="1" label="Show item author" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemAuthorAvatar" type="radio" default="1" label="Show item author avatar" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemIntroText" type="radio" default="1" label="Show item Introtext" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemImage" type="radio" default="1" label="Show item image" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemImgSize" type="list" default="XSmall" label="Item image size" description="">
+      <option value="XSmall">XSmall</option>
+      <option value="Small">Small</option>
+      <option value="Medium">Medium</option>
+      <option value="Large">Large</option>
+      <option value="XLarge">XLarge</option>
+    </param>
+    <param name="itemTags" type="radio" default="1" label="Show item tags" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemCategory" type="radio" default="1" label="Show item category" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemDateCreated" type="radio" default="1" label="Show item created date and time" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemReadMore" type="radio" default="1" label="Show item 'read more...' link" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemExtraFields" type="radio" default="0" label="Show item extra fields" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemCommentsCounter" type="radio" default="1" label="Show item comments counter" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="itemsOrdering" type="list" default="" label="Item Ordering" description="">
+      <option value="">Default</option>
+      <option value="date">Oldest first</option>
+      <option value="rdate">Most recent first</option>
+      <option value="alpha">Title Alphabetical</option>
+      <option value="ralpha">Title Reverse-Alphabetical</option>
+      <option value="order">Ordering</option>
+    </param>
+    <param name="items_limit" type="text" size="4" default="10" label="Items limit" description=""/>
+  </params>
+  <params group="advanced">
+    <param name="cache" type="list" default="1" label="Caching" description="Select whether to cache the content of this module">
+      <option value="1">Use global</option>
+      <option value="0">No caching</option>
+    </param>
+    <param name="cache_time" type="text" default="900" label="Cache Time" description="The time before the module is recached"/>
+  </params>
+</install>
