@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <params>
+    <!-- ######################### K2 CSS Settings ######################### -->
+    <param menu="hide" name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:15px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;K2 CSS Settings&lt;/div&gt;" label="" description="" />
+    <param menu="hide" name="enable_css" type="radio" default="1" label="Enable K2 base CSS" description="Enable K2 base CSS - ideal for the default Joomla! template and a starting point for making custom designs for K2.">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <!-- ######################### Image Settings ######################### -->
+    <param menu="hide" name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:15px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Image Settings&lt;/div&gt;" label="" description="" />
+    <param menu="hide" name="imagesQuality" type="text" default="85" label="Images quality (%)" description="" />
+    <param menu="hide" name="itemImageXS" type="text" default="100" label="Item XSmall image width (in px)" description="" />
+    <param menu="hide" name="itemImageS" type="text" default="200" label="Item Small image width (in px)" description="" />
+    <param menu="hide" name="itemImageM" type="text" default="400" label="Item Medium image width (in px)" description="" />
+    <param menu="hide" name="itemImageL" type="text" default="600" label="Item Large image width (in px)" description="" />
+    <param menu="hide" name="itemImageXL" type="text" default="800" label="Item XLarge image width (in px)" description="" />
+    <param menu="hide" name="itemImageGeneric" type="text" default="300" label="Item generic image width (in px). Used in user pages, tag, search and date listings." description="" />
+    <param menu="hide" name="catImageWidth" type="text" default="100" label="Category image width (in px)" description="" />
+    <param menu="hide" name="catImageDefault" type="radio" default="1" label="Show placeholder image for category if none exists" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userImageWidth" type="text" default="100" label="User image (avatar) width (in px)" description="" />
+    <param menu="hide" name="userImageDefault" type="radio" default="1" label="Show placeholder image for user if none exists" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <!-- ######################### Layout and view options for user (blog/profile) pages ######################### -->
+    <param menu="hide" name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:15px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Layout and view options for user (author) blog/profile pages&lt;/div&gt;" label="" description="" />
+    <param menu="hide" name="userName" type="radio" default="1" label="Show user name" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userImage" type="radio" default="1" label="Show user image" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userDescription" type="radio" default="1" label="Show user description" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userURL" type="radio" default="1" label="Show user URL" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userEmail" type="radio" default="1" label="Show user e-mail" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userFeed" type="radio" default="1" label="Show user RSS feed" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userItemCount" type="text" size="3" default="10" label="Item count on user (blog/profile) pages" description="" />
+    <param menu="hide" name="userItemTitle" type="radio" default="1" label="Show item title" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userItemDateCreated" type="radio" default="1" label="Show item created date and time" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userItemImage" type="radio" default="1" label="Show item Image" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userItemIntroText" type="radio" default="1" label="Show item Introtext" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userItemCategory" type="radio" default="1" label="Show item category" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userItemTags" type="radio" default="1" label="Show item tags" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userItemReadMore" type="radio" default="1" label="Show item 'read more...' link" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="userItemCommentsAnchor" type="radio" default="1" label="Show anchor link (with comments counter) to comment form" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="@spacer" type="spacer" default="" label="" description="" />
+    <param menu="hide" name="userItemK2Plugins" type="radio" default="1" label="Enable K2 plugins" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <!-- ######################### Layout and view options for Search, Tag and Date listings ######################### -->
+    <param menu="hide" name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:15px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Layout and view options for Search, Tag and Date listings&lt;/div&gt;" label="" description="" />
+    <param menu="hide" name="genericItemCount" type="text" size="3" default="10" label="Item count for Search, Tag and Date listings" description="" />
+    <param menu="hide" name="genericItemTitle" type="radio" default="1" label="Show item title" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="genericItemDateCreated" type="radio" default="1" label="Show item created date and time" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="genericItemImage" type="radio" default="1" label="Show item Image" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="genericItemIntroText" type="radio" default="1" label="Show item Introtext" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="genericItemCategory" type="radio" default="1" label="Show item category" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="genericItemReadMore" type="radio" default="1" label="Show item 'read more...' link" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <!-- ######################### Social Settings ######################### -->
+    <param menu="hide" name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:15px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Social Settings&lt;/div&gt;" label="" description="" />
+    <param menu="hide" name="socialButtonCode" type="textarea" default="" label="'Social button' code" description="Paste HTML code here to integrate services like 'Add This' or 'Share This' within the item body." rows="8" cols="40" />
+    <param menu="hide" name="twitterUsername" type="text" default="" label="Your Twitter username (account)" description="Enter you Twitter username (account) to enable the 'Tweet this' link in the item body." />
+    <param menu="hide" name="tinyURL" type="radio" default="1" label="Enable TinyURL integration for 'Tweet this' link" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <!-- ######################### Comment Settings ######################### -->
+    <param menu="hide" name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:15px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Comment Settings&lt;/div&gt;" label="" description="" />
+    <param menu="hide" name="comments" type="list" default="1" label="Global settings for comments" description="">
+      <option value="0">Disabled</option>
+      <option value="1">Enabled for everyone</option>
+      <option value="2">Enabled for registered users only</option>
+    </param>
+    <param menu="hide" name="commentsOrdering" type="list" default="DESC" label="Comments ordering" description="">
+      <option value="DESC">Newest first</option>
+      <option value="ASC">Oldest first</option>
+    </param>
+    <param menu="hide" name="commentsLimit" type="text" default="10" label="Comments limit" description="" />
+    <param menu="hide" name="commentsFormPosition" type="list" default="below" label="Comments form position" description="">
+      <option value="above">Above comments</option>
+      <option value="below">Below comments</option>
+    </param>
+    <param menu="hide" name="commentsPublishing" type="radio" default="1" label="Enable comments auto-publishing?" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="commenterImgWidth" type="text" size="3" default="50" label="Commenter image width" description="" />
+    <param menu="hide" name="gravatar" type="radio" default="1" label="Enable Gravatar.com integration for non registered commenters" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="recaptcha" type="radio" default="0" label="Enable reCaptcha" description="Enable the reCaptcha comments anti-spam service.">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="recaptcha_public_key" type="text" default="" label="reCaptcha public key" description="" />
+    <param menu="hide" name="recaptcha_private_key" type="password" default="" label="reCaptcha private key" description="" />
+    <!-- ######################### RSS Feed Settings ######################### -->
+    <param menu="hide" name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:15px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;RSS Feed Settings&lt;/div&gt;" label="" description="" />
+    <param menu="hide" name="feedLimit" type="text" size="3" default="20" label="Feed limit" description="" />
+    <param menu="hide" name="feedText" type="list" default="0" label="For each feed item show" description="">
+      <option value="0">Introtext</option>
+      <option value="1">Fulltext</option>
+      <option value="1">Introtext &amp; Fulltext</option>
+    </param>
+    <param menu="hide" name="feedTextWordLimit" type="text" default="" label="Feed text word limit" description="" />
+    <!-- ######################### Content Cleanup Settings ######################### -->
+    <param menu="hide" name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:15px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Content Cleanup Settings&lt;/div&gt;" label="" description="" />
+    <param menu="hide" name="introTextCleanup" type="radio" default="0" label="Introtext HTML cleanup (tag strip)" description="Enable this to strip all HTML tags except the ones defined below inside the introtext.">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="introTextCleanupExcludeTags" type="text" default="" label="Enter which tags not to strip in introtext" description="Separate valid HTML tags by comma. E.g. 'img,br,p,a,b,span' etc." />
+    <param menu="hide" name="introTextCleanupTagAttr" type="text" default="" label="Enter which tag attributes to strip in introtext" description="Separate valid HTML tag attributes by comma. E.g. 'width,height,border' etc." />
+    <param menu="hide" name="@spacer" type="spacer" default="" label="" description="" />
+    <param menu="hide" name="fullTextCleanup" type="radio" default="0" label="Fulltext HTML cleanup (tag strip)" description="Enable this to strip all HTML tags except the ones defined below inside the fulltext.">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="fullTextCleanupExcludeTags" type="text" default="" label="Enter which tags not to strip in fulltext" description="Separate valid HTML tags by comma. E.g. 'img,br,p,a,b,span' etc." />
+    <param menu="hide" name="fullTextCleanupTagAttr" type="text" default="" label="Enter which tag attributes to strip in fulltext" description="Separate valid HTML tag attributes by comma. E.g. 'width,height,border' etc." />
+    <!-- ######################### Advanced Settings ######################### -->
+    <param menu="hide" name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:15px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Advanced Settings&lt;/div&gt;" label="" description="" />
+    <param menu="hide" name="frontendEditing" type="radio" default="1" label="Global frontend editing features" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param menu="hide" name="K2PluginFormPosition" type="list" default="0" label="Display K2 plugins on admin form on:" description="">
+      <option value="0">Tab</option>
+      <option value="1">After main form</option>
+    </param>
+    <param menu="hide" name="mergeEditors" type="radio" default="1" label="Use one editor for introtext and fulltext" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+	<param menu="hide" name="SEFReplacements" type="textarea" default="Å |S, Å’|O, Å½|Z, Å¡|s, Å“|oe, Å¾|z, Å¸|Y, Â¥|Y, Âµ|u, Ã€|A, Ã�|A, Ã‚|A, Ãƒ|A, Ã„|A, Ã…|A, Ã†|A, Ã‡|C, Ãˆ|E, Ã‰|E, ÃŠ|E, Ã‹|E, ÃŒ|I, Ã�|I, ÃŽ|I, Ã�|I, Ã�|D, Ã‘|N, Ã’|O, Ã“|O, Ã”|O, Ã•|O, Ã–|O, Ã˜|O, Ã™|U, Ãš|U, Ã›|U, Ãœ|U, Ã�|Y, ÃŸ|s, Ã |a, Ã¡|a, Ã¢|a, Ã£|a, Ã¤|a, Ã¥|a, Ã¦|a, Ã§|c, Ã¨|e, Ã©|e, Ãª|e, Ã«|e, Ã¬|i, Ã­|i, Ã®|i, Ã¯|i, Ã°|o, Ã±|n, Ã²|o, Ã³|o, Ã´|o, Ãµ|o, Ã¶|o, Ã¸|o, Ã¹|u, Ãº|u, Ã»|u, Ã¼|u, Ã½|y, Ã¿|y, ÃŸ|ss" label="SEF replacements" description="" rows="8" cols="40" />
+    <!-- attachments_folder -->
+    <param menu="hide" name="attachmentsFolder" type="text" size="50" default="" label="Root attachments folder" description="Enter the path to the folder for storing attachments. Leave this blank to use the default K2 attachments folder (media/k2/attachments). If you change this later, remember to move your files to the newly set folder." />
+    <!-- ######################### sh404SEF Settings (optional) #########################
+    <param menu="hide" name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:15px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;sh404SEF Settings (optional) &lt;/div&gt;" label="" description="" />
+    <param menu="hide" name="sh404SefLabelCat" type="text" default="" label="sh404SEF URL prefix for Categories" description="" />
+    <param menu="hide" name="sh404SefLabelUser" type="text" default="blog" label="sh404SEF URL prefix for Users" description="" />
+    -->
+  </params>
+</config>
