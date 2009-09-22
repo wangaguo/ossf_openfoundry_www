@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.0">
+  <name>K2 Tools</name>
+  <author>JoomlaWorks</author>
+  <creationDate>June 20th, 2009</creationDate>
+  <copyright>Copyright (c) 2006 - 2009 JoomlaWorks Ltd. All rights reserved.</copyright>
+  <authorEmail>contact@joomlaworks.gr</authorEmail>
+  <authorUrl>www.joomlaworks.gr</authorUrl>
+  <version>2.0</version>
+  <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+  <description>K2 Tools</description>
+  <files>
+    <filename module="mod_k2_tools">mod_k2_tools.php</filename>
+    <filename>index.html</filename>
+    <filename>helper.php</filename>
+    <filename>calendarClass.php</filename>
+    <folder>elements</folder>
+    <folder>tmpl</folder>
+  </files>
+  <languages>
+    <language tag="en-GB">en-GB.mod_k2_tools.ini</language>
+  </languages>
+  <params addpath="/modules/mod_k2_tools/elements/">
+    <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+    <param name="module_usage" type="list" default="0" label="Select module functionality" description="">
+      <option value="0">Archive</option>
+      <option value="1">Authors List</option>
+      <option value="2">Blog-style Calendar (no options)</option>
+      <option value="3">Breadcrumbs</option>
+      <option value="4">Categories List (Menu)</option>
+      <option value="5">Category Select Box</option>
+      <option value="6">Search Box</option>
+      <option value="7">Tag Cloud</option>
+    </param>
+    <!-- Archive Settings -->
+    <param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Archive Settings&lt;/div&gt;" label="" description="" />
+    <param name="archiveItemsCounter" type="radio" default="1" label="Show items counter" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <!-- Authors List Settings -->
+    <param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Authors List Settings&lt;/div&gt;" label="" description="" />
+    <param name="authors_module_category" type="categories" default="" label="Filter authors by root category" description="Select the root category for which you want to filter an author list. Select none to fetch authors from all categories." />
+    <param name="authorItemsCounter" type="radio" default="1" label="Show items counter" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="authorAvatar" type="radio" default="0" label="Show author avatar" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <!-- Blog-style Calendar Settings
+    <param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Blog-style Calendar Settings&lt;/div&gt;" label="" description="" />
+    <param name="start_day" type="list" default="0" label="Week start day" description="">
+      <option value="0">Sunday</option>
+      <option value="1">Monday</option>
+      <option value="2">Tuesday</option>
+      <option value="3">Wednesday</option>
+      <option value="4">Thursday</option>
+      <option value="5">Friday</option>
+      <option value="6">Saturday</option>
+    </param>
+    -->
+    <!-- Breadcrumbs Settings -->
+    <param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Breadcrumbs Settings&lt;/div&gt;" label="" description="" />
+    <param name="home" type="text" default="" label="Root label (e.g. Home)" description="The label for the 'home' link. Leave this blank if you don't wish to include a home link in your path." />
+    <param name="seperator" type="text" default="" label="Path separator" description="The path separator, e.g. a right arrow." />
+    <!-- Categories List (Menu) Settings -->
+    <param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Categories List (Menu) Settings&lt;/div&gt;" label="" description="" />
+    <param name="root_id" type="categories" default="" label="Select root category" description="Select the root category for which you want to create a category list. Select none to fetch a list of all categories." />
+    <param name="end_level" type="text" default="" size="4" label="Levels to render" description="Select the number of levels you wish to render. Leave this blank if you wish to render all the levels below the selected root category." />
+    <param name="categoriesListOrdering" type="list" default="" label="Order by" description="">
+      <option value="">Default (by ID - ascending)</option>
+      <option value="reversedefault">Reverse default (by ID - descending)</option>
+      <option value="alpha">Name alphabetical</option>
+      <option value="ralpha">Name reverse alphabetical</option>
+      <option value="order">Ordering</option>
+    </param>
+    <param name="categoriesListItemsCounter" type="radio" default="1" label="Show items counter" description="">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <!-- Category Select Box Settings -->
+    <param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Category Select Box Settings&lt;/div&gt;" label="" description="" />
+    <param name="root_id2" type="categories" default="" label="Select root category" description="Select the root category for which you want to create a category drop-down list. Select none to create a drop-down list from all categories." />
+    <!-- Search Box Settings -->
+    <param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Search Box Settings&lt;/div&gt;" label="" description="" />
+    <param name="width" type="text" default="20" size="4" label="Search Box size" description="Size in characters for the search box" />
+    <param name="text" type="text" default="" label="Text" description="Text to display in the search form" />
+    <param name="button" type="radio" default="" label="Show search button" description="">
+      <option value="">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="imagebutton" type="radio" default="" label="Search button as image" description="Use an image as the search button">
+      <option value="">No</option>
+      <option value="1">Yes</option>
+    </param>
+    <param name="button_text" type="text" default="" label="Search button text" description="PARAMBUTTONTEXT" />
+    <!-- Tag Cloud Settings -->
+    <param name="@spacer" type="spacer" default="&lt;div style=&quot;font-weight:normal;font-size:12px;color:#fff;padding:4px;margin:0;background:#0B55C4;&quot;&gt;Tag Cloud Settings&lt;/div&gt;" label="" description="" />
+    <param name="min_size" type="text" default="75" size="4" label="Min font size (%)" description="Font size for less popular tags" />
+    <param name="max_size" type="text" default="300" size="4" label="Max font size (%)" description="Font size for most popular tags" />
+    <param name="cloud_limit" type="text" default="30" size="4" label="Tag limit (X most popular)" description="Select the X most popular tags to display." />
+  </params>
+  <params group="advanced">
+    <param name="cache" type="list" default="1" label="Caching" description="Select whether to cache the content of this module">
+      <option value="1">Use global</option>
+      <option value="0">No caching</option>
+    </param>
+    <param name="cache_time" type="text" default="900" label="Cache Time" description="The time before the module is recached" />
+  </params>
+</install>

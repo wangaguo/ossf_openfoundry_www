@@ -1,0 +1,29 @@
+/*
+// "K2 Comments" Module by JoomlaWorks for Joomla! 1.5.x - Version 2.0.0
+// Copyright (c) 2006 - 2009 JoomlaWorks Ltd. All rights reserved.
+// Released under the GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+// More info at http://www.joomlaworks.gr
+// Designed and developed by the JoomlaWorks team
+// *** Last update: June 20th, 2009 ***
+*/
+
+/* Latest Comments */
+div.k2CommentsListContainer {}
+div.k2CommentsListContainer ul.k2CommentsList {}
+div.k2CommentsListContainer ul.k2CommentsList li {}
+div.k2CommentsListContainer ul.k2CommentsList li a {display:block;}
+div.k2CommentsListContainer ul.k2CommentsList li a:hover {}
+div.k2CommentsListContainer ul.k2CommentsList li a span {}
+div.k2CommentsListContainer ul.k2CommentsList li a:hover span {}
+div.k2CommentsListContainer ul.k2CommentsList li span.commentDate {color:#999;border-right:1px solid #ccc;padding:0 4px 0 0;margin:0;}
+div.k2CommentsListContainer ul.k2CommentsList li span.commentItemTitle {padding:0;margin:0;}
+div.k2CommentsListContainer ul.k2CommentsList li.clr {}
+
+/* Top Commenters */
+div.k2CommentersListContainer {}
+div.k2CommentersListContainer ul.k2CommentersList {}
+div.k2CommentersListContainer ul.k2CommentersList li {}
+div.k2CommentersListContainer ul.k2CommentersList li a {display:block;}
+div.k2CommentersListContainer ul.k2CommentersList li a:hover {}
+
+img.commenterAvatar {float:left; margin-right:5px; margin-bottom:5px;}
