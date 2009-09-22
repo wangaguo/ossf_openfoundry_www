@@ -58,9 +58,10 @@ defined('_JEXEC') or die('Restricted access');
 			<div class="article-info-surround2">
 				<div class="article-info-right">
 					<?php if (($this->params->get('show_author')) && ($this->article->author != "")) : ?>
-					<span class="createdby">
-		<?php JText::printf(($this->article->created_by_alias ? $this->escape($this->article->created_by_alias) : $this->escape($this->article->author))); ?>
-					</span>
+					<div class="createdby">
+		<?php JText::printf($this->article->created_by_alias ? $this->article->created_by_alias : $this->article->author); ?>
+		<?php// JText::printf(($this->article->created_by_alias ? $this->escape($this->article->created_by_alias) : $this->escape($this->article->author))); ?>
+					</div>
 					<?php endif; ?>
 					<p class="buttonheading">
 						<?php if ($this->print) :

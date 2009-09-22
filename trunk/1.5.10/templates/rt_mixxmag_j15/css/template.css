@@ -73,7 +73,7 @@ a:hover {text-decoration: underline;}
 
 #horiz-menu {height: 40px;margin-top: 12px;padding: 0;display: block; }
 #menu-spacer {height: 55px;float: right;}
-ul#horiznav.menutop, #horiz-menu ul.menutop {padding: 8px 0 3px 0;margin: 0 12px;position: relative;z-index:120;float: left;}
+ul#horiznav.menutop, #horiz-menu ul.menutop {padding: 8px 0 3px 0;margin: 0 12px;position: relative;z-index:120;float: right;}
 #horiz-menu li, #horiz-menu li a, #horiz-menu li .separator {z-index:200;position:relative;display: block;}
 #horiz-menu span {height: 29px;}
 #horiz-menu a, #horiz-menu .separator {white-space: nowrap;display: block;float: left;height: 29px;line-height: 26px;font-weight: normal;font-size: 100%;text-decoration: none;z-index: 100;cursor: pointer;padding: 0 6px;color: #fff;text-transform: uppercase;}

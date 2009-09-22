@@ -1,5 +1,5 @@
 /* This is the Main template logo, Edit this to match the width and height of your new logo image */
-#logo {width: 275px;height: 75px;}
+#logo {width: 350px;height: 39px;}
 
 /* Template custom fonts */
 @font-face {font-family: "Nexus Header";src: url(../fonts/Titillium-Regular.eot);}
@@ -48,11 +48,11 @@ body#ff-optima, body#ff-optima.f-default {font-size: 13px;}
 body#ff-georgia, body#ff-georgia.f-default {font-size: 13px;}
 body.f-large, body#ff-optima.f-large, body#ff-georgia.f-large {font-size: 14px;}
 p {margin-top: 10px;margin-bottom: 15px;}
-h1, h2, h3, h4, h5 {padding-bottom: 5px;margin: 25px 0 10px 0;font-weight: normal;line-height: 135%;}
+h1, h2, h3, h4, h5 {padding-bottom: 5px;margin: 5px 0 10px 0;font-weight: normal;line-height: 135%;}
 h1 {font-size: 250%;line-height: 100%;}
 h2 {font-size: 200%;line-height: 100%;}
 h3 {font-size: 175%;}
-h4 {font-size: 120%;line-height: 130%;}
+h4 {font-size: 130%;line-height: 100%; font-weight:bold;}
 h5 {font-size: 120%;text-transform: uppercase;}
 a {text-decoration: none;}
 a:hover {text-decoration: underline;}
@@ -77,8 +77,8 @@ a:hover {text-decoration: underline;}
 #header {padding: 15px 0;overflow: hidden;}
 #header .padding {padding: 0 20px;}
 #logo {float: left;}
-.logo-module {width: 275px;float: left;overflow: hidden;}
-.banner-module {width: 50%;float: right;overflow: hidden;}
+.logo-module {float: left;overflow: hidden;padding:5px 15px 5px 5px;}
+.banner-module {width: 300px;float: left;overflow: hidden;}
 #header .moduletable {margin: 0;padding: 0;}
 
 /* Horizontal Menu */
@@ -410,12 +410,12 @@ form.josForm label.hasTip {display: block;float: left;height: 25px;line-height: 
 #bottom .moduletable {padding: 15px;}
 
 /* RokTabs */
-.roktabs-wrapper {padding: 0;position: relative;margin: 0;}
+.roktabs-wrapper {padding: 20px;position: relative;margin: 0px;}
 #featuremodules .roktabs-wrapper {padding: 0 20px;}
 .roktabs-wrapper .roktabs-container-inner {position:relative;overflow: hidden;}
 .roktabs-wrapper .roktabs-container-wrapper {clear: both;position: relative;overflow:hidden;width:50000px;}
 .roktabs-wrapper .roktabs-container-wrapper div {float: left;margin-right:15px;}
-.roktabs-wrapper .roktabs-container-wrapper div.wrapper {padding: 15px 0 20px 0;width: auto;}
+.roktabs-wrapper .roktabs-container-wrapper div.wrapper {padding: 5px 0 5px 0;width: auto;}
 .roktabs-wrapper .roktabs-links {margin: 0;padding: 0;height: 42px;overflow: hidden;}
 .roktabs-wrapper .active-arrows .roktabs-links {margin: 0 20px;padding: 0;height: 42px;}
 .roktabs-wrapper .roktabs-links ul {text-align: left;list-style-type: none;overflow:hidden;margin: 0;height: 42px;}
@@ -489,7 +489,9 @@ img.demo-tabs2 {float: left;width: 120px;height: 100px;margin-right: 15px;}
 .show-dark #showmodules h3.showtext span {color: inherit;}
 .show-light #showmodules h3.showtext span {color: inherit;}
 .featured-image {float: left;margin-right: 25px;}
-.featured-text-block {width: 225px;font-size: 110%;line-height: 140%;}
+.featured-botton {float: right;margin:5px 5px 5px 5px;}
+.featured-text-block {width: 450px;font-size: 140%;line-height: 140%;}
+.featured-text-right {width: 450px;font-size: 140%;line-height: 140%;}
 
 /* Frontpage Main Content */
 .body-dark img.demo-main {border: 8px solid #444;}
