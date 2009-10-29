@@ -1,5 +1,5 @@
 /* This is the Main template logo, Edit this to match the width and height of your new logo image */
-#logo {width: 350px;height: 39px;}
+#logo {width: 300px;height: 39px;}
 
 /* Template custom fonts */
 @font-face {font-family: "Nexus Header";src: url(../fonts/Titillium-Regular.eot);}
@@ -40,10 +40,10 @@ input {font-family: Helvetica,Arial,sans-serif;}
 
 /* Core Formatting */
 html {height: 100%;margin-bottom: 1px;}
-body {margin: 0;line-height: 135%;}
+body {margin: 0;line-height: 180%;}
 form {margin: 0;padding: 0;}
 body.f-small, body#ff-optima.f-small, body#ff-georgia.f-small {font-size: 11px;}
-body, body.f-default {font-size: 12px;}
+body, body.f-default {font-size: 14px;}
 body#ff-optima, body#ff-optima.f-default {font-size: 13px;}
 body#ff-georgia, body#ff-georgia.f-default {font-size: 13px;}
 body.f-large, body#ff-optima.f-large, body#ff-georgia.f-large {font-size: 14px;}
@@ -51,7 +51,7 @@ p {margin-top: 10px;margin-bottom: 15px;}
 h1, h2, h3, h4, h5 {padding-bottom: 5px;margin: 5px 0 10px 0;font-weight: normal;line-height: 135%;}
 h1 {font-size: 250%;line-height: 100%;}
 h2 {font-size: 200%;line-height: 100%;}
-h3 {font-size: 175%;}
+h3 {font-size: 145%;}
 h4 {font-size: 130%;line-height: 100%; font-weight:bold;}
 h5 {font-size: 120%;text-transform: uppercase;}
 a {text-decoration: none;}
@@ -80,6 +80,13 @@ a:hover {text-decoration: underline;}
 .logo-module {float: left;overflow: hidden;padding:5px 15px 5px 5px;}
 .banner-module {width: 300px;float: left;overflow: hidden;}
 #header .moduletable {margin: 0;padding: 0;}
+#header .moduletableright { float:right;font-size:16px; font-weight:bold;}
+#header .moduletableleft {
+    float:left;
+    margin-left:45px;
+    font-size:16px;
+    font-weight:bold;
+    background: url(../../../images/stories/key-32x32.png) no-repeat scroll 0 -5px ;}
 
 /* Horizontal Menu */
 #horiz-menu {display: block;}
