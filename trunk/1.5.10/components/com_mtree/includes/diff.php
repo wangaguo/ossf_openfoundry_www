@@ -6,7 +6,7 @@
  * License GNU LGPL http://www.gnu.org/licenses/lgpl.txt
  */
 
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
 // Diff_Match_Patch v1.4
 // Computes the difference between two texts to create a patch.

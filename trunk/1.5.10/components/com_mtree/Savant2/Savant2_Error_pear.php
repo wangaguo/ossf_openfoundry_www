@@ -1,11 +1,10 @@
 <?php
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
 /**
 * The base Savant2_Error class.
 */
-global $mosConfig_absolute_path;
-require_once $mosConfig_absolute_path.'/components/com_mtree/Savant2/Error.php';
+require_once JPATH_ROOT.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS.'Error.php';
 
 /**
 * The PEAR_Error class.
@@ -16,7 +15,7 @@ require_once 'PEAR.php';
 * 
 * Provides an interface to PEAR_ErrorStack class for Savant.
 *
-* $Id: Savant2_Error_pear.php,v 1.1 2004/10/04 01:52:23 pmjones Exp $
+* $Id: Savant2_Error_pear.php 432 2008-10-09 08:42:32Z cy $
 * 
 * @author Paul M. Jones <pmjones@ciaweb.net>
 * 

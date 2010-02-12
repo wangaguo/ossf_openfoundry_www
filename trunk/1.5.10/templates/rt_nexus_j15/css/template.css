@@ -1,5 +1,5 @@
 /* This is the Main template logo, Edit this to match the width and height of your new logo image */
-#logo {width: 300px;height: 39px;}
+#logo {width: 300px;height: 45px;}
 
 /* Template custom fonts */
 @font-face {font-family: "Nexus Header";src: url(../fonts/Titillium-Regular.eot);}
@@ -86,7 +86,7 @@ a:hover {text-decoration: underline;}
     margin-left:45px;
     font-size:16px;
     font-weight:bold;
-    background: url(../../../images/stories/key-32x32.png) no-repeat scroll 0 -5px ;}
+/*    background: url(../../../images/stories/key-32x32.png) no-repeat scroll 0 -5px ;*/}
 
 /* Horizontal Menu */
 #horiz-menu {display: block;}
@@ -141,7 +141,7 @@ a:hover {text-decoration: underline;}
 .x-c-s .col3 {float:right;position:relative;}
 
 /* Side Modules */
-.side-mod {overflow: hidden;padding: 15px 0;}
+.side-mod {overflow: hidden;padding: 5px 0;}
 .side-mod h3 {margin: 0 0 10px 0;}
 #leftcol .moduletable, #rightcol .moduletable {padding: 0;}
 
@@ -198,7 +198,7 @@ form.search_result .display {float: left;margin-left: 20px;height: 20px;margin-t
 
 /* Main Page Structure */
 #main-content {overflow: hidden;}
-#maincontent-block {padding: 15px 20px;}
+#maincontent-block {padding: 15px 5px;}
 #inset-block-right {float: right;z-index: 1;position: relative;background-position: 0 0;background-repeat: repeat-y;}
 #inset-block-left {float: left;z-index: 1;position: relative;background-position: 100% 0;background-repeat: repeat-y;}
 #inset-block-left h3, #inset-block-right h3 {margin-top: 0;}
@@ -206,7 +206,7 @@ table.mainbody, table.blog {width: 100%;border: 0;padding: 0;}
 .spacer .block {float: left;}
 
 /* Main Body Items */
-#breadcrumbs {margin: 0 0 10px 0;display: block;position:relative;overflow: hidden;height: 23px;padding: 15px;}
+#breadcrumbs {margin: 0 0 5px 0;display: block;position:relative;overflow: hidden;height: 15px;padding: 10px;}
 #breadcrumbs-home {width: 20px;height: 23px;display: block;float: left;}
 #breadcrumbs h3 {display: none;}
 #breadcrumbs .spinner {float:right;background:url(../images/spinner.gif) center center no-repeat;width: 16px;height: 16px;right: 10px;top: 10px;position: absolute;}
@@ -417,7 +417,7 @@ form.josForm label.hasTip {display: block;float: left;height: 25px;line-height: 
 #bottom .moduletable {padding: 15px;}
 
 /* RokTabs */
-.roktabs-wrapper {padding: 20px;position: relative;margin: 0px;}
+.roktabs-wrapper {padding: 0px;position: relative;margin: 0px;}
 #featuremodules .roktabs-wrapper {padding: 0 20px;}
 .roktabs-wrapper .roktabs-container-inner {position:relative;overflow: hidden;}
 .roktabs-wrapper .roktabs-container-wrapper {clear: both;position: relative;overflow:hidden;width:50000px;}
@@ -426,17 +426,22 @@ form.josForm label.hasTip {display: block;float: left;height: 25px;line-height: 
 .roktabs-wrapper .roktabs-links {margin: 0;padding: 0;height: 42px;overflow: hidden;}
 .roktabs-wrapper .active-arrows .roktabs-links {margin: 0 20px;padding: 0;height: 42px;}
 .roktabs-wrapper .roktabs-links ul {text-align: left;list-style-type: none;overflow:hidden;margin: 0;height: 42px;}
-.roktabs-wrapper .roktabs-links ul li {float: left;padding: 0;margin: 0 5px 0 0;text-decoration: none;position: relative;height: 42px;line-height: 42px;text-transform: lowercase;font-size: 110%;}
+.roktabs-wrapper .roktabs-links ul li {float: left;padding: 0;margin: 0 0px 0 0;text-decoration: none;position: relative;height: 42px;line-height: 42px;text-transform: lowercase;font-size: 110%;}
 .tabs-bottom .roktabs-links ul li {line-height: 42px;}
 .roktabs-wrapper .roktabs-links ul li span {padding: 0 11px;display: block;}
 .roktabs-wrapper .roktabs-links ul {padding: 0;}
 .roktabs-wrapper .roktabs-scroller {position: absolute;bottom: 0;right: 0;height: 50px;}
 .roktabs-wrapper .arrow-next, .roktabs-wrapper .arrow-prev {line-height: 20px;text-align: center;cursor: pointer;z-index: 2;position: absolute;top: 14px;height:16px;width: 11px;}
 .roktabs-wrapper .arrow-prev span, .roktabs-wrapper .arrow-next span {display: none;}
-.tabs-hidden .roktabs-container-wrapper div.wrapper {margin-top: 10px;}
+.tabs-hidden .roktabs-container-wrapper div.wrapper {margin-top: 5px;}
 .clear {clear: both;}
 .roktabs-links ul li.active {padding-left: 9px;}
 .roktabs-links ul li.active span {padding-left: 2px;}
+
+
+
+
+
 
 /* RSS Feeds */
 ul.newsfeed {margin: 0;padding: 0;}
@@ -503,7 +508,7 @@ img.demo-tabs2 {float: left;width: 120px;height: 100px;margin-right: 15px;}
 /* Frontpage Main Content */
 .body-dark img.demo-main {border: 8px solid #444;}
 .body-light img.demo-main {border: 8px solid #ddd;}
-.demo-main-surround {margin-top: 15px;margin-bottom: 25px;text-align: center;}
+.demo-main-surround {margin-top: 5px;margin-bottom: 5px;text-align: center;}
 .demo-main-text {float: left;width: 65%;}
 .demo-main-text h3 {margin-top: 0;}
 .demo-main-list {float: right;width: 30%;}
@@ -513,3 +518,10 @@ ul.frontpage li {list-style: none;padding-bottom: 3px;margin-bottom: 5px;padding
 .body-light ul.frontpage li {background: url(../images/body/light/list-arrows.png) 0 1px no-repeat;}
 .body-light .side-mod .rokstories-layout2 {border: 5px solid #ddd;}
 .body-dark .side-mod .rokstories-layout2 {border: 5px solid #333;}
+/*
+li {
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+}
+    */

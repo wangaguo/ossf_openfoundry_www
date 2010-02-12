@@ -1,18 +1,18 @@
 <?php
 /**
-* Mosets Tree Tools
-*
-* @package Mosets Tree 2.0
-* @copyright (C) 2005-2008 Mosets Consulting
-* @url http://www.mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
+ * @version		$Id: tools.mtree.php 575 2009-03-10 11:44:00Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-// ensure this file is being included by a parent file
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+
+defined('_JEXEC') or die('Restricted access');
 
 function mtUpdateLinkCount( $cat_id, $inc ) {
-	global $database;
+	$database =& JFactory::getDBO();
 
 	$mtPathWay = new mtPathWay( $cat_id );
 	$cat_parent_ids = implode(',',$mtPathWay->getPathWayWithCurrentCat());
@@ -35,7 +35,7 @@ function mtUpdateLinkCount( $cat_id, $inc ) {
 }
 
 function smartCountUpdate( $cat_id, $cat_links, $cat_cats ) {
-	global $database;
+	$database =& JFactory::getDBO();
 
 	// Add $old_cat_parent to $old_ancestors array first
 	$new_ancestors = mtPathWay::getPathWay( $cat_id );
@@ -56,7 +56,7 @@ function smartCountUpdate( $cat_id, $cat_links, $cat_cats ) {
 	if ( count($new_ancestors) > 0 ) {
 		foreach($new_ancestors AS $new_ancestor) {
 			if ($new_ancestor > 0) {
-				$database->setQuery( "UPDATE #__mt_cats SET cat_cats = (cat_cats $cat_cats_sym ABS($cat_cats)), cat_links = (cat_links $cat_links_sym ABS($cat_links)) WHERE cat_id = $new_ancestor" );
+				$database->setQuery( "UPDATE #__mt_cats SET cat_cats = (cat_cats $cat_cats_sym ABS(" . intval($cat_cats) . ")), cat_links = (cat_links $cat_links_sym ABS(" . intval($cat_links) . ")) WHERE cat_id = $new_ancestor" );
 				$database->query();
 			}
 		}
@@ -67,7 +67,7 @@ function smartCountUpdate( $cat_id, $cat_links, $cat_cats ) {
 }
 
 function smartCountUpdate_catMove( $old_cat_parent, $new_cat_parent, $cat_links, $cat_cats ) {
-	global $database;
+	$database =& JFactory::getDBO();
 
 	// Add $old_cat_parent to $old_ancestors array first
 	$old_ancestors = mtPathWay::getPathWay( $old_cat_parent );
@@ -76,20 +76,11 @@ function smartCountUpdate_catMove( $old_cat_parent, $new_cat_parent, $cat_links,
 	$new_ancestors = mtPathWay::getPathWay( $new_cat_parent );
 	$new_ancestors[] = $new_cat_parent;
 
-	/*
-	echo "<br />Old Ancestors: ";
-	print_r( $old_ancestors );
-
-	echo "<br />New Ancestors: ";
-	print_r( $new_ancestors );
-	*/
-
 	if ( count($old_ancestors) > 0 ) {
 		foreach($old_ancestors AS $old_ancestor) {
 			if ($old_ancestor > 0) {
-				$database->setQuery( "UPDATE #__mt_cats SET cat_cats = cat_cats - ".$cat_cats.", cat_links = cat_links - ".$cat_links." WHERE cat_id = $old_ancestor" );
+				$database->setQuery( "UPDATE #__mt_cats SET cat_cats = cat_cats - " . intval($cat_cats) . ", cat_links = cat_links - " . intval($cat_links) . " WHERE cat_id = $old_ancestor" );
 				$database->query();
-				//echo "<br />OLD: ";echo $database->getQuery();
 			}
 		}
 	}
@@ -97,9 +88,8 @@ function smartCountUpdate_catMove( $old_cat_parent, $new_cat_parent, $cat_links,
 	if ( count($new_ancestors) > 0 ) {
 		foreach($new_ancestors AS $new_ancestor) {
 			if ($new_ancestor > 0) {
-				$database->setQuery( "UPDATE #__mt_cats SET cat_cats = cat_cats + ".$cat_cats.", cat_links = cat_links + ".$cat_links." WHERE cat_id = $new_ancestor" );
+				$database->setQuery( "UPDATE #__mt_cats SET cat_cats = cat_cats + " . intval($cat_cats) . ", cat_links = cat_links + " . intval($cat_links) . " WHERE cat_id = $new_ancestor" );
 				$database->query();
-				//echo "<br />NEW: ";echo $database->getQuery();
 			}
 		}
 	}
@@ -109,10 +99,10 @@ function smartCountUpdate_catMove( $old_cat_parent, $new_cat_parent, $cat_links,
 }
 
 function tellDateTime( $datetime ) {
-	global $mtconf, $_MT_LANG;
+	global $mtconf;
 
 	if ( $datetime == '0000-00-00 00:00:00' ) {
-		return $_MT_LANG->NEVER;
+		return JText::_( 'Never' );
 	}
 
 	$time_now = time()+$mtconf->getjconf('offset')*60*60;
@@ -143,7 +133,9 @@ function detect_ImageLibs() {
 
 	# Initialization - To allow Windows machine to do proper detection
 	$shell_cmd='';
-	if(substr(PHP_OS, 0, 3) == 'WIN') $shell_cmd = getenv( "COMSPEC" ) . " /C ";
+	if(substr(PHP_OS, 0, 3) == 'WIN') {
+		return array();
+	}
 	unset($output);
 
 	# Detect Imagemagick
@@ -186,7 +178,7 @@ function detect_ImageLibs() {
 
 // Random listing generator
 function generate_random_listings( $quantity=100 ) {
-	global $database;
+	$database =& JFactory::getDBO();
 
 	include_once( $mtconf->getjconf('absolute_path') . '/components/com_mtree/nonsense/nonsense.php' );
 	$non = new Nonsense();
@@ -297,13 +289,13 @@ function generate_random_reviews( $quantity=10, $link_ids='' ) {
 class mtTree {
 
 	function rebuild($parent, $left) { 
-		global $database;
+		$database =& JFactory::getDBO();
 
 		 // the right value of this node is the left value + 1 
 		 $right = $left+1; 
 
 		 // get all children of this node 
-		 $database->setQuery("SELECT cat_id FROM #__mt_cats WHERE cat_parent = $parent");
+		 $database->setQuery("SELECT cat_id FROM #__mt_cats WHERE cat_parent = " . intval($parent));
 		 $cat_ids = $database->loadResultArray();
 
 		 foreach( $cat_ids AS $cat_id ) {
@@ -313,7 +305,7 @@ class mtTree {
 
 		 // we've got the left value, and now that we've processed 
 		 // the children of this node we also know the right value 
-		$database->setQuery("UPDATE #__mt_cats SET lft=$left, rgt=$right WHERE cat_id=$parent LIMIT 1");
+		$database->setQuery("UPDATE #__mt_cats SET lft=$left, rgt=$right WHERE cat_id=" . intval($parent) . " LIMIT 1");
 		$database->query();
 		/*
 		if ( $database->getNumRows() <= 0 ) {

@@ -23,7 +23,7 @@ class HTML_letterman {
     ?>
     <table width="100%" cellpadding="4" cellspacing="0" border="0" align="center">
         <tr>
-        	<td colspan="4" class="componentheading"><?php echo $menuname; ?></td>
+        	<td colspan="3" class="componentheading"><?php echo $menuname; ?></td>
 			<td align="right" class="componentheading" nowrap="nowrap">
 				<?php
 				//echo '&nbsp;&nbsp;&nbsp;'. _PN_DISPLAY_NR .'&nbsp;';
@@ -37,9 +37,9 @@ class HTML_letterman {
         <tr>
           <td width="32" align="center" class="sectiontableheader">&nbsp;</td>
           <td width="70%" class="sectiontableheader"><?php echo _E_SUBJECT; ?></td>
-          <td width="20%" class="sectiontableheader"><?php echo _E_START_PUB;?></td>
-          <td width="10%" align="left" class="sectiontableheader"><?php echo _HEADER_HITS;?></td>
-          <td width="32" align="center" class="sectiontableheader">&nbsp;</td>
+          <td width="30%" class="sectiontableheader"><?php echo _E_START_PUB;?></td>
+<!--          <td width="10%" align="left" class="sectiontableheader"><?php //echo _HEADER_HITS;?></td>-->
+          <td width="10%" align="center" class="sectiontableheader">&nbsp;</td>
         </tr>
 <?php
         $k = 0;
@@ -49,7 +49,7 @@ class HTML_letterman {
         ?>
             <tr class="<?php echo $tabclass[$k]; ?>">
               <td width="32" align="center">&nbsp;</td>
-              <td width="70%">
+              <td width="80%">
               <a href="<?php echo sefRelToAbs("index.php?option=com_letterman&amp;task=view&amp;Itemid=$Itemid&amp;id=$row->id"); ?>"><?php echo $row->subject; ?></a>
           <?php
           if( $letterman_rights['is_editor'] ) { ?>
@@ -64,8 +64,8 @@ class HTML_letterman {
           }
           ?>
               </td>
-              <td width="20%"><?php echo $row->send;?></td>
-              <td width="9%" align="center"><?php echo $row->hits;?></td>
+              <td width="10%"><?php echo substr("$row->send",0,10);?></td>
+<!--              <td width="9%" align="center"><?php //echo $row->hits;?></td>-->
               <td width="32" align="center"><?php
           if( $letterman_rights['can_delete'] ) { ?>
               <form name="deleteForm<?php echo $row->id;?>" action="index.php?option=com_letterman" method="post">
@@ -109,15 +109,12 @@ class HTML_letterman {
 
     }
 function editNewsletter( &$row, &$publist, $option , $glist ) {
-    global $mosConfig_absolute_path, $_MAMBOTS;
-		
-	$savetext = '';
-	$results = $_MAMBOTS->trigger( 'onGetEditorContents', array( "html_message", "html_message" ) );#
-	foreach ($results as $result) {
-		if (trim($result)) {
-			$savetext .= $result;
-        }
-	}
+      global $mosConfig_absolute_path;
+      
+		if( function_exists( "botTinymceEditorInit" ))
+		  $savetext = "tinyMCE.triggerSave();\n";
+		else
+		  $savetext = "";
 	  ?>
 	  <link rel="stylesheet" type="text/css" media="all" href="includes/js/calendar/calendar-mos.css" title="green" />
 	  <script type="text/javascript" src="includes/js/calendar/calendar.js"></script>
@@ -234,9 +231,10 @@ function editNewsletter( &$row, &$publist, $option , $glist ) {
   
     function showItems( $row, $gid ) {
       
-      ?><div class="componentheading">Newsletter Item <a href="javascript: history.back()">&nbsp;[ back ]</a></div>
+      ?>
+          <div class="componentheading"><?php echo $row->title; ?><a href="javascript: history.back()">&nbsp;[ back ]</a></div>
       <div align="right" class="createdate">Date: <?php echo $row->created ?></div>
-      <div><strong><?php echo $row->title; ?></strong></div><br/>
+      <!--<div><strong><?php// echo $row->title; ?></strong></div><br/>-->
       <div><?php echo $row->text; ?></div>
     <?php
     
@@ -496,8 +494,6 @@ function editNewsletter( &$row, &$publist, $option , $glist ) {
     }
     
     function footer() {
-    	
-    	echo '<div align="center" class="small">Powered by <a href="http://www.thejfactory.com" target="_blank">Letterman</a></div>';
     
     }
     
@@ -563,18 +559,18 @@ function editNewsletter( &$row, &$publist, $option , $glist ) {
           <?php
           if(!$subscriber) {
           	?>
-            <td>
-              <a href="<?php echo sefRelToAbs( 'index.php?option=com_letterman&amp;task=subscribe&amp;Itemid='. $Itemid ) ?>" title="<?php echo LM_SUBSCRIBE ?>">
-              <img src="components/com_letterman/images/subscribe.png" alt="<?php echo LM_SUBSCRIBE ?>" align="center" border="0" />&nbsp;<?php echo LM_SUBSCRIBE_TO ?></a>
-            </td>
+            <td><!--
+              <a href="<?php// echo sefRelToAbs( 'index.php?option=com_letterman&amp;task=subscribe&amp;Itemid='. $Itemid ) ?>" title="<?php //echo LM_SUBSCRIBE ?>">
+              <img src="components/com_letterman/images/subscribe.png" alt="<?php// echo LM_SUBSCRIBE ?>" align="center" border="0" />&nbsp;<?php //echo LM_SUBSCRIBE_TO ?></a>
+            --></td>
             <?php
           }
           else {
           	?>
-            <td>&nbsp;&nbsp;
-              <a href="<?php echo sefRelToAbs( 'index.php?option=com_letterman&amp;task=unsubscribe&amp;Itemid='. $Itemid ) ?>" title="<?php echo LM_UNSUBSCRIBE ?>">
-              <img src="components/com_letterman/images/unsubscribe.png" alt="<?php echo LM_UNSUBSCRIBE ?>" align="center" border="0" />&nbsp;<?php echo LM_UNSUBSCRIBE_FROM ?></a>
-            </td>
+            <td>&nbsp;&nbsp;<!--
+              <a href="<?php// echo sefRelToAbs( 'index.php?option=com_letterman&amp;task=unsubscribe&amp;Itemid='. $Itemid ) ?>" title="<?php// echo LM_UNSUBSCRIBE ?>">
+              <img src="components/com_letterman/images/unsubscribe.png" alt="<?php// echo LM_UNSUBSCRIBE ?>" align="center" border="0" />&nbsp;<?php// echo LM_UNSUBSCRIBE_FROM ?></a>
+           --> </td>
             <?php
           }
           ?>

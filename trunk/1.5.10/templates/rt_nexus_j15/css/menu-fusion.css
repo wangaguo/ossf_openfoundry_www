@@ -22,7 +22,7 @@
 .menutop .subtext span {line-height: 18px;}
 .menutop .subtext em {line-height:14px;}
 .menutop li:hover .item, .menutop li.sfHover .item, .menutop li.active .item {z-index: 100;cursor: pointer;}
-.menutop li .item span {display: block;padding: 0 14px;}
+.menutop li .item span {display: block;padding: 0 10px;}
 .menutop li.active, .menutop li:hover, .menutop li.sfHover {margin:0px 4px;}
 .menutop li li.active, .menutop li li:hover, .menutop li li.sfHover {padding:0;margin:0;}
 .menutop li .daddy {padding-right: 10px;}

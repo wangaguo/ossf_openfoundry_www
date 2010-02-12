@@ -1,14 +1,15 @@
 <?php
 /**
-* Mosets Tree admin 
-*
-* @package Mosets Tree 2.0
-* @copyright (C) 2007-2008 Mosets Consulting
-* @url http://www.mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
+ * @version		$Id: mfields.class.php 716 2009-05-28 11:03:21Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+
+defined('_JEXEC') or die('Restricted access');
 
 class mFields {
 	
@@ -52,6 +53,7 @@ class mFields {
 			'arrayFieldElements' => explode("|",$fieldsObject->field_elements),
 			'requiredField' => $fieldsObject->required_field,
 			'hideCaption' => $fieldsObject->hide_caption,
+			'tagSearch' => $fieldsObject->tag_search,
 			'simpleSearch' => $fieldsObject->simple_search,
 			'advancedSearch' => $fieldsObject->advanced_search,
 			'searchCaption' => $fieldsObject->search_caption,
@@ -60,7 +62,8 @@ class mFields {
 			'isCore' => $fieldsObject->iscore,
 			'params' => $fieldsObject->params,
 			'class' => $fieldsObject->ft_class,
-			'attachment' => isset($fieldsObject->attachment)?$fieldsObject->attachment:''
+			'attachment' => isset($fieldsObject->attachment)?$fieldsObject->attachment:'',
+			'counter' => isset($fieldsObject->counter)?$fieldsObject->counter:0
 			);
 	}
 
@@ -101,12 +104,17 @@ class mFields {
 		$this->coresValue['link_user'] = $user_id . '|' . $username;
 	}
 	
-	function loadSearchParams( $post ) {
+	function loadSearchParams( $post=null ) {
+		if( is_null($post) ) {
+			$post = JRequest::get( 'post' );
+		}
 		while( $this->hasNext() ) {
 			$field = $this->getField();
 			$searchFields = $field->getSearchFields();
 			foreach( $searchFields AS $searchField ) {
-				$searchParams[$searchField] = mosGetParam( $post, $searchField, '' );
+				if( isset($post[$searchField]) ) {
+					$searchParams[$searchField] = $post[$searchField];
+				}
 			}
 			$this->next();
 		}
@@ -168,16 +176,6 @@ class mFields {
 	
 	function getFieldTypeClassName( $data=array() ) {
 		if( array_key_exists('fieldType',$data) && !is_null($data['fieldType']) && !empty($data['fieldType']) ) {
-			/*
-			if( isset($data['class']) ) { 
-				eval($data['class']);
-				$class = 'mFieldType_' . $data['fieldType'];
-			} elseif(class_exists('mFieldType_' . $data['fieldType'])) {
-					$class = 'mFieldType_' . $data['fieldType'];
-			} else {
-				$class = 'mFieldType';
-			}
-			*/
 			if(class_exists('mFieldType_' . $data['fieldType'])) {
 				$class = 'mFieldType_' . $data['fieldType'];
 			} else {
@@ -213,6 +211,7 @@ class mFieldType {
 	var $numOfInputFields = 1;
 	var $numOfSearchFields = 1;
 	var $allowHTML = false;
+	var $counter = 0;
 	
 	function mFieldType( $data=array() ) {
 		if( !is_null($data) ) {
@@ -222,20 +221,7 @@ class mFieldType {
 						$this->arrayFieldElements = explode("|",$data[$key]);
 						break;
 					case 'params':
-						// echo '<br />Assigning parameter for cf_id: ' . $this->id;
-						// echo '<br />value: ';
-						// var_dump( $value );
-						// echo '<pre>';
-						// $debugs = debug_backtrace();
-						// foreach($debugs AS $debug) {
-						// 	echo '<br />' . $debug['file'] . ' LINE:' . $debug['line'] . ' Function: ' . $debug['function'];
-						// }
-						// // var_dump($debugs['files']);
-						// // var_dump(debug_backtrace());
-						// echo '</pre>';
-						// var_dump( $value );
-						// exit();
-						$this->params = new mosParameters( $value );
+						$this->params = new JParameter( $value );
 						break;
 					default:
 						$this->$key = $value;
@@ -285,6 +271,7 @@ class mFieldType {
 		if ( is_array($value) ) {
 			return ($this->allowHTML) ? implode("|",$value) : strip_tags(implode("|",$value));
 		} else {
+			$value = trim($value);
 			return ($this->allowHTML) ? $value : strip_tags($value);
 		}
 	}
@@ -317,11 +304,38 @@ class mFieldType {
 	function getArrayFieldElements() { return $this->arrayFieldElements; }
 	
 	function getInputHTML() {
-		return '<input class="inputbox text_area" type="text" name="' . $this->getInputFieldName(1) . '" id="' . $this->getInputFieldName(1) . '" size="' . $this->getSize() . '" value="' . htmlspecialchars($this->getValue()) . '" />';
+		if( !empty($this->arrayFieldElements[0]) )
+		{
+			$html = '<select name="' . $this->getInputFieldName(1) . '" id="' . $this->getInputFieldName(1) . '" class="inputbox text_area">';
+			$html .= '<option value="">&nbsp;</option>';
+			foreach($this->arrayFieldElements AS $fieldElement) {
+				$html .= '<option value="'.$fieldElement.'"';
+				if( $fieldElement == $this->getValue() ) {
+					$html .= ' selected';
+				}
+				$html .= '>' . $fieldElement . '</option>';
+			}
+			$html .= '</select>';
+			return $html;
+		} else {
+			return '<input class="inputbox text_area" type="text" name="' . $this->getInputFieldName(1) . '" id="' . $this->getInputFieldName(1) . '" size="' . ($this->getSize()?$this->getSize():'30') . '" value="' . htmlspecialchars($this->getValue()) . '" />';
+		}
 	}
 
 	function getSearchHTML() {
-		return '<input class="inputbox text_area" type="text" name="' . $this->getName() . '" id="' . $this->getName() . '" size="' . $this->getSize() . '" />';
+		if( !empty($this->arrayFieldElements[0]) )
+		{
+			$html = '<select name="' . $this->getName() . '" class="inputbox text_area">';
+			$html .= '<option value="">&nbsp;</option>';
+			foreach($this->arrayFieldElements AS $fieldElement) {
+				$html .= '<option value="'.$fieldElement.'"';
+				$html .= '>' . $fieldElement . '</option>';
+			}
+			$html .= '</select>';
+			return $html;
+		} else {
+			return '<input class="inputbox text_area" type="text" name="' . $this->getName() . '" id="' . $this->getName() . '" size="' . $this->getSize() . '" />';
+		}
 	}
 	
 	function getJSValidation() {
@@ -347,15 +361,15 @@ class mFieldType {
 	function getFieldTypeAttachmentURL($arg) {
 		global $mtconf;
 		if(is_int($arg)) {
-			return $mtconf->getjconf('live_site') . '/components/com_mtree/attachment.php?ft=' . $this->fieldType . '&o=' . $arg;
+			return JRoute::_( JURI::root().str_replace('&','&amp;','index.php?option=com_mtree&task=att_download&ft=' . $this->fieldType . '&o=' . $arg) );
 		} elseif( !empty($arg) ) {
-			return $mtconf->getjconf('live_site') . '/components/com_mtree/attachment.php?ft=' . $this->fieldType . '&file=' . $arg;
+			return JRoute::_( JURI::root().str_replace('&','&amp;','index.php?option=com_mtree&task=att_download&ft=' . $this->fieldType . '&file=' . $arg) );
 		}
 	}
 
 	function getDataAttachmentURL() {
 		global $mtconf;
-		return $mtconf->getjconf('live_site') . '/components/com_mtree/attachment.php?link_id=' . $this->getLinkId() . '&cf_id=' . $this->getId();
+		return JRoute::_( JURI::root().str_replace('&','&amp;','index.php?option=com_mtree&task=att_download&link_id=' . $this->getLinkId() . '&cf_id=' . $this->getId()) );
 	}
 	
 	function getModPrefixText() {
@@ -439,8 +453,26 @@ class mFieldType {
 	*			 for summary view. $view = 1 for Normal/Details View. $view = 2 for Summary View.
 	* @return str The formatted value of the field
 	*/
-	function getOutput($view=1) {
-		return $this->getValue();
+	function getOutput() {
+		if( $this->tagSearch && $this->hasValue() )
+		{
+			$arrTags = explode(',',$this->getValue());
+			$countTags = count($arrTags);
+			for($i=0;$i<$countTags;$i++)
+			{
+				$arrTags[$i] = trim($arrTags[$i]);
+
+				$outputTags[$i] = '';
+				$outputTags[$i] .= '<a class="tag" href="'.JRoute::_('index.php?option=com_mtree&task=searchby&cf_id='.$this->getId().'&value='.urlencode($arrTags[$i])).'">';
+				$outputTags[$i] .= $arrTags[$i];
+				$outputTags[$i] .= '</a>';
+			}
+			$html = '';
+			$html .= implode(',&nbsp;',$outputTags);
+			return $html;
+		} else {
+			return $this->getValue();
+		}
 	}
 	
 	function getWhereCondition() {
@@ -473,7 +505,7 @@ class mFieldType {
 	function parseMambots( &$html ) {
 		global $_MAMBOTS, $mtconf;
 
-		$params =& new mosParameters( '' );
+		$params =& new JParameter( '' );
 		$link = new stdclass;
 		$link->text = $html;
 		$link->id = 1;
@@ -632,21 +664,20 @@ class mFieldType_multitext extends mFieldType {
 class mFieldType_weblink extends mFieldType {
 
 	function getInputHTML() {
-		global $_MT_LANG;
 		$showGo = $this->getParam('showGo',0);
 		$html = '';
-		$html .= '<input class="inputbox text_area" type="text" name="' . $this->getInputFieldName(1) . '" id="' . $this->getInputFieldName(1) . '" size="' . $this->getSize() . '" value="' . htmlspecialchars($this->getValue()) . '" />';
-		if($showGo) {
+		$html .= '<input class="inputbox text_area" type="text" name="' . $this->getInputFieldName(1) . '" id="' . $this->getInputFieldName(1) . '" size="' . ($this->getSize()?$this->getSize():'30') . '" value="' . htmlspecialchars($this->getValue()) . '" />';
+		if($showGo && $this->inBackEnd()) {
 			$html .= '&nbsp;';
 			$html .= '<input type="button" class="button" onclick=\'';
 			$html .= 'javascript:window.open("index3.php?option=com_mtree&task=openurl&url="+escape(document.getElementById("' . $this->getInputFieldName(1) . '").value))\'';
-			$html .= 'value="' . $_MT_LANG->GO . '" />';
+			$html .= 'value="' . JText::_( 'Go' ) . '" />';
 		}
 		return $html;
 	}
 	
 	function parseValue($value) {
-		$value = strip_tags($value);
+		$value = trim(strip_tags($value));
 		if(substr($value,0,7) == 'http://' || substr($value,0,8) == 'https://') {
 			return $value;
 		} elseif(!empty($value)) {
@@ -656,11 +687,9 @@ class mFieldType_weblink extends mFieldType {
 		}
 	}
 	function getJSValidation() {
-		global $_MT_LANG;
 		$js = '';
-		// $js .= '} else if (form.' .$this->getName() . '.value != "" && /^(http:\/\/)/i.test(form.' .$this->getName() . '.value)==false) {'; 
 		$js .= '} else if (form.' .$this->getName() . '.value != "" && /^(http:\/\/|https:\/\/)?([a-zA-Z0-9]+\.[a-zA-Z0-9\-]+|[a-zA-Z0-9\-]+)\.[a-zA-Z\.]{2,6}(\/[a-zA-Z0-9\.\?=\/#%&\+-]+|\/|)/i.test(form.' .$this->getName() . '.value)==false) {'; 
-		$js .= 'alert("' . $this->getCaption() . ': ' . $_MT_LANG->PLEASE_ENTER_A_VALID_URL . '");';
+		$js .= 'alert("' . $this->getCaption() . ': ' . JText::_( 'Please enter a valid url' ) . '");';
 		return $js;
 	}
 
@@ -668,9 +697,12 @@ class mFieldType_weblink extends mFieldType {
 		$maxUrlLength = $this->getParam('maxUrlLength',60);
 		$text = $this->getParam('text','');
 		$openNewWindow = $this->getParam('openNewWindow',1);
-	
+		$hideProtocolOutput = $this->getParam('hideProtocolOutput',1);
+		
 		$html = '';
-		$html .= '<a href="' . $this->getValue() . '"';
+		$html .= '<a href="';
+		$html .= $this->getOutputURL();
+		$html .= '"';
 		if( $openNewWindow == 1 ) {
 			$html .= ' target="_blank"';
 		}
@@ -678,17 +710,46 @@ class mFieldType_weblink extends mFieldType {
 		if(!empty($text)) {
 			$html .= $text;
 		} else {
+			$value = $this->getValue();
+			if(strpos($value,'://') !== false && $hideProtocolOutput) {
+				$value = trim(substr($value,(strpos($value,'://')+3)));
+
+				// If $value has a single slash and this is at the end of the string, we can safely remove this.
+				if( substr($value,-1) == '/' && substr_count($value,'/') == 1 )
+				{
+					$value = substr($value,0,-1);
+				}
+			}
 			if( empty($maxUrlLength) || $maxUrlLength == 0 ) {
-				$html .= $this->getValue();
+				$html .= $value;
 			} else {
-				$html .= substr($this->getValue(),0,$maxUrlLength);
-				if( strlen($this->getValue()) > $maxUrlLength ) {
+				$html .= substr($value,0,$maxUrlLength);
+				if( strlen($value) > $maxUrlLength ) {
 					$html .= $this->getParam('clippedSymbol');
 				}
 			}
 		}
 		$html .= '</a>';
 		return $html;
+	}
+	
+	function getOutputURL() {
+		$useInternalRedirect = $this->getParam('useInternalRedirect',0);
+
+		$url = '';
+		
+		if( $useInternalRedirect ) {
+			$url .= JRoute::_( 
+				JURI::root()
+				. str_replace('&','&amp;','index.php?option=com_mtree&task=visit&link_id=' . $this->getLinkId() . '&cf_id=' . $this->getId()) 
+				);
+		} else {
+			// parseValue always make sure the protocol bits is always prepended before storing to database.
+			// We are going to do another check here, just in case the value is stored without going through
+			// the check.
+			$url .= $this->parseValue($this->getValue());
+		}
+		return $url;
 	}
 }
 
@@ -889,7 +950,9 @@ class mFieldType_checkbox extends mFieldType {
 			case '1':
 				$html .= '<ul>';
 				foreach( $arrayValue AS $value ) {
-					$html .= '<li>' . $value . '</li>';
+					if( $value != '' ) {
+						$html .= '<li>' . $value . '</li>';
+					}
 				}
 				$html .= '</ul>';
 				break;
@@ -909,7 +972,6 @@ class mFieldType_file extends mFieldType {
 	}
 	/*
 	function getJSValidation() {
-		global $_MT_LANG;
 		$js = '';
 		$js .= '} else if (!hasExt(form.' .$this->getInputFieldName(1) . '.value,\'png|jpe?g|gif\')) {'; 
 		$js .= 'alert("' . $this->getCaption() . ': Please select png, jpg or gif file.");';
@@ -918,10 +980,21 @@ class mFieldType_file extends mFieldType {
 	*/	
 	function getOutput() {
 		$html = '';
+		$showCounter 	= $this->getParam('showCounter',1);
+
 		if(!empty($this->value)) {
 			$html .= '<a href="' . $this->getDataAttachmentURL() . '" target="_blank">';
 			$html .= $this->getValue();
 			$html .= '</a>';
+		}
+		
+		$append_html = array();
+		if( $showCounter ) {
+			$append_html[] = JText::sprintf('{{n}} views', $this->counter);
+		}
+		
+		if( !empty($append_html) ) {
+			$html .= ' (' . implode(', ',$append_html) . ')';
 		}
 		return $html;
 	}
@@ -933,6 +1006,12 @@ class mFieldType_file extends mFieldType {
 			$html .= '<a href="' . $this->getDataAttachmentURL() . '" target="_blank">';
 			$html .= $this->getValue();
 			$html .= '</a>';
+			
+			$showCounter = $this->getParam('showCounter',1);
+			if( $showCounter ) {
+				$html .= ' (' . JText::sprintf('{{n}} views', $this->counter) . ')';
+			}
+			
 			$html .= '</br >';
 		}
 		$html .= '<input class="inputbox text_area" type="file" name="' . $this->getInputFieldName(1) . '" />';
@@ -940,8 +1019,7 @@ class mFieldType_file extends mFieldType {
 	}
 
 	function getSearchHTML() {
-		global $_MT_LANG;
-		return '<input class="inputbox text_area" type="checkbox" name="' . $this->getSearchFieldName(1) . '" id="' . $this->getSearchFieldName(1) . '" />&nbsp;<label for="' . $this->getName() . '">' . $_MT_LANG->CONTAINS_FILE . '</label>';
+		return '<input class="inputbox text_area" type="checkbox" name="' . $this->getSearchFieldName(1) . '" id="' . $this->getSearchFieldName(1) . '" />&nbsp;<label for="' . $this->getName() . '">' . JText::_( 'Contains file' ) . '</label>';
 	}
 	
 	function getWhereCondition() {
@@ -957,25 +1035,27 @@ class mFieldType_file extends mFieldType {
 class mFieldType_number extends mFieldType {
 	var $numOfSearchFields = 2;
 	function getJSValidation() {
-		global $_MT_LANG;
 		$js = '';
-		$js .= '} else if (form.' .$this->getInputFieldName(1) . '.value != "" && /^[-]?([1-9]{1}[0-9]{0,}(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|\.[0-9]{1,2})$/i.test(form.' .$this->getName() . '.value)==false) {'; 
-		$js .= 'alert("' . $this->getCaption() . ': '. $_MT_LANG->PLEASE_ENTER_A_VALID_NUMBER . '");';
+		if( in_array($this->getName(),array('link_hits','link_votes','link_visited','link_rating')) ) {
+			$js .= '} else if (form.elements["publishing[' .$this->getInputFieldName(1) . ']"].value != "" && /^[-]?([1-9]{1}[0-9]{0,}(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|\.[0-9]{1,2})$/i.test(form.elements["publishing[' .$this->getInputFieldName(1) . ']"].value)==false) {'; 
+		} else {
+			$js .= '} else if (form.' .$this->getInputFieldName(1) . '.value != "" && /^[-]?([1-9]{1}[0-9]{0,}(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|\.[0-9]{1,2})$/i.test(form.' .$this->getName() . '.value)==false) {'; 
+		}
+		$js .= 'alert("' . $this->getCaption() . ': '. JText::_( 'Please enter a valid number' ) . '");';
 		return $js;
 	}
 	function parseValue($value) {
 		if(is_numeric($value)) {
-			return $value;
+			return trim($value);
 		} else {
 			return '';
 		}
 	}
 	function getSearchHTML() {
-		global $_MT_LANG;
 		$html = '<select name="' . $this->getSearchFieldName(2) . '" class="inputbox text_area" size="1">';
-		$html .= '<option value="1" selected="selected">' . $_MT_LANG->EXACTLY . '</option>';
-		$html .= '<option value="2">' . $_MT_LANG->MORE_THAN . '</option>';
-		$html .= '<option value="3">' . $_MT_LANG->LESS_THAN . '</option>';
+		$html .= '<option value="1" selected="selected">' . JText::_( 'Exactly' ) . '</option>';
+		$html .= '<option value="2">' . JText::_( 'More than' ) . '</option>';
+		$html .= '<option value="3">' . JText::_( 'Less than' ) . '</option>';
 		$html .= '</select>';
 		$html .= '&nbsp;';
 		$html .= '<input name="' . $this->getSearchFieldName(1) . '" type="text" class="inputbox text_area" size="8" />';
@@ -1024,7 +1104,7 @@ class mFieldType_date extends mFieldType {
 	function getOutput() {
 		$dateFormat = $this->getParam('dateFormat','%Y-%m-%d');
 		$value = $this->getValue();
-		return strftime($dateFormat,mktime(0,0,0,intval(substr($value,5,2)),intval(substr($value,-2)),intval(substr($value,0,4))));
+		return strftime($dateFormat,mktime(0,0,0,intval(substr($value,5,2)),intval(substr($value,8,2)),intval(substr($value,0,4))));
 	}
 	
 	function getSearchHTML() {
@@ -1033,7 +1113,7 @@ class mFieldType_date extends mFieldType {
 		
 		$html = '';
 		$html .= '<input id="' . $this->getSearchFieldName(1) . 'a" name=' . $this->getSearchFieldName(1) . ' type="radio" value="1" checked />';
-		$html .= '<label for="' . $this->getSearchFieldName(1) . 'a">Exactly on</label>&nbsp;';
+		$html .= '<label for="' . $this->getSearchFieldName(1) . 'a">' . JText::_( 'Exactly on' ) . '</label>&nbsp;';
 		
 		$html .= '<select name="' . $this->getSearchFieldName(2) . '" class="inputbox">';
 		$html .= '<option value="">&nbsp;</option>';
@@ -1042,7 +1122,7 @@ class mFieldType_date extends mFieldType {
 
 		$html .= '<select name="' . $this->getSearchFieldName(3) . '" class="inputbox">';
 		$html .= '<option value="">&nbsp;</option>';
-		for($month=1;$month<=12;$month++) { $html .= '<option value="' . $month . '">' . date("M", mktime(0, 0, 0, $month)) . '</option>'; }
+		for($month=1;$month<=12;$month++) { $html .= '<option value="' . $month . '">' . strftime('%b', mktime(0, 0, 0, $month)) . '</option>'; }
 		$html .= '</select>';
 
 		$html .= '<select name="' . $this->getSearchFieldName(4) . '" class="inputbox">';
@@ -1053,7 +1133,7 @@ class mFieldType_date extends mFieldType {
 		$html .= '<br />';
 		
 		$html .= '<input id="' . $this->getSearchFieldName(1) . 'b" name=' . $this->getSearchFieldName(1) . ' type="radio" value="2" />';
-		$html .= '<label for="' . $this->getSearchFieldName(1) . 'b">Between</label>&nbsp;';
+		$html .= '<label for="' . $this->getSearchFieldName(1) . 'b">' . JText::_( 'Between' ) . '</label>&nbsp;';
 		
 		$html .= '<select name="' . $this->getSearchFieldName(5) . '" class="inputbox">';
 		$html .= '<option value="">&nbsp;</option>';
@@ -1062,7 +1142,7 @@ class mFieldType_date extends mFieldType {
 
 		$html .= '<select name="' . $this->getSearchFieldName(6) . '" class="inputbox">';
 		$html .= '<option value="">&nbsp;</option>';
-		for($month=1;$month<=12;$month++) { $html .= '<option value="' . $month . '">' . date("M", mktime(0, 0, 0, $month)) . '</option>'; }
+		for($month=1;$month<=12;$month++) { $html .= '<option value="' . $month . '">' . strftime('%b', mktime(0, 0, 0, $month, 1)) . '</option>'; }
 		$html .= '</select>';
 		
 		$html .= '<select name="' . $this->getSearchFieldName(7) . '" class="inputbox">';
@@ -1070,7 +1150,9 @@ class mFieldType_date extends mFieldType {
 		for($year=$endYear;$year>=$startYear;$year--) { $html .= '<option value="' . $year . '">' . $year . '</option>'; }
 		$html .= '</select>';
 		
-		$html .= '&nbsp;and&nbsp;';
+		$html .= '&nbsp;';
+		$html .= JText::_( 'and' );
+		$html .= '&nbsp;';
 		
 		$html .= '<select name="' . $this->getSearchFieldName(8) . '" class="inputbox">';
 		$html .= '<option value="">&nbsp;</option>';
@@ -1079,7 +1161,7 @@ class mFieldType_date extends mFieldType {
 
 		$html .= '<select name="' . $this->getSearchFieldName(9) . '" class="inputbox">';
 		$html .= '<option value="">&nbsp;</option>';
-		for($month=1;$month<=12;$month++) { $html .= '<option value="' . $month . '">' . date("M", mktime(0, 0, 0, $month)) . '</option>'; }
+		for($month=1;$month<=12;$month++) { $html .= '<option value="' . $month . '">' . date("M", mktime(0, 0, 0, $month, 1)) . '</option>'; }
 		$html .= '</select>';
 
 		$html .= '<select name="' . $this->getSearchFieldName(10) . '" class="inputbox">';
@@ -1127,7 +1209,7 @@ class mFieldType_date extends mFieldType {
 			if( $month == $monthValue ) {
 				$html .= ' selected';
 			}
-			$html .= '>' . date("M", mktime(0, 0, 0, $month)) . '</option>';
+			$html .= '>' . strftime('%b', mktime(0, 0, 0, $month)) . '</option>';
 		}
 		$html .= '</select>';
 		
@@ -1190,17 +1272,16 @@ class mFieldType_date extends mFieldType {
 
 class mFieldType_email extends mFieldType {
 	function getJSValidation() {
-		global $_MT_LANG;
 		$js = '';
-		$js .= '} else if (form.' .$this->getName() . '.value != "" && /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,4}$/i.test(form.' .$this->getName() . '.value)==false) {'; 
-		$js .= 'alert("' . $_MT_LANG->PLEASE_ENTER_A_VALID_EMAIL . '");';
+		$js .= '} else if (form.' .$this->getName() . '.value != "" && /^[a-zA-Z0-9._-]+@([a-zA-Z0-9.-]+\.)+[a-zA-Z0-9.-]{2,6}$/i.test(form.' .$this->getName() . '.value)==false) {'; 
+		$js .= 'alert("' . JText::_( 'Please enter a valid email' ) . '");';
 		return $js;
 	}
 	function getOutput() {
 		$email = $this->getValue();
 		$html = '';
 		if(!empty($email)) {
-			$html .= '<script language="JavaScript">document.write(\'<a hr\'+\'ef="mai\'+\'lto\'+\':\'+\'';
+			$html .= '<script type="text/javascript"><!--' . "\n" . 'document.write(\'<a hr\'+\'ef="mai\'+\'lto\'+\':\'+\'';
 			for($i=0;$i<strlen($email);$i++) {
 				$html .= '%'.dechex(ord(substr($email,$i,1)));
 			}
@@ -1209,10 +1290,58 @@ class mFieldType_email extends mFieldType {
 			    $check = htmlentities($email[$j],ENT_QUOTES);
 			   $html .= ($email[$j] == $check) ? "&#".ord($email[$j]).";" : $check;
 			}
-			$html .= '<\/a>\');</script>';			
+			$html .= '<\/a>\');' . "\n" . '//--></script>';
 		}
 		return $html;
 	}
 }
 
+class mFieldType_tags extends mFieldType {
+
+	function getInputHTML() {
+		$params['maxChars'] = intval($this->getParam('maxChars',80));
+		
+		return '<input class="inputbox text_area" type="text" name="' . $this->getInputFieldName(1) . '" id="' . $this->getInputFieldName(1) . '" size="' . $this->getSize() . '" value="' . htmlspecialchars($this->getValue()) . '" maxlength="'.$params['maxChars'].'" />';
+	}
+
+	function getOutput() {
+		$arrTags = explode(',',$this->getValue());
+		$countTags = count($arrTags);
+		
+		for($i=0;$i<$countTags;$i++)
+		{
+			$arrTags[$i] = trim($arrTags[$i]);
+			
+			$outputTags[$i] = '';
+			$outputTags[$i] .= '<a class="tag" href="'.JRoute::_('index.php?option=com_mtree&task=searchby&cf_id='.$this->getId().'&value='.urlencode($arrTags[$i])).'">';
+			$outputTags[$i] .= $arrTags[$i];
+			$outputTags[$i] .= '</a>';
+		}
+
+		$html = '';
+		$html .= implode(',&nbsp;',$outputTags);
+
+		return $html;
+	}
+	
+	function parseValue($value) {
+		$params['maxChars'] = intval($this->getParam('maxChars',80));
+		$value = JString::substr($value,0,$params['maxChars']);
+		
+		// Allow alphanumeric with dashes, and spaces
+		$pattern = "/^[A-Za-z0-9- ]+$/";
+
+		$arrTags = explode(',',$value);
+		$countTags = count($arrTags);
+		
+		for($i=0;$i<$countTags;$i++)
+		{
+			$arrTags[$i] = trim($arrTags[$i]);
+			if( !preg_match( $pattern, $arrTags[$i] ) ) {
+			    unset($arrTags[$i]);
+			}
+		}
+		return implode(', ',$arrTags);
+	}
+}
 ?>

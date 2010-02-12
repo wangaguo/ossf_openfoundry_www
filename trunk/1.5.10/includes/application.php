@@ -194,12 +194,15 @@ class JSite extends JApplication
 	*/
 	function authorize($itemid)
 	{
+        echo('authorize');
 		$menus	=& JSite::getMenu();
 		$user	=& JFactory::getUser();
 		$aid	= $user->get('aid');
+        echo($user->get('aid'));
 
 		if(!$menus->authorize($itemid, $aid))
 		{
+            echo('menus authorize');
 			if ( ! $aid )
 			{
 				// Redirect to login
@@ -208,7 +211,7 @@ class JSite extends JApplication
 
 				$url  = 'index.php?option=com_user&view=login';
 				$url .= '&return='.base64_encode($return);;
-				$url = '/OpenFoundry/secure/login.php?return_url='.$return;
+#$url = 'http://ssodev.openfoundry.org/sso/users/login?return_url='.$return;
 
 				//$url	= JRoute::_($url, false);
 				$this->redirect($url);

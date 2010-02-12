@@ -16,7 +16,18 @@ defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.'
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 *
 */
+/*
+	＠修改日期080903
+	＠修改內容
+		修改SWITCH中的compose case
+		增加 			editsave case
+		增加 checkRemain() function
+		修改composeNow() saveEditletter() removeNewsletter()
+		/*--------------------------------------START--------------------------------------------------
+		.............................................中間是修改的CODE...................................................
+		/*--------------------------------------END--------------------------------------------------
 
+*/
 global $mosConfig_lang, $mosConfig_absolute_path, $lm_params;
 
 $GLOBALS['lm_version'] = '1.2.3';
@@ -51,6 +62,8 @@ switch( $task ) {
 		editNewsletter( $cid[0], $option );
 		break;
 	case 'compose':
+		//檢查寫入狀況
+		checkRemain();
 		HTML_letterman::composeNewsletter();
 		break;
 	case 'composeNow':
@@ -58,6 +71,13 @@ switch( $task ) {
 		break;
 	case "save":
 		saveNewsletter( $option );
+		break;
+	case "editsave":
+		//儲存修改過後的目錄
+		saveEditletter( "com_letterman", mosGetParam( $_POST, 'id'));
+		break;		
+	case "reflash":
+		reflashOldPaper($option);
 		break;
 	case "remove":
 		removeNewsletter( $cid, $option );
@@ -122,13 +142,378 @@ switch( $task ) {
 	case 'cancelconfig':
 		cancelSettings( $option );
 		break;
-		
-		
+	//edit by aeil @ 090204
+	case 'allunmount':
+		unMount("" , $option);
+		break;
+	case 'unmount':
+		unMount( $cid , $option);
+	//end
 	default:
 		viewNewsletter( $option );
 		break;
 }
 HTML_letterman::footer();
+//modify by aeil @ 090204
+function unMount($cid,$option)
+{
+	global $database;
+    
+    if(empty($cid))
+    {
+        $sql = "SELECT id FROM #__letterman";
+        $database->setQuery( $sql );
+        $cid =  $database->loadResultArray();        
+    }
+	//從該篇文章中，取得他的內容ID，再根據ID刪除內容中的meta
+	foreach($cid as $cids)
+	{
+		$user = new stdClass;
+		$database->setQuery( "SELECT tags, subject FROM #__letterman WHERE id in ($cids) " );
+		$oldTag = $database->loadObjectList() ;
+		$removeTagId = explode("|",$oldTag[0]->tags);
+		foreach($removeTagId as $id)
+		{
+			$database->setQuery( "SELECT metakey FROM #__content WHERE id = $id" );
+			$removeTag = $database->loadResult() ;
+        
+            $user->id = $id;
+			//$user->metakey = str_replace(", ".$oldTag[0]->subject,"",$removeTag);	
+            $user->metakey = str_replace(",".$cids,"",$removeTag);
+			if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
+				if(!$database->updateObject('#__content',$user,'id'))
+					{
+						echo $database->stderr();
+					}			
+			}
+		}
+	}
+
+	mosRedirect( "index2.php?option=$option" );
+}
+//end
+
+function reflashOldPaper($option)
+{
+	global $database, $mosConfig_live_site;
+	
+	//modify by aeil @ 090204
+	$prefix = $database->_table_prefix;
+   	$tables = array( $prefix.'letterman' );
+    $result = $database->getTableFields( $tables );
+	if(!array_key_exists('id', $result[$prefix.'letterman']))
+    {
+            $sql = "ALTER TABLE #__letterman ADD tags VARCHAR( 255 ) NOT NULL ;";
+          	$database->setQuery( $sql );        
+            $database->loadResult();
+	}	 
+	//end
+
+	//找所有在letterman的文章
+	$database->setQuery( "SELECT message, id,  subject FROM #__letterman" );
+	$reflashItem = $database->loadObjectList() ;
+	
+	for($i=0;$i<sizeof($reflashItem);$i++)
+	{	
+		//挑出文章中的subject
+		$subject = $reflashItem[$i]->subject;
+	    $subject_id = $reflashItem[$i]->id;
+        
+		//如果message欄位是存成[content id=']的格式，處理之
+		$ids = explode('[CONTENT id="',$reflashItem[$i]->message);
+		
+		//將電子報中的tags欄位取出
+		$tags = "";
+		$database->setQuery("SELECT tags FROM #__letterman WHERE id = ". $reflashItem[$i]->id );
+		$oldTags = $database->loadResult();
+		$oldTagsArray = explode('|',$oldTags);
+		
+		foreach($ids as $id)
+		{
+			//將剛剛處理過的[content=']批次處理 用id去尋找content中的id
+			$contentid = explode('"',$id);
+			$database->setQuery("SELECT metakey FROM #__content WHERE id = $contentid[0]" );	
+			$oldMetakey = $database->loadResult();
+			
+			//尋找這篇content是不是已經有他相對應的電子報subject
+			//if(strrpos($oldMetakey, $subject) === false)
+            if(strrpos($oldMetakey, $subject_id) === false)
+			{
+				//沒有的話新增在其後
+				$user = new stdClass;
+                //$user->metakey = $oldMetakey.", ".$subject;
+				$user->metakey = $oldMetakey.",".$subject_id;
+				$user->id = $contentid[0];
+				if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
+					if(!$database->updateObject('#__content',$user,'id'))
+					{
+						echo $database->stderr();
+					}
+				}
+			}
+			//看id是不是有在電子報中的tags裡 沒有的話新增
+			if(!in_array($contentid[0],$oldTagsArray))$tags.=  $contentid[0]."|";
+		}
+		
+		//附加tags在電子報的tags中
+		$mlTags = new stdClass;
+		$mlTags-> id = $reflashItem[$i]->id;
+		$mlTags-> tags = $oldTags.$tags;
+				
+		if(!$database->updateObject('#__letterman',$mlTags,'id'))
+		{
+			echo $database->stderr();
+		}
+	}
+	//echo "<SCRIPT LANGUAGE='javascript'> alert('OK');window.location='$mosConfig_live_site.'/index2.php?option=$option''</script>\n";
+	
+	mosRedirect( "index2.php?option=$option" );
+}
+/*避免重複寫入*/
+/*--------------------------------------START--------------------------------------------------*/
+function checkRemain()
+{
+	global $database;
+	$database->setQuery("SELECT metakey FROM #__content" );
+	$result = $database->loadObjectList();
+	//檢查是否有＄字號，有則刪除
+	foreach ($result as $e)	
+	{
+		if(stripos($e->metakey,"$")!==false)
+		{
+			str_replace("$","",$e->metakey);			
+		}
+	}
+}
+/*--------------------------------------END--------------------------------------------------*/
+
+function addRss( $rows ,$title )
+{
+	global $mosConfig_absolute_path;
+	global $database, $mainframe;
+	global $mosConfig_live_site, $mosConfig_cachepath;
+	if( !function_exists( "sefRelToAbs" )) {
+		include_once( $mosConfig_absolute_path."/administrator/components/com_letterman/includes/sef.php" );
+	}
+	//$mode = true 代表第一次貯存
+	require_once( $mosConfig_absolute_path .'/includes/feedcreator.class.php' );
+
+	$info	=	null;
+	$rss	=	null;
+
+	$nullDate = $database->getNullDate();
+	// pull id of syndication component
+	$query = "SELECT a.id"
+	. "\n FROM #__components AS a"
+	. "\n WHERE ( a.admin_menu_link = 'option=com_syndicate' OR a.admin_menu_link = 'option=com_syndicate&hidemainmenu=1' )"
+	. "\n AND a.option = 'com_syndicate'"
+	;
+	$database->setQuery( $query );
+	$id = $database->loadResult();
+	// load syndication parameters
+	$component = new mosComponent( $database );
+	$component->load( (int)$id );
+	$params = new mosParameters( $component->params );
+	// test if security check is enbled
+	//$check = $params->def( 'check', 1 );
+	//
+	//if($check) {
+	//	// test if rssfeed module is published
+	//	// if not disable access
+	//	$query = "SELECT m.id"
+	//	. "\n FROM #__modules AS m"
+	//	. "\n WHERE m.module = 'mod_rssfeed'"
+	//	. "\n AND m.published = 1"
+	//	;
+	//	$database->setQuery( $query );
+	//	$check = $database->loadResultArray();
+	//	if(empty($check)) {
+	//		mosNotAuth();
+	//		return;		
+	//	}		
+	//}
+	
+	$now 	= _CURRENT_SERVER_TIME;
+	$iso 	= split( '=', _ISO );
+
+	// parameter intilization
+	$info[ 'date' ] 			= date( 'r' );
+	$info[ 'year' ] 			= date( 'Y' );
+	$info[ 'encoding' ] 		= $iso[1];
+	$info[ 'link' ] 			= $mosConfig_live_site.'/Newsletter.html';//Modify by ally
+	$info[ 'cache' ] 			= $params->def( 'cache', 0 );
+	$info[ 'cache_time' ] 		= $params->def( 'cache_time', 3600 );
+	$info[ 'count' ]			= $params->def( 'count', 20 );
+	$info[ 'orderby' ] 			= $params->def( 'orderby', '' );
+	$info[ 'title' ] 			= $title;
+	//$info[ 'title' ] 			= $params->def( 'title', $title );
+	//$info[ 'description' ] 		= $params->def( 'description', 'Joomla! site syndication' );
+	$info[ 'description' ] 		= "OSSF Newsletter";
+	$info[ 'image_file' ]		= $params->def( 'image_file', 'joomla_rss.png' );
+	if ( $info[ 'image_file' ] == -1 ) {
+		$info[ 'image' ]		= NULL;
+	} else{
+		$info[ 'image' ]		= $mosConfig_live_site .'/images/M_images/'. $info[ 'image_file' ];
+	}
+	//$info[ 'image_alt' ] 		= $params->def( 'image_alt', 'Powered by Joomla!' );
+	$info[ 'image_alt' ] 		= $title;
+	$info[ 'limit_text' ] 		= $params->def( 'limit_text', 0 );
+	$info[ 'text_length' ] 		= $params->def( 'text_length', 20 );
+	// get feed type from url
+	$info[ 'feed' ] 			= strval( mosGetParam( $_GET, 'feed', 'RSS1.0' ) );
+	// live bookmarks
+	$info[ 'live_bookmark' ]	= $params->def( 'live_bookmark', '' );
+	$info[ 'bookmark_file' ]	= $params->def( 'bookmark_file', '' );
+	// set filename for live bookmarks feed
+	if ( !$showFeed & $info[ 'live_bookmark' ] ) {
+		if ( $info[ 'bookmark_file' ] ) {
+		// custom bookmark filename
+			$filename = $info[ 'bookmark_file' ];
+		} else {
+		// standard bookmark filename
+			$filename = $info[ 'live_bookmark' ];
+		}
+			
+	} else {
+	// set filename for rss feeds
+		$info[ 'file' ] = strtolower( str_replace( '.', '', $info[ 'feed' ] ) );
+		// security check to limit arbitrary file creation.
+		// and to allow disabling/enabling of selected feed types
+		switch ( $info[ 'file' ] ) {
+			case 'rss091':			
+				if ( !$params->get( 'rss091', 1 ) ) {
+					echo _NOT_AUTH;
+					return;
+				}
+				break;
+
+			case 'rss10':			
+				if ( !$params->get( 'rss10', 1 ) ) {
+					echo _NOT_AUTH;
+					return;
+				}
+				break;
+			
+			case 'rss20':			
+				if ( !$params->get( 'rss20', 1 ) ) {
+					echo _NOT_AUTH;
+					return;
+				}
+				break;
+			
+			case 'atom03':			
+				if ( !$params->get( 'atom03', 1 ) ) {
+					echo _NOT_AUTH;
+					return;
+				}
+				break;
+			
+			case 'opml':			
+				if ( !$params->get( 'opml', 1 ) ) {
+					echo _NOT_AUTH;
+					return;
+				}
+				break;
+			
+			
+			default:
+				echo _NOT_AUTH;
+				return;
+				break;			
+		}
+	}
+	$filename = $info[ 'file' ] .'.xml';
+	
+	// security check to stop server path disclosure
+	if ( strstr( $filename, '/' ) ) { 
+		echo _NOT_AUTH;
+		return;
+	}
+	$info[ 'file' ] = $mosConfig_cachepath .'/'. $filename;
+
+	// load feed creator class
+	$rss 	= new UniversalFeedCreator();
+	// load image creator class
+	$image 	= new FeedImage();
+
+	// loads cache file
+	if ( $showFeed && $info[ 'cache' ] ) {
+		$rss->useCached( $info[ 'feed' ], $info[ 'file' ], $info[ 'cache_time' ] );
+	}
+
+	$rss->title 			= $info[ 'title' ];
+	$rss->description 		= $info[ 'description' ];
+	$rss->link 				= $info[ 'link' ];
+	$rss->syndicationURL 	= $info[ 'link' ];		
+	$rss->cssStyleSheet 	= NULL;
+	$rss->encoding 			= $info[ 'encoding' ];
+
+	if ( $info[ 'image' ] ) {
+		$image->url 		= $info[ 'image' ];
+		$image->link 		= $info[ 'link' ];
+		$image->title 		= $info[ 'image_alt' ];
+		$image->description	= $info[ 'description' ];
+		// loads image info into rss array
+		$rss->image 		= $image;
+	}
+
+	foreach ( $rows as $row ) {
+		// title for particular item
+		$item_title = htmlspecialchars( $row->title );
+		$item_title = html_entity_decode( $item_title );
+		// url link to article
+		// & used instead of &amp; as this is converted by feed creator
+		$_Itemid	= '';
+		$itemid 	= $mainframe->getItemid( $row->id );
+		if ($itemid) {
+			$_Itemid = '&Itemid='. $itemid;
+		}
+		
+		$item_link = 'index.php?option=com_content&task=view&id='. $row->id . $_Itemid;
+		$item_link = $mosConfig_live_site."/".$item_link;//Mofiby by ally
+		//$item_link = $mosConfig_live_site."/".sefRelToAbs( $item_link );
+		// removes all formating from the intro text for the description text
+		$item_description = $row->introtext;
+		$item_description = mosHTML::cleanText( $item_description );
+		$item_description = html_entity_decode( $item_description );
+		if ( $info[ 'limit_text' ] ) {
+			if ( $info[ 'text_length' ] ) {
+				// limits description text to x words
+				$item_description_array = split( ' ', $item_description );
+				$count = count( $item_description_array );
+				if ( $count > $info[ 'text_length' ] ) {
+					$item_description = '';
+					for ( $a = 0; $a < $info[ 'text_length' ]; $a++ ) {
+						$item_description .= $item_description_array[$a]. ' ';
+					}
+					$item_description = trim( $item_description );
+					$item_description .= '...';
+				}
+			} else  {
+				// do not include description when text_length = 0
+				$item_description = NULL;
+			}
+		}
+
+		// load individual item creator class
+		$item = new FeedItem();
+		// item info
+		$item->title 		= $item_title;
+		$item->link 		= $item_link;
+		$item->description 	= $item_description;
+		$item->source 		= $info[ 'link' ];
+		$item->date			= date( 'r', $row->created_ts );
+		$item->category     = $row->section_title . ' - ' . $row->cat_title;
+		$con_id = 		$row->id;
+		// loads item info into rss array
+		if ($con_id > 1028 || $con_id < 1000 ) {	//Modify by Ally
+		$rss->addItem( $item );
+		}
+	}
+		//$item->date			= date( 'r', $row->created_ts );
+	// save feed file
+	$rss->saveFeed( $info[ 'feed' ], $info[ 'file' ], $showFeed );
+}
 
 function viewNewsletter( $option) {
 	global $database, $mainframe;
@@ -162,7 +547,7 @@ function viewNewsletter( $option) {
 }
 
 function composeNow() {
-	global $mosConfig_absolute_path, $_MAMBOTS;
+	global $mosConfig_absolute_path, $_MAMBOTS, $database;
 	
 	if( !function_exists( "sefRelToAbs" )) {
 		include_once( $mosConfig_absolute_path."/administrator/components/com_letterman/includes/sef.php" );
@@ -173,6 +558,35 @@ function composeNow() {
 	else {
 		$nl_content = mosGetParam( $_POST, 'nl_content' );
 	}
+/*--------------------------------------START--------------------------------------------------*/
+
+	/*新增主題至文章的meta中*/	
+	
+	//由於compose的新增方式都是先選擇文章
+	//選擇文章之後會變成[CONTENT id="1"][CONTENT id="2"][CONTENT id="3"]的方式顯示，並存在＄nl_content的變數中
+	//之後再從資料庫中取得相對應的文章
+	//這裡利用explode先將＄nl_content拆開，取得文章的ID
+	//由於這裡還沒有做最後的貯存動作，所以先以＄字號存入meta中
+	$id = explode('"',$nl_content);
+	$user = new stdClass;		
+	for($i=1;$i<count($id)-1;$i+=2)
+	{		
+		$oldMetakey = "";
+		$user->id = $id[$i];
+		
+		//檢查之前是否有其他的主題名稱，有則附加上去
+		$database->setQuery("SELECT metakey FROM #__content WHERE id=$id[$i]" );
+		$oldMetakey=$database->loadResult();
+		$user->metakey = $oldMetakey."$";
+		if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
+			if(!$database->updateObject('#__content',$user,'id'))
+			{
+				echo $database->stderr();
+			}
+		}
+	}
+/*--------------------------------------END--------------------------------------------------*/
+
 	require_once( $mosConfig_absolute_path.'/administrator/components/com_letterman/includes/contentRenderer.class.php' );
 	$renderer = new lm_contentRenderer();
 	
@@ -182,8 +596,8 @@ function composeNow() {
 }
 
 function editNewsletter( $uid, $option ) {
-	global $database, $my;
-
+	global $database, $my, $editFlag;
+	
 	$row = new mosLetterman( $database );
 	// load the row from the db table
 	$row->load( $uid );
@@ -194,7 +608,7 @@ function editNewsletter( $uid, $option ) {
 		// initialise new record
 		$row->published = 0;
 	}
-
+	
 	// make the select list for the image positions
 	$yesno[] = mosHTML::makeOption( '0', 'No' );
 	$yesno[] = mosHTML::makeOption( '1', 'Yes' );
@@ -217,11 +631,20 @@ function editNewsletter( $uid, $option ) {
 
 	HTML_Letterman::editNewsletter( $row, $publist, $option , $glist );
 }
-
-function saveNewsletter( $option ) {
+/*修改主題名稱*/
+function saveEditletter( $option , $cid) 
+{
 	global $database, $my;
+/*--------------------------------------START--------------------------------------------------*/
 
+	//先取得舊的主題名稱
+	$database->setQuery( "SELECT subject FROM #__letterman WHERE id = $cid " );
+	$oldSubject = $database->loadResult() ;
+/*--------------------------------------END--------------------------------------------------*/
+	
 	$row = new mosLetterman( $database );
+
+	
 	if (!$row->bind( $_POST )) {
 		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 		exit();
@@ -237,6 +660,139 @@ function saveNewsletter( $option ) {
 	}
 	$row->checkin();
 
+/*--------------------------------------START--------------------------------------------------*/
+
+	//由於最後的呈現方式是文章而不是[CONTENT id="1"][CONTENT id="2"][CONTENT id="3"]
+	//所以只能針對主題名稱作修改，如果文章內的某一篇主題刪除的話是無法修改的，必須手動修改meta值
+	
+	//取得新的主題名稱，在與舊的比較之後若不相同，則修改之
+	$database->setQuery( "SELECT subject, tags FROM #__letterman WHERE id = $cid " );
+	$newSubject = $database->loadObjectList() ;
+    $title = $newSubject[0]->subject;
+	$user = new stdClass;
+	//if(strcmp ($newSubject[0]->subject,$oldSubject) !== 0)
+    if(strcmp ( $cid,$oldSubject) !== 0)
+	{
+		$tagsNumber = explode("|",$newSubject[0]->tags);
+		for($i=0;$i<count($tagsNumber);$i++)
+		{
+			$user->id = $user->metakey = "";
+			$database->setQuery("SELECT metakey FROM #__content WHERE id = $tagsNumber[$i]");
+			$oldMetakey = $database->loadResult();
+			$user->id = $tagsNumber[$i];
+			//將舊的主題名稱換成新的主題名稱
+			//$user->metakey = str_replace($oldSubject,$newSubject[0]->subject,$oldMetakey);	
+            $user->metakey = str_replace($olddSubject,$cid,$oldMetakey);
+			//$user->metakey = $oldMetakey.", ".$newSubject[0]->subject;	
+			//$newmeta = $newSubject[0]->subject;
+            $newmeta = $cid;
+			if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
+				if(!$database->updateObject('#__content',$user,'id'))
+				{
+					echo $database->stderr();
+				}			
+			}
+		}
+	}
+	
+	//加入RSS
+	$rssId = "";
+	foreach($tagsNumber as $temp)
+	{
+		$rssId.= "id = ".$temp." or ";
+	}
+	$id = substr($rssId,0,strlen($rssId) - 12);
+	$database->setQuery( "SELECT * FROM #__content WHERE id=$cid" );
+	$result = $database->loadObjectList();
+	
+//	addRss($result,$newSubject[0]->subject);
+     	// addRss($result,$cid);
+//    addRss($result,$title);
+/*--------------------------------------END--------------------------------------------------*/
+	
+	mosRedirect( "index2.php?option=$option" );
+
+}
+/*新增新的compose*/
+function saveNewsletter( $option ) {
+	global $database, $my, $editId;
+
+	$row = new mosLetterman( $database );
+	
+	if (!$row->bind( $_POST )) {
+		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
+		exit();
+	}
+
+	if (!$row->check()) {
+		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
+		exit();
+	}
+	if (!$row->store()) {
+		echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
+		exit();
+	}
+	$row->checkin();
+/*--------------------------------------START--------------------------------------------------*/
+
+	/*最後的貯存，將剛剛暫存的＄字號取代，並換上主題名稱*/
+	
+	//由於新增的一筆時間一定是最新的 依照時間去資料庫取得第一筆的資料
+	//$database->setQuery( "SELECT subject FROM #__letterman ORDER BY id DESC" );
+	//$title =  $database->loadResult() ;
+    $database->setQuery( "SELECT subject, id FROM #__letterman ORDER BY id DESC" );
+    $result = $database->loadObjectList();
+    $title = $result[0]->subject;
+    $title_id = $result[0]->id;
+    
+	//$database->setQuery( "SELECT tags FROM #__letterman WHERE subject = $title " );
+    $database->setQuery( "SELECT tags FROM #__letterman WHERE id = $title_id " );
+        
+	$isTags = $database->loadResult() ;
+	$tags = "";
+	$user = new stdClass;
+	$database->setQuery("SELECT id , metakey FROM #__content" );
+	$result = $database->loadObjectList();
+	
+	//for rss
+	$rssId = "";
+	
+	foreach ($result as $e)	
+	{
+		if(stripos($e->metakey,"$")!==false)
+		{
+			$newmetakey = explode("$",$e->metakey);
+			$user->id = $e->id;
+			//$user->metakey = $newmetakey[0]." ,".$title;
+            $user->metakey = $newmetakey[0].",".$title_id;
+			if(!$database->updateObject('#__content',$user,'id'))
+			{
+				echo $database->stderr();
+			}
+			//		
+			$tags.= ($e->id. "|");
+			$rssId.= "id = ".$e->id." or ";	
+		}
+	}
+	
+	//他會將所以你選的內容包成一篇文章，為了日後修改，我們將此文章所包含的內容都存入文章的Tag欄位中
+	$mlTags = new stdClass;
+	//$mlTags-> subject = $title;
+    $mlTags-> id = $title_id;
+	$mlTags-> tags = $tags;
+	if(!$database->updateObject('#__letterman',$mlTags,'id'))
+	{
+		echo $database->stderr();
+	}
+	
+	//加入RSS
+	$id = substr($rssId,0,strlen($rssId) - 3);
+	$database->setQuery( "SELECT id,title,introtext,UNIX_TIMESTAMP( created ) AS created_ts FROM #__content WHERE $id" );
+	$result = $database->loadObjectList();
+	addRss($result,$title);
+
+/*--------------------------------------END--------------------------------------------------*/
+	
 	mosRedirect( "index2.php?option=$option" );
 }
 
@@ -278,12 +834,37 @@ function publishNewsletter( $cid=null, $publish=1, $option ) {
 * @param array An array of unique category id numbers
 * @param string The current url option
 */
+/*移除文章之外，也移除相關連的meta值*/
 function removeNewsletter( $cid, $option ) {
 	global $database;
-
-	if (count( $cid )) {
-		$cids = implode( ',', $cid );
-		$database->setQuery( "DELETE FROM #__letterman WHERE id IN ($cids)" );
+	$countcids = implode( ',', $cid );
+	
+	//從該篇文章中，取得他的內容ID，再根據ID刪除內容中的meta
+	foreach($cid as $cids)
+	{
+		$user = new stdClass;
+		$database->setQuery( "SELECT tags, subject FROM #__letterman WHERE id in ($cids) " );
+		$oldTag = $database->loadObjectList() ;
+		$removeTagId = explode("|",$oldTag[0]->tags);
+		foreach($removeTagId as $id)
+		{
+			$database->setQuery( "SELECT metakey FROM #__content WHERE id = $id" );
+			$removeTag = $database->loadResult() ;
+			
+			$user->id = $user->metakey = "";
+			$user->id = $id;
+			//$user->metakey = str_replace(",".$oldTag[0]->subject,"",$removeTag);	
+            $user->metakey = str_replace(",".$cids,"",$removeTag);
+			//echo "$user->metakey";	
+			if(!$database->updateObject('#__content',$user,'id'))
+				{
+					echo $database->stderr();
+				}			
+		}
+	}
+	if (count( $countcids )) {
+		
+		$database->setQuery( "DELETE FROM #__letterman WHERE id IN ($countcids)" );
 		if (!$database->query()) {
 			echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
 		}
@@ -1060,4 +1641,50 @@ function lm_getContentSelectList(){
   	
   	return $selectList;
  }
+ /** select Newsletter Kind content list **/
+/** 2007/06/08/ by ally **/
+ function lm_getNLContentSelectList(){
+    global $database;
+    
+    $where = array(
+		"c.state > 0",
+		"c.catid=cc.id",
+		);
+		
+  	$items = array();
+  	$items[] = mosHTML::makeOption( '0', 'Select a content item' );
+  	$query = 'SELECT s.id, s.title AS section_name 
+  				FROM #__sections AS s 
+  				WHERE s.scope=\'content\'
+				AND id =\'20\'
+  				ORDER BY ordering ASC, s.title ASC
+  				LIMIT 0, 10';
+  	
+  	$database->setQuery( $query );
+  	$sections = $database->loadObjectList();
+  	foreach( $sections as $section ) {
+  		$items[] = mosHTML::makeOption( '', '- - - '.$section->section_name.' - - -' );
+	    $query = "SELECT c.id, c.title, cc.title AS categorie_name"
+	  	. "\n FROM #__content AS c, #__categories AS cc"
+	  	. ( count( $where ) ? "\nWHERE " . implode( ' AND ', $where ) : '' )
+	  	. "\n AND cc.section=".$section->id
+		. "\n And cc.id = 203"
+	  	. "\n ORDER BY c.created DESC, cc.title, c.title";
+	  	
+	  	//echo nl2br(str_replace("#__", "mos_", $query));
+	  	$database->setQuery( $query );
+	  	$rows = $database->loadObjectList();
+	  	
+	  	if(sizeof($rows) > 0){  	
+	    	foreach($rows AS $row){
+	    	  $items[] = mosHTML::makeOption( $row->id, $row->categorie_name . " - " . $row->title );
+	    	}
+	  	}
+  	}
+  	$selectList = mosHTML::selectList( $items, 'kindid', 'class="inputbox" size="10" onchange="addkindTag()"', 'value', 'text', '0' );
+  	$selectList = str_replace( '>- - -', ' disabled="disabled">- - -', $selectList );
+  	
+  	return $selectList;
+ }
+/** end **/
 ?>

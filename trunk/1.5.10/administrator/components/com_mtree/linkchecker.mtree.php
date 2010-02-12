@@ -1,23 +1,24 @@
 <?php
 /**
-* Mosets Tree admin 
-*
-* @package Mosets Tree 2.0
-* @copyright (C) 2007-2008 Mosets Consulting
-* @url http://www.mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
+ * @version		$Id: linkchecker.mtree.php 575 2009-03-10 11:44:00Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
-require_once( $mosConfig_absolute_path . '/administrator/components/com_mtree/linkchecker.mtree.html.php' );
+defined('_JEXEC') or die('Restricted access');
 
-$task2 = strval( mosGetParam( $_REQUEST, 'task2', '' ) );
-$updateurl = mosGetParam( $_REQUEST, 'updateurl', '' );
-$newurl = mosGetParam( $_REQUEST, 'newurl', '' );
-$field = mosGetParam( $_REQUEST, 'field', '' );
-$config_num_of_links = intval(mosGetParam( $_REQUEST, 'linkchecker_num_of_links', '' ));
-$config_seconds = intval(mosGetParam( $_REQUEST, 'linkchecker_seconds', '' ));
+require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_mtree'.DS.'linkchecker.mtree.html.php' );
+
+$task2					= JRequest::getCmd( 'task2', '');
+$updateurl 				= JRequest::getVar( 'updateurl', '');
+$newurl 				= JRequest::getVar( 'newurl', '');
+$field 					= JRequest::getVar( 'field', '');
+$config_num_of_links	= JRequest::getInt( 'linkchecker_num_of_links', 0);
+$config_seconds			= JRequest::getInt( 'linkchecker_seconds');
 
 switch( $task2 ) {
 	case 'linkchecker2':
@@ -29,13 +30,15 @@ switch( $task2 ) {
 }
 
 function linkChecker2( $option, $updateurl, $field, $newurl, $config_num_of_links, $config_seconds ) {
-	global $database;
+	global $mainframe;
+
+	$database =& JFactory::getDBO();
 
 	$updated=0;
 	if(count($updateurl)>0 && !empty($updateurl)){
 		foreach($updateurl AS $id => $link_id) {
 			if( !empty($newurl[$id]) && $newurl[$id] != 'http://' && !empty($field[$id])) {
-				$database->setQuery( 'UPDATE #__mt_links SET '.$field[$id].' = \''.$newurl[$id].'\' WHERE link_id = '.$link_id.' LIMIT 1' );
+				$database->setQuery( 'UPDATE #__mt_links SET '.$field[$id].' = ' . $database->quote($newurl[$id]) . ' WHERE link_id = ' . $database->quote($link_id) . ' LIMIT 1' );
 				if($database->query()){
 					$updated++;  
 				}
@@ -44,21 +47,21 @@ function linkChecker2( $option, $updateurl, $field, $newurl, $config_num_of_link
 	}
 	
 	if( $config_num_of_links > 0 ) {
-		$database->setQuery('UPDATE #__mt_config SET value = '.$config_num_of_links.' WHERE varname =\'linkchecker_num_of_links\' LIMIT 1');
+		$database->setQuery('UPDATE #__mt_config SET value = ' . $database->quote($config_num_of_links) . ' WHERE varname =\'linkchecker_num_of_links\' LIMIT 1');
 		$database->query();
 	}
 	
 	if( $config_seconds > 0 ) {
-		$database->setQuery('UPDATE #__mt_config SET value = '.$config_seconds.' WHERE varname =\'linkchecker_seconds\' LIMIT 1');
+		$database->setQuery('UPDATE #__mt_config SET value = ' . $database->quote($config_seconds) . ' WHERE varname =\'linkchecker_seconds\' LIMIT 1');
 		$database->query();
 	}
 	
-	mosRedirect( "index2.php?option=$option&task=linkchecker", sprintf("%d links has been succesfully updated.",$updated) );
+	$mainframe->redirect( "index2.php?option=$option&task=linkchecker", sprintf("%d links has been succesfully updated.",$updated) );
 
 }
 
 function linkChecker( $option ) {
-	global $database;
+	$database =& JFactory::getDBO();
 	
 	$database->setQuery( 'SELECT link_id, link_name, website FROM #__mt_links WHERE website LIKE \'http://%\'' );
 	$links = $database->loadObjectList( 'link_id' );
@@ -88,7 +91,7 @@ function linkChecker( $option ) {
 				$domain = $website;
 				$path = '/';
 			}
-			$database->setQuery( 'INSERT INTO #__mt_linkcheck (`link_id`, `link_name`,`domain`,`path`) VALUES('.$link->link_id.', \''.$database->getEscaped($link->link_name) .'\', \''.$domain.'\', \''.$path.'\')' );
+			$database->setQuery( 'INSERT INTO #__mt_linkcheck (`link_id`, `link_name`,`domain`,`path`) VALUES('.$database->quote($link->link_id).', '.$database->quote($link->link_name) .', ' . $database->quote($domain) . ', ' . $database->quote($path) . ')' );
 			$database->query();
 		}
 	}

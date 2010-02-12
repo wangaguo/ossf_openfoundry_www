@@ -1,23 +1,21 @@
 <?php
 /**
-* Mosets Tree class 
-*
-* @package Mosets Tree 1.50
-* @copyright (C) 2005 Mosets Consulting
-* @url http://www.Mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+ * @version		$Id: mtree.class.php 602 2009-03-19 14:27:52Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
+
+defined('_JEXEC') or die('Restricted access');
 
 class mtree {
 
 	function mtree() {
 		$this->_config = new stdClass();
 
-		//require('administrator/components/com_mtree/config.mtree.php');
-
 		$this->_config->mt_template = $mt_template;
-		$this->_config->mt_language = $mt_language;
 		$this->_config->mt_map = $mt_map;
 		$this->_config->mt_show_map = $mt_show_map;
 		$this->_config->mt_show_print = $mt_show_print;
@@ -34,15 +32,15 @@ class mtree {
 		$this->_config->mt_fe_num_of_subcats = $mt_fe_num_of_subcats;
 		$this->_config->mt_fe_num_of_links = $mt_fe_num_of_links;
 		$this->_config->mt_fe_num_of_reviews = $mt_fe_num_of_reviews;
-		$this->_config->mt_fe_num_of_popularlisting = $mt_fe_num_of_popularlisting;
-		$this->_config->mt_fe_num_of_newlisting = $mt_fe_num_of_newlisting;
-		$this->_config->mt_fe_total_newlisting = $mt_fe_total_newlisting;
-		$this->_config->mt_fe_num_of_recentlyupdated = $mt_fe_num_of_recentlyupdated;
+		$this->_config->mt_fe_num_of_popular = $mt_fe_num_of_popular;
+		$this->_config->mt_fe_num_of_new = $mt_fe_num_of_new;
+		$this->_config->mt_fe_total_new = $mt_fe_total_new;
+		$this->_config->mt_fe_num_of_updated = $mt_fe_num_of_updated;
 		$this->_config->mt_fe_num_of_mostrated = $mt_fe_num_of_mostrated;
 		$this->_config->mt_fe_num_of_toprated = $mt_fe_num_of_toprated;
 		$this->_config->mt_fe_num_of_mostreview = $mt_fe_num_of_mostreview;
 		$this->_config->mt_fe_num_of_searchresults = $mt_fe_num_of_searchresults;
-		$this->_config->mt_fe_num_of_mostfavoured = $mt_fe_num_of_mostfavoured;
+		$this->_config->mt_fe_num_of_favourite = $mt_fe_num_of_favourite;
 		$this->_config->mt_rate_once = $mt_rate_once;
 		$this->_config->mt_min_votes_for_toprated= $mt_min_votes_for_toprated;
 		$this->_config->mt_min_votes_to_show_rating= $mt_min_votes_to_show_rating;
@@ -124,9 +122,10 @@ class mtLog {
 	/** @var Integer Review ID */
 	var $rev_id=null;
 
-	function mtLog( $database, $mosConfig_offset, $ip='', $user_id=0, $link_id=0, $rev_id=0 ) {
+	function mtLog( $database, $ip='', $user_id=0, $link_id=0, $rev_id=0 ) {
+		$jdate			= JFactory::getDate();
 		$this->db		= $database;
-		$this->now		= date( "Y-m-d H:i:s", time()+$mosConfig_offset*60*60 );
+		$this->now		= $jdate->toMySQL();
 		$this->ip		= $ip;
 		$this->user_id	= $user_id;
 		$this->link_id	= $link_id;
@@ -170,7 +169,11 @@ class mtLog {
 	}
 
 	function getUserLastRating() {
-		$this->db->setQuery( "SELECT value FROM #__mt_log WHERE link_id = '".$this->link_id."' AND user_id = '".$this->user_id."' AND log_type = 'vote' LIMIT 1" );
+		if(empty($this->user_id)) {
+			$this->db->setQuery( 'SELECT value FROM #__mt_log WHERE link_id = ' . $this->db->quote($this->link_id) . ' AND log_ip = ' . $this->db->quote($this->ip) . ' AND log_type = \'vote\' LIMIT 1' );
+		} else {
+			$this->db->setQuery( 'SELECT value FROM #__mt_log WHERE link_id = ' . $this->db->quote($this->link_id) . ' AND user_id = ' . $this->db->quote($this->user_id) . ' AND log_type = \'vote\' LIMIT 1' );
+		}
 		$user_rating = $this->db->loadResult();
 		if( $user_rating > 0 ) {
 			return $user_rating;
@@ -180,16 +183,16 @@ class mtLog {
 	}
 
 	function logReview() {
-		$this->db->setQuery( "INSERT INTO #__mt_log "
-			.	"( `log_ip` , `log_type`, `user_id` , `log_date` , `link_id` , `rev_id` )"
-			.	"VALUES ( "
-			.	"'" . $this->getIP() . "',"
-			.	"'review',"
-			.	"'" . $this->getUserID() . "',"
-			.	"'" . $this->now . "',"
-			.	"'" . $this->getLinkID() . "',"
-			.	"'" . $this->getRevID() . "'"
-			.	")");
+		$this->db->setQuery( 'INSERT INTO #__mt_log '
+			.	'( `log_ip` , `log_type`, `user_id` , `log_date` , `link_id` , `rev_id` )'
+			.	'VALUES ( '
+			.	$this->db->quote($this->getIP()) . ', '
+			.	'\'review\', '
+			.	$this->db->quote($this->getUserID()) . ', '
+			.	$this->db->quote($this->now) . ', '
+			.	$this->db->quote($this->getLinkID()) . ', '
+			.	$this->db->quote($this->getRevID())
+			.	')' );
 		if (!$this->db->query()) {
 			return false;
 		} else {
@@ -198,16 +201,16 @@ class mtLog {
 	}
 
 	function logReplyReview() {
-		$this->db->setQuery( "INSERT INTO #__mt_log "
-			.	"( `log_ip` , `log_type`, `user_id` , `log_date` , `link_id` , `rev_id` )"
-			.	"VALUES ( "
-			.	"'" . $this->getIP() . "',"
+		$this->db->setQuery( 'INSERT INTO #__mt_log '
+			.	'( `log_ip` , `log_type`, `user_id` , `log_date` , `link_id` , `rev_id` )'
+			.	'VALUES ( '
+			.	$this->db->quote($this->getIP()) . ', '
 			.	"'replyreview',"
-			.	"'" . $this->getUserID() . "',"
-			.	"'" . $this->now . "',"
-			.	"'" . $this->getLinkID() . "',"
-			.	"'" . $this->getRevID() . "'"
-			.	")");
+			.	$this->db->quote($this->getUserID()) . ', '
+			.	$this->db->quote($this->now) . ', '
+			.	$this->db->quote($this->getLinkID()) . ', '
+			.	$this->db->quote($this->getRevID())
+			.	')');
 		if (!$this->db->query()) {
 			return false;
 		} else {
@@ -219,17 +222,17 @@ class mtLog {
 		
 		if( $rating <= 0 ) $rating = 0;
 
-		$this->db->setQuery( "INSERT INTO #__mt_log "
-			.	"( `log_ip` , `log_type`, `user_id` , `log_date` , `link_id` , `rev_id`, `value` )"
-			.	"VALUES ( "
-			.	"'" . $this->getIP() . "',"
+		$this->db->setQuery( 'INSERT INTO #__mt_log '
+			.	'( `log_ip` , `log_type`, `user_id` , `log_date` , `link_id` , `rev_id`, `value` )'
+			.	'VALUES ( '
+			.	$this->db->quote($this->getIP()) . ', '
 			.	"'vote',"
-			.	"'" . $this->getUserID() . "',"
-			.	"'" . $this->now . "',"
-			.	"'" . $this->getLinkID() . "',"
-			.	"'" . $this->getRevID() . "',"
-			.	"'" . $rating . "'"
-			.	")");
+			.	$this->db->quote($this->getUserID()) . ', '
+			.	$this->db->quote($this->now) . ', '
+			.	$this->db->quote($this->getLinkID()) . ', '
+			.	$this->db->quote($this->getRevID()) . ', '
+			.	$this->db->quote($rating)
+			.	')');
 		if (!$this->db->query()) { return false; } 
 		else { return true; }
 
@@ -238,7 +241,7 @@ class mtLog {
 	function deleteVote() {
 
 		if( $this->getUserID() > 0 && $this->getLinkID() > 0 ) {
-			$this->db->setQuery( "DELETE FROM #__mt_log WHERE user_id = '".$this->getUserID()."' AND link_id = '".$this->getLinkID()."' AND log_type = 'vote'" );
+			$this->db->setQuery( 'DELETE FROM #__mt_log WHERE user_id = ' . $this->db->quote($this->getUserID()) . ' AND link_id = ' . $this->db->quote($this->getLinkID()) . ' AND log_type = \'vote\'' );
 			if (!$this->db->query()) { return false; } 
 			else { return true; }
 		}
@@ -248,7 +251,7 @@ class mtLog {
 	function logVisit() {
 
 		if ( $this->user_id == 0 ) {
-			$this->db->setQuery( "SELECT log_date FROM #__mt_log WHERE link_id ='".$this->link_id."' AND log_ip = '".$this->ip."' AND log_type = 'visit'" );
+			$this->db->setQuery( "SELECT log_date FROM #__mt_log WHERE link_id ='".$this->link_id."' AND log_ip = " . $this->db->quote($this->ip) . " AND log_type = 'visit'" );
 		} else {
 			$this->db->setQuery( "SELECT log_date FROM #__mt_log WHERE link_id ='".$this->link_id."' AND user_id = '".$this->user_id."' AND log_type = 'visit'" );
 		}
@@ -260,7 +263,7 @@ class mtLog {
 			$this->db->setQuery( "INSERT INTO #__mt_log "
 				.	"( `log_ip` , `log_type`, `user_id` , `log_date` , `link_id` )"
 				.	"VALUES ( "
-				.	"'" . $this->getIP() . "',"
+				.	$this->db->quote($this->getIP()) . ', '
 				.	"'visit',"
 				.	"'" . $this->getUserID() . "',"
 				.	"'" . $this->now . "',"
@@ -280,7 +283,7 @@ class mtLog {
 		$this->db->setQuery( "INSERT INTO #__mt_log "
 			.	"( `log_ip` , `log_type`, `user_id` , `log_date` , `link_id` )"
 			.	"VALUES ( "
-			.	"'" . $this->getIP() . "',"
+			.	$this->db->quote($this->getIP()) . ', '
 			.	"'" . ( ($action == 1) ? 'addfav' : 'removefav' ) . "',"
 			.	"'" . $this->getUserID() . "',"
 			.	"'" . $this->now . "',"

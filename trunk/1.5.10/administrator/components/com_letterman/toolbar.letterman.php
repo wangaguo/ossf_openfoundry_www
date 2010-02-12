@@ -13,7 +13,6 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 *
 */
-
 // ensure this file is being included by a parent file
 defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
 global $mosConfig_lang, $mosConfig_absolute_path;

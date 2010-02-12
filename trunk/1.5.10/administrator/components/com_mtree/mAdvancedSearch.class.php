@@ -1,14 +1,15 @@
 <?php
 /**
-* Mosets Tree admin 
-*
-* @package Mosets Tree 2.0
-* @copyright (C) 2007-2008 Mosets Consulting
-* @url http://www.mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
+ * @version		$Id: mAdvancedSearch.class.php 660 2009-04-21 05:25:29Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+
+defined('_JEXEC') or die('Restricted access');
 
 class mAdvancedSearch {
 	
@@ -87,12 +88,16 @@ class mAdvancedSearch {
 			}
 			if( $published ) {
 				global $mtconf;
-				$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+				$jdate 		= JFactory::getDate();
+				$now 		= $jdate->toMySQL();
+				$database 	=& JFactory::getDBO();
+				$nullDate	= $database->getNullDate();
+
 				if( count($this->where) > 0 ) {
 					$sql .= "\nAND ";
 				}
-				$sql .= "(publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now')  AND "
-				 	. "(publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now') AND "
+				$sql .= "(publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now')  AND "
+				 	. "(publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now') AND "
 					. "link_published = '1'";
 			}
 			if( $approved ) {
@@ -127,18 +132,22 @@ class mAdvancedSearch {
 	function loadResultList( $limitstart=0, $limit=15) {
 		global $mtconf;
 		if( count($this->arrayLinkId) > 0 ) {
-			$this->_db->setQuery( "SELECT l.*, u.username, cl.cat_id, COUNT(r.rev_id) AS reviews, img.filename AS link_image FROM (#__mt_links AS l, #__mt_cl AS cl) "
+			$sql = "SELECT l.*, u.username, cl.cat_id, COUNT(r.rev_id) AS reviews, img.filename AS link_image FROM (#__mt_links AS l, #__mt_cl AS cl) "
 				.	"\nLEFT JOIN #__mt_reviews AS r ON r.link_id = l.link_id"
 				.	"\nLEFT JOIN #__mt_images AS img ON img.link_id = l.link_id AND img.ordering = 1"
 				.	"\nLEFT JOIN #__users AS u ON u.id = l.user_id "
 				.	"\nWHERE l.link_id IN (" . implode(",", $this->arrayLinkId) . ")"
 				.	"\nAND cl.main = '1'"
 				.	"\nAND cl.link_id = l.link_id"				
-				.	"\nGROUP BY l.link_id"
-				//. ( ($having <> '') ? "\nHAVING " . $having : '' )
-				.	"\n ORDER BY " . $mtconf->get('first_search_order1') . ' ' . $mtconf->get('first_search_order2') . ', ' . $mtconf->get('second_search_order1') . ' ' . $mtconf->get('second_search_order2')
-				.	"\nLIMIT $limitstart, $limit" );
-			// echo $this->_db->getQuery();
+				.	"\nGROUP BY l.link_id";
+			
+			if( $mtconf->get('min_votes_to_show_rating') > 0 && $mtconf->get('first_listing_order1') == 'link_rating' ) {
+				$sql .= "\n ORDER BY link_votes >= " . $mtconf->get('min_votes_to_show_rating') . ' DESC, ' . $mtconf->get('first_listing_order1') . ' ' . $mtconf->get('first_listing_order2') . ', ' . $mtconf->get('second_listing_order1') . ' ' . $mtconf->get('second_listing_order2') . ' ';
+			} else {
+				$sql .= "\n ORDER BY " . $mtconf->get('first_listing_order1') . ' ' . $mtconf->get('first_listing_order2') . ', ' . $mtconf->get('second_listing_order1') . ' ' . $mtconf->get('second_listing_order2') . ' ';
+			}
+			$sql .= "\nLIMIT $limitstart, $limit";
+			$this->_db->setQuery( $sql );
 			return $this->_db->loadObjectList();
 		} else {
 			return null;

@@ -3,10 +3,10 @@
     <name>Letterman</name>
     <creationDate>02.07.2006</creationDate>
     <author><![CDATA[S&ouml;ren Eberhardt]]></author>
-    <copyright><![CDATA[Copyright &copy; 2006 Shayne Bartlett]]></copyright>
-    <authorEmail>shayne.bartlett@thejfactory.com</authorEmail>
-    <authorUrl>http://www.thejfactory.com</authorUrl>
-    <version>1.2.4</version>
+    <copyright><![CDATA[Copyright &copy; 2006 S&ouml;ren Eberhardt]]></copyright>
+    <authorEmail>soeren@virtuemart.net</authorEmail>
+    <authorUrl>http://developer.joomla.org/sf/sfmain/do/viewProject/projects.letterman</authorUrl>
+    <version>1.2.3</version>
     <description>Create HTML newsletters to send to your website users.</description>
     <files><!-- Frontend Files! -->
         <filename>letterman.php</filename>
@@ -97,6 +97,8 @@
 		<filename>language/serbian_lat.messages.php</filename>
 		<filename>language/spanish2.messages.php</filename>
 		<filename>language/spanish.messages.php</filename>
+		<filename>language/traditional_chinese.messages.php</filename>
+		<filename>language/simplified_chinese.messages.php</filename>
 		<filename>includes/contentRenderer.class.php</filename>
 		<filename>includes/email_validation.php</filename>
 		<filename>includes/sef.php</filename>

@@ -11,6 +11,21 @@ function addContentTag(){
   //form.contentid.options[0].selected = true;
 }
 
+//2007/06/08 by ally
+
+function addkindTag(){
+  var form = document.adminForm;
+  var tempval=eval("document.adminForm.content_tag");
+  if(form.kindid.options[form.kindid.selectedIndex].value != 0) {
+    //alert(form.contentid.options[form.contentid.selectedIndex].value);
+    var text = '[CONTENT id="' + form.kindid.options[form.kindid.selectedIndex].value + '"]';
+    
+    insertAtCursor(form.nl_content, text);
+
+  }
+  //form.contentid.options[0].selected = true;
+}
+// END
 
 function insertAtCursor(myField, myValue) {
   //IE support

@@ -1,83 +1,57 @@
 <?php
 /**
-* Mosets Tree 
-*
-* @package Mosets Tree 2.00
-* @copyright (C) 2008 Mosets Consulting
-* @url http://www.mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
+ * @version		$Id: router.php 726 2009-06-12 10:47:51Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
+
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
 require_once(  dirname(__FILE__).DS.'init.php' );
 
 jimport( 'joomla.filter.filteroutput' );
 
-define("_MT_SEF_ADD_LINKID", 0);		// Setting this to 1 will add listing ID number as a prefix to the listing name in the URL. This is used in cases where a category has more than one listing with the same name.
-define("_MT_SEF_ADD_LINKID_SEP", "-");	// Seperator to separate Listing ID and Listing Name
-define("_MT_SEF_ADD_LINKID_ATTACH", 1);	// (1) Add Link ID as a suffix; (2)  Add Link ID as a prefix
-
-define("_MT_SEF_IMAGE", "image");
-define("_MT_SEF_GALLERY", "gallery");
-define("_MT_SEF_DETAILS", "details");
-define("_MT_SEF_REVIEW", "review");
-define("_MT_SEF_REPLYREVIEW", "replyreview");
-define("_MT_SEF_REPORTREVIEW", "reportreview");
-define("_MT_SEF_RATE", "rate");
-define("_MT_SEF_RECOMMEND", "recommend");
-define("_MT_SEF_CONTACT", "contact");
-define("_MT_SEF_REPORT", "report");
-define("_MT_SEF_CLAIM", "claim");
-define("_MT_SEF_VISIT", "visit");
-define("_MT_SEF_CATEGORY_PAGE", "page");
-define("_MT_SEF_DELETE", "delete");
-define("_MT_SEF_REVIEWS_PAGE","reviews");
-define("_MT_SEF_ADDLISTING","Add_Listing");
-define("_MT_SEF_ADDCATEGORY","Add_Category");
-define("_MT_SEF_MYPAGE","mypage");
-define("_MT_SEF_NEWLISTING","New_Listing");
-define("_MT_SEF_RECENTLYUPDATED","Recently_Updated");
-define("_MT_SEF_MOSTFAVOURED","Most_Favoured");
-define("_MT_SEF_FEATUREDLISTING","Featured_Listing");
-define("_MT_SEF_POPULARLISTING","Popular_listing");
-define("_MT_SEF_MOSTRATEDLISTING","Most_Rated");
-define("_MT_SEF_TOPRATEDLISTING","Top_Rated");
-define("_MT_SEF_MOSTREVIEWEDLISTING","Most_Reviewed");
-define("_MT_SEF_LISTALPHA","List_Alpha");
-define("_MT_SEF_OWNER", "Owner");
-define("_MT_SEF_FAVOURITES", "Favourites");
-define("_MT_SEF_REVIEWS", "Reviews");
-define("_MT_SEF_SEARCH", "Search");
-define("_MT_SEF_ADVSEARCH", "AdvSearch");
-define("_MT_SEF_ADVSEARCH2", "AdvSearchR");
-define("_MT_SEF_RSS", "rss");
-define("_MT_SEF_NEW", "new");
-define("_MT_SEF_UPDATE", "update");
-define('_MT_SEF_SPACE', '-');
-
-global $sef_replace, $listing_tasks;
+global $mtconf, $sef_replace, $listing_tasks, $listlisting_names;
 $sef_replace = array(
+	'%26' => '&', // &
 	'%3F' => '-3F', // ?
 	'%2F' => '-2F', // /
 	'%3C' => '-3C', // <
 	'%3E' => '-3E', // >
 	'%23' => '-23', // #
 	'%24' => '-24', // $
-	'%3A' => '-3A'  // :
-
+	'%3A' => '-3A',  // :
+	'%2E' => '-2E'  // .
 	);
+
 $listing_tasks = array(
 	// task			=>	SEF String
-	'viewgallery'	=>	_MT_SEF_GALLERY,
-	'writereview'	=>	_MT_SEF_REVIEW,
-	'recommend'		=>	_MT_SEF_RECOMMEND,
-	'contact'		=>	_MT_SEF_CONTACT,
-	'report'		=>	_MT_SEF_REPORT,
-	'claim'			=>	_MT_SEF_CLAIM,
-	'visit'			=>	_MT_SEF_VISIT,
-	'deletelisting'	=>	_MT_SEF_DELETE
+	'viewgallery'	=>	$mtconf->get('sef_gallery'),
+	'writereview'	=>	$mtconf->get('sef_review'),
+	'recommend'		=>	$mtconf->get('sef_recommend'),
+	'print'			=>	$mtconf->get('sef_print'),
+	'contact'		=>	$mtconf->get('sef_contact'),
+	'report'		=>	$mtconf->get('sef_report'),
+	'claim'			=>	$mtconf->get('sef_claim'),
+	'visit'			=>	$mtconf->get('sef_visit'),
+	'deletelisting'	=>	$mtconf->get('sef_delete'),
+	'editlisting'	=>	$mtconf->get('sef_editlisting')
 	);
-
+	
+$listlisting_names = array(
+	$mtconf->get('sef_featured')	=> 'featured',
+	$mtconf->get('sef_updated')		=> 'updated',
+	$mtconf->get('sef_favourite')	=> 'favourite',
+	$mtconf->get('sef_popular')		=> 'popular',
+	$mtconf->get('sef_mostrated')	=> 'mostrated',
+	$mtconf->get('sef_toprated')	=> 'toprated',
+	$mtconf->get('sef_mostreview')	=> 'mostreview',
+	$mtconf->get('sef_new')			=> 'new'
+	);
+	
 function MtreeBuildRoute(&$query) {
 	global $mtconf, $listing_tasks;
 	$segments = array();
@@ -89,15 +63,16 @@ function MtreeBuildRoute(&$query) {
 	if(!isset($query['task'])) {
 		return $segments;
 	}
+	
 	switch($query['task']) {
-		
+			
 		case 'listcats':
 			if(isset($query['cat_id'])) {
 				$segments = appendCat($query['cat_id']);
 				unset($query['cat_id']);
 				if( isset($query['start']) ) {
 					$page = getPage($query['start'],$mtconf->get('fe_num_of_links'));
-					$segments[] = _MT_SEF_CATEGORY_PAGE . $page;
+					$segments[] = $mtconf->get('sef_category_page') . $page;
 				}
 			}
 			break;
@@ -109,106 +84,66 @@ function MtreeBuildRoute(&$query) {
 			if( isset($query['start']) ) {
 				//	http://example.com/c/mtree/Computer/Games/Donkey_Kong/reviews23
 				$page = getPage($query['start'],$mtconf->get('fe_num_of_reviews'));
-				$segments = array_merge($segments,appendListing( $mtLink->link_name, $mtLink->link_id, false ));
-				$segments[] =  _MT_SEF_REVIEWS_PAGE . $page;
+				$segments = array_merge($segments,appendListing( $mtLink->link_name, $mtLink->link_id, $mtLink->alias, false ));
+				$segments[] =  $mtconf->get('sef_reviews_page') . $page;
 			} else {
-				$segments = array_merge($segments,appendListing( $mtLink->link_name, $mtLink->link_id, true ));
+				$segments = array_merge($segments,appendListing( $mtLink->link_name, $mtLink->link_id, $mtLink->alias, false ));
 			}
 			unset($query['link_id']);
 			break;
 			
 		case 'mypage':
-			$segments[] = _MT_SEF_MYPAGE;
+			$segments[] = $mtconf->get('sef_mypage');
 			if( isset($query['start']) ) {
 				$page = getPage($query['start'],$mtconf->get('fe_num_of_links'));
-				$segments[] = _MT_SEF_CATEGORY_PAGE . $page;
+				$segments[] = $mtconf->get('sef_category_page') . $page;
 			}
 			break;
-			
+		
 		case 'listfeatured':
-			$cat_id = getId( 'cat', $query );
-			$segments = appendCat( $cat_id );
-			$segments[] = _MT_SEF_FEATUREDLISTING;
-			if( isset($query['start']) ) {
-				$page = getPage($query['start'],$mtconf->get('fe_num_of_featured'));
-				$segments[] = _MT_SEF_CATEGORY_PAGE . $page;
-			}
-			break;
-
 		case 'listnew':
+		case 'listupdated':
+		case 'listfavourite':
+		case 'listpopular':
+		case 'listmostrated':
+		case 'listtoprated':
+		case 'listmostreview':
+			$type = strtoupper(substr($query['task'],4));
 			$cat_id = getId( 'cat', $query );
 			$segments = appendCat( $cat_id );
-			$segments[] = _MT_SEF_NEWLISTING;
+			$segments[] = $mtconf->get('sef_'.strtolower($type));
 			if( isset($query['start']) ) {
-				$page = getPage($query['start'],$mtconf->get('fe_num_of_newlisting'));
-				$segments[] = _MT_SEF_CATEGORY_PAGE . $page;
+				$page = getPage($query['start'],$mtconf->get('fe_num_of_'.strtolower($type)));
+				$segments[] = $mtconf->get('sef_category_page') . $page;
 			}
 			break;
-			
-		case 'listupdated':
-			$cat_id = getId( 'cat', $query );
-			$segments = appendCat( $cat_id );
-			$segments[] = _MT_SEF_RECENTLYUPDATED;
-			break;
 
-		case 'listfavourite':
-			$cat_id = getId( 'cat', $query );
-			$segments = appendCat( $cat_id );
-			$segments[] = _MT_SEF_MOSTFAVOURED;
-			break;
-
-		case 'listpopular':
-			$cat_id = getId( 'cat', $query );
-			$segments = appendCat( $cat_id );
-			$segments[] = _MT_SEF_POPULARLISTING;
-			break;
-
-		case 'listmostrated':
-			$cat_id = getId( 'cat', $query );
-			$segments = appendCat( $cat_id );
-			$segments[] = _MT_SEF_MOSTRATEDLISTING;
-			break;
-
-		case 'listtoprated':
-			$cat_id = getId( 'cat', $query );
-			$segments = appendCat( $cat_id );
-			$segments[] = _MT_SEF_TOPRATEDLISTING;
-			break;
-
-		case 'listmostreview':
-			$cat_id = getId( 'cat', $query );
-			$segments = appendCat( $cat_id );
-			$segments[] = _MT_SEF_MOSTREVIEWEDLISTING;
-			break;
-	
 		case 'advsearch':
-			$segments[] = _MT_SEF_ADVSEARCH;
+			$segments[] = $mtconf->get('sef_advsearch');
 			break;
 		
 		case 'advsearch2':
-			$segments[] = _MT_SEF_ADVSEARCH2;
+			$segments[] = $mtconf->get('sef_advsearch2');
 			$search_id = getId( 'search', $query );
 			$page = 1;
 			if( isset($query['start']) ) {
 				$page = getPage($query['start'],$mtconf->get('fe_num_of_searchresults'));
-				$segments[] = $page;
 				$segments[] = $search_id;
+				$segments[] = $page;
 			} else {
-				$segments[] = 1;
 				$segments[] = $search_id;
 			}
+			break;
 		
 		case 'listalpha':
 			$cat_id = getId( 'cat', $query );
 			$segments = appendCat( $cat_id );
-			$segments[] = _MT_SEF_LISTALPHA;
+			$segments[] = $mtconf->get('sef_listalpha');
 			$segments[] = urlencode($query['alpha']);
 			unset($query['alpha']);
 			if( isset($query['start']) ) {
 				$page = getPage($query['start'],$mtconf->get('fe_num_of_links'));
 				$segments[] = $page;
-			} else {
-				$segments[] = 1;
 			}
 			break;
 
@@ -216,42 +151,40 @@ function MtreeBuildRoute(&$query) {
 		case 'viewusersreview';
 		case 'viewusersfav';
 			$user_id = getId( 'user', $query );
-			$db->setQuery( "SELECT username FROM #__users WHERE id='".$user_id."' AND block='0'" );
+			$db->setQuery( "SELECT username FROM #__users WHERE id= " . $db->quote($user_id) . " AND block='0'" );
 			$username = $db->loadResult();
 			if(!empty($username)) {
 				switch($query['task']) {
 					default:
-						$segments[] = _MT_SEF_OWNER;
+						$segments[] = $mtconf->get('sef_owner');
 						break;
 					case 'viewusersreview':
-						$segments[] = _MT_SEF_REVIEWS;
+						$segments[] = $mtconf->get('sef_reviews');
 						break;
 					case 'viewusersfav':
-						$segments[] = _MT_SEF_FAVOURITES;
+						$segments[] = $mtconf->get('sef_favourites');
 						break;
 				}
-				$segments[] = $username;
+				$segments[] = murlencode($username);
 			}
 			if( isset($query['start']) ) {
 				$page = getPage($query['start'],$mtconf->get('fe_num_of_links'));
 				$segments[] = $page;
-			} else {
-				$segments[] = 1;
 			}
 			break;
 		
 		case 'viewimage':
-			$segments[] = _MT_SEF_IMAGE;
+			$segments[] = $mtconf->get('sef_image');
 			$segments[] = getId( 'img', $query );
 			break;
 
 		case 'replyreview':
-			$segments[] = _MT_SEF_REPLYREVIEW;
+			$segments[] = $mtconf->get('sef_replyreview');
 			$segments[] = getId( 'rev', $query );
 			break;
 
 		case 'reportreview':
-			$segments[] = _MT_SEF_REPORTREVIEW;
+			$segments[] = $mtconf->get('sef_reportreview');
 			$segments[] = getId( 'rev', $query );
 			break;
 		
@@ -274,68 +207,122 @@ function MtreeBuildRoute(&$query) {
 				$segments = appendCat( getId( 'cat', $query ) );
 			}
 			if($query['task'] == 'addlisting') {
-				$segments[] = _MT_SEF_ADDLISTING;
+				$segments[] = $mtconf->get('sef_addlisting');
 			} else {
-				$segments[] = _MT_SEF_ADDCATEGORY;
+				$segments[] = $mtconf->get('sef_addcategory');
 			}
+			break;
+			
+		case 'searchby':
+			$cf_id = getId( 'cf', $query );
+			$cat_id = getId( 'cat', $query );
+			$segments = appendCat( $cat_id );
+			$segments[] = $mtconf->get('sef_searchby');
+			$segments[] = appendTag($cf_id);
+			$segments[] = $query['value'];
+			if( isset($query['start']) ) {
+				$page = getPage($query['start'],$mtconf->get('fe_num_of_searchresults'));
+				$segments[] = $page;
+			}
+			unset($query['value']);
 			break;
 			
 		case 'search':
 			$cat_id = getId( 'cat', $query );
 			$segments = appendCat( $cat_id );
-			$segments[] = _MT_SEF_SEARCH;
-			if( isset($query['start']) ) {
-				$page = getPage($query['start'],$mtconf->get('fe_num_of_searchresults'));
-				$segments[] = $page;
-			} else {
-				$segments[] = 1;
+			$segments[] = $mtconf->get('sef_search');
+			
+			$badchars = array('#','>','<','\\'); 
+			$searchword = urldecode(trim(str_replace($badchars, '', $query['searchword'])));
+
+			// limit searchword to 20 characters
+			if ( JString::strlen( $searchword ) > 20 ) {
+				$searchword	= JString::substr( $searchword, 0, 19 );
 			}
-			$segments[] = $query['searchword'];
+
+			if( 
+				strpos($searchword,'?') !== false 
+				OR
+				strpos($searchword,'%') !== false
+				OR
+				strpos($searchword,'/') !== false
+			) {
+				$searchword = urlencode($searchword);
+			}
+			$searchword = urlencode(($searchword));
+			
+			if( isset($searchword) && !empty($searchword) ) {
+				$segments[] = $searchword;
+			}
+			
+			// Retrieve configuration options - needed to know which SEF URLs are used
+			$app =& JFactory::getApplication();
+			// Allows for searching on strings that include ".xxx" that appear to Apache as an extension
+			if ( $app->getCfg('sef') && $app->getCfg('sef_rewrite') && !$app->getCfg('sef_suffix') && strpos($searchword,'.') !== false
+			) {
+				$segments[] .= '/';
+			}
+			
+			unset($query['searchword']);
 			break;
 		
 		case 'rss':
 			$cat_id = getId( 'cat', $query );
 			$segments = appendCat( $cat_id );
-			$segments[] = _MT_SEF_RSS;
+			$segments[] = $mtconf->get('sef_rss');
 			if( isset($query['type']) && $query['type'] == 'new') {
-				$segments[] = _MT_SEF_NEW;
+				$segments[] = $mtconf->get('sef_rss_new');
 			} else {
-				$segments[] = _MT_SEF_UPDATE;
+				$segments[] = $mtconf->get('sef_rss_updated');
 			}
 			unset($query['type']);
 			break;
 	}
-	unset($query['start']);
+
+	if( $query['task'] != 'search' ) {
+		unset($query['start']);
+	}
 	unset($query['limit']);
 	unset($query['task']);
 	return $segments;
 }
 
 function MtreeParseRoute($segments) {
-	global $mtconf, $listing_tasks;
+	global $mtconf, $listing_tasks, $listlisting_names;
 	$vars = array();
 	$db =& JFactory::getDBO();
 
-	switch(end($segments)) {
-		
-		case _MT_SEF_DETAILS:
-		case eregi( _MT_SEF_REVIEWS_PAGE . "[0-9]+",end($segments)) == true:
-			// http://example.com/directory/Arts/Leonardo-da-Vinci/details
-			$isReviewsPage = eregi(_MT_SEF_REVIEWS_PAGE . '[0-9]+',end($segments));
+	$end_segment = preg_replace('/:/', '-', end($segments), 1);
+
+	for($i=0;$i<count($segments);$i++) {
+		$segments[$i] = preg_replace('/:/', '-', $segments[$i], 1);
+	}
+	
+	// Fix for listalpha=0. eg: http://<site>/directory/list-alpha/0.html
+	if($end_segment == '0') {
+		$end_segment = $mtconf->get('sef_listalpha');
+	}
+	
+	switch($end_segment) {
+			
+		case $mtconf->get('sef_details'):
+		case eregi( $mtconf->get('sef_reviews_page') . "[0-9]+",$end_segment) == true:
+			// http://example.com/directory/arts/leonardo-da-vinci/details
+			$isReviewsPage = eregi($mtconf->get('sef_reviews_page') . '[0-9]+',$end_segment);
 			$path_names = array_slice( $segments, 0, -1 );
 			$link_id = findLinkID( $path_names );
 			$vars['task'] = 'viewlink';
 			$vars['link_id'] = $link_id;
 			if ( $isReviewsPage ) {
 				// Get the page numner
-				$pagenumber = substr( end($segments), strlen(_MT_SEF_REVIEWS_PAGE) );
+				$pagenumber = substr( $end_segment, strlen($mtconf->get('sef_reviews_page')) );
 				$vars['limit'] = $mtconf->get('fe_num_of_reviews');
 				$vars['limitstart'] = $mtconf->get('fe_num_of_reviews') * ($pagenumber -1);
 			}
 			break;
 
-		case _MT_SEF_MYPAGE:
-		case count($segments) > 1 && eregi( _MT_SEF_MYPAGE,$segments[count($segments)-2]) == true:
+		case $mtconf->get('sef_mypage'):
+		case count($segments) > 1 && $mtconf->get('sef_mypage') == $segments[count($segments)-2]:
 			$vars['task'] = 'mypage';
 			$pagenumber = getPageNumber($segments);
 			if ( $pagenumber > 0 ) {
@@ -344,141 +331,180 @@ function MtreeParseRoute($segments) {
 			}
 			break;
 			
-		case _MT_SEF_FEATUREDLISTING:
-		case count($segments) > 1 && eregi( _MT_SEF_FEATUREDLISTING,$segments[count($segments)-2]) == true:
-			$vars['task'] = 'listfeatured';
+		// List listing page
+		case count($segments) == 1 && array_key_exists($end_segment,$listlisting_names):
+
+		case isset($segments[count($segments)-2]) 
+			&& 
+			(array_key_exists($segments[count($segments)-2],$listlisting_names) || array_key_exists($segments[count($segments)-1],$listlisting_names)) 
+			&& 
+			$segments[count($segments)-2] != $mtconf->get('sef_rss'):
+
+			$last_segment = $end_segment;
+			if( array_key_exists($last_segment,$listlisting_names) ) {
+				$type = $listlisting_names[$last_segment];
+				$offset = -1;
+			} else {
+				$type = $listlisting_names[$segments[count($segments)-2]];
+				$offset = -2;
+			}
+			$vars['task'] = 'list'.$type;
 			$page = getPageNumber($segments);
-			$cat_id = findCatId(array_slice($segments,0,-1));
+			$cat_id = findCatId(array_slice($segments,0,$offset));
 			$vars['cat_id'] = $cat_id;
 			if($page > 0) {
-				$vars['limit'] = $mtconf->get('fe_num_of_featured');
-				$vars['limitstart'] = $mtconf->get('fe_num_of_featured') * ($page -1);
+				$vars['limit'] = $mtconf->get('fe_num_of_'.$type);
+				$vars['limitstart'] = $mtconf->get('fe_num_of_'.$type) * ($page -1);
 			}
 			break;
 
-		case _MT_SEF_NEWLISTING:
-		case count($segments) > 1 && eregi( _MT_SEF_NEWLISTING,$segments[count($segments)-2]) == true:
-			$vars['task'] = 'listnew';
-			$page = getPageNumber($segments);
-			$cat_id = findCatId(array_slice($segments,0,-1));
-			$vars['cat_id'] = $cat_id;
-			if($page > 0) {
-				$vars['limit'] = $mtconf->get('fe_num_of_newlisting');
-				$vars['limitstart'] = $mtconf->get('fe_num_of_newlisting') * ($page -1);
-			}
-			break;
-
-		case _MT_SEF_RECENTLYUPDATED:
-			$vars['task'] = 'listupdated';
-			$cat_id = findCatId(array_slice($segments,0,-1));
-			$vars['cat_id'] = $cat_id;
-			break;
-
-		case _MT_SEF_MOSTFAVOURED:
-			$vars['task'] = 'listfavourite';
-			$cat_id = findCatId(array_slice($segments,0,-1));
-			$vars['cat_id'] = $cat_id;
-			break;
-						
-		case _MT_SEF_POPULARLISTING:
-			$vars['task'] = 'listpopular';
-			$cat_id = findCatId(array_slice($segments,0,-1));
-			$vars['cat_id'] = $cat_id;
-			break;
-
-		case _MT_SEF_MOSTRATEDLISTING:
-			$vars['task'] = 'listmostrated';
-			$cat_id = findCatId(array_slice($segments,0,-1));
-			$vars['cat_id'] = $cat_id;
-			break;
-
-		case _MT_SEF_TOPRATEDLISTING:
-			$vars['task'] = 'listtoprated';
-			$cat_id = findCatId(array_slice($segments,0,-1));
-			$vars['cat_id'] = $cat_id;
-			break;
-
-		case _MT_SEF_MOSTREVIEWEDLISTING:
-			$vars['task'] = 'listmostreview';
-			$cat_id = findCatId(array_slice($segments,0,-1));
-			$vars['cat_id'] = $cat_id;
-			break;
-
-		case _MT_SEF_ADVSEARCH:
+		case $mtconf->get('sef_advsearch'):
 			$vars['task'] = 'advsearch';
 			break;
 		
-		case count($segments) > 2 && eregi( _MT_SEF_ADVSEARCH2,$segments[count($segments)-3]) == true:
-			$search_id = end($segments);
-			$page = $segments[count($segments)-2];
+		case count($segments) == 3 && $mtconf->get('sef_advsearch2') == $segments[count($segments)-3]:
+		case count($segments) == 2 && $mtconf->get('sef_advsearch2') == $segments[count($segments)-2]:
+			if( count($segments) == 2 ) {
+				$page = 1;
+				$vars['limitstart'] = 0;
+				$search_id = $end_segment;
+			} else {
+				$page = $end_segment;
+				$vars['limitstart'] = ($mtconf->get('fe_num_of_searchresults') * ($page -1));
+				$search_id = $segments[count($segments)-2];
+			}
 			$vars['task'] = 'advsearch2';
 			$vars['search_id'] = $search_id;
 			$vars['limit'] = $mtconf->get('fe_num_of_searchresults');
-			$vars['limitstart'] = ($mtconf->get('fe_num_of_searchresults') * ($page -1));
 			break;
 		
-		case count($segments) > 2 && eregi( _MT_SEF_LISTALPHA,$segments[count($segments)-3]) == true:
+		case (count($segments) > 3 && $mtconf->get('sef_searchby') == $segments[count($segments)-4]):
+		case (count($segments) > 2 && $mtconf->get('sef_searchby') == $segments[count($segments)-3]):
+			if( $mtconf->get('sef_searchby') == $segments[count($segments)-3] ) {
+				$page = 1;
+				$vars['cf_id'] = findCfId($segments[count($segments)-2]);
+				$vars['value'] = $end_segment;
+				$vars['cat_id'] = findCatId(array_slice($segments,0,-3));
+			} else {
+				$page = $end_segment;
+				$vars['cf_id'] = findCfId($segments[count($segments)-3]);
+				$vars['value'] = $segments[count($segments)-2];
+				$vars['cat_id'] = findCatId(array_slice($segments,0,-4));
+			}
+			$vars['task'] = 'searchby';
+			$vars['limit'] = $mtconf->get('fe_num_of_searchresults');
+			$vars['limitstart'] = ($mtconf->get('fe_num_of_searchresults') * ($page -1));
+			break;
+					
+		case count($segments) > 2 && $mtconf->get('sef_search') == $segments[count($segments)-3]:
+		case count($segments) > 1 && $mtconf->get('sef_search') == $segments[count($segments)-2]:
+			if( $mtconf->get('sef_search') == $segments[count($segments)-2] ) {
+				$page = 1;
+				$cat_id = findCatId(array_slice($segments,0,-2));
+				$vars['searchword'] = $end_segment;
+			} else {
+				$page = $end_segment;
+				$cat_id = findCatId(array_slice($segments,0,-3));
+				$vars['searchword'] = $segments[count($segments)-2];
+			}
+			
+			$vars['task'] = 'search';
+			$vars['limit'] = $mtconf->get('fe_num_of_searchresults');
+			$vars['limitstart'] = ($mtconf->get('fe_num_of_searchresults') * ($page -1));
+			$vars['cat_id'] = $cat_id;
+			break;
+		
+		// No search string. eg: http://example.com/directory/search.html
+		case count($segments) == 1 && $mtconf->get('sef_search') == $segments[count($segments)-1]:
+			$vars['searchword'] = '';
+			$vars['task'] = 'search';
+			$vars['limit'] = $mtconf->get('fe_num_of_searchresults');
+			$vars['limitstart'] = 0;
+			$vars['cat_id'] = 0;
+			break;
+		
+		case count($segments) > 1 && $mtconf->get('sef_listalpha') == $segments[count($segments)-2]:
+		case count($segments) > 2 && $mtconf->get('sef_listalpha') == $segments[count($segments)-3]:
+			if( $mtconf->get('sef_listalpha') == $segments[count($segments)-2] ) {
+				$vars['cat_id'] = findCatId(array_slice($segments,0,-2));
+				$vars['alpha'] = end($segments);
+				$page = 1;
+			} else {
+				$vars['cat_id'] = findCatId(array_slice($segments,0,-3));
+				$vars['alpha'] = $segments[count($segments)-2];
+				$page = $segments[count($segments)-1];
+			}
 			$vars['task'] = 'listalpha';
-			$vars['cat_id'] = findCatId(array_slice($segments,0,-3));
-			$vars['alpha'] = $segments[count($segments)-2];
-			$page = $segments[count($segments)-1];
 			if($page > 0) {
 				$vars['limit'] = $mtconf->get('fe_num_of_featured');
 				$vars['limitstart'] = $mtconf->get('fe_num_of_featured') * ($page -1);
 			}
 			break;
 
-		case count($segments) > 2 && in_array($segments[count($segments)-3],array(_MT_SEF_OWNER,_MT_SEF_REVIEWS,_MT_SEF_FAVOURITES)) == true:
-			switch($segments[count($segments)-3]) {
-				case _MT_SEF_OWNER:
+		case count($segments) == 3 && in_array($segments[count($segments)-3],array($mtconf->get('sef_owner'),$mtconf->get('sef_reviews'),$mtconf->get('sef_favourites'))) == true:
+		case count($segments) == 2 && in_array($segments[count($segments)-2],array($mtconf->get('sef_owner'),$mtconf->get('sef_reviews'),$mtconf->get('sef_favourites'))) == true:
+			if( count($segments) == 2 ) {
+				$task = $segments[count($segments)-2];
+				$owner_username = $segments[ (count($segments)-1) ];
+			} else {
+				$task = $segments[count($segments)-3];
+				$owner_username = $segments[ (count($segments)-2) ];
+			}
+			switch($task) {
+				case $mtconf->get('sef_owner'):
 					$vars['task'] = 'viewowner';
 					break;
-				case _MT_SEF_REVIEWS:
+				case $mtconf->get('sef_reviews'):
 					$vars['task'] = 'viewusersreview';
 					break;
-				case _MT_SEF_FAVOURITES:
+				case $mtconf->get('sef_favourites'):
 					$vars['task'] = 'viewusersfav';
 					break;
 			}
-			$owner_username = $segments[ (count($segments)-2) ];
 			$owner_username = murldecode($owner_username);
 			
-			$db->setQuery( "SELECT id FROM #__users WHERE username='".$owner_username."' LIMIT 1" );
+			$db->setQuery( "SELECT id FROM #__users WHERE username = " . $db->quote($owner_username) . " LIMIT 1" );
 			$vars['user_id'] = $db->loadResult();
 			$page = $segments[count($segments)-1];
+			if( !is_numeric($page) ) $page = 1;
 			if($page > 0) {
 				$vars['limit'] = $mtconf->get('fe_num_of_links');
 				$vars['limitstart'] = $mtconf->get('fe_num_of_links') * ($page -1);
 			}
 			break;
 		
-		case count($segments) > 1 && eregi( _MT_SEF_IMAGE,$segments[count($segments)-2]) == true:
+		case count($segments) == 2 && $mtconf->get('sef_editlisting') == $segments[count($segments)-2] && is_numeric($segments[count($segments)-1]):
+			$vars['task'] = 'editlisting';
+			$vars['link_id'] = $end_segment;
+			break;
+		
+		case count($segments) == 2 && $mtconf->get('sef_image') == $segments[count($segments)-2] && is_numeric($segments[count($segments)-1]):
 			$vars['task'] = 'viewimage';
-			$vars['img_id'] = end($segments);
+			$vars['img_id'] = $end_segment;
 			break;
 			
-		case count($segments) > 1 && eregi( _MT_SEF_REPLYREVIEW,$segments[count($segments)-2]) == true:
+		case count($segments) == 2 && $mtconf->get('sef_replyreview') == $segments[count($segments)-2]:
 			$vars['task'] = 'replyreview';
-			$vars['rev_id'] = end($segments);
+			$vars['rev_id'] = $end_segment;
 			break;
 	
-		case count($segments) > 1 && eregi( _MT_SEF_REPORTREVIEW,$segments[count($segments)-2]) == true:
+		case count($segments) == 2 && $mtconf->get('sef_reportreview') == $segments[count($segments)-2]:
 			$vars['task'] = 'reportreview';
-			$vars['rev_id'] = end($segments);
+			$vars['rev_id'] = $end_segment;
 			break;
 		
 		// Listing's task - http://example.com/directory/Business/Mosets/listing_task
-		case in_array(end($segments),$listing_tasks):
+		case in_array($end_segment,$listing_tasks):
 			$path_names = array_slice( $segments, 0, -1 );
 			$link_id = findLinkID( $path_names );
-			$vars['task'] = array_search(end($segments),$listing_tasks);
+			$vars['task'] = array_search($end_segment,$listing_tasks);
 			$vars['link_id'] = $link_id;
 
 			break;
 		
-		case _MT_SEF_ADDLISTING:
-		case _MT_SEF_ADDCATEGORY:
-			if(end($segments) == _MT_SEF_ADDLISTING) {
+		case $mtconf->get('sef_addlisting'):
+		case $mtconf->get('sef_addcategory'):
+			if($end_segment == $mtconf->get('sef_addlisting')) {
 				$vars['task'] = 'addlisting';
 			} else {
 				$vars['task'] = 'addcategory';
@@ -487,9 +513,10 @@ function MtreeParseRoute($segments) {
 			$vars['cat_id'] = $cat_id;
 			break;
 			
-		case count($segments) > 1 && eregi( _MT_SEF_RSS,$segments[count($segments)-2]) == true:
+		case count($segments) > 1 && $mtconf->get('sef_rss') == $segments[count($segments)-2]:
 			$vars['task'] = 'rss';
-			if(end($segments)=='new') {
+			$vars['cat_id'] = findCatId(array_slice($segments,0,-2));
+			if($end_segment=='new') {
 				$vars['type'] = 'new';
 			} else {
 				$vars['type'] = 'updated';
@@ -497,20 +524,39 @@ function MtreeParseRoute($segments) {
 			break;
 	
 		default:
-			$pagepattern = _MT_SEF_CATEGORY_PAGE . "[0-9]+";
-			if( eregi($pagepattern,end($segments)) ) {
+		
+			// Find as category
+			$pagepattern = $mtconf->get('sef_category_page') . "[0-9]+";
+			if( eregi($pagepattern,$end_segment) ) {
 				$cat_segments = $segments;
 				array_pop($cat_segments);
 				$cat_id = findCatId($cat_segments);
 			} else {
 				$cat_id = findCatId($segments);
 			}
-			$vars['cat_id'] = $cat_id;
+			if( !empty($cat_id) ) {
+				$vars['cat_id'] = $cat_id;
+			}
 			$vars['task'] = 'listcats';
 			$page = getPageNumber($segments);
 			if($page > 0) {
 				$vars['limit'] = $mtconf->get('fe_num_of_links');
 				$vars['limitstart'] = $mtconf->get('fe_num_of_links') * ($page -1);
+			}
+			
+			// If no category is found, find as a listing
+			if( empty($cat_id) )
+			{
+				$isReviewsPage = eregi($mtconf->get('sef_reviews_page') . '[0-9]+',$end_segment);
+				$link_id = findLinkID( $segments );
+				$vars['task'] = 'viewlink';
+				$vars['link_id'] = $link_id;
+				if ( $isReviewsPage ) {
+					// Get the page numner
+					$pagenumber = substr( $end_segment, strlen($mtconf->get('sef_reviews_page')) );
+					$vars['limit'] = $mtconf->get('fe_num_of_reviews');
+					$vars['limitstart'] = $mtconf->get('fe_num_of_reviews') * ($pagenumber -1);
+				}
 			}
 			break;
 	}
@@ -518,7 +564,13 @@ function MtreeParseRoute($segments) {
 	return $vars;
 }
 
-function appendCat( $cat_id ) {
+function appendCat($cat_id) {
+	$cache =& JFactory::getCache('com_mtree');
+	return $cache->call('appendCat_cached', $cat_id);
+}
+
+function appendCat_cached( $cat_id )
+{
 	global $mtconf;
 	
 	$segments = array();
@@ -533,35 +585,34 @@ function appendCat( $cat_id ) {
 	
 	if( !empty($pathway_ids) ) {
 		foreach( $pathway_ids AS $id ) {
-			$alias = murlencode( $pathWay->getCatName( $id ) );
-			$segments[] = $alias;
+			$segments[] = $pathWay->getCatAlias( $id );
 		}
 	}
 	
 	// If current category is not root, append to sefstring
-	$cat_name = $pathWay->getCatName($cat_id);
-	if ( $cat_id > 0 && !empty($cat_name) ) {
-		$alias = murlencode( $cat_name );
-		$segments[] = $alias;
+	$cat_alias = $pathWay->getCatAlias($cat_id);
+	if ( $cat_id > 0 && !empty($cat_alias) ) {
+		$segments[] = $cat_alias;
 	}
 	return $segments;
 }
 
-function appendListing( $link_name, $link_id, $add_details=false ) {
+function appendListing( $link_name, $link_id, $alias='', $add_details=false ) {
+	global $mtconf;
 	$segments = array();
 	
-	if( _MT_SEF_ADD_LINKID ) {
-		if( _MT_SEF_ADD_LINKID_ATTACH == 1 ) {
-			$segments[] = murlencode( $link_name ) . _MT_SEF_ADD_LINKID_SEP . $link_id;
-		} else {
-			$segments[] = $link_id . _MT_SEF_ADD_LINKID_SEP . murlencode( $link_name );
-		}
-	} else {
-		$segments[] = murlencode( $link_name );
+	switch( $mtconf->get('sef_link_slug_type') )
+	{
+		case 1:
+			$segments[] = $alias;
+			break;
+		case 2:
+			$segments[] = $link_id;
+			break;
 	}
 
 	if( $add_details ) {
-		$segments[] = _MT_SEF_DETAILS;
+		$segments[] = $mtconf->get('sef_details');
 	}
 
 	return $segments;
@@ -572,6 +623,8 @@ function appendListing( $link_name, $link_id, $add_details=false ) {
 * @param array Category name retrieved from SEF Advance URL. 
 */
 function findCatID( $cat_names ) {
+	global $mtconf;
+	
 	$db =& JFactory::getDBO();
 
 	if ( count($cat_names) == 0 ) {
@@ -583,45 +636,86 @@ function findCatID( $cat_names ) {
 	}
 
 	// (1) 
-	// First Attempt will try to search by category name. 
+	// First Attempt will try to search by category's alias. 
 	// If it returns one result, then this is most probably the correct category
-	$db->setQuery( "SELECT cat_id FROM #__mt_cats WHERE cat_published='1' AND cat_approved='1' && cat_name ='" . $db->getEscaped(murldecode($cat_names[ (count($cat_names)-1) ])) . "' " );
-	$cat_ids = $db->loadResultArray();
+	$db->setQuery( "SELECT cat_id, cat_parent, alias FROM #__mt_cats WHERE cat_published='1' AND cat_approved='1' && alias = " . $db->quote($cat_names[ (count($cat_names)-1) ]) );
+	$cat_ids = $db->loadObjectList();
+	if ( count($cat_ids) == 1 && $cat_ids[0]->cat_id > 0 ) {
 
-	if ( count($cat_ids) == 1 && $cat_ids[0] > 0 ) {
-
-		return $cat_ids[0];
+		return $cat_ids[0]->cat_id;
 	
 	} else {
 
 	// (2)
-	// Second attempt will search the category ID by looking from top level to bottom
-		$cat_ids = array();
-
-		for( $i=0; $i<count($cat_names); $i++ ) {
-			$cat_names[$i] = $cat_names[$i];
-
-			$sql = "SELECT cat_id FROM #__mt_cats "
-				.	"\n WHERE cat_published='1' AND cat_approved='1' && cat_name ='" . $db->getEscaped(murldecode($cat_names[$i])) . "' ";
-
-			if ( $i > 0 ) {
-				$sql .= "&& cat_parent='".$cat_ids[$i-1]."' ";
-			} else {
-				$sql .= "&& cat_parent='0' ";
+	// Second attempt will load each matches above for their pathway cat_ids
+	
+		if(!class_exists('mtPathWay')) {
+			require_once( $mtconf->getjconf('absolute_path').'/administrator/components/com_mtree/admin.mtree.class.php');
+		}
+	
+		$pathway_matches = array();
+		$i = 0;
+		
+		foreach( $cat_ids AS $cat_id )
+		{
+			$pathWay = new mtPathWay( $cat_id->cat_id );
+			$pathway_ids = $pathWay->getPathWay( $cat_id->cat_id );
+			
+			// Only matches the category that has the same number of level
+			if( count($cat_names)-1 == count($pathway_ids) )
+			{
+				$pathway_matches[$i]->pathway_ids = $pathway_ids;
+				$pathway_matches[$i]->cat = $cat_id;
+				$i++;
+				
 			}
-
-			$db->setQuery( $sql );
-			$cat_ids[$i] = $db->loadResult();
-
 		}
 		
-		return end($cat_ids);
+		// There is only one match, return the result
+		if( count($pathway_matches) == 1 ) {
 
+			return $pathway_matches[0]->cat->cat_id;
+			
+		} else {
+		// There is more than one result, we have to do another round of check based on their aliases
+		// There are at least 2 matches and all of them have the same number of levels
+			
+			// First, get all the alias of all matching pathways.
+			$select_cat_ids = array();
+			foreach($pathway_matches AS $pathway_match) {
+				$select_cat_ids = array_merge($select_cat_ids,$pathway_match->pathway_ids);
+			}
+			if( !empty($select_cat_ids) )
+			{
+				$db->setQuery( 'SELECT cat_id, alias FROM #__mt_cats WHERE cat_id IN ('.implode(', ',$select_cat_ids).') LIMIT ' . count($select_cat_ids) );
+				$cat_aliases = $db->loadObjectList('cat_id');
+
+				// Now for each pathway matches, look through their aliases and look for matches against the SEF URLs
+				foreach($pathway_matches AS $pathway_match) {
+					$matched = true;
+					for( $i=count($pathway_match->pathway_ids)-1; $i>=0; $i-- )
+					{
+						$cat_id = $pathway_match->pathway_ids[$i];
+						if( $cat_aliases[$cat_id]->alias == $cat_names[$i]) {
+							$matched = true;
+						} else {
+							$matched = false;
+							continue 2;
+						}
+					}
+					if( $matched ) {
+						return $pathway_match->cat->cat_id;
+					}
+				}				
+			}
+		}
 	}
 
 }
 
 function findLinkID( $path_names ) {
+	global $mtconf;
+	
 	$db =& JFactory::getDBO();
 
 	$path_names[count($path_names)-1] = preg_replace('/:/', '-', $path_names[count($path_names)-1], 1);
@@ -632,28 +726,19 @@ function findLinkID( $path_names ) {
 	
 	$link_name = $path_names[ (count($path_names)-1) ];
 	$link_name = urldecode( $link_name );
-
-	if( _MT_SEF_ADD_LINKID ) {
-		if( _MT_SEF_ADD_LINKID_ATTACH == 1 ) {
-			// suffix 
-
-			$link_ids[0] = substr( $link_name, (strrpos( $link_name, _MT_SEF_ADD_LINKID_SEP ) + strlen(_MT_SEF_ADD_LINKID_SEP)), ( strlen($link_name)  - strrpos( $link_name, _MT_SEF_ADD_LINKID_SEP ) ) );
-			
-		} else {
-			// prefix
-			
-			$link_ids[0] = substr( $link_name, 0, strpos( $link_name, _MT_SEF_ADD_LINKID_SEP ) );
-
-		}
-		
-		if( is_numeric($link_ids[0]) ) {
-			return $link_ids[0];
-		}
-
+	$link_ids = array();
+	
+	switch( $mtconf->get('sef_link_slug_type') )
+	{			
+		case 1:
+			$db->setQuery( 'SELECT link_id FROM #__mt_links WHERE alias = ' . $db->quote($link_name) );
+			$link_ids = $db->loadResultArray();
+			break;
+		case 2:
+			return intval( $link_name );
+			break;
 	}
-	$link_name = murldecode( $path_names[ (count($path_names)-1) ]);
-	$db->setQuery( "SELECT link_id FROM #__mt_links WHERE link_published=1 AND link_approved=1 AND link_name ='" . $db->getEscaped($link_name) . "' " );
-	$link_ids = $db->loadResultArray();
+	
 	if ( count($link_ids) == 1 && $link_ids[0] > 0 ) {
 
 		return $link_ids[0];
@@ -665,36 +750,16 @@ function findLinkID( $path_names ) {
 		
 		$cat_id = findCatID( array_slice($path_names, 0, -1) );
 		
-		$db->setQuery( "SELECT l.link_id FROM #__mt_links AS l, #__mt_cl AS cl WHERE link_published='1' AND link_approved='1' AND cl.cat_id = '".$cat_id."' AND link_name ='" . $db->getEscaped($link_name) . "' AND l.link_id = cl.link_id LIMIT 1" );
-		
-		return $db->loadResult();
-
+		if( $mtconf->get('sef_link_slug_type') == 1 )
+		{
+			$db->setQuery( "SELECT l.link_id FROM #__mt_links AS l, #__mt_cl AS cl "
+				. " WHERE link_published='1' AND link_approved='1' AND cl.cat_id = '".$cat_id."'"
+				. " AND l.alias = " . $db->quote($link_name) . " AND l.link_id = cl.link_id LIMIT 1" );
+			return $db->loadResult();
+		} else {
+			return null;
+		}
 	}
-}
-
-function murlencode($string) {
-	global $sef_replace;
-	$string = urlencode($string);
-	$string = eregi_replace(_MT_SEF_SPACE, "%252D", $string);
-	$string = eregi_replace('\+', _MT_SEF_SPACE, $string);
-	foreach ($sef_replace as $key => $value) {
-		$string = eregi_replace($key, $value, $string);
-	}
-	return $string;
-}
-
-function murldecode($string) {
-	global $sef_replace;
-	foreach ($sef_replace as $key => $value) {
-		$string = str_replace($value, urldecode($key), $string);
-	}
-	$string = eregi_replace('%', "%25", $string);
-	$string = eregi_replace(_MT_SEF_SPACE, "%20", $string);
-	$string = eregi_replace('\+', "%2B", $string);
-	$string = eregi_replace('&quot;', "%22", $string);
-	$string = urldecode($string);
-	$string = eregi_replace("%2D", "-", $string);
-	return $string;
 }
 
 function getPage($start,$limit) {
@@ -708,11 +773,13 @@ function getPage($start,$limit) {
 * @return int Page number
 */
 function getPageNumber( $segments ) {
-	$pagepattern = _MT_SEF_CATEGORY_PAGE . "[0-9]+";
+	global $mtconf;
+	
+	$pagepattern = $mtconf->get('sef_category_page') . "[0-9]+";
 	$pagenumber = 0;
 	if ( eregi($pagepattern,end($segments)) ) {
 		// Get the page number
-		$pagenumber = substr( end($segments), strlen(_MT_SEF_CATEGORY_PAGE));
+		$pagenumber = substr( end($segments), strlen($mtconf->get('sef_category_page')));
 	}
 	return $pagenumber;
 }
@@ -730,7 +797,77 @@ function getId( $type, &$query ) {
 * Return value from appendCat + appendListing
 */
 function appendCatListing( $mtLink, $add_extension=true ) {
-	return array_merge( appendCat( $mtLink->cat_id ), appendListing( $mtLink->link_name, $mtLink->link_id, false ) );
+	return array_merge( appendCat( $mtLink->cat_id ), appendListing( $mtLink->link_name, $mtLink->link_id, $mtLink->alias, false ) );
 }
 
+function appendTag($cf_id) {
+	static $tags;
+	
+	if( !$tags )
+	{
+		$tags = getTagAliases();
+	}
+	
+	if( isset($tags[$cf_id]) ) {
+		return $tags[$cf_id]->alias;
+	} else {
+		return false;
+	}
+}
+
+function findCfId($alias) {
+	static $tags;
+	
+	if( !$tags )
+	{
+		$tags = getTagAliases();
+	}
+	
+	foreach( $tags AS $tag ) {
+		if( $tag->alias == $alias ) {
+			return $tag->cf_id;
+		}
+	}
+	return false;
+}
+
+function getTagAliases() {
+	$db =& JFactory::getDBO();
+	$db->setQuery('SELECT cf_id, caption FROM #__mt_customfields WHERE tag_search = 1 AND published = 1');
+	$tags = $db->loadObjectList('cf_id');
+	if( !empty($tags) )
+	{
+		foreach($tags AS $tag)
+		{
+			$tags[$tag->cf_id]->alias = JFilterOutput::stringURLSafe($tag->caption);
+		}
+	}
+	return $tags;
+}
+
+function murlencode($string) {
+	global $mtconf, $sef_replace;
+	$string = urlencode($string);
+	$string = eregi_replace($mtconf->get('sef_space'), "%252D", $string);
+	$string = eregi_replace('\+', $mtconf->get('sef_space'), $string);
+	$string = eregi_replace('\.', '%2E', $string);
+	foreach ($sef_replace as $key => $value) {
+		$string = eregi_replace($key, $value, $string);
+	}
+	return $string;
+}
+
+function murldecode($string) {
+	global $mtconf, $sef_replace;
+	foreach ($sef_replace as $key => $value) {
+		$string = str_replace(strtolower($value), strtolower(urldecode($key)), strtolower($string));
+	}
+	$string = eregi_replace('%', "%25", $string);
+	$string = eregi_replace($mtconf->get('sef_space'), "%20", $string);
+	$string = eregi_replace('\+', "%2B", $string);
+	$string = eregi_replace('&quot;', "%22", $string);
+	$string = urldecode($string);
+	$string = eregi_replace("%2D", "-", $string);
+	return $string;
+}
 ?>

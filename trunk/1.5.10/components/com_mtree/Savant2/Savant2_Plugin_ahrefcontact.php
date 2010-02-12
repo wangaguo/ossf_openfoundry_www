@@ -4,41 +4,46 @@
 *
 * @package Mosets Tree 1.50
 * @copyright (C) 2005 Mosets Consulting
-* @url http://www.Mosets.com/
+* @url http://www.mosets.com/
 * @author Lee Cher Yeong <mtree@mosets.com>
 **/
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
 //Base plugin class.
-global $mosConfig_absolute_path;
-require_once $mosConfig_absolute_path.'/components/com_mtree/Savant2/Plugin.php';
+require_once JPATH_ROOT.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS.'Plugin.php';
 
 class Savant2_Plugin_ahrefcontact extends Savant2_Plugin {
 	
 	function plugin( &$link, $attr=null )
 	{
-		global $Itemid, $_MT_LANG, $mtconf;
+		global $Itemid, $mtconf;
 
 		# Load Parameters
-		$params =& new mosParameters( $link->attribs );
+		$params =& new JParameter( $link->attribs );
 		$params->def( 'show_contact', $mtconf->get('show_contact') );
 		$params->def( 'use_owner_email', $mtconf->get('use_owner_email') );
 		
 		$html = '';
 		
 		if ( 
-			// Contact is enabled, link has e-mail
-			($params->get( 'show_contact' ) == 1 && $link->email <> '') 
-			OR 
-			// Contact is enabled, use_owner_email is enabled
-			( $params->get( 'show_contact' ) == 1 && $params->get( 'use_owner_email' ) == 1 && $link->user_id > 0 ) 
+			(
+				// Contact is enabled, link has e-mail
+				($params->get( 'show_contact' ) == 1 && $link->email <> '') 
+				OR 
+				// Contact is enabled, use_owner_email is enabled
+				( $params->get( 'show_contact' ) == 1 && $params->get( 'use_owner_email' ) == 1 && $link->user_id > 0 ) 
+			)
+			AND
+			(
+				$mtconf->get('user_contact') != -1
+			)
 		) {
 
 			// $html = '<img src="images/M_images/indent1.png" width="9" height="9" />';
 
 			$html .= '<a href="';
 
-			$html .= sefRelToAbs("index.php?option=com_mtree&task=contact&link_id=".$link->link_id."&Itemid=".$Itemid);
+			$html .= JRoute::_( 'index.php?option=com_mtree&task=contact&link_id='.$link->link_id);
 			
 			$html .= '"';
 
@@ -55,7 +60,7 @@ class Savant2_Plugin_ahrefcontact extends Savant2_Plugin {
 				$html .= " $attr";
 			}
 			
-			$html .= '>'.$_MT_LANG->CONTACT_OWNER."</a>";
+			$html .= '>'.JText::_( 'Contact owner' )."</a>";
 
 		}
 		return $html;

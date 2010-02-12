@@ -1,7 +1,29 @@
 <div class="listing-summary<?php echo ($link->link_featured && $this->config->getTemParam('useFeaturedHighlight','1')) ? ' featured':''?>">
 		<h3><?php 
 			$link_name = $fields->getFieldById(1);
-			$this->plugin( 'ahreflisting', $link, $link_name->getOutput(2), '', array("delete"=>false) ) 
+			switch( $this->config->getTemParam('listingNameLink','1') )
+			{
+				default:
+				case 1:
+					$this->plugin( 'ahreflisting', $link, $link_name->getOutput(2), '', array('delete'=>false) );
+					break;
+				case 4:
+					if( !empty($link->website) ) {
+						$this->plugin( 'ahreflisting', $link, $link_name->getOutput(2), '', array('delete'=>false), 1 );
+					} else {
+						$this->plugin( 'ahreflisting', $link, $link_name->getOutput(2), '', array('delete'=>false) );
+					}
+					break;
+				case 2:
+					$this->plugin( 'ahreflisting', $link, $link_name->getOutput(2), '', array('delete'=>false), 1 );
+					break;
+				case 3:
+					$this->plugin( 'ahreflisting', $link, $link_name->getOutput(2), 'target="_blank"', array('delete'=>false), 1 );
+					break;
+				case 0:
+					$this->plugin( 'ahreflisting', $link, $link_name->getOutput(2), '', array('delete'=>false, 'link'=>false) );
+					break;
+			}
 		?></h3><?php
 		
 		// Rating
@@ -41,13 +63,14 @@
 		
 		// Listing's category
 		if($this->task <> 'listcats' && $this->task <> '' ) {
-			echo '<div class="category"><span>' . $this->_MT_LANG->CATEGORY . ':</span>';
+			echo '<div class="category"><span>' . JText::_( 'Category' ) . ':</span>';
 			$this->plugin( 'mtpath', $link->cat_id, '' );
 			echo '</div>';
 		}
 		
 		// Other custom field		
 		$fields->resetPointer();
+		echo '<div class="fields">';
 		while( $fields->hasNext() ) {
 			$field = $fields->getField();
 			$value = $field->getOutput(2);
@@ -79,6 +102,8 @@
 			}
 			$fields->next();
 		}
+		echo '</div>';
+		
 		if($this->config->getTemParam('showActionLinksInSummary','0')) {
 			echo '<div class="actions">';
 			$this->plugin( 'ahrefreview', $link, array("rel"=>"nofollow") ); 

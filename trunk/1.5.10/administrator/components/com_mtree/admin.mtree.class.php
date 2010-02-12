@@ -1,15 +1,14 @@
 <?php
 /**
-* Mosets Tree class
-*
-* @package Mosets Tree 2.0
-* @copyright (C) 2005 - 2007 Mosets Consulting
-* @url http://www.Mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
+ * @version		$Id: admin.mtree.class.php 719 2009-06-01 07:42:09Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-// ensure this file is being included by a parent file
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
 class mtPathWay {
 
@@ -24,11 +23,12 @@ class mtPathWay {
 	* this class cat_id ($this->cat_id) to generate the pathway
 	*/
 	function printPathWayFromLink( $link_id=0, $url='' ) {
-		global $database, $_MT_LANG;
+
+		$database =& JFactory::getDBO();
 
 		# Get Cat ID
 		if ( $link_id > 0 ) {
-			$database->setQuery( "SELECT cl.cat_id FROM #__mt_links AS l, #__mt_cl AS cl WHERE l.link_id = cl.link_id AND l.link_id ='".$link_id."' AND cl.main = '1'" );
+			$database->setQuery( "SELECT cl.cat_id FROM #__mt_links AS l, #__mt_cl AS cl WHERE l.link_id = cl.link_id AND l.link_id = " . $database->quote($link_id) . " AND cl.main = '1'" );
 			$this->cat_id = $database->loadResult();
 		}
 
@@ -36,19 +36,19 @@ class mtPathWay {
 		$path = $this->getPathWay( $this->cat_id );
 		
 		if ( $url <> '' ) {
-			echo '<a href="'.$url.'">'.$_MT_LANG->ROOT.'</a> ';
+			echo '<a href="'.$url.'">'.JText::_( 'Root' ).'</a> ';
 		} else {
-			echo $_MT_LANG->ROOT;
+			echo JText::_( 'Root' );
 		}
 		
 		if( count($path) > 0 ) {
 			foreach($path AS $cat_id) {
-				$database->setQuery("SELECT cat_name FROM #__mt_cats WHERE cat_id = '".$cat_id."' LIMIT 1");
+				$database->setQuery('SELECT cat_name FROM #__mt_cats WHERE cat_id = ' . $database->quote($cat_id) .' LIMIT 1');
 				$cat_name = $database->loadResult();
 				if ( $url <> '' ) {
-					echo $_MT_LANG->ARROW.'<a href="'.$url.'&cat_id='.$cat_id.'">'.$cat_name.'</a> ';
+					echo JText::_( 'Arrow' ).'<a href="'.$url.'&cat_id='.$cat_id.'">'.$cat_name.'</a> ';
 				} else {
-					echo $_MT_LANG->ARROW.$cat_name;
+					echo JText::_( 'Arrow' ).$cat_name;
 				}
 			}
 		}
@@ -56,32 +56,33 @@ class mtPathWay {
 		if ($link_id > 0) {
 			if ($this->cat_id > 0) {
 				if ( $url <> '' ) {
-					echo $_MT_LANG->ARROW.'<a href="'.$url.'&cat_id='.$this->cat_id.'">'.$this->getCatName().'</a> ';
+					echo JText::_( 'Arrow' ).'<a href="'.$url.'&cat_id='.$this->cat_id.'">'.$this->getCatName().'</a> ';
 				} else {
-					echo $_MT_LANG->ARROW.$this->getCatName();
+					echo JText::_( 'Arrow' ).$this->getCatName();
 				}
 			}
-			$database->setQuery("SELECT link_name FROM #__mt_links WHERE link_id='".$link_id."'");
+			$database->setQuery('SELECT link_name FROM #__mt_links WHERE link_id = ' . $database->quote($link_id));
 			//echo $database->loadResult();
 		} else {
 
 			if ( $this->cat_id > 0 ) {
 				# Print current directory
-				echo $_MT_LANG->ARROW.$this->getCatName();
+				echo JText::_( 'Arrow' ).$this->getCatName();
 			}
 
 		}
 	}
 
 	function printPathWayWithCurrentCat( $link_id=0, $url ) {
-		global $database, $_MT_LANG;
+
+		$database =& JFactory::getDBO();
 
 		$path = $this->getPathWay();
 		
-		echo "<a href=".$url.">".$_MT_LANG->ROOT."</a> > ";
+		echo "<a href=".$url.">".JText::_( 'Root' )."</a> > ";
 
 		foreach($path AS $cat_id) {
-			$database->setQuery("SELECT cat_name FROM #__mt_cats WHERE cat_id = '".$cat_id."' LIMIT 1");
+			$database->setQuery('SELECT cat_name FROM #__mt_cats WHERE cat_id = ' . $database->quote($cat_id) . ' LIMIT 1');
 			$cat_name = $database->loadResult();
 			echo '<a href="'.$url.'&cat_id='.$cat_id.'">'.$cat_name.'</a> > ';
 		}
@@ -90,7 +91,7 @@ class mtPathWay {
 			if ($this->cat_id > 0) {
 				echo '<a href="'.$url.'&cat_id='.$this->cat_id.'">'.$this->getCatName().'</a> > ';
 			}
-			$database->setQuery("SELECT link_name FROM #__mt_links WHERE link_id='".$link_id."'");
+			$database->setQuery('SELECT link_name FROM #__mt_links WHERE link_id=' . $database->quote($link_id));
 			echo $database->loadResult();
 		} else {
 			# Print current directory
@@ -100,7 +101,8 @@ class mtPathWay {
 	}
 
 	function printPathWayFromCat( $cat_id=0, $withlink=0 ) {
-		global $database, $_MT_LANG;
+		
+		$database =& JFactory::getDBO();
 
 		$old_cat_id = $this->cat_id ;
 		$this->cat_id = $cat_id;
@@ -109,22 +111,22 @@ class mtPathWay {
 		$return = '';
 
 		if ( $withlink ) {
-			//echo '<a href="index2.php?option=com_mtree&task=listcats&cat_id='.$cat_id.'">'.$_MT_LANG->ROOT.'</a> '.$_MT_LANG->ARROW;
-			$return .= '<a href="index2.php?option=com_mtree&task=listcats&cat_id='.$cat_id.'">'.$_MT_LANG->ROOT.'</a> '.$_MT_LANG->ARROW;
+			//echo '<a href="index2.php?option=com_mtree&task=listcats&cat_id='.$cat_id.'">'.JText::_( 'Root' ).'</a> '.JText::_( 'Arrow' );
+			$return .= '<a href="index2.php?option=com_mtree&task=listcats&cat_id='.$cat_id.'">'.JText::_( 'Root' ).'</a> '.JText::_( 'Arrow' );
 		} else {
-			//echo $_MT_LANG->ROOT." ";
-			$return .= $_MT_LANG->ROOT." ";
+			//echo JText::_( 'Root' )." ";
+			$return .= JText::_( 'Root' )." ";
 		}
 
 		foreach($path AS $cat_id) {
-			$database->setQuery("SELECT cat_name FROM #__mt_cats WHERE cat_id = '".$cat_id."' LIMIT 1");
+			$database->setQuery('SELECT cat_name FROM #__mt_cats WHERE cat_id = ' . $database->quote($cat_id) . ' LIMIT 1');
 			$cat_name = $database->loadResult();
 			if ( $withlink ) {
-				//echo '<a href="index2.php?option=com_mtree&task=listcats&cat_id='.$cat_id.'">'.$cat_name.'</a> '.$_MT_LANG->ARROW;
-				$return .= '<a href="index2.php?option=com_mtree&task=listcats&cat_id='.$cat_id.'">'.$cat_name.'</a> '.$_MT_LANG->ARROW;
+				//echo '<a href="index2.php?option=com_mtree&task=listcats&cat_id='.$cat_id.'">'.$cat_name.'</a> '.JText::_( 'Arrow' );
+				$return .= '<a href="index2.php?option=com_mtree&task=listcats&cat_id='.$cat_id.'">'.$cat_name.'</a> '.JText::_( 'Arrow' );
 			} else {
-				//echo $_MT_LANG->ARROW.$cat_name;
-				$return .= $_MT_LANG->ARROW.$cat_name;
+				//echo JText::_( 'Arrow' ).$cat_name;
+				$return .= JText::_( 'Arrow' ).$cat_name;
 			}
 		}
 		
@@ -136,16 +138,15 @@ class mtPathWay {
 
 	function printPathWayFromCat_withCurrentCat( $cat_id=0, $withlink=0 ) {
 
-		global $_MT_LANG;
 
 		$return = '';
 		$return .= $this->printPathWayFromCat( $cat_id, $withlink );
 
 		if ( $cat_id <> 0 ) {
 			if ( $withlink ) {
-				$return .= '<a href="index2.php?option=com_mtree&task=listcats&cat_id='.$cat_id.'">'.$this->getCatName( $cat_id ).'</a> '.$_MT_LANG->ARROW;
+				$return .= '<a href="index2.php?option=com_mtree&task=listcats&cat_id='.$cat_id.'">'.$this->getCatName( $cat_id ).'</a> '.JText::_( 'Arrow' );
 			} else {
-				$return .= $_MT_LANG->ARROW;
+				$return .= JText::_( 'Arrow' );
 				$return .= $this->getCatName( $cat_id );
 			}
 		}
@@ -155,7 +156,7 @@ class mtPathWay {
 	}
 
 	function getPathWay( $node=0 ) {
-		global $database;
+		$database =& JFactory::getDBO();
 		
 		$path = array();
 		if ( $node > 0 ) {
@@ -166,10 +167,11 @@ class mtPathWay {
 				if(isset($cache_paths) && array_key_exists($node,$cache_paths)) {
 					return $cache_paths[$node]; 
 				} else {
-					$database->setQuery("SELECT cat_name, cat_id, lft, rgt FROM #__mt_cats WHERE cat_id = ".(($node <= 0) ? $this->cat_id : $node));
-					$database->loadObject( $left_right );
+					$database->setQuery("SELECT cat_name, cat_id, lft, rgt FROM #__mt_cats WHERE cat_id = ".$database->quote((($node <= 0) ? $this->cat_id : $node)));
+					$left_right = $database->loadObject();
 				}
-				if (!empty($left_right)) {
+				// if (!empty($left_right)) {
+				if (!empty($left_right->lft)) {
 					$database->setQuery("SELECT cat_id FROM #__mt_cats WHERE lft < $left_right->lft AND rgt > $left_right->rgt AND cat_id > 0 AND cat_parent >= 0 ORDER BY lft ASC");
 					$cache_paths[$node] = $database->loadResultArray();
 					if( isset($cache_lft_rgt) && array_key_exists($left_right->lft,$cache_lft_rgt) ) {
@@ -196,29 +198,37 @@ class mtPathWay {
 	}
 
 	function getCatName( $cat_id = '' ) {
-		global $database;
+		$database =& JFactory::getDBO();
 
 		# look up the name for this category
 		if ( $cat_id == '' ) {
-			$database->setQuery("SELECT cat_name FROM #__mt_cats WHERE cat_id = '".$this->cat_id."' LIMIT 1");
+			$database->setQuery("SELECT cat_name FROM #__mt_cats WHERE cat_id = " . $database->quote($this->cat_id) . " LIMIT 1");
 			return $database->loadResult();
 		} else {
 			global $cache_cat_names;
 			if ( empty($cache_cat_names) || !array_key_exists($cat_id,$cache_cat_names) ) {
-				$database->setQuery("SELECT cat_name FROM #__mt_cats WHERE cat_id = '".$cat_id."' LIMIT 1");
+				$database->setQuery("SELECT cat_name FROM #__mt_cats WHERE cat_id = " . $database->quote($cat_id) . " LIMIT 1");
 				$cache_cat_names[$cat_id] = $database->loadResult();
 			}
 			return $cache_cat_names[$cat_id];
 		}
+	}
+	
+	function getCatAlias( $cat_id ) {
+		$db =& JFactory::getDBO();
+		$db->setQuery( 'SELECT alias FROM #__mt_cats WHERE cat_id = ' . $db->quote($cat_id) . ' LIMIT 1' );
+		return $db->loadResult();		
 	}
 }
 
 /**
 * Link Categories Table class
 */
-class mtCats extends mosDBTable {
+class mtCats extends JTable {
 	var $cat_id=null;
 	var $cat_name=null;
+	var $alias=null;
+	var $title=null;
 	var $cat_desc=null;
 	var $cat_parent=null;
 	var $cat_links=null;
@@ -238,16 +248,16 @@ class mtCats extends mosDBTable {
 	var $lft=null;
 	var $rgt=null;
 
-	function mtCats( &$db ) {
-		$this->mosDBTable( '#__mt_cats', 'cat_id', $db );
+	function __construct( &$_db ) {
+		parent::__construct( '#__mt_cats', 'cat_id', $_db );
 	}
 
 	/***
 	 * Return true if the given category is a child
 	 */
 	 function isChild( $child_id ) {
-		$this->_db->setQuery( "SELECT lft, rgt FROM #__mt_cats WHERE cat_id = '".$child_id."' LIMIT 1" );
-		$this->_db->loadObject($child);
+		$this->_db->setQuery( 'SELECT lft, rgt FROM #__mt_cats WHERE cat_id = ' . $this->_db->quote($child_id) . ' LIMIT 1' );
+		$child = $this->_db->loadObject();
 
 		if( $child->lft > $this->lft && $child->rgt < $this->rgt ) {
 			return true;
@@ -271,9 +281,9 @@ class mtCats extends mosDBTable {
 				$cat_parent_ids2 = implode(',',$cat_parent_ids);
 				//echo $cat_parent_ids2;
 				if ($inc < 0) {
-					$this->_db->setQuery("UPDATE #__mt_cats SET cat_cats = (cat_cats - ABS($inc)) WHERE cat_id IN ($cat_parent_ids2)");
+					$this->_db->setQuery('UPDATE #__mt_cats SET cat_cats = (cat_cats - ABS(' . intval($inc) . ')) WHERE cat_id IN (' . $cat_parent_ids2 . ')');
 				} else {
-					$this->_db->setQuery("UPDATE #__mt_cats SET cat_cats = (cat_cats + ABS($inc)) WHERE cat_id IN ($cat_parent_ids2)");
+					$this->_db->setQuery('UPDATE #__mt_cats SET cat_cats = (cat_cats + ABS(' . intval($inc) . ')) WHERE cat_id IN (' . $cat_parent_ids2 . ')');
 				}
 
 				if (!$this->_db->query()) {
@@ -381,7 +391,7 @@ class mtCats extends mosDBTable {
 
 		# Find lft & rgt value of this category
 		$this->_db->setQuery( "SELECT lft, rgt, cat_approved FROM #__mt_cats WHERE cat_id = $cat_id LIMIT 1" );
-		$this->_db->loadObject( $lr );		
+		$lr = $this->_db->loadObject();		
 
 		if ( $lr->cat_approved == 0 OR ($lr->lft == 0 AND $lr->rgt == 0) ) {
 
@@ -451,7 +461,7 @@ class mtCats extends mosDBTable {
 			return false;
 		}
 
-		$this->_db->setQuery("UPDATE #__mt_cats SET cat_published = '".$publish."' WHERE cat_id = '".$cid."'");
+		$this->_db->setQuery("UPDATE #__mt_cats SET cat_published = " . $this->_db->quote($publish) . " WHERE cat_id = " . $this->_db->quote($cid) );
 	
 		if (!$this->_db->query()) {
 			echo "<script> alert('".$this->_db->getErrorMsg()."'); window.history.go(-1); </script>\n";
@@ -492,9 +502,9 @@ class mtCats extends mosDBTable {
 	*/
 	function setFeaturedCat( $featured=1, $cat_id=0 ) {
 		if ($cat_id == 0 && $this->cat_id > 0) {
-			$this->_db->setQuery("UPDATE #__mt_cats SET cat_featured = '".$featured."' WHERE cat_id = '".$this->cat_id."'");
+			$this->_db->setQuery("UPDATE #__mt_cats SET cat_featured = '".intval($featured)."' WHERE cat_id = '".$this->cat_id."'");
 		} else {
-			$this->_db->setQuery("UPDATE #__mt_cats SET cat_featured = '".$featured."' WHERE cat_id = '".$cat_id."'");
+			$this->_db->setQuery("UPDATE #__mt_cats SET cat_featured = '".intval($featured)."' WHERE cat_id = '".$cat_id."'");
 		}
 		if (!$this->_db->query()) {
 			echo "<script> alert('".$this->_db->getErrorMsg()."'); window.history.go(-1); </script>\n";
@@ -512,7 +522,7 @@ class mtCats extends mosDBTable {
 		
 		$subcats = $this->getSubCats_Recursive( $this->cat_id );
 
-		$this->_db->setQuery( "UPDATE $this->_tbl SET cat_template = '$this->cat_template' WHERE cat_id IN(". implode(',',$subcats) .") " );
+		$this->_db->setQuery( "UPDATE $this->_tbl SET cat_template = " . $this->_db->quote($this->cat_template) . " WHERE cat_id IN(". implode(',',$subcats) .") " );
 		$this->_db->query();
 	}
 
@@ -522,10 +532,11 @@ class mtCats extends mosDBTable {
 	function getSubCats_Recursive( $cat_id='', $published_only=false ) {
 		
 		$subcats = array();
-
+		$left_right = null;
+		
 		// Find current category's lft and rgt value
 		$this->_db->setQuery("SELECT lft, rgt FROM #__mt_cats WHERE cat_id = $cat_id LIMIT 1");
-		$this->_db->loadObject($left_right);
+		$left_right = $this->_db->loadObject();
 		
 		if ( !empty($left_right)) {
 			// Find all subcategories
@@ -547,18 +558,20 @@ class mtCats extends mosDBTable {
 	* Copy Category
 	*/
 	function copyCategory( $cat_id, $dest, $copy_subcats, $copy_relcats, $copy_listings, $copy_reviews, $reset_hits, $reset_rating, $increment=null ) {
-		global $database, $mtconf;
+		global $mtconf;
 		static $copied_cat_ids;
+
+		$database =& JFactory::getDBO();
 
 		# Get original cat's info
 		$this->_db->setQuery( "SELECT * FROM $this->_tbl WHERE cat_id = '".$cat_id."' LIMIT 1" );
-		$this->_db->loadObject( $org_cat );
+		$org_cat = $this->_db->loadObject();
 
 		# Get $dest (New cat parent)'s lft & rgt
 
 		if ( is_null($increment) ) {
 			$this->_db->setQuery( "SELECT lft, rgt FROM $this->_tbl WHERE cat_id = '".$dest."' LIMIT 1" );
-			$this->_db->loadObject( $new_cat );
+			$new_cat = $this->_db->loadObject();
 
 			$inc = $new_cat->rgt - $org_cat->lft;
 
@@ -571,32 +584,39 @@ class mtCats extends mosDBTable {
 		$org_cat->cat_parent = $dest;
 
 		# Copy cat
-		$this->_db->setQuery( "INSERT INTO $this->_tbl (cat_name, cat_desc, cat_parent, cat_links, cat_cats, cat_featured, cat_published, cat_created, cat_approved, cat_template, metakey, metadesc, ordering, lft, rgt) VALUES('".mysql_escape_string($org_cat->cat_name)."', '".mysql_escape_string($org_cat->cat_desc)."', '$org_cat->cat_parent', '".(($copy_listings)?$org_cat->cat_links:'0')."', '$org_cat->cat_cats', '$org_cat->cat_featured', '$org_cat->cat_published', '$org_cat->cat_created', '$org_cat->cat_approved', '$org_cat->cat_template', '".mysql_escape_string($org_cat->metakey)."', '".mysql_escape_string($org_cat->metadesc)."', '$org_cat->ordering', ".($org_cat->lft + $inc).", ".($org_cat->rgt + $inc)." )" );
-		
-		//, (".$org_cat->lft + $inc."), (".$org_cat->rgt + $inc.") )" );
+		$this->_db->setQuery( 'INSERT INTO ' . $this->_tbl 
+			. ' (cat_name, cat_desc, cat_parent, cat_links, cat_cats, cat_featured, cat_published, cat_created, cat_approved, cat_template, metakey, metadesc, ordering, lft, rgt) '
+			. ' VALUES(' . $this->_db->quote($org_cat->cat_name).', '
+			. $this->_db->quote($org_cat->cat_desc) . ', '
+			. $this->_db->quote($org_cat->cat_parent) . ', '
+			. (($copy_listings)?$org_cat->cat_links:'0') . ', '
+			. $this->_db->quote($org_cat->cat_cats) . ', '
+			. $this->_db->quote($org_cat->cat_featured) . ', '
+			. $this->_db->quote($org_cat->cat_published) . ', '
+			. $this->_db->quote($org_cat->cat_created) . ', '
+			. $this->_db->quote($org_cat->cat_approved) . ', '
+			. $this->_db->quote($org_cat->cat_template) . ', '
+			. $this->_db->quote($org_cat->metakey) . ', '
+			. $this->_db->quote($org_cat->metadesc) . ', '
+			. $this->_db->quote($org_cat->ordering) . ', '
+			. $this->_db->quote($org_cat->lft + $inc) . ', '
+			. $this->_db->quote($org_cat->rgt + $inc) . ')'
+			);
 		$this->_db->query();
-		//echo "<br />(org_cat->lft:".$org_cat->lft."|inc:".$inc.")".$this->_db->getQuery();
 
-		$new_cat_parent = mysql_insert_id();
+		$new_cat_parent = $this->_db->insertid();
 		$copied_cat_ids[] = $new_cat_parent;
 
 		# Copy image
-		// $this->_db->setQuery( "INSERT INTO #__mt_cats_images (cat_id,filename,small_filedata,small_filesize,original_filedata,original_filesize,extension)"
-		// 	.	"\n SELECT '" . $new_cat_parent . "',filename,small_filedata,small_filesize,original_filedata,original_filesize,extension FROM #__mt_cats_images WHERE cat_id = '" . $cat_id . "' LIMIT 1" );
-		// $this->_db->query();
-		# Copy image
-		// global $mosConfig_absolute_path, $mt_cat_image_dir;
 		$file_s = $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_cat_small_image') . $org_cat->cat_image;
 		$file_o = $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_cat_original_image') . $org_cat->cat_image;
-		// $file = $mosConfig_absolute_path.$mt_cat_image_dir.$org_cat->cat_image;
 		if ( $org_cat->cat_image && is_writable($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_cat_small_image')) && is_writable($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_cat_original_image')) ) {
 			if( 
-				// copy( $file, $mosConfig_absolute_path.$mt_cat_image_dir.$new_cat_parent."_".(substr($org_cat->cat_image, strpos( $org_cat->cat_image, "_" )+1 )) ) 
 				copy( $file_s, $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_cat_small_image').$new_cat_parent."_".(substr($org_cat->cat_image, strpos( $org_cat->cat_image, "_" )+1 )) ) 
 				&&
 				copy( $file_o, $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_cat_original_image').$new_cat_parent."_".(substr($org_cat->cat_image, strpos( $org_cat->cat_image, "_" )+1 )) ) 
 			) {
-				$this->_db->setQuery( "UPDATE #__mt_cats SET cat_image = '".$new_cat_parent."_".(substr($org_cat->cat_image, strpos( $org_cat->cat_image, "_" )+1 ))."' WHERE cat_id = '".$new_cat_parent."'" );
+				$this->_db->setQuery( 'UPDATE #__mt_cats SET cat_image = ' . $this->_db->quote($new_cat_parent."_".(substr($org_cat->cat_image, strpos( $org_cat->cat_image, "_" )+1 ))) . ' WHERE cat_id = ' . $this->_db->quote($new_cat_parent) );
 				$this->_db->query();
 			}
 		}
@@ -710,9 +730,8 @@ class mtCats extends mosDBTable {
 	}
 
 	function getName( $cat_id=0 ) {
-		global $_MT_LANG;
 		if ($cat_id == 0) {
-			return $_MT_LANG->ROOT;
+			return JText::_( 'Root' );
 		} else {
 			$this->_db->setQuery("SELECT cat_name FROM #__mt_cats WHERE cat_id = '$cat_id' LIMIT 1");
 			return $this->_db->loadResult();
@@ -721,20 +740,20 @@ class mtCats extends mosDBTable {
 
 }
 
-class mtCL extends mosDBTable {
+class mtCL extends JTable {
 
 	var $cl_id=null;
 	var $link_id=null;
 	var $cat_id=null;
 	var $main=null;
 	
-	function mtCL( &$db ) {
-		$this->mosDBTable( '#__mt_cl', 'cl_id', $db );
+	function __construct( &$_db ) {
+		parent::__construct( '#__mt_cl', 'cl_id', $_db );
 	}
 	
 	function update( $cat_id, $link_id ) {
 		$this->_db->setQuery( "SELECT * FROM #__mt_links AS l, #__mt_cl AS cl WHERE l.link_id = cl.link_id AND l.link_id = $link_id " );
-		$this->_db->loadObject( $ori );
+		$ori = $this->_db->loadObject();
 		//echo $this->_db->getQuery();
 		$this->_db->setQuery( "UPDATE #__mt_cl SET cat_id = $cat_id WHERE cat_id = $ori->cat_id AND link_id = $link_id" );
 		$this->_db->query();
@@ -773,16 +792,17 @@ class mtCL_main0 {
 		// Get the new other cats
 		$removes = array_diff( $this->other_cat_ids, $new_other_cat_ids );
 		foreach( $removes AS $remove ) {
-			$this->_db->setQuery( "DELETE FROM #__mt_cl WHERE link_id = '".$this->link_id."' AND cat_id = '".$remove."' AND main = '0'" );
+			$this->_db->setQuery( "DELETE FROM #__mt_cl WHERE link_id = ".$this->_db->Quote($this->link_id)." AND cat_id = ".$this->_db->Quote($remove)." AND main = '0'" );
 			$this->_db->query();
 			mtUpdateLinkCount( $remove, -1 );
 		}
 
 		// Get the soon to be removed cats
 		$adds = array_diff( $new_other_cat_ids, $this->other_cat_ids );
+
 		foreach( $adds AS $add ) {
-			if ( is_numeric($add) ) {
-				$this->_db->setQuery( "INSERT INTO #__mt_cl ( link_id, cat_id, main )  VALUES('".$this->link_id."', '".$add."', '0')" );
+			if ( !is_null($add) && is_numeric($add) ) {
+				$this->_db->setQuery( "INSERT INTO #__mt_cl ( link_id, cat_id, main )  VALUES(".$this->_db->Quote($this->link_id).", ".$this->_db->Quote($add).", '0')" );
 				$this->_db->query();
 				mtUpdateLinkCount( $add, 1 );
 			}
@@ -796,9 +816,10 @@ class mtCL_main0 {
 /**
 * Links Table class
 */
-class mtLinks extends mosDBTable {
+class mtLinks extends JTable {
 	var $link_id=null;
 	var $link_name=null;
+	var $alias=null;
 	var $link_desc=null;
 	var $user_id=null;
 	var $cat_id=null;
@@ -829,18 +850,21 @@ class mtLinks extends mosDBTable {
 	var $email=null;
 	var $website=null;
 	var $price=null;
+	var $lat=null;
+	var $lng=null;
+	var $zoom=null;
 
-	function mtLinks( &$db ) {
-		$this->mosDBTable( '#__mt_links', 'link_id', $db );
+	function __construct( &$_db ) {
+		parent::__construct( '#__mt_links', 'link_id', $_db );
 	}
 
 	function store( $updateNulls=false ) {
-		global $migrate, $database;
-
+		$database =& JFactory::getDBO();
+		
 		$k = $this->_tbl_key;
 		$cl = new mtCL( $database );
 
-		if( $this->$k && !$migrate) {
+		if( $this->$k ) {
 			$cl->update( $this->cat_id, $this->link_id );
 			unset( $this->cat_id);
 			$ret = $this->_db->updateObject( $this->_tbl, $this, $this->_tbl_key, $updateNulls );
@@ -868,46 +892,33 @@ class mtLinks extends mosDBTable {
 	}
 
 	function load( $oid=null ) {
-		if(defined('JVERSION')) {
-			$k = $this->_tbl_key;
+		$k = $this->_tbl_key;
 
-			if ($oid !== null) {
-				$this->$k = $oid;
-			}
+		if ($oid !== null) {
+			$this->$k = $oid;
+		}
 
-			$oid = $this->$k;
+		$oid = $this->$k;
 
-			if ($oid === null) {
-				return false;
-			}
-			$this->reset();
+		if ($oid === null) {
+			return false;
+		}
+		$this->reset();
 
-			$db =& $this->getDBO();
+		$db =& $this->getDBO();
 
-			$query = 'SELECT l.*, cl.cat_id AS cat_id'
-			. ' FROM '.$this->_tbl.' AS l, #__mt_cl AS cl'
-			. ' WHERE l.'.$this->_tbl_key.' = cl.link_id AND l.'.$this->_tbl_key.' = '.$db->Quote($oid).' AND main = 1';
-			$db->setQuery( $query );
+		$query = 'SELECT l.*, cl.cat_id AS cat_id'
+		. ' FROM '.$this->_tbl.' AS l, #__mt_cl AS cl'
+		. ' WHERE l.'.$this->_tbl_key.' = cl.link_id AND l.'.$this->_tbl_key.' = '.$db->Quote($oid).' AND main = 1';
+		$db->setQuery( $query );
 
-			if ($result = $db->loadAssoc( )) {
-				return $this->bind($result);
-			}
-			else
-			{
-				$this->setError( $db->getErrorMsg() );
-				return false;
-			}
-		} else {
-			$k = $this->_tbl_key;
-			if ($oid !== null) {
-				$this->$k = $oid;
-			}
-			$oid = $this->$k;
-			if ($oid === null) {
-				return false;
-			}
-			$this->_db->setQuery( "SELECT l.*, cl.cat_id AS cat_id FROM #__mt_links AS l, #__mt_cl AS cl WHERE l.link_id=cl.link_id AND l.link_id='$oid' AND main='1'" );
-			return $this->_db->loadObject( $this );
+		if ($result = $db->loadAssoc( )) {
+			return $this->bind($result);
+		}
+		else
+		{
+			$this->setError( $db->getErrorMsg() );
+			return false;
 		}
 	}
 	
@@ -931,9 +942,9 @@ class mtLinks extends mosDBTable {
 		$cat_parent_ids = implode(',',$mtPathWay->getPathWayWithCurrentCat());
 
 		if ($inc < 0) {
-			$this->_db->setQuery("UPDATE #__mt_cats SET cat_links = (cat_links - ABS($inc)) WHERE cat_id IN ($cat_parent_ids)");
+			$this->_db->setQuery('UPDATE #__mt_cats SET cat_links = (cat_links - ABS(' . intval($inc) . ")) WHERE cat_id IN ($cat_parent_ids)");
 		} else {
-			$this->_db->setQuery("UPDATE #__mt_cats SET cat_links = (cat_links + ABS($inc)) WHERE cat_id IN ($cat_parent_ids)");
+			$this->_db->setQuery('UPDATE #__mt_cats SET cat_links = (cat_links + ABS(' . intval($inc) . ")) WHERE cat_id IN ($cat_parent_ids)");
 		}
 
 		if (!$this->_db->query()) {
@@ -959,7 +970,7 @@ class mtLinks extends mosDBTable {
 			return false;
 		}
 
-		$this->_db->setQuery("UPDATE #__mt_links SET link_published = '".$publish."' WHERE link_id = '".$lid."'");
+		$this->_db->setQuery("UPDATE #__mt_links SET link_published = " . $this->_db->quote($publish) . " WHERE link_id = '".$lid."'");
 	
 		if (!$this->_db->query()) {
 			echo "<script> alert('".$this->_db->getErrorMsg()."'); window.history.go(-1); </script>\n";
@@ -975,9 +986,9 @@ class mtLinks extends mosDBTable {
 	*/
 	function setFeaturedLink( $featured=1, $link_id=0 ) {
 		if ($link_id == 0 && $this->link_id > 0) {
-			$this->_db->setQuery("UPDATE #__mt_links SET link_featured = '".$featured."' WHERE link_id = '".$this->link_id."'");
+			$this->_db->setQuery("UPDATE #__mt_links SET link_featured = " . $this->_db->quote($featured) . " WHERE link_id = '".$this->link_id."'");
 		} else {
-			$this->_db->setQuery("UPDATE #__mt_links SET link_featured = '".$featured."' WHERE link_id = '".$link_id."'");
+			$this->_db->setQuery("UPDATE #__mt_links SET link_featured = " . $this->_db->quote($featured) . " WHERE link_id = '".$link_id."'");
 		}
 		if (!$this->_db->query()) {
 			echo "<script> alert('".$this->_db->getErrorMsg()."'); window.history.go(-1); </script>\n";
@@ -1012,14 +1023,6 @@ class mtLinks extends mosDBTable {
 			return false;
 		}
 
-		# Remove the photos
-		// $this->_db->setQuery( "SELECT link_image FROM #__mt_links WHERE link_id = '".$link_id."'" );
-		// $link_image = $this->_db->loadResult();
-		// 
-		// if ( $link_image <> '' ) {
-		// 	unlink( $mosConfig_absolute_path.$mtconf->get('listing_image_dir').$link_image );
-		// }
-
 		# Remove CL mapping
 		$this->_db->setQuery("DELETE FROM #__mt_cl WHERE link_id = '".$link_id."'");
 		if (!$this->_db->query()) {
@@ -1033,7 +1036,19 @@ class mtLinks extends mosDBTable {
 			echo "<script> alert('".$this->_db->getErrorMsg()."'); window.history.go(-1); </script>\n";
 			return false;
 		}
-
+		
+		# Delete attachments
+		$this->_db->setQuery( 'SELECT CONCAT(' . $this->_db->quote(JPATH_SITE.$mtconf->get('relative_path_to_attachments')) . ',raw_filename) FROM #__mt_cfvalues_att WHERE link_id = ' . $this->_db->quote($link_id) );
+		$raw_filenames = $this->_db->loadResultArray();
+		if( !empty($raw_filenames) )
+		{
+			if( !empty($raw_filenames) )
+			{
+				jimport('joomla.filesystem.file');
+				JFile::delete($raw_filenames);
+			}
+		}
+		
 		# Remove custom field data attachment
 		$this->_db->setQuery("DELETE FROM #__mt_cfvalues_att WHERE link_id = '".$link_id."'");
 		if (!$this->_db->query()) {
@@ -1074,7 +1089,13 @@ class mtLinks extends mosDBTable {
 	* published or not
 	*/
 	function approveLink( $link_id=0 ) {
-		global $mosConfig_mailfrom, $mosConfig_fromname, $_MT_LANG, $mosConfig_live_site, $mosConfig_absolute_path, $mtconf;
+		global $mainframe, $mtconf;
+
+		$MailFrom 	= $mainframe->getCfg('mailfrom');
+		$FromName 	= $mainframe->getCfg('fromname');
+
+		$jdate		= JFactory::getDate();
+		$now		= $jdate->toMySQL();
 
 		# Determine which Link ID to use. If none, return false.
 		if ( $this->link_id > 0 ) {
@@ -1099,36 +1120,18 @@ class mtLinks extends mosDBTable {
 			// Insert new listing
 			$new_link_id = $this->link_id;
 			$this->link_id = $original_link_id;
-
-			// Removal of image
-			// Replace '-1' in link_image to empty string ''
-			/*
-			if ( $this->link_image == "-1" ) {
-
-				$this->_db->setQuery( "SELECT link_image FROM #__mt_links WHERE link_id = '".$original_link_id."'" );
-				$link_image = $this->_db->loadResult();
-				
-				if ( !empty($link_image) ) {
-					if(!unlink($mosConfig_absolute_path.$mtconf->get('listing_image_dir').$link_image)) {
-							echo "<script> alert('".$_MT_LANG->ERROR_DELETING_OLD_IMAGE."'); </script>\n";
-					}
+			
+			# Delete attachments
+			$this->_db->setQuery( 'SELECT CONCAT(' . $this->_db->quote(JPATH_SITE.$mtconf->get('relative_path_to_attachments')) . ',raw_filename) FROM #__mt_cfvalues_att WHERE link_id = ' . $this->_db->quote($original_link_id) );
+			$raw_filenames = $this->_db->loadResultArray();
+			if( !empty($raw_filenames) )
+			{
+				if( !empty($raw_filenames) )
+				{
+					jimport('joomla.filesystem.file');
+					JFile::delete($raw_filenames);
 				}
-				
-				$this->link_image = '';
-
-			} elseif ( $this->link_image <> '' ) {
-
-				$this->_db->setQuery( "SELECT link_image FROM #__mt_links WHERE link_id = '".$original_link_id."'" );
-				$link_image = $this->_db->loadResult();
-				
-				if ( !empty($link_image) && $link_image <> $this->link_image ) {
-					if(!unlink($mosConfig_absolute_path.$mtconf->get('listing_image_dir').$link_image)) {
-							echo "<script> alert('".$_MT_LANG->ERROR_DELETING_OLD_IMAGE."'); </script>\n";
-					}
-				}
-
 			}
-			*/
 			
 			$this->_db->setQuery( "DELETE FROM #__mt_cfvalues WHERE link_id = '" . $original_link_id . "'" );
 			$this->_db->query();
@@ -1198,9 +1201,9 @@ class mtLinks extends mosDBTable {
 				$email = $this->_db->loadResult();
 
 				if ( $email <> '' ) {
-					$subject = $_MT_LANG->UPDATE_LISTING_APPROVED_SUBJECT;
-					$body = sprintf($_MT_LANG->UPDATE_LISTING_APPROVED_MSG, $this->link_name);
-					mosMail( $mosConfig_mailfrom, $mosConfig_fromname, $email, $subject, $body );
+					$subject	= JText::_( 'Update listing approved subject' );
+					$body 		= sprintf(JText::_( 'Update listing approved msg' ), $this->link_name);
+					JUTility::sendMail( $MailFrom, $FromName, $email, $subject, $body );
 				}
 
 			}
@@ -1211,14 +1214,25 @@ class mtLinks extends mosDBTable {
 		} else {
 			
 			# Approve and reset the created date. This ensure the approved listing is shown in Latest Listings
-			$this->_db->setQuery("UPDATE #__mt_links SET link_approved = '1', link_created = '".date( "Y-m-d H:i:s" )."' WHERE link_id = '".$lid."'");
-		
+			$sql = "UPDATE #__mt_links SET link_approved = '1'";
+			if( $mtconf->get('reset_created_date_upon_approval') ) {
+				$sql .= ", link_created = ". $this->_db->Quote($now);
+			}
+			$sql .= " WHERE link_id = '".$lid."'";
+			$this->_db->setQuery( $sql );
+
 			if (!$this->_db->query()) {
 				echo "<script> alert('".$this->_db->getErrorMsg()."'); window.history.go(-1); </script>\n";
 				return false;
 			}
-			
-			//smartCountUpdate( $this->cat_id, 1, 0 );
+
+			$this->_db->setQuery( "SELECT cat_id FROM #__mt_cl WHERE link_id = '".$lid."' AND main = '1'" );
+			$ori_cat_id = $this->_db->loadResult();
+
+			if ( $ori_cat_id <> $this->cat_id ) {
+				$this->_db->setQuery( "UPDATE #__mt_cl SET cat_id = '".$this->cat_id."' WHERE link_id = '".$lid."' AND main = '1'" );
+				$this->_db->query();
+			}
 
 			// Send approval notification to user
 			if ( $mtconf->get('notifyuser_approved') == 1 ) {
@@ -1237,9 +1251,9 @@ class mtLinks extends mosDBTable {
 					$email = $this->_db->loadResult();
 				}
 				if ( $email <> '' ) {
-					$subject = $_MT_LANG->NEW_LISTING_APPROVED_SUBJECT;
-					$body = sprintf($_MT_LANG->NEW_LISTING_APPROVED_MSG, $this->link_name);
-					mosMail( $mosConfig_mailfrom, $mosConfig_fromname, $email, $subject, $body );
+					$subject = JText::_( 'New listing approved subject' );
+					$body = sprintf(JText::_( 'New listing approved msg' ), $this->link_name);
+					JUTility::sendMail( $MailFrom, $FromName, $email, $subject, $body );
 
 				}
 
@@ -1258,8 +1272,8 @@ class mtLinks extends mosDBTable {
 		global $mtconf;
 
 		// Get original listing info
-		$this->_db->setQuery( "SELECT * FROM #__mt_links WHERE link_id = '".$listing."'" );
-		$this->_db->loadObject( $org_listing );
+		$this->_db->setQuery( "SELECT * FROM #__mt_links WHERE link_id = " . $this->_db->quote($listing) );
+		$org_listing = $this->_db->loadObject();
 
 		// Change cat_id
 		$org_listing->cat_id = $new_cat_parent;
@@ -1274,7 +1288,7 @@ class mtLinks extends mosDBTable {
 		}
 
 		# Copy listing
-		$this->_db->setQuery( "INSERT INTO #__mt_links 
+		$this->_db->setQuery( 'INSERT INTO #__mt_links 
 			( 
 				link_name, 
 				link_desc, 
@@ -1303,42 +1317,48 @@ class mtLinks extends mosDBTable {
 				fax, 
 				email, 
 				website,
-				price
-			) "
-			. "VALUES( '"
-				.mysql_escape_string($org_listing->link_name)."', '"
-				.mysql_escape_string($org_listing->link_desc)."', '"
-				.$org_listing->user_id."', '"
-				.$org_listing->link_hits."', '"
-				.$org_listing->link_votes."', '"
-				.$org_listing->link_rating."', '"
-				.$org_listing->link_featured."', '"
-				.$org_listing->link_published."', '"
-				.$org_listing->link_approved."', '"
-				.mysql_escape_string($org_listing->link_template)."', '"
-				.mysql_escape_string($org_listing->attribs)."', '"
-				.mysql_escape_string($org_listing->metakey)."', '"
-				.mysql_escape_string($org_listing->metadesc)."', '"
-				.$org_listing->ordering."', '"
-				.$org_listing->link_created."', '"
-				.$org_listing->publish_up."', '"
-				.$org_listing->publish_down."', '"
-				.$org_listing->link_modified."', '"
-				.mysql_escape_string($org_listing->address)."', '"
-				.mysql_escape_string($org_listing->city)."', '"
-				.mysql_escape_string($org_listing->state)."', '"
-				.mysql_escape_string($org_listing->country)."', '"
-				.mysql_escape_string($org_listing->postcode)."', '"
-				.mysql_escape_string($org_listing->telephone)."', '"
-				.mysql_escape_string($org_listing->fax)."', '"
-				.mysql_escape_string($org_listing->email)."', '"
-				.mysql_escape_string($org_listing->website)."', '" 
-				.mysql_escape_string($org_listing->price)."'" 
-				.")"
+				price,
+				lat,
+				lng,
+				zoom
+			) '
+			. 'VALUES( '
+				. $this->_db->quote($org_listing->link_name) . ', '
+				. $this->_db->quote($org_listing->link_desc) . ', '
+				. $this->_db->quote($org_listing->user_id) . ', '
+				. $this->_db->quote($org_listing->link_hits) . ', '
+				. $this->_db->quote($org_listing->link_votes) . ', '
+				. $this->_db->quote($org_listing->link_rating) . ', '
+				. $this->_db->quote($org_listing->link_featured) . ', '
+				. $this->_db->quote($org_listing->link_published) . ', '
+				. $this->_db->quote($org_listing->link_approved) . ', '
+				. $this->_db->quote($org_listing->link_template) . ', '
+				. $this->_db->quote($org_listing->attribs) . ', '
+				. $this->_db->quote($org_listing->metakey) . ', '
+				. $this->_db->quote($org_listing->metadesc) . ', '
+				. $this->_db->quote($org_listing->ordering) . ', '
+				. $this->_db->quote($org_listing->link_created) . ', '
+				. $this->_db->quote($org_listing->publish_up) . ', '
+				. $this->_db->quote($org_listing->publish_down) . ', '
+				. $this->_db->quote($org_listing->link_modified) . ', '
+				. $this->_db->quote($org_listing->address) .  ', '
+				. $this->_db->quote($org_listing->city) . ', '
+				. $this->_db->quote($org_listing->state) . ', '
+				. $this->_db->quote($org_listing->country) . ', '
+				. $this->_db->quote($org_listing->postcode) . ', '
+				. $this->_db->quote($org_listing->telephone) . ', '
+				. $this->_db->quote($org_listing->fax) . ', '
+				. $this->_db->quote($org_listing->email) . ', '
+				. $this->_db->quote($org_listing->website) . ', '
+				. $this->_db->quote($org_listing->price) . ', '
+				. $this->_db->quote($org_listing->lat) . ', '
+				. $this->_db->quote($org_listing->lng) . ', '
+				. $this->_db->quote($org_listing->zoom)
+				. ')'
 				);
 		$this->_db->query();
 
-		$new_listing_id = mysql_insert_id();
+		$new_listing_id = $this->_db->insertid();
 		
 		# Copy listing's custom fields' value
 		$this->_db->setQuery( 'INSERT INTO #__mt_cfvalues (`cf_id`,`link_id`,`value`,`attachment`) '
@@ -1346,17 +1366,36 @@ class mtLinks extends mosDBTable {
 		$this->_db->query();
 		
 		# Copy listing's custom fields' attachment
-		$this->_db->setQuery( 'INSERT INTO #__mt_cfvalues_att (`link_id`,`cf_id`,`filename`,`filedata`,`filesize`,`extension`) '
-			. 'SELECT ' . $new_listing_id . ', cf_id, filename, filedata, filesize, extension FROM #__mt_cfvalues_att WHERE link_id = ' . $listing);
-		$this->_db->query();
+		$this->_db->setQuery( "SELECT * FROM #__mt_cfvalues_att WHERE link_id = '" . $listing . "'" );
+		$listing_atts = $this->_db->loadObjectList();
+		foreach($listing_atts AS $listing_att) {
+			$file_extension = pathinfo($listing_att->raw_filename);
+			$file_extension = strtolower($file_extension['extension']);
+			
+			$this->_db->setQuery( 
+				'INSERT INTO #__mt_cfvalues_att (`link_id`,`cf_id`,`raw_filename`,`filename`,`filesize`,`extension`) '
+				. 'VALUES (' . $new_listing_id . ', ' . $this->_db->Quote($listing_att->cf_id). ', ' . $this->_db->Quote($listing_att->raw_filename). ', ' . $this->_db->Quote($listing_att->filename). ', ' . $this->_db->Quote($listing_att->filesize). ', ' . $this->_db->Quote($listing_att->extension). ')' );
+			$this->_db->query();
+			$att_id = $this->_db->insertid();
+			
+			$this->_db->setQuery( 'UPDATE #__mt_cfvalues_att SET raw_filename = ' . $this->_db->Quote($att_id . '.' . $file_extension) . ' WHERE att_id = ' . $this->_db->Quote($att_id) . ' LIMIT 1' );
+			$this->_db->query();
+			
+			copy( 
+				$mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_attachments') . $listing_att->raw_filename,
+				$mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_attachments') . $att_id . "." . $file_extension 
+			);
+		}
 
 		# Copy listing's images
 		$this->_db->setQuery( "SELECT filename, ordering FROM #__mt_images WHERE link_id = '" . $listing . "'" );
 		$listing_images = $this->_db->loadObjectList();
-		if(count($listing_images) && is_writable($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_small_image')) && is_writable($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_medium_image')) && is_writable($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_original_image')) ) {
-			// $this->_db->setQuery( 'INSERT INTO #__mt_images (`link_id`,`filename`,`ordering`) '
-			// 	. 'SELECT ' . $new_listing_id . ', filename, ordering FROM #__mt_images WHERE link_id = ' . $listing);
-			// $this->_db->query();
+		if(
+			count($listing_images) 
+			&& is_writable($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_small_image')) 
+			&& is_writable($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_medium_image')) 
+			&& is_writable($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_original_image')) 
+		) {
 			foreach($listing_images AS $listing_image) {
 				$file_extension = pathinfo($listing_image->filename);
 				$file_extension = strtolower($file_extension['extension']);
@@ -1371,15 +1410,6 @@ class mtLinks extends mosDBTable {
 				$this->_db->query();
 			}
 		}
-		// global $mosConfig_absolute_path, $mt_listing_image_dir;
-		// $file = $mosConfig_absolute_path.$mt_listing_image_dir.$org_listing->link_image;
-		// if ( $org_listing->link_image ) {
-		// 	if( 
-		// 	copy( $file, $mosConfig_absolute_path.$mt_listing_image_dir.$new_listing_id."_".(substr($org_listing->link_image, strpos( $org_listing->link_image, "_" )+1 )) ) ) {
-		// 		$this->_db->setQuery( "UPDATE #__mt_links SET link_image = '".$new_listing_id."_".(substr($org_listing->link_image, strpos( $org_listing->link_image, "_" )+1 ))."' WHERE link_id = '".$new_listing_id."'" );
-		// 		$this->_db->query();
-		// 	}
-		// }
 
 		# Create CL mapping
 		$this->_db->setQuery( "INSERT INTO #__mt_cl ( link_id, cat_id, main )  VALUES( '".$new_listing_id."', '".$org_listing->cat_id."', '1' )" );
@@ -1398,7 +1428,7 @@ class mtLinks extends mosDBTable {
 			foreach( $reviews AS $review ) {
 				// Get original review
 				$this->_db->setQuery( "SELECT * FROM #__mt_reviews WHERE rev_id = '".$review."'" );
-				$this->_db->loadObject( $org_review );
+				$org_review = $this->_db->loadObject();
 
 				// Change link_id
 				$org_review->link_id = $new_listing_id;
@@ -1424,6 +1454,9 @@ class mtLinks extends mosDBTable {
 	function getLinkModified( $original_link_id, $formpost ) {
 		global $mtconf;
 		
+		$jdate		= JFactory::getDate();
+		$now		= $jdate->toMySQL();
+		
 		$postdata_cf = array();
 		foreach( $formpost AS $k => $v ) {
 			if ( substr($k,0,2) == "cf" ) {
@@ -1435,10 +1468,12 @@ class mtLinks extends mosDBTable {
 		$trigger_modified_listing = $mtconf->get( 'trigger_modified_listing' );
 		if( !empty($trigger_modified_listing) ) {
 			$array_trigger_fields = explode(',',$mtconf->get( 'trigger_modified_listing' ));
+			JArrayHelper::toInteger($array_trigger_fields, array());
+			
 			// $originalRow = new mtLinks( $this->_db );
 			// $originalRow->load( $original_link_id );
 			$this->_db->setQuery( 'SELECT * FROM #__mt_links WHERE link_id = ' . $original_link_id . ' LIMIT 1');
-			$this->_db->loadObject($originalRow);
+			$originalRow = $this->_db->loadObject();
 			
 			$this->_db->setQuery( 'SELECT cf_id, value FROM #__mt_cfvalues WHERE link_id = ' . $original_link_id . ' AND cf_id IN (\'' . implode('\',\'',$array_trigger_fields) . '\')');
 			$cfvalues = $this->_db->loadObjectList('cf_id');
@@ -1464,7 +1499,7 @@ class mtLinks extends mosDBTable {
 							if( $v == $originalRow->{substr($k,2)} ) {
 								// No change
 							} else {
-								return date( 'Y-m-d H:i:s', time() + ( $mtconf->getjconf('offset') * 60 * 60 ) );
+								return $now;
 							}
 						}
 						// If changed, update link_modified
@@ -1474,13 +1509,13 @@ class mtLinks extends mosDBTable {
 					if( $v == $originalRow->$k ) {
 						// No change
 					} else {
-						return date( 'Y-m-d H:i:s', time() + ( $mtconf->getjconf('offset') * 60 * 60 ) );
+						return $now;
 					}
 				}
 			}
 			return $originalRow->link_modified;
 		} else {
-			return date( 'Y-m-d H:i:s', time() + ( $mtconf->getjconf('offset') * 60 * 60 ) );
+			return $now;
 		}
 	}
 
@@ -1516,13 +1551,12 @@ class mtLinks extends mosDBTable {
 	}
 
 	function getCatName() {
-		global $_MT_LANG;
 
 		$this->_db->setQuery( "SELECT c.cat_id, cat_name FROM #__mt_cl AS cl, #__mt_cats AS c WHERE cl.cat_id = c.cat_id AND link_id = $this->link_id AND main = 1 LIMIT 1" );
-		$this->_db->loadObject( $cat );
+		$cat = $this->_db->loadObject();
 
 		if ( !isset($cat->cat_id) || $cat->cat_id == 0 ) {
-			return $_MT_LANG->ROOT;
+			return JText::_( 'Root' );
 		} else {
 
 			return $cat->cat_name;
@@ -1535,7 +1569,7 @@ class mtLinks extends mosDBTable {
 /***
 * Custom Fields
 */
-class mtCustomFields extends mosDBTable {
+class mtCustomFields extends JTable {
 	var $cf_id=null;
 	var $field_type=null;
 	var $caption=null;
@@ -1555,14 +1589,15 @@ class mtCustomFields extends mosDBTable {
 	var $hide_caption=null;
 	var $advanced_search=null;
 	var $simple_search=null;
+	var $tag_search=null;
 	var $details_view=null;
 	var $summary_view=null;
 	var $search_caption=null;
 	var $params=null;
 	var $iscore=null;
 	
-	function mtCustomFields( &$db ) {
-		$this->mosDBTable( '#__mt_customfields', 'cf_id', $db );
+	function __construct( &$_db ) {
+		parent::__construct( '#__mt_customfields', 'cf_id', $_db );
 	}
 
 }
@@ -1570,7 +1605,7 @@ class mtCustomFields extends mosDBTable {
 /**
 * Reviews Table class
 */
-class mtReviews extends mosDBTable {
+class mtReviews extends JTable {
 	var $rev_id=null;
 	var $link_id=null;
 	var $user_id=null;
@@ -1587,27 +1622,29 @@ class mtReviews extends mosDBTable {
 	var $ownersreply_approved=null;
 	var $ownersreply_admin_note=null;
 
-	function mtReviews( &$db ) {
-		$this->mosDBTable( '#__mt_reviews', 'rev_id', $db );
+	function __construct( &$_db ) {
+		parent::__construct( '#__mt_reviews', 'rev_id', $_db );
 	}
 
 	/***
 	* Approve Review
 	*/
 	function approveReview( $approve=1, $rev_id=0 ) {
-		global $_MT_LANG, $mosConfig_mailfrom, $mosConfig_fromname, $mtconf;
-		//$mt_notifyuser_review_approved, 
+		global $mainframe, $mtconf;
+
+		$MailFrom 	= $mainframe->getCfg('mailfrom');
+		$FromName 	= $mainframe->getCfg('fromname');
 
 		# Determine which Review ID to use. If none, return false.
 		if ( $this->rev_id > 0 ) {
-			$rid = $this->rev_id;
+			$rid = (int) $this->rev_id;
 		} elseif ( $rev_id > 0) {
-			$rid = $rev_id;
+			$rid = (int) $rev_id;
 		} else {
 			return false;
 		}
 
-		$this->_db->setQuery("UPDATE #__mt_reviews SET rev_approved = '".$approve."' WHERE rev_id = '".$rid."'");
+		$this->_db->setQuery("UPDATE #__mt_reviews SET rev_approved = '" . intval($approve) . "' WHERE rev_id = '".$rid."'");
 	
 		if (!$this->_db->query()) {
 			echo "<script> alert('".$this->_db->getErrorMsg()."'); window.history.go(-1); </script>\n";
@@ -1616,25 +1653,48 @@ class mtReviews extends mosDBTable {
 	
 			$this->_db->setQuery("UPDATE #__mt_reviews SET admin_note = '' WHERE rev_id = '".$rid."'");
 			$this->_db->query();
+			
+			if( $approve == 1 )
+			{
+				// Send approval notification to reviewer
+				if ( $mtconf->get('notifyuser_review_approved') == 1 ) {
 
-			// Send approval notification to user
-			if ( $mtconf->get('notifyuser_review_approved') == 1 && $approve == 1 ) {
+					$this->_db->setQuery( 
+						"SELECT u.email, l.link_name, l.link_id FROM #__mt_reviews AS r"
+						.	"\nLEFT JOIN #__users AS u ON u.id = r.user_id"
+						.	"\nLEFT JOIN #__mt_links AS l ON l.link_id = r.link_id"
+						.	"\nWHERE r.rev_id = '".$rid."' LIMIT 1"
+					);
+					$row = $this->_db->loadObject();
 
-				$this->_db->setQuery( 
-					"SELECT u.email, l.link_name FROM #__mt_reviews AS r"
-					.	"\nLEFT JOIN #__users AS u ON u.id = r.user_id"
-					.	"\nLEFT JOIN #__mt_links AS l ON l.link_id = r.link_id"
-					.	"\nWHERE r.rev_id = '".$rid."' LIMIT 1"
-				);
-				$this->_db->loadObject($row);
+					$link_url = $mainframe->getSiteURL() . 'index.php?option=com_mtree&task=viewlink&link_id=' . $row->link_id;
 
-				if ( $row->email <> '' ) {
-					$subject = $_MT_LANG->REVIEW_APPROVED_SUBJECT;
-					$body = sprintf($_MT_LANG->REVIEW_APPROVED_MSG, $row->link_name);
-					mosMail( $mosConfig_mailfrom, $mosConfig_fromname, $row->email, $subject, $body );
-
+					if ( $row->email <> '' ) {
+						$subject = JText::_( 'Review approved subject' );
+						$body = sprintf(JText::_( 'Review approved msg' ), $row->link_name, $link_url);
+						JUTility::sendMail( $MailFrom, $FromName, $row->email, $subject, $body );
+					}
 				}
 
+				// Send notification to listing owner
+				if ( $mtconf->get('notifyowner_review_added') == 1 ) {
+					// Notification can only be sent when this listing is owned by a registered user
+					$this->_db->setQuery(
+						'SELECT u.email, l.link_name, l.link_id FROM #__mt_reviews AS r'
+						. ' LEFT JOIN #__mt_links AS l ON l.link_id = r.link_id'
+						. ' LEFT JOIN #__users AS u ON u.id = l.user_id'
+						. ' WHERE r.rev_id = ' . $rid . ' LIMIT 1'
+						);
+					$row = $this->_db->loadObject();
+
+					$link_url = $mainframe->getSiteURL() . 'index.php?option=com_mtree&task=viewlink&link_id=' . $row->link_id;
+
+					if ( $row->email <> '' ) {
+						$subject = sprintf(JText::_( 'Review added subject' ), $row->link_name);
+ 						$body = sprintf(JText::_( 'Review added msg' ), $row->link_name, $link_url );
+						JUTility::sendMail( $MailFrom, $FromName, $row->email, $subject, $body );
+					}
+				}
 			}
 
 			return true;
@@ -1648,14 +1708,14 @@ class mtReviews extends mosDBTable {
 * Votes Table class
 */
 /*
-class mtVotes extends mosDBTable {
+class mtVotes extends JTable {
 	var $vote_ip=null;
 	var $user_id=null;
 	var $vote_date=null;
 	var $link_id=null;
 
 	function mtVotes( &$db ) {
-		$this->mosDBTable( '#__mt_votes', 'vote_ip', $db );
+		$this->JTable( '#__mt_votes', 'vote_ip', $db );
 	}
 }
 */
@@ -1663,12 +1723,12 @@ class mtVotes extends mosDBTable {
 /**
 * Related Categories Table class
 */
-class mtRelCats extends mosDBTable {
+class mtRelCats extends JTable {
 	var $cat_id=null;
 	var $rel_id=null;
 
-	function mtRelCats( &$db ) {
-		$this->mosDBTable( '#__mt_relcats', 'cat_id', $db );
+	function __construct( &$_db ) {
+		parent::__construct( '#__mt_relcats', 'cat_id', $_db );
 	}
 	
 	function setcatid( $cat_id ) {
@@ -1709,7 +1769,7 @@ class mtRelCats extends mosDBTable {
 /**
 * Related Categories Table class
 */
-class mtClaims extends mosDBTable {
+class mtClaims extends JTable {
 	var $claim_id=null;
 	var $user_id=null;
 	var $link_id=null;
@@ -1717,7 +1777,7 @@ class mtClaims extends mosDBTable {
 	var $admin_note=null;
 }
 
-class mtReports extends mosDBTable {
+class mtReports extends JTable {
 	var $report_id=null;
 	var $user_id=null;
 	var $guest_name=null;
@@ -1731,31 +1791,31 @@ class mtReports extends mosDBTable {
 /**
 * Field Type Attachments table class
 */
-class mtFieldTypesAtt extends mosDBTable {
+class mtFieldTypesAtt extends JTable {
 	var $fta_id=null;
 	var $ft_id=null;
+	var $raw_filename=null;
 	var $filename=null;
-	var $filedata=null;
 	var $filesize=null;
 	var $extension=null;
 	var $ordering=null;
 
-	function mtFieldTypesAtt( &$db ) {
-		$this->mosDBTable( '#__mt_fieldtypes_att', 'fta_id', $db );
+	function __construct( &$_db ) {
+		parent::__construct( '#__mt_fieldtypes_att', 'fta_id', $_db );
 	}
 }
 
 /**
 * Images Table
 */
-class mtImages extends mosDBTable {
+class mtImages extends JTable {
 	var $img_id=null;
 	var $link_id=null;
 	var $filename=null;
 	var $ordering=null;
 
-	function mtImages( &$db ) {
-		$this->mosDBTable( '#__mt_images', 'img_id', $db );
+	function __construct( &$_db ) {
+		parent::__construct( '#__mt_images', 'img_id', $_db );
 	}
 }
 
@@ -1829,50 +1889,35 @@ class mtImage {
 	}
 
 	function check() {
-		global $_MT_LANG;
 
 		# Is destination directory writable?
 		if( !is_writable($this->directory) ) { 
-			$this->setErrorMsg(sprintf($_MT_LANG->IMAGE_DIR_NOT_WRITABLE, $this->directory));
+			$this->setErrorMsg(sprintf(JText::_( 'Image dir not writable' ), $this->directory));
 			return false;
 		}
 
 		# Is there a specified source path?
 		if ( $this->tmpFile == '' ) {
-			$this->setErrorMsg($_MT_LANG->IMAGE_NOT_SPECIFIED);
+			$this->setErrorMsg(JText::_( 'Image not specified' ));
 			return false;
 		}
 
 		# Uploaded ?
 		if ( !is_uploaded_file($this->tmpFile) ) {
-			$this->setErrorMsg($_MT_LANG->IMAGE_NOT_VALID);
+			$this->setErrorMsg(JText::_( 'Image not valid' ));
 			return false;
 		} 
 
 		# No duplicate
 		if ( file_exists($this->directory.$this->imageName) ) {
-			$this->setErrorMsg($_MT_LANG->DUPLICATE_IMAGE);
+			$this->setErrorMsg(JText::_( 'Duplicate image' ));
 			return false;
 		}
 		
 		return true;
 
 	}
-/*
-	function moveToMedia( $file ) {
-		global $mosConfig_absolute_path;
-		
-		$newTmpFile = $mosConfig_absolute_path.'/media/'.basename($file);
 
-		if ( move_uploaded_file( $file, $newTmpFile ) ) {
-			$this->tmpFile = $newTmpFile;
-			return true;
-		} else {
-			return false;
-		}
-		
-	}
-*/
 	function getImageData() {
 		return $this->imageData;
 	}
@@ -1905,16 +1950,14 @@ class mtImage {
 		if($fp = fopen($this->directory . $this->imageName,'w')) {
 			if(fwrite($fp,$this->imageData) === false) {
 				echo '<br />Unable to write to file: ' . $this->directory . $this->imageName;
-				break;
 			}
 		} else {
 			echo '<br />Unable to open for writing: ' . $this->directory . $this->imageName;
-			break;
 		}
 	}
 	
 	function resize()	{
-		global $mtconf, $mosConfig_absolute_path;
+		global $mtconf;
 
 		$imagetype = array( 1 => 'GIF', 2 => 'JPG', 3 => 'PNG', 4 => 'SWF', 5 => 'PSD', 6 => 'BMP', 7 => 'TIFF', 8 => 'TIFF', 9 => 'JPC', 10 => 'JP2', 11 => 'JPX', 12 => 'JB2', 13 => 'SWC', 14 => 'IFF');
 		
@@ -2041,20 +2084,20 @@ class mtImage {
 				} 
 				
 				if ($imginfo[2] == 'PNG') { 
-					$cmd = $mtconf->get('img_netpbmpath') . "pngtopnm $this->tmpFile | " . $mtconf->get('img_netpbmpath') . "pnmscale -xysize $destWidth ".(int)$destHeight." | " . $mtconf->get('img_netpbmpath') . "pnmtopng > $mosConfig_absolute_path/media/$this->imageName" ; 
+					$cmd = $mtconf->get('img_netpbmpath') . "pngtopnm $this->tmpFile | " . $mtconf->get('img_netpbmpath') . "pnmscale -xysize $destWidth ".(int)$destHeight." | " . $mtconf->get('img_netpbmpath') . "pnmtopng > " . JPATH_ROOT.DS.'media'.DS.$this->imageName; 
 				}	else if ($imginfo[2] == 'JPG')	{ 
-					$cmd = $mtconf->get('img_netpbmpath') . "jpegtopnm $this->tmpFile | " . $mtconf->get('img_netpbmpath') . "pnmscale -xysize $destWidth ".(int)$destHeight." | " . $mtconf->get('img_netpbmpath') . "pnmtojpeg -quality=$this->quality > $mosConfig_absolute_path/media/$this->imageName" ;
+					$cmd = $mtconf->get('img_netpbmpath') . "jpegtopnm $this->tmpFile | " . $mtconf->get('img_netpbmpath') . "pnmscale -xysize $destWidth ".(int)$destHeight." | " . $mtconf->get('img_netpbmpath') . "pnmtojpeg -quality=$this->quality > ".JPATH_ROOT.DS.'media'.DS.$this->imageName;
 				}	else if ($imginfo[2] == 'GIF') { 
-					$cmd = $mtconf->get('img_netpbmpath') . "giftopnm $this->tmpFile | " . $mtconf->get('img_netpbmpath') . "pnmscale -xysize $destWidth ".(int)$destHeight." | " . $mtconf->get('img_netpbmpath') . "ppmquant 256 | " . $mtconf->get('img_netpbmpath') . "ppmtogif > $mosConfig_absolute_path/media/$this->imageName" ; 
+					$cmd = $mtconf->get('img_netpbmpath') . "giftopnm $this->tmpFile | " . $mtconf->get('img_netpbmpath') . "pnmscale -xysize $destWidth ".(int)$destHeight." | " . $mtconf->get('img_netpbmpath') . "ppmquant 256 | " . $mtconf->get('img_netpbmpath') . "ppmtogif > " . JPATH_ROOT.DS.'media'.DS.$this->imageName; 
 				}
 				exec($cmd);
 				break;
 			case "imagemagick":
 
 				$tmp_name = substr(strrchr($this->directory.$this->imageName, "/"), 1);
-				copy($this->tmpFile, $mosConfig_absolute_path.'/media/'.$tmp_name);
-				$uploadfile = $mosConfig_absolute_path.'/media/'.$tmp_name;
-				$cmd = $mtconf->get('img_impath')."convert -resize ".$destWidth."x".(int)$destHeight." $uploadfile $mosConfig_absolute_path/media/$this->imageName";
+				copy($this->tmpFile, JPATH_ROOT.DS.'media'.DS.$tmp_name);
+				$uploadfile = JPATH_ROOT.DS.'media'.DS.$tmp_name;
+				$cmd = $mtconf->get('img_impath')."convert -resize ".$destWidth."x".(int)$destHeight." $uploadfile ".JPATH_ROOT.DS.'media'.DS.$this->imageName;
 				exec($cmd);
 				unlink($uploadfile);
 
@@ -2062,11 +2105,11 @@ class mtImage {
 		}
 		
 		if( $this->method == 'netpbm' || $this->method == 'imagemagick' ) {
-			$filename = $mosConfig_absolute_path . '/media/' . $this->imageName;
+			$filename = JPATH_ROOT.DS.'media'.DS.$this->imageName;
 			$handle = fopen($filename, "r");
 			$this->imageData = fread($handle, filesize($filename));
 			fclose($handle);
-			unlink($mosConfig_absolute_path . '/media/' . $this->imageName);
+			unlink(JPATH_ROOT.DS.'media'.DS.$this->imageName);
 		}
 
 		# Set mode of uploaded picture
@@ -2125,13 +2168,12 @@ class mtDisplay {
 	}
 
 	function display() {
-		global $_MT_LANG;
 		?>
 		<table width="100%" cellpadding="2" cellspacing="0" border="0" style="border: 1px solid #C0C0C0">
 		<?php
 		for( $i=0; $i<count($this->captions); $i++ ) {
 
-			if ( $this->captions[$i] == $_MT_LANG->NAME ) {
+			if ( $this->captions[$i] == JText::_( 'Name' ) ) {
 				echo "<tr>";
 				echo '<td colspan="2" align="center">' . $this->data[$i] . "</td>";
 				echo "</tr>";

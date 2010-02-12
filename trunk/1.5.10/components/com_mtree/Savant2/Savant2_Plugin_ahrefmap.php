@@ -4,14 +4,13 @@
 *
 * @package Mosets Tree 1.50
 * @copyright (C) 2005 Mosets Consulting
-* @url http://www.Mosets.com/
+* @url http://www.mosets.com/
 * @author Lee Cher Yeong <mtree@mosets.com>
 **/
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
 //Base plugin class.
-global $mosConfig_absolute_path;
-require_once $mosConfig_absolute_path.'/components/com_mtree/Savant2/Plugin.php';
+require_once JPATH_ROOT.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS.'Plugin.php';
 
 class Savant2_Plugin_ahrefmap extends Savant2_Plugin {
 
@@ -27,11 +26,11 @@ class Savant2_Plugin_ahrefmap extends Savant2_Plugin {
 	
 	function plugin( &$link, $attr=null, $show_arrow=1 )
 	{
-		global $_MT_LANG, $mtconf;
+		global $mtconf;
 		//, $mt_map, $mt_show_map;
 
 		# Load Parameters
-		$params =& new mosParameters( $link->attribs );
+		$params =& new JParameter( $link->attribs );
 		$params->def( 'show_map', $mtconf->get('show_map') );
 		$params->def( 'map', $mtconf->get('map') );
 		$html = '';
@@ -46,11 +45,11 @@ class Savant2_Plugin_ahrefmap extends Savant2_Plugin {
 			switch($params->get('map')) {
 				# Map Quest
 				case 'mapquest':
-					$html .= '<a href=" http://www.mapquest.com/maps/map.adp?';
+					$html .= '<a href="http://www.mapquest.com/maps/map.adp?';
 					$html .= 'address='.urlencode($link->address);
 					$html .= '&city='.urlencode($link->city);
 					$html .= '&state='.urlencode($link->state);
-					$html .= '&zip='.urlencode($link->zip);
+					$html .= '&zip='.urlencode($link->postcode);
 					$html .= '&country='.urlencode($link->country);
 					$html .= '"';
 					break;
@@ -116,7 +115,7 @@ class Savant2_Plugin_ahrefmap extends Savant2_Plugin {
 				$html .= " $attr";
 			}
 			
-			$html .= ' target="_blank">'.$_MT_LANG->MAP	."</a>";
+			$html .= ' target="_blank">'.JText::_( 'Map' )	."</a>";
 
 			# Return the map link
 			return $html;

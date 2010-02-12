@@ -4,23 +4,22 @@
 *
 * @package Mosets Tree 0.8
 * @copyright (C) 2004 Lee Cher Yeong
-* @url http://www.Mosets.com/
-* @author Lee Cher Yeong <cy@mosets.com>
+* @url http://www.mosets.com/
+* @author Lee Cher Yeong <mtree@mosets.com>
 **/
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
 //Base plugin class.
-global $mosConfig_absolute_path;
-require_once $mosConfig_absolute_path.'/components/com_mtree/Savant2/Plugin.php';
+require_once JPATH_ROOT.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS.'Plugin.php';
 
 class Savant2_Plugin_ahrefprint extends Savant2_Plugin {
 	
 	function plugin( &$link, $attr=null )
 	{
-		global $mosConfig_live_site, $Itemid, $_MT_LANG, $mtconf;
+		global $Itemid, $mtconf;
 
 		# Load Parameters
-		$params =& new mosParameters( $link->attribs );
+		$params =& new JParameter( $link->attribs );
 		$params->def( 'show_print', $mtconf->get('show_print') );
 
 		if ( $params->get( 'show_print' ) == 1 ) {
@@ -29,8 +28,8 @@ class Savant2_Plugin_ahrefprint extends Savant2_Plugin {
 			// $html = '<img src="images/M_images/indent1.png" width="9" height="9" />';
 
 			$html .= '<a ';
-
-			$html .= 'href="javascript:void window.open(\''.$mosConfig_live_site.'/index2.php?option=com_mtree&amp;task=print&amp;link_id='.$link->link_id.'&amp;Itemid='.$Itemid.'\', \'win2\', \'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no\');" title="Print"';
+			$html .= 'href="index.php?option=com_mtree&amp;task=print&amp;link_id='.$link->link_id.'&amp;tmpl=component&amp;Itemid='.$Itemid.'" ';
+			$html .= 'onclick="javascript:void window.open(this.href, \'win2\', \'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=480,directories=no,location=no\'); return false;" title="Print"';
 			
 			# Insert attributes
 			if (is_array($attr)) {
@@ -45,7 +44,7 @@ class Savant2_Plugin_ahrefprint extends Savant2_Plugin {
 				$html .= " $attr";
 			}
 			
-			$html .= '>'.$_MT_LANG->PRINT	."</a>";
+			$html .= '>'.JText::_( 'Print' )	."</a>";
 
 			# Return the print link
 			return $html;

@@ -71,7 +71,7 @@ if ( count($langActive)>0 ) {
 			$outString .= '<noscript>' .$noscriptString. '</noscript>';
 		}
 	} elseif (count( $langOptions ) == 1) {
-		$outString = '<div id="jflanguageselection"><ul class="jflanguageselection"><li id="active_language"><a href="' .$langOptions[0]->value. '"><span lang="' .$langOptions[0]->value. '" xml:lang="' .$langOptions[0]->value. '">' .$langOptions[0]->text. '</a></li></ul></div>';
+		$outString = '&nbsp;&nbsp;<a href="' .$langOptions[0]->value. '"><span lang="' .$langOptions[0]->value. '" xml:lang="' .$langOptions[0]->value. '">' .$langOptions[0]->text. '</a>';
 	}
 
 	echo $outString;

@@ -4,7 +4,8 @@ defined('_JEXEC') or die('Restricted access'); ?>
 <div class="roknewspager-wrapper">
 	<?php foreach ($list as $item) :  ?>
 	        <div class="roknewspager-div">
-	            <a href="<?php echo $item->link; ?>" class="roknewspager-title"><?php echo $item->title; ?></a><br>
+		    <a href="<?php echo $item->link; ?>" class="roknewspager-title"><?php echo $item->title; ?></a><br>
+
 	            <?php echo $item->introtext; ?>
 	        </div>
 	<?php endforeach; ?>

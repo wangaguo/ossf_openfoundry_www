@@ -1,17 +1,16 @@
 <?php
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
 /**
 * Base plugin class.
 */
-global $mosConfig_absolute_path;
-require_once $mosConfig_absolute_path.'/components/com_mtree/Savant2/Plugin.php';
+require_once JPATH_ROOT.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS.'Plugin.php';
 
 /**
 * Mosets Tree 
 *
 * @package Mosets Tree 2.0
-* @copyright (C) 2007-2008 Lee Cher Yeong
+* @copyright (C) 2007-2009 Lee Cher Yeong
 * @url http://www.mosets.com/
 * @author Lee Cher Yeong <mtree@mosets.com>
 **/
@@ -38,7 +37,7 @@ class Savant2_Plugin_mt_image extends Savant2_Plugin {
 		$html = '<img border="0" src="' . $mtconf->getjconf('live_site').$path.$filename . '"';
 
 		if (substr(PHP_OS, 0, 3) != 'WIN' ) {
-			$listingimage_info = @getimagesize($mtconf->getjconf('live_site').$path.$filename);
+			$listingimage_info = @getimagesize($mtconf->getjconf('absolute_path').$path.$filename);
 			if($listingimage_info !== false && !empty($listingimage_info[0]) && $listingimage_info[0] > 0 && !empty($listingimage_info[1]) && $listingimage_info[1] >0) {
 				$html .= ' width="'.$listingimage_info[0].'" height="'.$listingimage_info[1].'"';
 			}

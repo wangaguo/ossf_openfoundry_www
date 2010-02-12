@@ -14,11 +14,9 @@ defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.'
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 *
 */
-
 // load the html drawing class, MUST include the option for components
 require_once( $mosConfig_absolute_path . '/components/com_letterman/letterman.html.php');
 require_once( $mosConfig_absolute_path . '/components/com_letterman/letterman.class.php');
-
 // Load configuration in constructor
 $letterman = new mosLetterman($database);
 
@@ -227,7 +225,7 @@ function listAll( $letterman_rights )
 	$pageNav = new mosPageNav( $num_rows, $limitstart, $limit );
 	
 	$sql .= "\nORDER BY created DESC";
-//	$sql .= "\nLIMIT $limitstart, $limit";
+	//$sql .= "\nLIMIT $limitstart, $limit";
 	$database->setQuery( $sql );
     
 	$newsletters = $database->loadObjectList();
@@ -241,8 +239,7 @@ function listAll( $letterman_rights )
 function showItems( $uid, $gid, $is_editor, $pop, $option ) {
 	global $database, $mainframe, $my;
 	global $mosConfig_offset, $mosConfig_live_site;
-	$gid=0;
-
+	$gid = 0;
 	$now = date( "Y-m-d H:i:s", time()+$mosConfig_offset*60*60 );
 
 	if ($is_editor) {
@@ -278,7 +275,7 @@ function showItems( $uid, $gid, $is_editor, $pop, $option ) {
 	}
 }
 function saveSubscriber($name, $email){
-	global $database, $my, $Itemid, $mosConfig_live_site, $mosConfig_fromname, $mosConfig_mailfrom,
+	global $database, $my, $Itemid, $mosConfig_live_site, 
 			$mosConfig_absolute_path, $lm_params;
     // Added to prevent spamming
 	lm_SpoofCheck(NULL,1);
@@ -321,7 +318,7 @@ function saveSubscriber($name, $email){
         }
         $content = str_replace( "[mosConfig_live_site]", $mosConfig_live_site, $content );
         
-        if( !$send = mosMail( $mosConfig_mailfrom, $mosConfig_fromname, $email, $subject, $content) ) {
+        if( !$send = mosMail("", "", $email, $subject, $content) ) {
           echo '<script type="text/javascript">alert("'.LM_ERROR_SENDING_SUBSCRIBE. $send . '");</script>';
         }
     
@@ -332,7 +329,7 @@ function saveSubscriber($name, $email){
 }
 
 function deleteSubscriber($name, $email ){
-	global $database, $Itemid, $my, $mosConfig_live_site, $mosConfig_fromname, $mosConfig_mailfrom;
+	global $database, $Itemid, $my, $mosConfig_live_site;
 	lm_SpoofCheck(NULL,1);
     if( $name != "" ) {
     	$check = "SELECT user_id FROM #__letterman_subscribers WHERE subscriber_name = '" . $name . "' AND subscriber_email = '" . $email . "'";
@@ -358,7 +355,7 @@ function deleteSubscriber($name, $email ){
         $content = str_replace( "[NAME]", $name, LM_UNSUBSCRIBE_MESSAGE );
         $content = str_replace( "[mosConfig_live_site]", $mosConfig_live_site, $content );
         
-        if( !$send = mosMail($mosConfig_mailfrom, $mosConfig_fromname, $email, $subject, $content) ) {
+        if( !$send = mosMail("", "", $email, $subject, $content) ) {
           echo '<script type="text/javaScript">alert("'.LM_ERROR_SENDING_UNSUBSCRIBE . $send . '");</script>';
         }
 		 
@@ -477,5 +474,4 @@ function removeNewsletter( $id, $option ) {
         mosRedirect( "index.php?option=$option&Itemid=$Itemid" );
     }
 }
-
 ?>

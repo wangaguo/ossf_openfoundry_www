@@ -33,7 +33,7 @@
 * 	{tpl $tplname}
 * 
 * 
-* $Id: Savant2_Compiler_basic.php,v 1.5 2004/10/14 16:37:50 pmjones Exp $
+* $Id: Savant2_Compiler_basic.php 357 2008-08-14 10:09:37Z cy $
 * 
 * @author Paul M. Jones <pmjones@ciaweb.net>
 * 

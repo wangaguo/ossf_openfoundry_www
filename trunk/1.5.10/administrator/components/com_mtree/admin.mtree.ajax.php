@@ -1,18 +1,17 @@
 <?php
 /**
-* Mosets Tree admin 
-*
-* @package Mosets Tree 2.0
-* @copyright (C) 2007 Mosets Consulting
-* @url http://www.Mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
+ * @version		$Id: admin.mtree.ajax.php 652 2009-04-15 14:26:05Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-// ensure this file is being included by a parent file
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
-$mosConfig_debug = 0;
-$parent_cat_id = intval(mosGetParam( $_REQUEST, 'parent_cat_id', 0 ));
-$task2 = mosGetParam($_REQUEST,'task2','');
+defined('_JEXEC') or die('Restricted access');
+
+$parent_cat_id	= JRequest::getInt('parent_cat_id', 0);
+$task2			= JRequest::getCmd('task2', '');
 
 switch($task2){
 	case 'spiderurl':
@@ -32,12 +31,12 @@ switch($task2){
 		$return = $mtPathWay->printPathWayFromCat_withCurrentCat($parent_cat_id,0);
 		$return .= "\n";
 		
-		$database->setQuery( 'SELECT cat_id, cat_name FROM #__mt_cats WHERE cat_parent = '. $parent_cat_id . ' ORDER BY cat_name ASC' );
+		$database->setQuery( 'SELECT cat_id, cat_name FROM #__mt_cats WHERE cat_parent = ' . $database->quote($parent_cat_id) . ' ORDER BY cat_name ASC' );
 		$cats = $database->loadObjectList();
 		if($parent_cat_id > 0) {
-			$database->setQuery("SELECT cat_parent FROM #__mt_cats WHERE cat_id = '$parent_cat_id' LIMIT 1");
+			$database->setQuery( 'SELECT cat_parent FROM #__mt_cats WHERE cat_id = ' . $database->quote($parent_cat_id) . ' LIMIT 1');
 			$browse_cat_parent = $database->loadResult();
-			$return .= $browse_cat_parent . "|" . $_MT_LANG->ARROW_BACK;
+			$return .= $browse_cat_parent . "|" . JText::_( 'Arrow back' );
 			if(count($cats)>0) {
 				$return .= "\n";
 			}
@@ -57,10 +56,11 @@ switch($task2){
 		break;
 }
 function spiderurl( $option ) {
-	global $database, $_MT_LANG;
+	global $database;
 
-	$url = mosGetParam( $_REQUEST, 'url', '' );
-	$start = mosGetParam( $_REQUEST, 'start', 0 );
+	$url	= JRequest::getVar( 'url', '');
+	$start	= JRequest::getVar( 'start', 0);
+	
 	$error = 0;
 
 	if ( substr($url, 0, 7) <> "http://" ) {
@@ -68,7 +68,7 @@ function spiderurl( $option ) {
 	}
 	
 	if ( empty($url) || $start) {
-		echo "jQuery('#spiderwebsite').html('<img src=\"../components/com_mtree/img/exclamation.png\" style=\"position:relative;top:3px\" /> " . $_MT_LANG->UNABLE_TO_GET_METATAGS . "')";
+		echo "jQuery('#spiderwebsite').html('<img src=\"../components/com_mtree/img/exclamation.png\" style=\"position:relative;top:3px\" /> " . JText::_( 'Unable to get metatags' ) . "')";
 	} else {
 		if(ini_get('allow_url_fopen')) {
 			$metatags = get_meta_tags( $url ) or $error = 1;
@@ -77,14 +77,14 @@ function spiderurl( $option ) {
 		}
 		if ( !$error ) {
 			if ( !empty($metatags['keywords']) ) {
-				echo "document.getElementById('spider_metakey').value='".htmlspecialchars($metatags['keywords'], ENT_QUOTES )."'; \n";
+				echo "document.getElementById('publishingmetakey').value='".htmlspecialchars($metatags['keywords'], ENT_QUOTES )."'; \n";
 			}
 			if ( !empty($metatags['description']) ) {
-				echo "document.getElementById('spider_metadesc').value='".htmlspecialchars($metatags['description'], ENT_QUOTES )."';";
+				echo "document.getElementById('publishingmetadesc').value='".htmlspecialchars($metatags['description'], ENT_QUOTES )."';";
 			}
-			echo "jQuery('#spiderwebsite').html('<img src=\"../components/com_mtree/img/accept.png\" style=\"position:relative;top:3px\" /> " . $_MT_LANG->SPIDER_HAS_BEEN_UPDATED . "')";
+			echo "jQuery('#spiderwebsite').html('<img src=\"../components/com_mtree/img/accept.png\" style=\"position:relative;top:3px\" /> " . JText::_( 'Spider has been updated' ) . "')";
 		} else {
-			echo "jQuery('#spiderwebsite').html('<img src=\"../components/com_mtree/img/exclamation.png\" style=\"position:relative;top:3px\" /> " . $_MT_LANG->UNABLE_TO_GET_METATAGS . "')";
+			echo "jQuery('#spiderwebsite').html('<img src=\"../components/com_mtree/img/exclamation.png\" style=\"position:relative;top:3px\" /> " . JText::_( 'Unable to get metatags' ) . "')";
 		}
 	}
 }
@@ -93,9 +93,9 @@ function checklink(){
 	global $database;
 	
 	$database->setQuery( 'SELECT id, link_id, field, link_name, domain, path FROM #__mt_linkcheck WHERE check_status = \'0\' LIMIT 1');
-	$database->loadObject($link);
+	$link = $database->loadObject();
 
-	$database->setQuery( 'UPDATE #__mt_linkcheck SET check_status=1 WHERE id =\''.$link->id.'\' LIMIT 1' );
+	$database->setQuery( 'UPDATE #__mt_linkcheck SET check_status=1 WHERE id = ' . $database->quote($link->id) . ' LIMIT 1' );
 	$database->query();
 
 	if( count($link) == 1 ) {
@@ -110,7 +110,7 @@ function checklink(){
 		if (!$fp) {
 		  // $output .= "Server unreachable: $errstr ($errno)";
 		 	$output .= "HTTP/1.1 Unable to connect to the server";
-			$database->setQuery( 'UPDATE #__mt_linkcheck SET check_status= \'-1\' WHERE id =\''.$link->id.'\' LIMIT 1' );
+			$database->setQuery( 'UPDATE #__mt_linkcheck SET check_status= \'-1\' WHERE id = ' . $database->quote($link->id) . ' LIMIT 1' );
 			$database->query();
 		
 		} else {
@@ -132,7 +132,7 @@ function checklink(){
 			
 			//}
 			fclose($fp);
-			$database->setQuery( 'UPDATE #__mt_linkcheck SET check_status=2, status_code=\''.$response[1].'\' WHERE id =\''.$link->id.'\' LIMIT 1' );
+			$database->setQuery( 'UPDATE #__mt_linkcheck SET check_status=2, status_code=' . $database->quote($response[1]) . ' WHERE id = ' . $database->quote($link->id) . ' LIMIT 1' );
 			$database->query();
 		}
 		echo $output;
@@ -142,7 +142,10 @@ function checklink(){
 function checklinkcomplete() {
 	global $database, $mtconf;
 	
-	$database->setQuery('UPDATE #__mt_config SET value = \''.date( 'Y-m-d H:i:s', time() - ( $mtconf->getjconf('offset') * 60 * 60 ) ).'\' WHERE varname = \'linkchecker_last_checked\' LIMIT 1');
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
+	
+	$database->setQuery('UPDATE #__mt_config SET value = '.$database->Quote($now).' WHERE varname = \'linkchecker_last_checked\' LIMIT 1');
 	$database->query();
 }
 ?>

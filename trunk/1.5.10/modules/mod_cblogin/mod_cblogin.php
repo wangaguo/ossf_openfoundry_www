@@ -212,7 +212,7 @@ if ( $_CB_framework->myId() ) {
 			else echo '<div style="float:'.$avatar_position.'; margin: 3px 0px 4px 0px; ">';
 			echo '<a href="'.cbSef("index.php?option=com_comprofiler&amp;task=userProfile".$andItemid).'" class="mod_login'.$class_sfx.'">';		
 			echo '<img src="' . htmlspecialchars( $oValue ) . '" style="margin: 0px 1px 3px 1px; border-width:0px;" alt="'.$name
-				 . '" title="'. _UE_MENU_VIEWMYPROFILE_DESC . '" class="mod_login'.$class_sfx.'" id="mod_login_avatar'.$class_sfx.'" />';
+				 . '" title="'. _UE_MENU_VIEWMYPROFILE_DESC . '" class="mod_login'.$class_sfx.'" id="mod_login_avatar'.$class_sfx.'"  />';
 			echo "</a></div>\n";
 			$avatarDisplayed = true;
 		}
@@ -221,25 +221,28 @@ if ( $_CB_framework->myId() ) {
 	if ( trim( $text_show_profile ) ) {
 		if ( ! ( ( $compact && ( $show_remind_register_icons == 2 ) ) || $horizontal ) ) {
 			if ($avatar_position=="default") {
-				echo '<div style="text-align:center; margin-left:auto; margin-right:auto;">';
+				echo '<div style="text-align:left; margin-left:auto; margin-right:auto;">';
 			} else {
 				echo '<div style="float:'.$avatar_position.'; margin: 3px 0px 4px 0px; ">';
 			}
 		}
-		echo '<a href="'.cbSef("index.php?option=com_comprofiler&amp;task=userProfile".$andItemid).'" class="mod_login'.$class_sfx.'">';		
+		echo "Hi,&nbsp;&nbsp;";
+		echo '<a href="'.cbSef("index.php?option=com_content&view=article&id=2068&Itemid=87&lang=tw").'" class="mod_login'.$class_sfx.'">';		
+		//echo '<a href="'.cbSef("index.php?option=com_comprofiler&amp;task=userProfile".$andItemid).'" class="mod_login'.$class_sfx.'">';		
 		echo '<span title="' . _UE_MENU_VIEWMYPROFILE_DESC . '" id="mod_login_showprofile'.$class_sfx.'">';
 		if ( $show_remind_register_icons >= 1 ) {
 			echo '<img src="' . $urlImgPath . 'username.png" alt="' . _UE_MENU_VIEWMYPROFILE_DESC . '" width="25px" height="20px" style="border-width:0px;cursor:pointer;" /> ';
 		}
-		if ( $show_remind_register_icons <= 1 ) {
-			if ( defined( $text_show_profile ) ) {
-				echo constant( $text_show_profile );
-			} else {
-				echo $text_show_profile;
-			}
-		}
+		echo sprintf($name);
+//		if ( $show_remind_register_icons <= 1 ) {
+//			if ( defined( $text_show_profile ) ) {
+//				echo constant( $text_show_profile );
+//			} else {
+//				echo $text_show_profile;
+//			}
+//		}
 		echo '</span>';
-		echo '</a>';
+		echo '</a>&nbsp;&nbsp;|&nbsp;&nbsp;';
 		if ( ! ( ( $compact && ( $show_remind_register_icons == 2 ) ) || $horizontal ) ) {
 			echo "</div>\n";
 		}
@@ -506,8 +509,10 @@ if ( $_CB_framework->myId() ) {
 			$buttonValue	=	_UE_BUTTON_LOGOUT;
 			break;
 	}
-	echo '<input type="submit" name="Submit" class="button'.$class_sfx.'" value="' . $buttonValue . '"' . $buttonStyle . ' />';
-
+	echo '&nbsp;|&nbsp;&nbsp;<input type="submit" name="Submit" class="button" value="'.JText::_('BUTTON_LOGOUT').'" />&nbsp;&nbsp;|';
+	//echo '<input type="submit" name="Submit" class="button'.$class_sfx.'" value="' . $buttonValue . '"' . $buttonStyle . ' />';
+	echo '<input type="hidden" name="Submit" class="button'.$class_sfx.'" value="' . $buttonValue . '"' . $buttonStyle . ' />';
+	//echo '&nbsp;&nbsp;|&nbsp;&nbsp;<a href="index.php?option=com_user&view=login" >Logout</a>';
 	echo "\n".'<input type="hidden" name="op2" value="logout" />'."\n";
 	echo '<input type="hidden" name="lang" value="' . $_CB_framework->getCfg( 'lang' ) . '" />'."\n";
 	echo '<input type="hidden" name="return" value="B:' . base64_encode( $logout ) . '" />'."\n";
@@ -633,17 +638,17 @@ if ( $_CB_framework->myId() ) {
 	$bgstyleUser			=	'';
 	$bgstylePass			=	'';
 	if ( $compact ) {
-		if ( $show_username_pass_icons >= 1 ) {
-			$bgstyleUser	.=	' style="background-image:url(' . $urlImgPath . 'username.png); background-repeat: no-repeat; background-position: 0px 0px; padding-left: 30px; min-height: 18px;" ';
-			$bgstylePass	.=	' style="background-image:url(' . $urlImgPath . 'password.png); background-repeat: no-repeat; background-position: 0px 0px; padding-left: 30px; min-height: 18px;" ';
-		}
-		if ( $show_username_pass_icons <= 1 ) {
-			$bgstyleUser	.=	" alt=\"" . $userNameText . "\" value=\"" . $userNameText . "\" "
-							.	"onfocus=\"if (this.value=='" . $userNameText . "') this.value=''\" onblur=\"if(this.value=='') { this.value='" . $userNameText . "'; return false; }\""
-							;
-			$bgstylePass	.=	" alt=\""._UE_PASS."\" value=\"paswww\" onfocus=\"if (this.value=='paswww') this.value=''\" onblur=\"if(this.value=='') { this.value='paswww'; return false; }\""
-							;
-		}
+//		if ( $show_username_pass_icons >= 1 ) {
+//			$bgstyleUser	.=	' style="background-image:url(' . $urlImgPath . 'username.png); background-repeat: no-repeat; background-position: 0px 0px; padding-left: 30px; min-height: 18px;" ';
+//			$bgstylePass	.=	' style="background-image:url(' . $urlImgPath . 'password.png); background-repeat: no-repeat; background-position: 0px 0px; padding-left: 30px; min-height: 18px;" ';
+//		}
+//		if ( $show_username_pass_icons <= 1 ) {
+//			$bgstyleUser	.=	" alt=\"" . $userNameText . "\" value=\"" . $userNameText . "\" "
+//							.	"onfocus=\"if (this.value=='" . $userNameText . "') this.value=''\" onblur=\"if(this.value=='') { this.value='" . $userNameText . "'; return false; }\""
+//							;
+//			$bgstylePass	.=	" alt=\""._UE_PASS."\" value=\"paswww\" onfocus=\"if (this.value=='paswww') this.value=''\" onblur=\"if(this.value=='') { this.value='paswww'; return false; }\""
+//							;
+//		}
 	} else {
 		if ( $show_username_pass_icons == 2 ) {
 			$bgstyleUser	.=	' style="vertical-align:top;" ';
@@ -663,41 +668,41 @@ if ( $_CB_framework->myId() ) {
 		echo '<span id="mod_login_usernametext'.$class_sfx.'">'.$txtusername.'</span>';
 	}
 	if ( $compact || ( $show_username_pass_icons == 2 ) ) {
-		$bgstyleUser		.=	' title="' . $userNameText . '"';
-		$bgstylePass		.=	' title="' . _UE_PASS . '"';
+	//	$bgstyleUser		.=	' title="' . $userNameText . '"';
+	//	$bgstylePass		.=	' title="' . _UE_PASS . '"';
 	}
 	if ($horizontal) {
 		echo "&nbsp;\n";
 	} elseif ( ( ! $compact ) && ( $show_username_pass_icons != 2 ) ) {
 		echo "<br />\n";
 	}
-	echo '<input type="text" name="username" id="mod_login_username'.$class_sfx.'" class="inputbox'.$class_sfx.'" size="'.$name_lenght.'"' . $bgstyleUser . ' />';
+	//echo '<input type="text" name="username" id="mod_login_username'.$class_sfx.'" class="inputbox'.$class_sfx.'" size="'.$name_lenght.'"' . $bgstyleUser . ' />';
 	if ($horizontal) {
 		echo "&nbsp;\n";
 	} else {				// if (!$compact) {
 		echo "<br />\n";
 	}
 	if (!$compact) {
-		echo '<span id="mod_login_passwordtext'.$class_sfx.'">'.$txtpassword.'</span>';
+	//	echo '<span id="mod_login_passwordtext'.$class_sfx.'">'.$txtpassword.'</span>';
 	}
 	if ($horizontal) {
 		echo "&nbsp;";
 	} elseif ( ( ! $compact ) && ( $show_username_pass_icons != 2 ) ) {
 		echo "<br />";
 	}
-	echo '<span><input type="password" name="passwd" id="mod_login_password'.$class_sfx.'" class="inputbox'.$class_sfx.'" size="'.$pass_lenght.'"' . $bgstylePass . ' /></span>';
+//	echo '<span><input type="password" name="passwd" id="mod_login_password'.$class_sfx.'" class="inputbox'.$class_sfx.'" size="'.$pass_lenght.'"' . $bgstylePass . ' /></span>';
 	if ($horizontal) {
 		echo "&nbsp;\n";
 	} else {
 		echo "<br />\n";
 	}
 
-	echo '<input type="hidden" name="op2" value="login" />'."\n";
-	echo '<input type="hidden" name="lang" value="' . $_CB_framework->getCfg( 'lang' ) . '" />' . "\n";
-	echo '<input type="hidden" name="force_session" value="1" />'."\n";		// makes sure to create joomla 1.0.11+12 session/bugfix
-	echo '<input type="hidden" name="return" value="B:' . base64_encode( $login ) . '" />'."\n";
-	echo '<input type="hidden" name="message" value="' . htmlspecialchars( $message_login ) . '" />'."\n";
-	echo cbGetSpoofInputTag( 'login' );
+//	echo '<input type="hidden" name="op2" value="login" />'."\n";
+//	echo '<input type="hidden" name="lang" value="' . $_CB_framework->getCfg( 'lang' ) . '" />' . "\n";
+//	echo '<input type="hidden" name="force_session" value="1" />'."\n";		// makes sure to create joomla 1.0.11+12 session/bugfix
+//	echo '<input type="hidden" name="return" value="B:' . base64_encode( $login ) . '" />'."\n";
+//	echo '<input type="hidden" name="message" value="' . htmlspecialchars( $message_login ) . '" />'."\n";
+//	echo cbGetSpoofInputTag( 'login' );
 	// this is left for backwards compatibility only, to be removed after CB 1.2:
 	if ( is_callable("josSpoofValue")) {
 		$validate = josSpoofValue( 1 );
@@ -706,9 +711,9 @@ if ( $_CB_framework->myId() ) {
 
 	switch ($remember_enabled) {
 		case 1:
-			echo '<br><input type="checkbox" name="remember" id="mod_login_remember'.$class_sfx.'"' . ( $class_sfx ? ' class="inputbox'.$class_sfx.'"' : '' ) . ' value="yes" /> '
-				.'<span id="mod_login_remembermetext'.$class_sfx.'"><label for="mod_login_remember'.$class_sfx.'">'._UE_REMEMBER_ME."</label></span>";
-			if ($horizontal) echo "&nbsp;\n"; else echo "<br />\n";
+//			echo '<br><input type="checkbox" name="remember" id="mod_login_remember'.$class_sfx.'"' . ( $class_sfx ? ' class="inputbox'.$class_sfx.'"' : '' ) . ' value="yes" /> '
+//				.'<span id="mod_login_remembermetext'.$class_sfx.'"><label for="mod_login_remember'.$class_sfx.'">'._UE_REMEMBER_ME."</label></span>";
+//			if ($horizontal) echo "&nbsp;\n"; else echo "<br />\n";
 		break;
 		case 2:
 			echo '<br><input type="hidden" name="remember" value="yes" />';
@@ -752,7 +757,7 @@ if ( $_CB_framework->myId() ) {
 			$buttonValue	=	_UE_BUTTON_LOGIN;
 			break;
 	}
-	echo '<input type="submit" name="Submit" class="button'.$class_sfx.'" value="' . $buttonValue . '"' . $buttonStyle . ' />';
+//	echo '<input type="submit" name="Submit" class="button'.$class_sfx.'" value="' . $buttonValue . '"' . $buttonStyle . ' />';
 
 	if ($horizontal || ( $show_remind_register_icons == 2 ) ) {
 		echo "&nbsp;&nbsp;\n";
@@ -761,36 +766,36 @@ if ( $_CB_framework->myId() ) {
 	}
 	
 	if ($show_lostpass) {
-		$loginPost = cbSef("index.php?option=com_comprofiler&amp;task=lostPassword");
-		if ( $https_post /* && ! $isHttps */ ) {
-			if ( ( substr($loginPost, 0, 5) != "http:" ) && ( substr($loginPost, 0, 6) != "https:" ) ) {
-				$loginPost = $cblogin_live_site."/".$loginPost;
-			}
-			$loginPost = str_replace("http://","https://",$loginPost);
-		}
-		echo '<br><a href="'.$loginPost.'" class="mod_login'.$class_sfx.'">';
-
-		if ( $show_remind_register_icons >= 1 ) {
-			echo '<img src="' . $urlImgPath . 'forgot.png" alt="' . _UE_USERNAME_PASSWORD_REMINDER . '" title="' . _UE_USERNAME_PASSWORD_REMINDER . '" width="25px" height="20px" style="border-width:0px;cursor:pointer;" /> ';
-		}
-		if ( $show_remind_register_icons <= 1 ) {
-			if ($compact) {
-				echo _UE_FORGOT_PASSWORD;	
-			} else {
-				echo ( ( checkJversion() == -1 ) ? _UE_USERNAME_PASSWORD_REMINDER : _UE_LOST_USERNAME_PASSWORD );
-			}
-		}
-		echo '</a>';
-
-		if ( $show_remind_register_icons == 2 ) {
-			echo "&nbsp;\n"; 
-		} elseif ($horizontal) {
-			if ($compact) {
-				echo "&nbsp;|";
-			} else {
-				echo "&nbsp;\n"; 
-			}
-		} else echo "</td></tr>\n";
+//		$loginPost = cbSef("index.php?option=com_comprofiler&amp;task=lostPassword");
+//		if ( $https_post /* && ! $isHttps */ ) {
+//			if ( ( substr($loginPost, 0, 5) != "http:" ) && ( substr($loginPost, 0, 6) != "https:" ) ) {
+//				$loginPost = $cblogin_live_site."/".$loginPost;
+//			}
+//			$loginPost = str_replace("http://","https://",$loginPost);
+//		}
+//		echo '<br><a href="'.$loginPost.'" class="mod_login'.$class_sfx.'">';
+//
+//		if ( $show_remind_register_icons >= 1 ) {
+//			echo '<img src="' . $urlImgPath . 'forgot.png" alt="' . _UE_USERNAME_PASSWORD_REMINDER . '" title="' . _UE_USERNAME_PASSWORD_REMINDER . '" width="25px" height="20px" style="border-width:0px;cursor:pointer;" /> ';
+//		}
+//		if ( $show_remind_register_icons <= 1 ) {
+//			if ($compact) {
+//				echo _UE_FORGOT_PASSWORD;	
+//			} else {
+//				echo ( ( checkJversion() == -1 ) ? _UE_USERNAME_PASSWORD_REMINDER : _UE_LOST_USERNAME_PASSWORD );
+//			}
+//		}
+//		echo '</a>';
+//
+//		if ( $show_remind_register_icons == 2 ) {
+//			echo "&nbsp;\n"; 
+//		} elseif ($horizontal) {
+//			if ($compact) {
+//				echo "&nbsp;|";
+//			} else {
+//				echo "&nbsp;\n"; 
+//			}
+//		} else echo "</td></tr>\n";
 	}
 	// CB config may override the system configuration setting
 	$registration_enabled	=	$_CB_framework->getCfg( 'allowUserRegistration' );
@@ -799,6 +804,8 @@ if ( $_CB_framework->myId() ) {
 			$registration_enabled = true;
 		}
 	}
+
+	echo '<a href="./index.php?option=com_content&view=article&id=2069&Itemid=36">Login</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;';
 	if ($registration_enabled && $show_newaccount) {
 		if ($horizontal || ( $show_remind_register_icons == 2 ) ) {
 			echo '&nbsp;<span id="mod_login_noaccount'.$class_sfx.'">';
@@ -822,7 +829,7 @@ if ( $_CB_framework->myId() ) {
 		if ( $show_remind_register_icons <= 1 ) {
 			echo ( ( ( checkJversion() == -1 ) && ! $compact ) ? _UE_CREATE_ACCOUNT : _UE_REGISTER );
 		}
-		echo '</a>';
+		echo '</a>&nbsp;&nbsp;&nbsp;&nbsp;|';
 		if ($horizontal || ( $show_remind_register_icons == 2 ) ) {
 			echo "</span>\n";
 		} else {

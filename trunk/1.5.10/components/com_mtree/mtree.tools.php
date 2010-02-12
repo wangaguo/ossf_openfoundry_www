@@ -1,21 +1,25 @@
 <?php
 /**
-* Mosets Tree Tools 
-*
-* @package Mosets Tree 2.0
-* @copyright (C) 2005-2008 Mosets Consulting
-* @url http://www.mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+ * @version		$Id: mtree.tools.php 708 2009-05-19 15:43:52Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
+
+defined('_JEXEC') or die('Restricted access');
 
 /***
 * Load Link
 */
 function loadLink( $link_id, &$savantConf, &$fields, &$params ) {
-	global $database, $_MAMBOTS, $mtconf;
+	global $_MAMBOTS, $mtconf;
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	$database	=& JFactory::getDBO();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
+	$nullDate	= $database->getNullDate();
 
 	# Get all link data
 	$database->setQuery( "SELECT l.*, u.username AS username, u.name AS owner, u.email AS owner_email, cl.cat_id AS cat_id, c.cat_name AS cat_name, img.filename AS link_image, img.img_id FROM (#__mt_links AS l, #__mt_cl AS cl)"
@@ -23,12 +27,12 @@ function loadLink( $link_id, &$savantConf, &$fields, &$params ) {
 		. "\n LEFT JOIN #__mt_cats AS c ON c.cat_id = cl.cat_id"
 		. "\n LEFT JOIN #__mt_images AS img ON img.link_id = l.link_id AND img.ordering = 1"
 		. "\n WHERE link_published='1' AND link_approved > 0 AND l.link_id='".$link_id."' " 
-		. "\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-		. "\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) "
-		.	"\n AND l.link_id = cl.link_id"
-		.	"\n LIMIT 1"
+		. "\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+		. "\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) "
+		. "\n AND l.link_id = cl.link_id"
+		. "\n LIMIT 1"
 	);
-	$database->loadObject( $link );
+	$link = $database->loadObject();
 	
 	if(count($link)==0) return false;
 	
@@ -62,7 +66,7 @@ function loadLink( $link_id, &$savantConf, &$fields, &$params ) {
 	}
 
 	# Parameters
-	$params = new mosParameters( $link->attribs );
+	$params = new JParameter( $link->attribs );
 	$params->def( 'show_review', $mtconf->get('show_review'));
 	$params->def( 'show_rating', $mtconf->get('show_rating' ));
 
@@ -70,16 +74,36 @@ function loadLink( $link_id, &$savantConf, &$fields, &$params ) {
 
 }
 
-function loadFields( $link ) {
-	global $database, $mtconf;
+/**
+* Return 
+* @param object #__mt_links object list results
+* @param int Fields' filter type. Setting this to 0 will return all published field types.
+*			 $view = 1 for Normal/Details View. $view = 2 for Summary View.
+* @return mFields The formatted value of the field
+*/
+function loadFields( $link, $view=1 ) {
+	global $mtconf;
+
+	$database	=& JFactory::getDBO();
 
 	require_once( $mtconf->getjconf('absolute_path') . '/administrator/components/com_mtree/mfields.class.php' );
 	
 	# Load all published CORE & custom fields
-	$sql = "SELECT cf.*, cfv.link_id, cfv.value, cfv.attachment, ft.ft_class FROM #__mt_customfields AS cf "
+	$sql = "SELECT cf.*, cfv.link_id, cfv.value, cfv.attachment, cfv.counter, ft.ft_class FROM #__mt_customfields AS cf "
 		.	"\nLEFT JOIN #__mt_cfvalues AS cfv ON cf.cf_id=cfv.cf_id AND cfv.link_id = " . $link->link_id
 		.	"\nLEFT JOIN #__mt_fieldtypes AS ft ON ft.field_type=cf.field_type"
-		.	"\nWHERE cf.published = '1' && details_view = '1' ORDER BY ordering ASC";
+		.	"\nWHERE cf.published = '1' ";
+	switch( $view ) {
+		case 1:
+			$sql .= "&& details_view = '1' ";
+			break;
+		case 2:
+			$sql .= "&& summary_view = '1' ";
+			break;
+		default:
+			break;			
+	}
+	$sql .= "ORDER BY ordering ASC";
 	$database->setQuery($sql);
 
 	$fields = new mFields();
@@ -104,9 +128,10 @@ function loadFields( $link ) {
 */
 
 function assignCommonVar( &$savant ) {
-	global $_MT_LANG, $database, $option, $Itemid, $my, $mtconf, $task;
+	global $option, $Itemid, $mtconf, $task;
 
-	$savant->_MT_LANG =& $_MT_LANG;
+	$my			=& JFactory::getUser();
+
 	$savant->assign('option', $option);
 	$savant->assign('task', $task);
 	$savant->assign('Itemid', $Itemid);
@@ -126,7 +151,10 @@ function assignCommonVar( &$savant ) {
 */
 
 function assignCommonViewlinkVar( &$savant, &$link, &$fields, &$pathWay, &$params ) {
-	global $database, $_MT_LANG, $option, $Itemid, $my, $_MAMBOTS, $mtconf;
+	global $option, $Itemid, $mtconf;
+	
+	$database	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
 	
 	# Get total favourites
 	$total_favourites = 0;
@@ -186,7 +214,7 @@ function assignCommonViewlinkVar( &$savant, &$link, &$fields, &$pathWay, &$param
 	$savant->assign('link_id', $link->link_id);
 	$savant->assign('min_votes_to_show_rating', $mtconf->get('min_votes_to_show_rating'));
 	$savant->assign('fields', $fields);
-		
+
 	$savant->assign('mt_show_review', $params->get( 'show_review' ));
 	$savant->assign('mt_show_rating', $params->get( 'show_rating' ));
 
@@ -202,10 +230,16 @@ function assignCommonViewlinkVar( &$savant, &$link, &$fields, &$pathWay, &$param
 		$savant->assign('allow_rating', 1);
 	}
 
-	// mambots results
-	$savant->assign('mambotAfterDisplayTitle', $_MAMBOTS->trigger( 'onAfterDisplayTitle', array( &$link, &$params, 0 ) ));
-	$savant->assign('mambotBeforeDisplayContent', $_MAMBOTS->trigger( 'onBeforeDisplayContent', array( &$link, &$params, 0 ) ));
-	$savant->assign('mambotAfterDisplayContent', $_MAMBOTS->trigger( 'onAfterDisplayContent', array( &$link, &$params, 0 ) ));
+	// Plugins support
+	$link->id 	= $link->link_id;
+	$link->title = $link->link_name;
+	$link->created_by = $link->user_id;
+
+	$dispatcher	=& JDispatcher::getInstance();
+	JPluginHelper::importPlugin('content');
+	$savant->assign('mambotAfterDisplayTitle', $dispatcher->trigger('onAfterDisplayTitle', array (& $link, & $params, 0)));
+	$savant->assign('mambotBeforeDisplayContent', $dispatcher->trigger('onBeforeDisplayContent', array (& $link, & $params, 0)));
+	$savant->assign('mambotAfterDisplayContent', $dispatcher->trigger('onAfterDisplayContent', array (& $link, & $params, 0)));
 
 	return true;
 }
@@ -217,7 +251,9 @@ function assignCommonViewlinkVar( &$savant, &$link, &$fields, &$pathWay, &$param
 */
 
 function assignCommonListlinksVar( &$savant, &$links, &$pathWay, &$pageNav ) {
-	global $_MT_LANG, $task, $Itemid, $my, $database, $cat_id, $mtconf;
+	global $task, $Itemid, $my, $cat_id, $mtconf;
+	
+	$database =& JFactory::getDBO();
 	
 	require_once( $mtconf->getjconf('absolute_path') . '/administrator/components/com_mtree/mfields.class.php' );
 	
@@ -234,14 +270,14 @@ function assignCommonListlinksVar( &$savant, &$links, &$pathWay, &$pageNav ) {
 	$arrayLinkId = array();
 	if( count($links) > 0 ) {
 		foreach( $links AS $link ) {
-			$arrayLinkId[] = $link->link_id;
+			$arrayLinkId[] = intval($link->link_id);
 		}
 	}
 	
 	$tmp_fields = array();
 	$tmp_core_fields = array();
 	if( count($arrayLinkId) > 0 ) {
-		$sql = "SELECT cf.*, cfv.link_id, cfv.value, cfv.attachment, ft.ft_class FROM #__mt_customfields AS cf "
+		$sql = "SELECT cf.*, cfv.link_id, cfv.value, cfv.attachment, cfv.counter, ft.ft_class FROM #__mt_customfields AS cf "
 			.	"\nLEFT JOIN #__mt_cfvalues AS cfv ON cf.cf_id=cfv.cf_id "
 			.	"\nLEFT JOIN #__mt_fieldtypes AS ft ON ft.field_type=cf.field_type"
 			.	"\nWHERE cf.published = '1' AND cf.summary_view = '1' "
@@ -333,7 +369,7 @@ function customFieldsSort($a,$b) {
 * This list will include $cat_id as well.
 */
 function getSubCats_Recursive( $cat_id, $published_only=true ) {
-	global $database;
+	$database	=& JFactory::getDBO();
 
 	$mtCats = new mtCats( $database );
 
@@ -351,10 +387,11 @@ function getSubCats_Recursive( $cat_id, $published_only=true ) {
 *
 */
 function getCatsSelectlist( $cat_id=0, &$cat_tree, $max_level=0 ) {
-	global $database;
+	$database	=& JFactory::getDBO();
+
 	static $level = 0;
 
-	$sql = "SELECT *, '".$level."' AS level FROM #__mt_cats WHERE cat_published=1 && cat_approved=1 && cat_parent='".$cat_id."' ORDER BY cat_name ASC";
+	$sql = "SELECT *, '".$level."' AS level FROM #__mt_cats WHERE cat_published=1 && cat_approved=1 && cat_parent= " . $database->quote($cat_id) . " ORDER BY cat_name ASC";
 	$database->setQuery( $sql );
 
 	$cat_ids = $database->loadObjectList();
@@ -388,17 +425,22 @@ function getCatsSelectlist( $cat_id=0, &$cat_tree, $max_level=0 ) {
 * no changes is done, and it will load default template.
 */
 function loadCustomTemplate( $cat_id=null, &$savantConf, $template='') {
-	global $database, $mtconf;
+	global $mtconf;
+
+	$database	=& JFactory::getDBO();
+	
 	if(!empty($template)) {
 		$templateDir = $mtconf->getjconf('absolute_path') . '/components/com_mtree/templates/' . $template;
 		if ( is_dir( $templateDir ) ) {
-			$savantConf["template_path"] = $templateDir;
+			$savantConf["template_path"] = $templateDir . '/';
+			$mtconf->set('template',$template);
 		}
 	} else {
 		$mtCats = new mtCats( $database );
 		$mtCats->load( $cat_id );
 		if ( !empty($mtCats->cat_template) ) {
 			$savantConf['template_path'] = $mtconf->getjconf('absolute_path')."/components/com_mtree/templates/".$mtCats->cat_template."/";
+			$mtconf->set('template',$mtCats->cat_template);
 		}
 	}
 }
@@ -407,13 +449,14 @@ function loadCustomTemplate( $cat_id=null, &$savantConf, $template='') {
 * Apply Mambot to list of link objects and also enforce the max char for summary text in listcats
 */
 function applyMambots( &$links ) {
-	global $_MAMBOTS, $mtconf;
+	global $mtconf;
 
-	$_MAMBOTS->loadBotGroup( 'content' );
+	JPluginHelper::importPlugin('content');
+	// $_MAMBOTS->loadBotGroup( 'content' );
 
 	for( $i=0; $i<count($links); $i++ ) {
 		// Load Parameters
-		$params =& new mosParameters( $links[$i]->attribs );
+		$params =& new JParameter( $links[$i]->attribs );
 	
 		$links[$i]->text = substr($links[$i]->link_desc,0,255);
 		
@@ -423,16 +466,20 @@ function applyMambots( &$links ) {
 
 		$links[$i]->id = $links[$i]->link_id;
 		$links[$i]->title = $links[$i]->link_name;
+		$links[$i]->created_by = $links[$i]->user_id;
 
-		$results = $_MAMBOTS->trigger( 'onPrepareContent', array( &$links[$i], &$params, 0 ), true );
+		$dispatcher	=& JDispatcher::getInstance();
+		$results = $dispatcher->trigger('onPrepareContent', array (& $links[$i], & $params->params, 0));
 		}
 
 }
 
 function mtAppendPathWay( $option, $task, $cat_id=0, $link_id=0, $img_id=0 ) {
-	global $mainframe, $database, $Itemid, $_MT_LANG;
+	global $mainframe, $Itemid;
 
-	$mtPathWay = new mtPathWay();
+	$database	=& JFactory::getDBO();
+	$mtPathWay	= new mtPathWay();
+	$pathway	=& $mainframe->getPathway();
 
 	switch( $task ) {
 
@@ -456,10 +503,12 @@ function mtAppendPathWay( $option, $task, $cat_id=0, $link_id=0, $img_id=0 ) {
 			if( $img_id > 0 ) {
 				$database->setQuery('SELECT link_id FROM #__mt_images WHERE img_id = \'' . $img_id . '\' LIMIT 1');
 				$link_id = $database->loadResult();
-				$mtLink = new mtLinks( $database );
-				$mtLink->load( $link_id );
-				$cat_id = $mtLink->getCatID();
-				$cids = $mtPathWay->getPathWay( $cat_id );
+				if( !is_null($link_id) ) {
+					$mtLink = new mtLinks( $database );
+					$mtLink->load( $link_id );
+					$cat_id = $mtLink->getCatID();
+					$cids = $mtPathWay->getPathWay( $cat_id );
+				}
 			}
 			break;
 
@@ -477,59 +526,59 @@ function mtAppendPathWay( $option, $task, $cat_id=0, $link_id=0, $img_id=0 ) {
 
 		
 		case "listnew":
-			$mainframe->appendPathWay( $_MT_LANG->NEW_LISTING );
+			$pathway->addItem( JText::_( 'New listing' ) );
 			break;
 		case "listfeatured":
-			$mainframe->appendPathWay( $_MT_LANG->FEATURED_LISTING );
+			$pathway->addItem( JText::_( 'Featured listing' ) );
 			break;
 		case "listpopular":
-			$mainframe->appendPathWay( $_MT_LANG->POPULAR_LISTING );
+			$pathway->addItem( JText::_( 'Popular listing' ) );
 			break;
 		case "listmostrated":
-			$mainframe->appendPathWay( $_MT_LANG->MOST_RATED_LISTING );
+			$pathway->addItem( JText::_( 'Most rated listing' ) );
 			break;
 		case "listtoprated":
-			$mainframe->appendPathWay( $_MT_LANG->TOP_RATED_LISTING );
+			$pathway->addItem( JText::_( 'Top rated listing' ) );
 			break;
 		case "listmostreview":
-			$mainframe->appendPathWay( $_MT_LANG->MOST_REVIEWED_LISTING );
+			$pathway->addItem( JText::_( 'Most reviewed listing' ) );
 			break;
 		case "advsearch":
-			$mainframe->appendPathWay( $_MT_LANG->ADVANCED_SEARCH );
+			$pathway->addItem( JText::_( 'Advanced search' ) );
 			break;
 		case "advsearch2":
-			$mainframe->appendPathWay( $_MT_LANG->ADVANCED_SEARCH_RESULTS );
+			$pathway->addItem( JText::_( 'Advanced search results' ) );
 			break;
 		case "search":
-			$mainframe->appendPathWay( $_MT_LANG->SEARCH_RESULTS );
+			$pathway->addItem( JText::_( 'Search results' ) );
 			break;
 			
 	}
 	
-
 	if ( isset($cids) && is_array($cids) && count($cids) > 0 ) {
 		foreach( $cids AS $cid ) {
-			$mainframe->appendPathWay( "<a href=\"" . sefRelToAbs("index.php?option=$option&task=listcats&cat_id=$cid&Itemid=$Itemid") . "\" class=\"pathway\">".$mtPathWay->getCatName($cid)."</a>");
+			$pathway->addItem( $mtPathWay->getCatName($cid), "index.php?option=$option&task=listcats&cat_id=$cid" );
 		}
-		
 		// Append the curreny category name
-		$mainframe->appendPathWay( "<a href=\"" . sefRelToAbs("index.php?option=$option&task=listcats&cat_id=$cat_id&Itemid=$Itemid") . "\" class=\"pathway\">".$mtPathWay->getCatName($cat_id)."</a>");
-
+		$pathway->addItem( $mtPathWay->getCatName($cat_id), "index.php?option=$option&task=listcats&cat_id=$cat_id" );
 	} elseif( $cat_id > 0 ) {
-		$mainframe->appendPathWay( "<a href=\"" . sefRelToAbs("index.php?option=$option&task=listcats&cat_id=$cat_id&Itemid=$Itemid") . "\" class=\"pathway\">".$mtPathWay->getCatName($cat_id)."</a>");
+		$pathway->addItem( $mtPathWay->getCatName($cat_id), "index.php?option=$option&task=listcats&cat_id=$cat_id" );
+	}
 
+	if( in_array($task,array("viewlink", "writereview", "rate", "recommend", "viewgallery")) ) {
+		$pathway->addItem( $mtLink->link_name, "index.php?option=$option&task=viewlink&link_id=$link_id");
 	}
 
 }
 
 function getReviews( $links ) {
-	global $database;
+	$database =& JFactory::getDBO();
 	
 	$link_ids = array();
 	
 	if ( count( $links ) > 0 ) {
 		foreach( $links AS $l ) {
-			$link_ids[] = $l->link_id;
+			$link_ids[] = intval($l->link_id);
 		}
 
 		if ( count($link_ids) > 0 ) {

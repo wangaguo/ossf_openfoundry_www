@@ -130,12 +130,17 @@ require(YOURBASEPATH . "/rt_styleloader.php");
 				<?php endif; ?>
 				<!--End Logo-->
 				<!--Begin Banner Position-->
-				<div style="float:left;overflow:hidden;"><img src="http://whoswho.openfoundry.org/OpenFoundry/templates/rt_nexus_j15/images/header/dark/search.gif"></div>
+				<div style="float:left;overflow:hidden;"><img src="./templates/rt_nexus_j15/images/header/dark/search.gif"></div>
 				<?php if ($this->countModules('banner')) : ?>
 				<div class="banner-module"><jdoc:include type="modules" name="banner" style="xhtml" /></div>
 				<?php endif; ?>
-<div style="float:right;overflow:hidden;">
-<a href="http://whoswho.openfoundry.org/OpenFoundry"><img border="0" src="http://whoswho.openfoundry.org/OpenFoundry/images/stories/login.gif"/></a></div>
+
+                                <?php if ($this->countModules('banner-right')) : ?>
+                                <div class="banner-right"><jdoc:include type="modules" name="banner-right" style="xhtml" /></div>
+                                <?php endif; ?>
+
+<!--<div style="float:right;overflow:hidden;">
+<a href="http://whoswho.openfoundry.org/OpenFoundry"><img border="0" src="http://whoswho.openfoundry.org/OpenFoundry/images/stories/login.gif"/></a></div>-->
 				<!--End Banner Position-->
 			</div>
 		</div>

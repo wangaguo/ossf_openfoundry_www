@@ -1,6 +1,6 @@
 <?php if (isset($this->categories) && is_array($this->categories) && !empty($this->categories)) { ?>
 <div id="subcats">
-<div class="title"><?php echo $this->_MT_LANG->CATEGORIES; ?></div>
+<div class="title"><?php echo JText::_( 'Categories' ); ?></div>
 <?php 
 	$i = 0;
 	
@@ -15,7 +15,7 @@
 		}
 		echo '<li>';
 		if($cat->cat_featured) echo '<strong>';
-		$this->plugin('ahref', "index.php?option=$this->option&task=listcats&cat_id=$cat->cat_id&Itemid=$this->Itemid", $cat->cat_name, '' );
+		$this->plugin('ahref', "index.php?option=$this->option&task=listcats&cat_id=$cat->cat_id&Itemid=$this->Itemid", htmlspecialchars($cat->cat_name), '' );
 		
 		if( $this->config->getTemParam('displaySubcatsCatCount','0') ) {
 			$count[] = $cat->cat_cats;
@@ -39,7 +39,7 @@
 	#
 	if ( isset($this->related_categories) && count($this->related_categories) > 0 ) {
 		echo '<div id="relcats">';
-		?><div class="title"><?php echo $this->_MT_LANG->RELATED_CATEGORIES; ?></div><?php
+		?><div class="title"><?php echo JText::_( 'Related categories' ); ?></div><?php
 		echo '<ul>';
 		foreach( $this->related_categories AS $related_category ) {
 			echo '<li>';

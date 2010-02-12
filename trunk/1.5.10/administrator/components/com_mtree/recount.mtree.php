@@ -1,18 +1,19 @@
 <?php
 /**
-* Mosets Tree toolbar 
-*
-* @package Mosets Tree 2.0
-* @copyright (C) 2005-2008 Mosets Consulting
-* @url http://www.mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
+ * @version		$Id: recount.mtree.php 602 2009-03-19 14:27:52Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-// ensure this file is being included by a parent file
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+
+defined('_JEXEC') or die('Restricted access');
 
 function update_cats_and_links_count( $cat_id = 0, $updateOrder = true, $visible_links_only = false ) {
-	global $database, $mosConfig_offset;
+	$database	=& JFactory::getDBO();
+	$nullDate	= $database->getNullDate();
 
 	$sql = "SELECT cat_id FROM #__mt_cats WHERE cat_parent=$cat_id ";
 	if ( $visible_links_only ) {
@@ -39,12 +40,13 @@ function update_cats_and_links_count( $cat_id = 0, $updateOrder = true, $visible
 	}
 
 	# Update its own links
-	$now = date( "Y-m-d H:i:s", time()+$mosConfig_offset*60*60 );
+	$jdate = JFactory::getDate();
+	$now = $jdate->toMySQL();
 	$sql2 = "SELECT count(l.link_id) FROM #__mt_links AS l, #__mt_cl AS cl WHERE l.link_id = cl.link_id AND cl.cat_id=$cat_id ";
 	if ( $visible_links_only ) {
 		$sql2 .= "AND link_published = '1' AND link_approved = '1'"
-			. " AND ( l.publish_up = '0000-00-00 00:00:00' OR l.publish_up <= '$now'  ) "
-			. " AND ( l.publish_down = '0000-00-00 00:00:00' OR l.publish_down >= '$now' ) ";
+			. " AND ( l.publish_up = ".$database->Quote($nullDate)." OR l.publish_up <= '$now'  ) "
+			. " AND ( l.publish_down = ".$database->Quote($nullDate)." OR l.publish_down >= '$now' ) ";
 
 	}
 	$database->setQuery( $sql2 );
@@ -56,7 +58,8 @@ function update_cats_and_links_count( $cat_id = 0, $updateOrder = true, $visible
 }
 
 function fast_update_cats_and_links_count( $cat_id = 0 ) {
-	global $database, $_MT_LANG;
+
+	$database	=& JFactory::getDBO();
 
 	$database->setQuery( "SELECT COUNT(*) FROM #__mt_cats AS c, #__mt_cl AS cl WHERE c.cat_id = cl.cat_id AND cl.main = 1 AND cl.cat_id = '$cat_id'" );
 	$total_links = $database->loadResult();
@@ -73,7 +76,7 @@ function fast_update_cats_and_links_count( $cat_id = 0 ) {
 		$total_cats += $cid->cat_cats;
 	}
 
-	$database->setQuery("UPDATE #__mt_cats SET cat_cats=".$total_cats.", cat_links=".$total_links." WHERE cat_id = ".$cat_id);
+	$database->setQuery( 'UPDATE #__mt_cats SET cat_cats = ' . $database->quote($total_cats) . ", cat_links = " . $database->quote($total_links) . " WHERE cat_id = " . $database->quote($cat_id) );
 	$database->query();
 
 	return true;
@@ -81,18 +84,18 @@ function fast_update_cats_and_links_count( $cat_id = 0 ) {
 }
 
 function recount( $method, $cat_id ) {
-	global $_MT_LANG, $database;
-
-	echo "<center><strong>".$_MT_LANG->PLEASE_WAIT_RECOUNT_IN_PROGRESS."</strong>";
+	$database	=& JFactory::getDBO();
+	
+	echo "<center><strong>".JText::_( 'Please wait recount in progress' )."</strong>";
 	
 	if ( $method == "fast" ) {
 		fast_update_cats_and_links_count( $cat_id );
 	} else {
 		$retval = update_cats_and_links_count( $cat_id, true, true );
-		$database->setQuery("UPDATE #__mt_cats SET cat_cats=".$retval["cats"].", cat_links=".$retval["links"]." WHERE cat_id = ".$cat_id);
+		$database->setQuery('UPDATE #__mt_cats SET cat_cats = ' . $database->quote($retval["cats"]) . ', cat_links = ' . $database->quote($retval["links"]) . ' WHERE cat_id = ' . $database->quote($cat_id) );
 		$database->query();
 	}
 
-	echo '<p /><strong>'.$_MT_LANG->DONE.'</strong><p /><input type="button" class="button" value="'.$_MT_LANG->CLOSE_THIS_WINDOW.'" onclick="window.close();" /></center>';
+	echo '<p /><strong>'.JText::_( 'Done' ).'</strong><p /><input type="button" class="button" value="'.JText::_( 'Close this window' ).'" onclick="window.close();" /></center>';
 }
 ?>

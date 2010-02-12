@@ -5,23 +5,26 @@
 		form.submit();
 		}
 </script>
-<h1 class="componentheading"><?php echo $this->_MT_LANG->TITLE ?></h1>
-<h2 class="contentheading"><?php echo $this->_MT_LANG->ADVANCED_SEARCH ?></h2>
+ 
+<h2 class="contentheading"><?php echo JText::_( 'Advanced search' ) ?></h2>
 
-<table width="96%" cellpadding="4" cellspacing="0" border="0" align="center">
-	<form action="<?php echo sefRelToAbs("index.php") ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_("index.php") ?>" method="post" name="adminForm" id="adminForm">
+<table width="100%" cellpadding="4" cellspacing="0" border="0" align="center">
 	<tr>
-		<td colspan="2"><?php printf($this->_MT_LANG->RETURN_RESULTS_IF_X_OF_THE_FOLLOWING_CONDITIONS_ARE_MET,$this->lists['searchcondition']); ?></td>
+		<td colspan="2"><?php printf(JText::_( 'Return results if x of the following conditions are met' ),$this->lists['searchcondition']); ?></td>
 	</tr>
 	<tr height="60">
 		<td colspan="2">
-		<input type="button" value="<?php echo $this->_MT_LANG->SEARCH ?>" onclick="javascript:submitbutton('advsearch2')" class="button" />	<input type="reset" value="<?php echo $this->_MT_LANG->RESET ?>" class="button" /></td>
+		<input type="button" value="<?php echo JText::_( 'Search' ) ?>" onclick="javascript:submitbutton('advsearch2')" class="button" />	<input type="reset" value="<?php echo JText::_( 'Reset' ) ?>" class="button" /></td>
 	</tr>
+	<?php if( isset($this->catlist) ) { ?>
 	<tr>
-		<td width="20%"><?php echo $this->_MT_LANG->CATEGORY ?>:</td>
+		<td width="20%"><?php echo JText::_( 'Category' ) ?>:</td>
 		<td width="80%"><?php echo $this->catlist; ?></td>
 	</tr>
 	<?php
+	}
+
 	while( $this->fields->hasNext() ) {
 		$field = $this->fields->getField();
 		if($field->hasSearchField()) {
@@ -37,10 +40,10 @@
 	?>
 	<tr height="60">
 		<td colspan="2">
-		<input type="button" value="<?php echo $this->_MT_LANG->SEARCH ?>" onclick="javascript:submitbutton('advsearch2')" class="button" />	<input type="reset" value="<?php echo $this->_MT_LANG->RESET ?>" class="button" /></td>
+		<input type="submit" value="<?php echo JText::_( 'Search' ) ?>" onclick="javascript:submitbutton('advsearch2')" class="button" />	<input type="reset" value="<?php echo JText::_( 'Reset' ) ?>" class="button" /></td>
 	</tr>
 	<input type="hidden" name="Itemid" value="<?php echo $this->Itemid ?>" />
 	<input type="hidden" name="option" value="com_mtree" />
 	<input type="hidden" name="task" value="advsearch2" />
-	</form>
 </table>
+</form>

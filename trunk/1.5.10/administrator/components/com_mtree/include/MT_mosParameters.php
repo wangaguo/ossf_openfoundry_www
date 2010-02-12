@@ -1,13 +1,17 @@
 <?php
 /**
-* @version 1.00
-* @copyright (C) 2007 Lee Cher Yeong. All rights reserved
-* @license http://www.gnu.org/copyleft/lesser.html LGPL License
-**/
+ * @version		$Id: MT_mosParameters.php 575 2009-03-10 11:44:00Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
-class MT_mosParameters extends mosParameters {
+defined('_JEXEC') or die('Restricted access');
+
+class MT_mosParameters extends JParameter {
 	/** @var object */
 	var $_params 	= null;
 	/** @var string The raw params string */
@@ -84,11 +88,9 @@ class MT_mosParameters extends mosParameters {
 	}
 	
 	function render( $name='params' ) {
-		global $mosConfig_absolute_path;
-
 		if (!empty($this->_xmlText)) {
 			if (!is_object( $this->_xmlElem )) {
-				require_once( $mosConfig_absolute_path . '/administrator/components/com_mtree/include/MT_DOMIT_Lite_Document.php' );
+				require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_mtree'.DS.'include'.DS.'MT_DOMIT_Lite_Document.php' );
 
 				$xmlDoc = new MT_DOMIT_Lite_Document();
 				$xmlDoc->resolveErrors( true );
@@ -159,7 +161,7 @@ class MT_mosParameters extends mosParameters {
 		if ($result[0] == '@spacer') {
 			$result[0] = '&nbsp;';
 		} else {
-			$result[0] = mosToolTip( addslashes( $description ), addslashes( $result[0] ), '', '', $result[0], '#', 0 );
+			$result[0] = JHTML::_('tooltip', addslashes( $description ), addslashes( $result[0] ));
 		}
 		$type = $param->getAttribute( 'type' );
 
@@ -170,8 +172,8 @@ class MT_mosParameters extends mosParameters {
 		}
 
 		if ( $description ) {
-			$result[2] = mosToolTip( $description, $result[0] );
-			$result[2] = '';
+			$result[2] = JHTML::_('tooltip', $description, $result[0]);
+			
 		} else {
 			$result[2] = '';
 		}
@@ -205,10 +207,10 @@ class MT_mosParameters extends mosParameters {
 		foreach ($node->childNodes as $option) {
 			$val = $option->getAttribute( 'value' );
 			$text = $option->gettext();
-			$options[] = mosHTML::makeOption( $val, $text );
+			$options[] = JHTML::_('select.option', $val, $text );
 		}
 
-		return mosHTML::selectList( $options, ''. $control_name .'['. $name .']', 'class="inputbox"', 'value', 'text', $value );
+		return JHTML::_('select.genericlist', $options, ''. $control_name .'['. $name .']', 'class="inputbox"', 'value', 'text', $value );
 	}
 	/**
 	* @param string The name of the form element
@@ -222,10 +224,10 @@ class MT_mosParameters extends mosParameters {
 		foreach ($node->childNodes as $option) {
 			$val 	= $option->getAttribute( 'value' );
 			$text 	= $option->gettext();
-			$options[] = mosHTML::makeOption( $val, $text );
+			$options[] = JHTML::_('select.option', $val, $text );
 		}
 
-		return mosHTML::radioList( $options, ''. $control_name .'['. $name .']', '', $value );
+		return JHTML::_('select.booleanlist', $options, ''. $control_name .'['. $name .']', '', $value );
 	}
 	/**
 	* @param string The name of the form element
@@ -245,9 +247,9 @@ class MT_mosParameters extends mosParameters {
 		;
 		$database->setQuery( $query );
 		$options = $database->loadObjectList();
-		array_unshift( $options, mosHTML::makeOption( '0', '- Select Section -', 'id', 'title' ) );
+		array_unshift( $options, JHTML::_('select.option', '0', '- Select Section -', 'id', 'title' ) );
 
-		return mosHTML::selectList( $options, ''. $control_name .'['. $name .']', 'class="inputbox"', 'id', 'title', $value );
+		return JHTML::_('select.genericlist', $options, ''. $control_name .'['. $name .']', 'class="inputbox"', 'id', 'title', $value );
 	}
 	/**
 	* @param string The name of the form element
@@ -283,9 +285,9 @@ class MT_mosParameters extends mosParameters {
 		}
 		$database->setQuery( $query );
 		$options = $database->loadObjectList();
-		array_unshift( $options, mosHTML::makeOption( '0', '- Select Category -', 'id', 'title' ) );
+		array_unshift( $options, JHTML::_('select.option', '0', '- Select Category -', 'id', 'title' ) );
 
-		return mosHTML::selectList( $options, ''. $control_name .'['. $name .']', 'class="inputbox"', 'id', 'title', $value );
+		return JHTML::_('select.genericlist', $options, ''. $control_name .'['. $name .']', 'class="inputbox"', 'id', 'title', $value );
 	}
 	/**
 	* @param string The name of the form element
@@ -300,11 +302,11 @@ class MT_mosParameters extends mosParameters {
 		$menuTypes = mosAdminMenus::menutypes();
 
 		foreach($menuTypes as $menutype ) {
-			$options[] = mosHTML::makeOption( $menutype, $menutype );
+			$options[] = JHTML::_('select.option', $menutype, $menutype );
 		}
-		array_unshift( $options, mosHTML::makeOption( '', '- Select Menu -' ) );
+		array_unshift( $options, JHTML::_('select.option', '', '- Select Menu -' ) );
 
-		return mosHTML::selectList( $options, ''. $control_name .'['. $name .']', 'class="inputbox"', 'value', 'text', $value );
+		return JHTML::_('select.genericlist', $options, ''. $control_name .'['. $name .']', 'class="inputbox"', 'value', 'text', $value );
 	}
 	/**
 	* @param string The name of the form element
@@ -314,25 +316,23 @@ class MT_mosParameters extends mosParameters {
 	* @return string The html for the element
 	*/
 	function _form_filelist( $name, $value, &$node, $control_name ) {
-		global $mosConfig_absolute_path;
-
 		// path to images directory
-		$path 	= $mosConfig_absolute_path . $node->getAttribute( 'directory' );
+		$path 	= JPATH_ROOT . $node->getAttribute( 'directory' );
 		$filter = $node->getAttribute( 'filter' );
 		$files 	= mosReadDirectory( $path, $filter );
 
 		$options = array();
 		foreach ($files as $file) {
-			$options[] = mosHTML::makeOption( $file, $file );
+			$options[] = JHTML::_('select.option', $file, $file );
 		}
 		if ( !$node->getAttribute( 'hide_none' ) ) {
-			array_unshift( $options, mosHTML::makeOption( '-1', '- '. 'Do Not Use' .' -' ) );
+			array_unshift( $options, JHTML::_('select.option', '-1', '- '. 'Do Not Use' .' -' ) );
 		}
 		if ( !$node->getAttribute( 'hide_default' ) ) {
-			array_unshift( $options, mosHTML::makeOption( '', '- '. 'Use Default' .' -' ) );
+			array_unshift( $options, JHTML::_('select.option', '', '- '. 'Use Default' .' -' ) );
 		}
 
-		return mosHTML::selectList( $options, ''. $control_name .'['. $name .']', 'class="inputbox"', 'value', 'text', $value, "param$name" );
+		return JHTML::_('select.genericlist', $options, ''. $control_name .'['. $name .']', 'class="inputbox"', 'value', 'text', $value, "param$name" );
 	}
 	/**
 	* @param string The name of the form element

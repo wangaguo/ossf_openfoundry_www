@@ -4,9 +4,9 @@ $displayIndexListingCount = $this->config->getTemParam('displayIndexListingCount
 $displayIndexCatCount = $this->config->getTemParam('displayIndexCatCount',0);
 $numOfSubcatsToDisplay = $this->config->getTemParam('numOfSubcatsToDisplay',3);
 ?>
-<h1 class="componentheading"><?php echo $this->_MT_LANG->TITLE ?></h1>
+ 
 <div id="index">
-<div class="title"><?php echo $this->_MT_LANG->CATEGORIES; ?></div>
+<div class="title"><?php echo JText::_( 'Categories' ); ?></div>
 <?php
 if( $this->config->getTemParam('displayAlphaIndex','1') ) { $this->display( 'sub_alphaIndex.tpl.php' ); } 
 
@@ -17,14 +17,14 @@ if (is_array($this->categories)): ?>
 		if ( ($i % $numOfColumns) == 0) echo '<div class="row">';
 		echo '<div class="category" style="width:' . floor(99/$numOfColumns) . '%">';
 		if(!empty($cat->cat_image) && $this->config->getTemParam('displayIndexCatImage','0')) {
-			echo '<a href="' . sefReltoAbs("index.php?option=$this->option&task=listcats&cat_id=$cat->cat_id&Itemid=$this->Itemid") . '">';
-			echo '<img src="' . $this->config->getjconf('live_site') . $this->config->get('relative_path_to_cat_small_image') . $cat->cat_image . '" />';
+			echo '<a href="' . JRoute::_("index.php?option=$this->option&task=listcats&cat_id=$cat->cat_id&Itemid=$this->Itemid") . '">';
+			echo '<img src="' . $this->config->getjconf('live_site') . $this->config->get('relative_path_to_cat_small_image') . $cat->cat_image . '" alt="' . htmlspecialchars($cat->cat_name) . '" />';
 			echo '</a>';
 		}
 
 		?><h2><?php 
 		
-		$this->plugin('ahref', "index.php?option=$this->option&task=listcats&cat_id=$cat->cat_id&Itemid=$this->Itemid", $cat->cat_name ); 
+		$this->plugin('ahref', "index.php?option=$this->option&task=listcats&cat_id=$cat->cat_id&Itemid=$this->Itemid", htmlspecialchars($cat->cat_name) ); 
 
 		if($displayIndexCatCount) {
 			$count[]=$cat->cat_cats;
@@ -43,12 +43,12 @@ if (is_array($this->categories)): ?>
 			echo '<div class="desc">' . $cat->cat_desc . '</div>';
 		}
 		
-		if (isset($this->sub_cats) && count($this->sub_cats[$cat->cat_id]) > 0) {
+		if (isset($this->sub_cats) && isset($this->sub_cats[$cat->cat_id]) && count($this->sub_cats[$cat->cat_id]) > 0) {
 			$j = 0;
 			echo '<div class="subcat">';
 			
 			foreach ($this->sub_cats[$cat->cat_id] AS $sub_cat): 
-				$this->plugin('ahref', "index.php?option=$this->option&task=listcats&cat_id=$sub_cat->cat_id&Itemid=$this->Itemid", $sub_cat->cat_name); 
+				$this->plugin('ahref', "index.php?option=$this->option&task=listcats&cat_id=$sub_cat->cat_id&Itemid=$this->Itemid", htmlspecialchars($sub_cat->cat_name)); 
 				$j++;
 				if ($this->sub_cats_total[$cat->cat_id] > $j) {
 					$lastSubCat = end($this->sub_cats[$cat->cat_id]);
@@ -63,7 +63,7 @@ if (is_array($this->categories)): ?>
 			endforeach; 
 			echo '</div>';
 		}
-		if(isset($this->cat_links)) {
+		if(isset($this->cat_links) && !empty($this->cat_links[$cat->cat_id])) {
 			echo '<ul class="listings">';
 			foreach($this->cat_links[$cat->cat_id] AS $cat_link) {
 				echo '<li>';

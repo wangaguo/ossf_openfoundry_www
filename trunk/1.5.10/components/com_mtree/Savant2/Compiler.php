@@ -7,7 +7,7 @@
 * You have to extend this class for it to be useful; e.g., "class
 * Savant2_Plugin_example extends Savant2_Plugin".
 * 
-* $Id: Compiler.php,v 1.2 2004/10/13 16:17:46 pmjones Exp $
+* $Id: Compiler.php 357 2008-08-14 10:09:37Z cy $
 * 
 * @author Paul M. Jones <pmjones@ciaweb.net>
 * 

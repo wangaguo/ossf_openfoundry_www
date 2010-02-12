@@ -3,21 +3,20 @@
 * Mosets Tree 
 *
 * @package Mosets Tree 2.0
-* @copyright (C) 2004-2008 Lee Cher Yeong
+* @copyright (C) 2004-2009 Lee Cher Yeong
 * @url http://www.mosets.com/
 * @author Lee Cher Yeong <mtree@mosets.com>
 **/
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
 //Base plugin class.
-global $mosConfig_absolute_path;
-require_once $mosConfig_absolute_path.'/components/com_mtree/Savant2/Plugin.php';
+require_once JPATH_ROOT.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS.'Plugin.php';
 
 class Savant2_Plugin_listalpha extends Savant2_Plugin {
 	
 	function plugin($alpha, $cat_id=null, $attr=null)
 	{
-		global $Itemid, $_MT_LANG;
+		global $Itemid;
 
 		if ( $cat_id == null || !is_numeric($cat_id) ) {
 			global $cat_id;
@@ -26,7 +25,7 @@ class Savant2_Plugin_listalpha extends Savant2_Plugin {
 		if ( eregi("[a-z0]{1}[0-9]*", $alpha) ) {
 
 			$html = '<a href="';
-			$html .= sefRelToAbs("index.php?option=com_mtree&task=listalpha&alpha=".strtolower($alpha)."&cat_id=".$cat_id."&Itemid=".$Itemid);
+			$html .= JRoute::_("index.php?option=com_mtree&task=listalpha&alpha=".strtolower($alpha)."&cat_id=".$cat_id."&Itemid=".$Itemid);
 			$html .= '"';
 			
 			# Insert attributes

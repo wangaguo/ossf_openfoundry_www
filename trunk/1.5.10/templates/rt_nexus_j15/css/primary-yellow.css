@@ -1,7 +1,7 @@
 /* Primary Style - Yellow */
 
 /* Text Colors */
-a, .date1, .createdby, #horiz-menu li.active .item span {color: #D49400;}
+a, .date1, .createdby  {color: #0058A6;}
 #mainmodules3 {color: #5A450C;}
 #mainmodules3 a {color: #5A450C;}
 #featuremodules {color: #000000;}
@@ -9,6 +9,18 @@ a, .date1, .createdby, #horiz-menu li.active .item span {color: #D49400;}
 #featuremodules .roktabs-links {color: #997B25;}
 #featuremodules .roktabs-links li.active {color: #fff;}
 .readon-wrap1 a, .readon-wrap1 button, .readon-wrap1 input.button {color: #fff !important;}
+input.button {
+    background:transparent none repeat scroll 0 0;
+    border:medium none;
+    cursor:pointer;
+    line-height:24px;
+    margin-bottom:5px;
+    padding:0;
+    text-align:center;
+    color:#ffffff;
+    font-weight:bold;
+}
+
 #featuremodules .readon-wrap1 a, #featuremodules .readon-wrap1 button, #featuremodules .readon-wrap1 input.button, .hilite2 .readon-wrap1 a, .hilite2 .readon-wrap1 button, .hilite2 .readon-wrap1 input.button {color: #997B25 !important;}
 h3 span, .contentheading, .contentheading a, .blog_more h2 {color: #663366;}
 #featuremodules h3 span, #mainmodules3 h3 span {color: #000;}
@@ -23,7 +35,7 @@ h3.module-title, .contentheading, .blog_more h2 {border-bottom: 2px solid #66336
 img.demo-tabs, img.demo-tabs2 {border: 5px solid #FFE26E;}
 
 /* Top Feature */
-#featuremodules {background: #FFE26E url(../images/primary/yellow/feature-bg.png) 0 0 repeat-x;}
+#featuremodules {/*background: #FFE26E url(../images/primary/yellow/feature-bg.png) 0 0 repeat-x;*/}
 #tabs-bar {/*background: url(../images/primary/yellow/tabs-bar.png) 0 0 repeat-x;*/}
 #featuremodules ul li a {background: url(../images/primary/yellow/hilite-typo.png) 0 0 no-repeat;}
 

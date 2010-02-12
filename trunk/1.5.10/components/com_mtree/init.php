@@ -1,26 +1,21 @@
 <?php
 /**
-* Mosets Tree 
-*
-* @package Mosets Tree 2.00
-* @copyright (C) 2007-2008 Mosets Consulting
-* @url http://www.mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+ * @version		$Id: init.php 625 2009-03-29 07:16:20Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-if(!isset($database)) { global $database; }
-if(!isset($mosConfig_absolute_path)) { global $mosConfig_absolute_path; }
+defined('_JEXEC') or die('Restricted access');
 
 global $mtconf;
 if(!isset($mtconf)) {
-	require( $mosConfig_absolute_path . '/administrator/components/com_mtree/config.mtree.class.php');
+	if( !isset($database) ) {
+		$database 	=& JFactory::getDBO();
+	}
+	require( JPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_mtree'.DS.'config.mtree.class.php');
 	$mtconf	= new mtConfig($database);
 }
-
-require_once( $mosConfig_absolute_path . '/components/com_mtree/language/' . $mtconf->get('language') . '.php');
-if ( !isset($_MT_LANG) ) {
-	$_MT_LANG =& new mtLanguage();	
-}
-
 ?>

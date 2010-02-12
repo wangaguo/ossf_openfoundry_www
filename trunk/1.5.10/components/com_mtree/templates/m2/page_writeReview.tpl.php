@@ -8,9 +8,9 @@
 
 		// do field validation
 		if (form.rev_text.value == ""){
-			alert( "<?php echo $this->_MT_LANG->PLEASE_FILL_IN_REVIEW ?>" );
+			alert( "<?php echo JText::_( 'Please fill in review' ) ?>" );
 		} else if (form.rev_title.value == ""){
-			alert( "<?php echo $this->_MT_LANG->PLEASE_FILL_IN_TITLE ?>" );
+			alert( "<?php echo JText::_( 'Please fill in title' ) ?>" );
 		<?php
 		if( 
 			$this->config->get('require_rating_with_review')
@@ -25,24 +25,24 @@
 				($this->config->get('user_rating') == '2' && $this->my->id > 0 && $this->my->id != $this->link->user_id)
 			)
 		) {			
-			echo '} else if (form.rating.value == ""){ alert("' . $this->_MT_LANG->PLEASE_FILL_IN_RATING . '"); ';
+			echo '} else if (form.rating.value == ""){ alert("' . JText::_( 'Please fill in rating' ) . '"); ';
 		}		
 		?>} else {
 			form.submit();
 		}
 	}
 </script>
-<h1 class="componentheading"><?php echo $this->_MT_LANG->TITLE ?></h1>
-<h2 class="contentheading"><?php echo $this->_MT_LANG->WRITE_REVIEW . ' - ' . $this->link->link_name; ?></h2>
+ 
+<h2 class="contentheading"><?php echo JText::_( 'Write review' ) . ' - ' . $this->link->link_name; ?></h2>
 
 <div id="listing">
 
+<form action="<?php echo JRoute::_('index.php'); ?>" method="post" name="adminForm" id="adminForm">
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
-<form action="<?php echo sefReltoAbs('index.php'); ?>" method="post" name="adminForm" id="adminForm">
 	<?php if ( !($this->my->id > 0) ) { ?>
 	<tr>
 		<td align="left">
-			<?php echo $this->_MT_LANG->YOUR_NAME ?>:
+			<?php echo JText::_( 'Your name' ) ?>:
 		</td>
 	</tr>
 	<tr>
@@ -53,12 +53,12 @@
 	<?php } ?>
 	<tr>
 		<td align="left">
-			<?php echo $this->_MT_LANG->REVIEW_TITLE ?>:
+			<?php echo JText::_( 'Review title' ) ?>:
 		</td>
 	</tr>
 	<tr>
 		<td align="left">
-			<input type="text" name="rev_title" class="inputbox" size="40" />
+			<input type="text" name="rev_title" class="inputbox" size="69" />
 		</td>
 	</tr>
 	<tr>
@@ -78,7 +78,7 @@
 			?>
 			<select name="rating" class="inputbox">
 			<?php
-			$options = array(""=>$this->_MT_LANG->SELECT_YOUR_RATING, "5"=>$this->_MT_LANG->RATING_5, "4"=>$this->_MT_LANG->RATING_4, "3"=>$this->_MT_LANG->RATING_3, "2"=>$this->_MT_LANG->RATING_2, "1"=>$this->_MT_LANG->RATING_1);
+			$options = array(""=>JText::_( 'Select your rating' ), "5"=>JText::_( 'Rating 5' ), "4"=>JText::_( 'Rating 4' ), "3"=>JText::_( 'Rating 3' ), "2"=>JText::_( 'Rating 2' ), "1"=>JText::_( 'Rating 1' ));
 			echo $this->plugin( "options", $options, $this->user_rating ); 
 			?>
 			</select>
@@ -87,22 +87,22 @@
 	</tr>
 	<tr>
 		<td align="left">
-			<?php echo $this->_MT_LANG->REVIEW ?>:
+			<?php echo JText::_( 'Review' ) ?>:
 		</td>
 	</tr>
 	<tr>
 		<td align="left">
-			<?php $this->plugin('textarea', 'rev_text', '', 8, 50, 'class="inputbox"'); ?>
+			<?php $this->plugin('textarea', 'rev_text', '', 8, 69, 'class="inputbox"'); ?>
 			<br /><br />
 			<input type="hidden" name="option" value="<?php echo $this->option ?>" />
 			<input type="hidden" name="task" value="addreview" />
 			<input type="hidden" name="Itemid" value="<?php echo $this->Itemid ?>" />
 			<input type="hidden" name="link_id" value="<?php echo $this->link->link_id ?>" />
-			<input type="hidden" name="<?php echo $this->validate; ?>" value="1" />
-			<input type="button" value="<?php echo $this->_MT_LANG->ADD_REVIEW ?>" onclick="javascript:submitbutton('addreview')" class="button" /> <input type="button" value="<?php echo $this->_MT_LANG->CANCEL ?>" onclick="history.back();" class="button" />
+			<?php echo JHTML::_( 'form.token' ); ?>
+			<input type="button" value="<?php echo JText::_( 'Add review' ) ?>" onclick="javascript:submitbutton('addreview')" class="button" /> <input type="button" value="<?php echo JText::_( 'Cancel' ) ?>" onclick="history.back();" class="button" />
 		</td>
 	</tr>
-</table>	
+</table>
 </form>
 
 </div>
