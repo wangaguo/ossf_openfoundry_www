@@ -1,18 +1,17 @@
 <?php
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
 /**
 * Base plugin class.
 */
-global $mosConfig_absolute_path;
-require_once $mosConfig_absolute_path.'/components/com_mtree/Savant2/Plugin.php';
+require_once JPATH_ROOT.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS.'Plugin.php';
 
 /**
 * Mosets Tree 
 *
 * @package Mosets Tree 2.0
 * @copyright (C) 2007 Lee Cher Yeong
-* @url http://www.Mosets.com/
+* @url http://www.mosets.com/
 * @author Lee Cher Yeong <mtree@mosets.com>
 **/
 
@@ -21,8 +20,11 @@ class Savant2_Plugin_ratableRating extends Savant2_Plugin {
 
 	function plugin($link, $rating, $votes)
 	{
-		global $database, $_MT_LANG, $my, $mtree, $Itemid, $mtconf;
+		global $mtree, $Itemid, $mtconf;
 
+		$database	=& JFactory::getDBO();
+		$my			=& JFactory::getUser();
+		
 		$vote_ip = getenv( 'REMOTE_ADDR' );
 
 		if ( $votes >= $mtconf->get('min_votes_to_show_rating') ) {
@@ -46,16 +48,20 @@ class Savant2_Plugin_ratableRating extends Savant2_Plugin {
 		if( 
 			($voted && $mtconf->get('rate_once') == '1') 
 			|| 
+			($mtconf->get('user_rating') == '-1') 
+			|| 
 			($mtconf->get('user_rating') == '1' && $my->id < 1) 
 			|| 
 			($mtconf->get('user_rating') == '2' && $my->id > 0 && $my->id == $link->user_id) 
+			||
+			($mtconf->get('user_rating') == '2' && $my->id == 0)
 			|| 
 			($link->user_id == $my->id && !$mtconf->get('allow_owner_rate_own_listing')) 
 		) {
-			$html .= $_MT_LANG->RATING;
+			$html .= JText::_( 'Rating' );
 			$allowRating = false;
 		} else {
-			$html .= $_MT_LANG->RATE_THIS_LISTING;
+			$html .= JText::_( 'Rate this listing' );
 			$allowRating = true;
 		}
 		$html .= '</div>';
@@ -65,21 +71,21 @@ class Savant2_Plugin_ratableRating extends Savant2_Plugin {
 		// Print stars
 		for( $i=0; $i<$star; $i++) {
 			if($allowRating) {
-				$html .= '<a href="'.sefReltoAbs('index.php?option=com_mtree&link_id='.$link->link_id.'&task=addrating&rating='.($i+1).'&Itemid='.$Itemid).'" onclick="return(rateListing('.$link->link_id.','.($i+1).'))">';
-				$html .= '<img src="components/com_mtree/img/star_10.gif" width="16" height="16" hspace="1" vspace="3" border="0" id="rating'.($i+1).'" />';
+				$html .= '<a href="javascript:rateListing('.$link->link_id.','.($i+1).');">';
+				$html .= '<img src="components/com_mtree/img/star_10.png" width="16" height="16" hspace="1" vspace="3" border="0" id="rating'.($i+1).'" alt="★" />';
 				$html .= '</a>';
 			} else {
-				$html .= '<img src="components/com_mtree/img/star_10.gif" width="16" height="16" hspace="1" vspace="3" />';
+				$html .= '<img src="components/com_mtree/img/star_10.png" width="16" height="16" hspace="1" vspace="3" alt="★" />';
 			}
 		}
 		
 		if( ($rating-$star) >= 0.5 && $star > 0 ) {
 			if($allowRating) {
-				$html .= '<a href="'.sefReltoAbs('index.php?option=com_mtree&link_id='.$link->link_id.'&task=addrating&rating='.($i+1).'&Itemid='.$Itemid).'" onclick="return(rateListing('.$link->link_id.','.($i+1).'))">';
-				$html .= '<img src="components/com_mtree/img/star_05.gif" width="16" height="16" hspace="1" vspace="3" border="0" id="rating'.($i+1).'" />';
+				$html .= '<a href="javascript:rateListing('.$link->link_id.','.($i+1).');">';
+				$html .= '<img src="components/com_mtree/img/star_05.png" width="16" height="16" hspace="1" vspace="3" border="0" id="rating'.($i+1).'" alt="½" />';
 				$html .= '</a>';
 			} else {
-				$html .= '<img src="components/com_mtree/img/star_05.gif" width="16" height="16" hspace="1" vspace="3" />';
+				$html .= '<img src="components/com_mtree/img/star_05.png" width="16" height="16" hspace="1" vspace="3" alt="½" />';
 			}
 			$star += 1;
 		}
@@ -87,11 +93,11 @@ class Savant2_Plugin_ratableRating extends Savant2_Plugin {
 		// Print blank star
 		for( $i=$star; $i<5; $i++) {
 			if($allowRating) {
-				$html .= '<a href="'.sefReltoAbs('index.php?option=com_mtree&link_id='.$link->link_id.'&task=addrating&rating='.($i+1).'&Itemid='.$Itemid).'" onclick="return(rateListing('.$link->link_id.','.($i+1).'))">';
-				$html .= '<img src="components/com_mtree/img/star_00.gif" width="16" height="16" hspace="1" vspace="3" border="0" id="rating'.($i+1).'" />';
+				$html .= '<a href="javascript:rateListing('.$link->link_id.','.($i+1).');">';
+				$html .= '<img src="components/com_mtree/img/star_00.png" width="16" height="16" hspace="1" vspace="3" border="0" id="rating'.($i+1).'" alt="" />';
 				$html .= '</a>';
 			} else {
-				$html .= '<img src="components/com_mtree/img/star_00.gif" width="16" height="16" hspace="1" vspace="3" />';
+				$html .= '<img src="components/com_mtree/img/star_00.png" width="16" height="16" hspace="1" vspace="3" alt="" />';
 			}
 		}
 		// $html .= '</center>';

@@ -1,12 +1,12 @@
 /* Footer Styles */
 
 /* Text Colors - Dark */
-.foot-dark #mainmodules5 {color: #999;}
+.foot-dark #mainmodules5 {color: #fff;}
 .foot-dark #footer {color: #666;}
 
 /* Text Color -Light */
 .foot-light #mainmodules5 {color: #666;}
-.foot-light #footer {color: #666;}
+.foot-light #footer {color: #999;}
 .foot-light #mainmodules5 h3 span {color: #333;}
 
 /* Dark */

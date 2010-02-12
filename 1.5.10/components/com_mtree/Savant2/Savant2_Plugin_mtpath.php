@@ -1,28 +1,26 @@
 <?php
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
 /**
 * Base plugin class.
 */
-global $mosConfig_absolute_path;
-require_once $mosConfig_absolute_path.'/components/com_mtree/Savant2/Plugin.php';
+require_once JPATH_ROOT.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS.'Plugin.php';
 
 /**
 * Mosets Tree 
 *
 * @package Mosets Tree 0.8
 * @copyright (C) 2004 Lee Cher Yeong
-* @url http://www.Mosets.com/
-* @author Lee Cher Yeong <cy@mosets.com>
+* @url http://www.mosets.com/
+* @author Lee Cher Yeong <mtree@mosets.com>
 **/
 
 
 class Savant2_Plugin_mtpath extends Savant2_Plugin {
 	
 function plugin( $cat_id, $attr = null)	{
-	global $Itemid, $mosConfig_absolute_path, $_MT_LANG;
 
-	require_once( $mosConfig_absolute_path.'/administrator/components/com_mtree/admin.mtree.class.php');
+	require_once( JPATH_ROOT.DS.'administrator'.DS.'components'.DS.'com_mtree'.DS.'admin.mtree.class.php');
 
 	$mtPathWay = new mtPathWay( $cat_id );
 	$cat_ids = $mtPathWay->getPathWay();
@@ -31,7 +29,7 @@ function plugin( $cat_id, $attr = null)	{
 	$cat_names = array();
 
 	if ( empty($cat_ids[0]) ) {
-		$cat_names[] = $_MT_LANG->ROOT;
+		$cat_names[] = JText::_( 'Root' );
 	}
 
 	foreach( $cat_ids AS $cid ) {
@@ -42,7 +40,7 @@ function plugin( $cat_id, $attr = null)	{
 	}
 
 	$html = '<a href="';
-	$html .= sefRelToAbs('index.php?option=com_mtree&task=listcats&cat_id='.$cat_id.'&Itemid='.$Itemid);
+	$html .= JRoute::_('index.php?option=com_mtree&task=listcats&cat_id='.$cat_id);
 	$html .= '"';
 	
 	# Insert attributes
@@ -59,7 +57,7 @@ function plugin( $cat_id, $attr = null)	{
 	}
 	
 	# set the listing text, close the tag
-	$html .= '>' . htmlspecialchars( implode($_MT_LANG->ARROW, $cat_names) ) . '</a> ';
+	$html .= '>' . htmlspecialchars( implode(JText::_( 'Arrow' ), $cat_names) ) . '</a> ';
 
 	return $html;
 

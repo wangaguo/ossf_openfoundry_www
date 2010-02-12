@@ -1,25 +1,29 @@
 <?php
 /**
-* Mosets Tree 
-*
-* @package Mosets Tree 2.0
-* @copyright (C) 2006-2008 Mosets Consulting
-* @url http://www.mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
+ * @version		$Id: rss.php 602 2009-03-19 14:27:52Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-// no direct access
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+
+defined('_JEXEC') or die('Restricted access');
 
 // load feed creator class
 require_once( $mtconf->getjconf('absolute_path').'/includes/feedcreator.class.php' );
 
 function rss( $option, $type, $cat_id=0 ) {
-	global $database, $_MT_LANG, $mtconf;
-
+	global $mtconf;
+	
+	$database	=& JFactory::getDBO();
+	
 	$info	=	null;
 	$rss	=	null;
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	$jdate	= JFactory::getDate();
+	$now	= $jdate->toMySQL();
+	$nullDate	= $database->getNullDate();
 
 	$rss = new MTRSSCreator20();
 	
@@ -32,11 +36,11 @@ function rss( $option, $type, $cat_id=0 ) {
 	
 	switch($type) {
 		case 'updated':
-			$rss->title = $mtconf->getjconf('sitename') . $mtconf->get('rss_title_separator') . $_MT_LANG->RECENTLY_UPDATED_LISTING;
+			$rss->title = $mtconf->getjconf('sitename') . $mtconf->get('rss_title_separator') . JText::_( 'Recently updated listing' );
 			break;
 		case 'new':
 		default:
-			$rss->title = $mtconf->getjconf('sitename') . $mtconf->get('rss_title_separator') . $_MT_LANG->NEW_LISTING;
+			$rss->title = $mtconf->getjconf('sitename') . $mtconf->get('rss_title_separator') . JText::_( 'New listing' );
 			break;
 	}
 	if($cat_id>0) {
@@ -45,7 +49,7 @@ function rss( $option, $type, $cat_id=0 ) {
 		$rss->title .= $mtconf->get('rss_title_separator') . $cat_name;
 	}
 	
-	$rss->link = $mtconf->getjconf('live_site');
+	$rss->link = JURI::root();
 	$rss->cssStyleSheet	= NULL;
 	$rss->feedURL = $mtconf->getjconf('live_site').$_SERVER['PHP_SELF'];
 
@@ -54,8 +58,8 @@ function rss( $option, $type, $cat_id=0 ) {
 	
 	$sql = "SELECT l.*, u.username, u.name AS owner, c.cat_id, c.cat_name FROM (#__mt_links AS l, #__mt_cl AS cl, #__users AS u, #__mt_cats AS c) "
 		. "WHERE link_published='1' && link_approved='1' "
-		. "\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-		. "\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) "
+		. "\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+		. "\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) "
 		. "\n AND l.link_id = cl.link_id "
 		. "\n AND cl.main = 1 "
 		. "\n AND cl.cat_id = c.cat_id "
@@ -78,6 +82,16 @@ function rss( $option, $type, $cat_id=0 ) {
 	$sql .= "LIMIT 10";
 	$database->setQuery( $sql );
 	$links = $database->loadObjectList();
+
+	# Get first image of each listings
+	if( $mtconf->get('show_image_rss') && !empty($links) )
+	{
+		foreach( $links AS $link ) {
+			$link_ids[] = $link->link_id;
+		}
+		$database->setQuery( 'SELECT link_id, filename FROM #__mt_images WHERE link_id IN ('.implode(', ',$link_ids).') AND ordering = 1 LIMIT ' . count($link_ids) );
+		$link_images = $database->loadObjectList('link_id');
+	}
 
 	# Get arrays if link_ids
 	foreach( $links AS $link ) {
@@ -113,12 +127,24 @@ function rss( $option, $type, $cat_id=0 ) {
 		}
 	}
 	
+	$uri =& JURI::getInstance(JURI::base());
+	$host = $uri->toString(array('scheme', 'host', 'port'));
+
+	$thumbnail_path = $mtconf->get('relative_path_to_listing_small_image');
+
 	foreach( $links AS $link ) {
 		$item = new FeedItem();
 		$item->title = $link->link_name;
-		$item->link = sefRelToAbs("index.php?option=com_mtree&task=viewlink&link_id=".$link->link_id."&Itemid=".$Itemid);
-		$item->guid = sefRelToAbs("index.php?option=com_mtree&task=viewlink&link_id=".$link->link_id."&Itemid=".$Itemid);
-		$item->description = $link->link_desc;
+		$item->link = $host . JRoute::_("index.php?option=com_mtree&task=viewlink&link_id=".$link->link_id."&Itemid=".$Itemid);
+		$item->guid = $host . JRoute::_("index.php?option=com_mtree&task=viewlink&link_id=".$link->link_id."&Itemid=".$Itemid);
+
+		$item->description = '';
+		if( $mtconf->get('show_image_rss') && isset($link_images[$link->link_id]) && !empty($link_images[$link->link_id]->filename) )
+		{
+			$item->description .= '<img align="right" src="'.$mtconf->getjconf('live_site').$thumbnail_path.$link_images[$link->link_id]->filename.'" alt="'.$link->link_name.'" />';
+		}
+		$item->description .= $link->link_desc;
+		
 		//optional
 		$item->descriptionHtmlSyndicated = true;
 
@@ -139,7 +165,7 @@ function rss( $option, $type, $cat_id=0 ) {
 			foreach($additional_elements AS $additional_element) {
 				if( in_array($additional_element,$core_fields) ) {
 					if ($additional_element == 'cat_url') {
-						$ae['mtree:'.$additional_element] = htmlspecialchars(sefReltoAbs('index.php?option=com_mtree&task=listcats&cat_id='.$link->cat_id.'&Itemid='.$Itemid));
+						$ae['mtree:'.$additional_element] = htmlspecialchars(JRoute::_('index.php?option=com_mtree&task=listcats&cat_id='.$link->cat_id.'&Itemid='.$Itemid));
 					} else {
 						$ae['mtree:'.$additional_element] = '<![CDATA[' . $link->$additional_element . ']]>';
 					}

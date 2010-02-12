@@ -4,23 +4,22 @@
 *
 * @package Mosets Tree 0.8
 * @copyright (C) 2004 Lee Cher Yeong
-* @url http://www.Mosets.com/
-* @author Lee Cher Yeong <cy@mosets.com>
+* @url http://www.mosets.com/
+* @author Lee Cher Yeong <mtree@mosets.com>
 **/
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
 //Base plugin class.
-global $mosConfig_absolute_path;
-require_once $mosConfig_absolute_path.'/components/com_mtree/Savant2/Plugin.php';
+require_once JPATH_ROOT.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS.'Plugin.php';
 
 class Savant2_Plugin_ahrefreview extends Savant2_Plugin {
 	
 	function plugin(&$link, $attr=null)
 	{
-		global $Itemid, $_MT_LANG, $mtconf;//, $mt_show_review;
+		global $Itemid, $mtconf;//, $mt_show_review;
 
 		# Load Parameters
-		$params =& new mosParameters( $link->attribs );
+		$params =& new JParameter( $link->attribs );
 		$params->def( 'show_review', $mtconf->get('show_review') );
 
 		if ( $params->get( 'show_review' ) == 1 ) {
@@ -30,7 +29,7 @@ class Savant2_Plugin_ahrefreview extends Savant2_Plugin {
 
 			$html .= '<a href="';
 
-			$html .= sefRelToAbs("index.php?option=com_mtree&task=writereview&link_id=".$link->link_id."&Itemid=".$Itemid);
+			$html .= JRoute::_( 'index.php?option=com_mtree&task=writereview&link_id='.$link->link_id);
 
 			$html .= '"';
 			
@@ -47,7 +46,7 @@ class Savant2_Plugin_ahrefreview extends Savant2_Plugin {
 				$html .= " $attr";
 			}
 
-			$html .= '>'.$_MT_LANG->WRITE_REVIEW	."</a>";
+			$html .= '>'.JText::_( 'Write review' )	."</a>";
 
 			# Return the review link
 			return $html;

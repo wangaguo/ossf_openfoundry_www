@@ -1,11 +1,15 @@
 <?php
 /**
-* @version 1.00
-* @copyright (C) 2007 Lee Cher Yeong. All rights reserved
-* @license http://www.gnu.org/copyleft/lesser.html LGPL License
-**/
+ * @version		$Id: MT_DOMIT_Lite_Document.php 575 2009-03-10 11:44:00Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
+
+defined('_JEXEC') or die('Restricted access');
 
 require_once( $mtconf->getjconf('absolute_path') . '/includes/domit/xml_domit_lite_include.php' );
 

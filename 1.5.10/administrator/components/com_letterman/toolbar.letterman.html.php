@@ -13,7 +13,11 @@
 * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 *
 */
-
+/*
+	＠修改日期080903
+	＠修改內容
+		更改class MENU_letterman中的EDIT_MENU()
+*/
 // ensure this file is being included by a parent file
 defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
 
@@ -23,7 +27,9 @@ class MENU_letterman {
 	*/
 	function EDIT_MENU() {
 		mosMenuBar::startTable();
-		mosMenuBar::save( 'save', _E_SAVE);
+		//mosMenuBar::save( 'save', _E_SAVE);
+		//在EDIT介面加入自己定義的按鈕
+		mosMenuBar::save( 'editsave', _E_SAVE);
 		mosMenuBar::spacer();
 		mosMenuBar::cancel( 'cancel', _E_CANCEL);
 		mosMenuBar::spacer();
@@ -69,6 +75,17 @@ class MENU_letterman {
 		mosMenuBar::spacer();
 		mosMenuBar::deleteList( '', 'remove', _E_REMOVE);
 		mosMenuBar::spacer();
+		if(file_exists('reflash.png') && file_exists('reflash_f2.png'))
+			mosMenuBar::custom( 'reflash', 'reflash.png', 'reflash_f2.png', LM_reflashOldPaper, false );
+		else
+			mosMenuBar::custom( 'reflash', 'reload.png', 'reload_f2.png', LM_reflashOldPaper, false );
+
+		//modify by aeil @ 090204
+		mosMenuBar::spacer();
+		mosMenuBar::custom( 'unmount', 'reload.png', 'reload_f2.png', LM_unreflashOldPaper, true );		
+		mosMenuBar::spacer();
+		mosMenuBar::custom( 'allunmount', 'reload.png', 'reload_f2.png', LM_allunreflashOldPaper, false );	
+		//end
 		mosMenuBar::endTable();
 	}
 	function SUBSCRIBE_MENU() {
@@ -95,7 +112,7 @@ class MENU_letterman {
 		if( function_exists('getmxrr')) {
 			mosMenuBar::divider();
 			mosMenuBar::spacer();
-			$href = "javascript:if (document.adminForm.boxchecked.value == 0){ alert('Please make a selection from the list to validate emails');}else{ if( document.adminForm.boxchecked.value > 5 ) { if( confirm('You have selected more than 5 items for validation. \\nValidation can take very long and result in a timout error.\\nDo you still want to continue?')) { submitbutton('validateEmails')}} else { submitbutton('validateEmails') }}";
+			$href = "javascript:if (document.adminForm.boxchecked.value == 0){ alert('Please make a selection from the list to validate emails');}else{ if( document.adminForm.boxchecked.value > 5 ) { if( confirm('You have selected more than 5 items for validation. \\nValidation can take very long and result in a timout error.\\nDo you still want to continue?')) { submitbutton('validateEmails')}}}";
 			?>
 			<td>
 				<a class="toolbar" href="<?php echo $href;?>" onmouseout="MM_swapImgRestore();"  onmouseover="MM_swapImage('validateEmails','','<?php echo $mosConfig_live_site."/components/com_letterman/images/validate_f2.gif" ?>',1);">

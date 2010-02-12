@@ -1,18 +1,17 @@
 <?php
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
 /**
 * Base plugin class.
 */
-global $mosConfig_absolute_path;
-require_once $mosConfig_absolute_path.'/components/com_mtree/Savant2/Plugin.php';
+require_once JPATH_ROOT.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS.'Plugin.php';
 
 /**
 * Mosets Tree 
 *
 * @package Mosets Tree 1.5
 * @copyright (C) 2006 Lee Cher Yeong
-* @url http://www.Mosets.com/
+* @url http://www.mosets.com/
 * @author Lee Cher Yeong <mtree@mosets.com>
 **/
 
@@ -20,13 +19,13 @@ require_once $mosConfig_absolute_path.'/components/com_mtree/Savant2/Plugin.php'
 class Savant2_Plugin_smartdatetime extends Savant2_Plugin {
 
 	function plugin( $datetime ) {
-		global $mosConfig_offset, $_MT_LANG;
+		$database	=& JFactory::getDBO();
+		$nullDate	= $database->getNullDate();
 
-		if ( $datetime == '0000-00-00 00:00:00' ) {
-			return $_MT_LANG->NEVER;
+		if ( $datetime == $database->getNullDate() ) {
+			return JText::_( 'Never' );
 		}
 
-		//$time_now = time()+$mosConfig_offset*60*60;
 		$time_now = time();
 		$time_str = strtotime( $datetime );
 
@@ -38,24 +37,24 @@ class Savant2_Plugin_smartdatetime extends Savant2_Plugin {
 			$minutes = ceil(($time_now - $time_str)/60);
 			if( $minutes < 60 ) {
 				if($minutes == 1) {
-					return sprintf( $_MT_LANG->MINUTE_AGO, $minutes );
+					return sprintf( JText::_( 'Minute ago' ), $minutes );
 				} else {
-					return sprintf( $_MT_LANG->MINUTES_AGO, $minutes );
+					return sprintf( JText::_( 'Minutes ago' ), $minutes );
 				}
 			} else {
 				$hours = ceil(($time_now - $time_str)/3600);
 				if($hours == 1) {
-					return  sprintf( $_MT_LANG->HOUR_AGO, $hours );
+					return  sprintf( JText::_( 'Hour ago' ), $hours );
 				} else {
-					return  sprintf( $_MT_LANG->HOURS_AGO, $hours );
+					return  sprintf( JText::_( 'Hours ago' ), $hours );
 				}
 			}
 		} else {
 			$days = ceil(($time_now - $time_str)/86400);
 			if($days == 1) {
-				return  sprintf( $_MT_LANG->DAY_AGO, $days );
+				return  sprintf( JText::_( 'Day ago' ), $days );
 			} else {
-				return  sprintf( $_MT_LANG->DAYS_AGO, $days );
+				return  sprintf( JText::_( 'Days ago' ), $days );
 			}
 		}
 

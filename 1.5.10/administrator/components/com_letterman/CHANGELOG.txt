@@ -3,11 +3,6 @@ Changelog for Letterman
 Version 1.2.x
 ****************
 
-- changed the default mail encoding to "base64" to prevent exclamation marks in the mail body
-	on too long lines.
-
----------- version 1.2.3 released ------------
-
 - fixed compatibility issues with Mambo 4.5.3 and Joomla >= 1.0.9
 - added "Spoof Check" functions like in Joomla 1.0.10, to prevent subscriber spam
 

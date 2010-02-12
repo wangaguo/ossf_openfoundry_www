@@ -1,15 +1,15 @@
 <?php
 /**
-* Mosets Tree toolbar 
-*
-* @package Mosets Tree 2.0
-* @copyright (C) 2005-2007 Mosets Consulting
-* @url http://www.Mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
+ * @version		$Id: config.mtree.class.php 706 2009-05-16 08:31:35Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-// ensure this file is being included by a parent file
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+
+defined('_JEXEC') or die('Restricted access');
 
 if ( !class_exists('mtConfig') ) {
 	class mtConfig {
@@ -18,37 +18,27 @@ if ( !class_exists('mtConfig') ) {
 		var $jconfig=null;
 		var $params=null;
 
-		function mtConfig($db) {
-			$this->_db=$db;
-			$db->setQuery( 'SELECT `varname`, `value`, `default` FROM #__mt_config' );
-			$this->mtconfig = $db->loadObjectList('varname');
+		function mtConfig() {
+			$this->_db = JFactory::getDBO();
+			$this->_db->setQuery( 'SELECT `varname`, `value`, `default` FROM #__mt_config' );
+			$this->mtconfig = $this->_db->loadObjectList('varname');
 
-			if( $GLOBALS['_VERSION']->RELEASE == '1.0' ) {
-				foreach($GLOBALS AS $key=>$value) {
-					if( substr($key,0,10) == 'mosConfig_' ) {
-						$this->jconfig[substr($key,10)] = $value;
-					}
-				}
+			global $mainframe;
+			$this->jconfig['absolute_path'] = JPATH_SITE;
+			if(substr(JURI::root(),-1) == '/') {
+				$this->jconfig['live_site'] = substr(JURI::root(),0,-1);
 			} else {
-				/*
-				if(class_exists('JCONFIG')) {
-					$jconfig_vars = get_class_vars('JCONFIG');
-					foreach ($jconfig_vars as $name => $value) {
-					    // echo "<br />$name : $value\n";
-					}
-				}
-				*/
-				global $mainframe;
-				$this->jconfig['absolute_path'] = JPATH_SITE;
 				$this->jconfig['live_site'] = JURI::root();
-				$this->jconfig['sitename'] = $mainframe->getCfg('sitename');
-				$this->jconfig['offset'] = $mainframe->getCfg('offset');
-				$this->jconfig['MetaTitle'] = $mainframe->getCfg('MetaTitle');
-				$this->jconfig['MetaAuthor'] = $mainframe->getCfg('MetaAuthor');
-				$this->jconfig['sef'] = $mainframe->getCfg('sef');
-				$this->jconfig['cachepath'] = JPATH_BASE.DS.'cache';
 			}
-
+			$this->jconfig['sitename'] = $mainframe->getCfg('sitename');
+			$this->jconfig['offset'] = $mainframe->getCfg('offset');
+			$this->jconfig['MetaTitle'] = $mainframe->getCfg('MetaTitle');
+			$this->jconfig['MetaAuthor'] = $mainframe->getCfg('MetaAuthor');
+			$this->jconfig['list_limit'] = $mainframe->getCfg('list_limit');
+			$this->jconfig['sef'] = $mainframe->getCfg('sef');
+			$this->jconfig['cachepath'] = JPATH_BASE.DS.'cache';
+			$this->jconfig['mailfrom'] = $mainframe->getCfg('mailfrom');
+			$this->jconfig['fromname'] = $mainframe->getCfg('fromname');
 		}
 
 		function get($varname){
@@ -74,15 +64,19 @@ if ( !class_exists('mtConfig') ) {
 	
 		function getTemParam($key,$default='') {
 			if(is_null($this->params)) {
-				$this->_db->setQuery('SELECT params FROM #__mt_templates WHERE tem_name = \'' . $this->get('template') . '\' LIMIT 1');
+				$this->_db->setQuery('SELECT params FROM #__mt_templates WHERE tem_name = ' . $this->_db->quote($this->get('template')) . ' LIMIT 1');
 				$params = $this->_db->loadResult();
-				$this->params = new mosParameters( $params );
+				$this->params = new JParameter( $params );
 			}
 			return $this->params->get( $key, $default );
 		}
 	
 		function getDefault($varname){
-			return $this->mtconfig[$varname]->default;
+			if( isset($this->mtconfig[$varname]->default) ) {
+				return $this->mtconfig[$varname]->default;
+			} else {
+				return null;
+			}
 		}
 
 		function getVarArray() {

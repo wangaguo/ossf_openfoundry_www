@@ -1,5 +1,14 @@
 <?php
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+/**
+ * @version		$Id: 2_0_1.php 575 2009-03-10 11:44:00Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
+
+defined('_JEXEC') or die('Restricted access');
 
 class mUpgrade_2_0_1 extends mUpgrade {
 	function upgrade() {

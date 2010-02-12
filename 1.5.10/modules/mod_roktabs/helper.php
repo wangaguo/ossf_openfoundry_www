@@ -198,6 +198,7 @@ class modRokTabsHelper
 
 						switch($tabs_title) {
 							case 'incremental':
+								$tabs_incremental='';//Modify by ally
 								if (strlen($tabs_incremental) > 0) $title = $tabs_incremental . '' . ($i + 1);
 								else $title = $tabs_incremental . '' . ($i + 1);						
 								break;

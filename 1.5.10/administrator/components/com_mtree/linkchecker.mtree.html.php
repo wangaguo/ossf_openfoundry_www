@@ -1,17 +1,20 @@
 <?php
 /**
-* Mosets Tree admin 
-*
-* @package Mosets Tree 2.0
-* @copyright (C) 2007-2008 Mosets Consulting
-* @url http://www.mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
+ * @version		$Id: linkchecker.mtree.html.php 575 2009-03-10 11:44:00Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
+
+
+defined('_JEXEC') or die('Restricted access');
 
 class HTML_mtlinkchecker {
 	
 	function linkChecker( $option, $num_of_links, $config ) {
-		global $_MT_LANG, $mtconf;
+		global $mtconf;
 	?>
 	<script language="javascript" type="text/javascript" src="<?php echo $mtconf->getjconf('live_site') . $mtconf->get('relative_path_to_js_library'); ?>"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $mtconf->getjconf('live_site'); ?>/administrator/components/com_mtree/js/admin.js"></script>
@@ -20,8 +23,8 @@ class HTML_mtlinkchecker {
 	jQuery.noConflict();
 	var mosConfig_live_site='http://<?php echo $_SERVER["SERVER_NAME"] . str_replace("/administrator/index2.php","",$_SERVER["PHP_SELF"]); ?>';
 	var num_of_links='<?php echo $num_of_links; ?>';
-	var msgLCCompleted = '<?php echo $_MT_LANG->LINK_CHECKER_COMPLETED ?>';
-	var msgLinksRemaining = '<?php echo $_MT_LANG->LINKS_REMAINING ?>';
+	var msgLCCompleted = '<?php echo JText::_( 'Link checker completed' ) ?>';
+	var msgLinksRemaining = '<?php echo JText::_( 'Links remaining' ) ?>';
 	var checked=0;
 	var okLinks=new Array();
 	</script>
@@ -35,17 +38,17 @@ class HTML_mtlinkchecker {
 		<tr>
 			<td width="100%">
 			<fieldset>
-			<legend><?php echo $_MT_LANG->LINK_CHECKER ?></legend>
+			<legend><?php echo JText::_( 'Link checker' ) ?></legend>
 			<table width="100%" border=0>
 				<tr>
 					<td width="50%" valign="top">
-						<input type="button" value="Check Links" onclick="startLinkChecker()" /> &nbsp;<?php printf($_MT_LANG->THERE_ARE_X_LINKS_IN_THE_DIRECTORY, $num_of_links) ?><?php printf($_MT_LANG->LAST_CHECKED_DATE,( (empty($config['linkchecker_last_checked']->value))? $_MT_LANG->NEVER : tellDateTime($config['linkchecker_last_checked']->value) )) ?>
+						<input type="button" value="Check Links" onclick="startLinkChecker()" /> &nbsp;<?php printf(JText::_( 'There are x links in the directory' ), $num_of_links) ?><?php printf(JText::_( 'Last checked date' ),( (empty($config['linkchecker_last_checked']->value))? JText::_( 'Never' ) : tellDateTime($config['linkchecker_last_checked']->value) )) ?>
 						<p />
-						<a href="#" onclick="jQuery('#advancedoptions').slideToggle('fast');return false;"><?php echo $_MT_LANG->ADVANCED_OPTIONS ?></a>
+						<a href="#" onclick="jQuery('#advancedoptions').slideToggle('fast');return false;"><?php echo JText::_( 'Advanced options' ) ?></a>
 						<div id="advancedoptions" style="display:none">
 							<table>
-								<tr><td width="20"><input type="checkbox" id="togglelinks" onclick="toggleLinks()" class="text_area" /></td><td width="99%"><label for="togglelinks"><?php echo $_MT_LANG->SHOW_ALL_LINKS ?></label></td></tr>
-								<tr><td colspan="2"><?php printf( $_MT_LANG->CHECK_X_LINKS_EVERY_Y_SECONDS, '<input type="text" value="'.$config['linkchecker_num_of_links']->value.'" name="linkchecker_num_of_links" id="linkchecker_num_of_links" size="3" class="text_area" />', '<input type="text" value="'.$config['linkchecker_seconds']->value.'" name="linkchecker_seconds" id="linkchecker_seconds" size="3" class="text_area" />') ?></td></tr>
+								<tr><td width="20"><input type="checkbox" id="togglelinks" onclick="toggleLinks()" class="text_area" /></td><td width="99%"><label for="togglelinks"><?php echo JText::_( 'Show all links' ) ?></label></td></tr>
+								<tr><td colspan="2"><?php printf( JText::_( 'Check x links every y seconds' ), '<input type="text" value="'.$config['linkchecker_num_of_links']->value.'" name="linkchecker_num_of_links" id="linkchecker_num_of_links" size="3" class="text_area" />', '<input type="text" value="'.$config['linkchecker_seconds']->value.'" name="linkchecker_seconds" id="linkchecker_seconds" size="3" class="text_area" />') ?></td></tr>
 							</table>
 						</div>
 					</td>
@@ -63,7 +66,7 @@ class HTML_mtlinkchecker {
 
 	<table class="adminlist">
 	<tbody id="problem">
-		<tr align="left"><th width="20"></th><th width="40%" align="left"><?php echo $_MT_LANG->WEBSITE ?></th><th width="20%" align="left"><?php echo $_MT_LANG->STATUS_CODE_AND_REASON ?></th><th width="16">&nbsp;</th><th width="20%" align="left"><?php echo $_MT_LANG->ACTION ?></th><th width="20%" align="right">	</th></tr>
+		<tr align="left"><th width="20"></th><th width="40%" align="left"><?php echo JText::_( 'Website' ) ?></th><th width="20%" align="left"><?php echo JText::_( 'Status code and reason' ) ?></th><th width="16">&nbsp;</th><th width="20%" align="left"><?php echo JText::_( 'Action' ) ?></th><th width="20%" align="right">	</th></tr>
 	</tbody>
 	</table>
 

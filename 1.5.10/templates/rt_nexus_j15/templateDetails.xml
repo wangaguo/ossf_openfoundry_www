@@ -47,6 +47,7 @@
 		<position>top-left</position>
 		<position>top-right</position>
 		<position>banner</position>
+		<position>banner-right</position>
 		<position>logo</position>
 		<position>toolbar</position>
 		<position>showcase</position>

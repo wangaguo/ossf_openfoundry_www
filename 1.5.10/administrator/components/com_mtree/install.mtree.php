@@ -1,108 +1,77 @@
 <?php
 /**
-* Mosets Tree toolbar 
-*
-* @package Mosets Tree 2.0
-* @copyright (C) 2005-2008 Mosets Consulting
-* @url http://www.mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
+ * @version		$Id: install.mtree.php 655 2009-04-17 06:59:16Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-// ensure this file is being included by a parent file
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
-global $mosConfig_absolute_path, $database;
-require_once( $mosConfig_absolute_path . '/administrator/components/com_mtree/config.mtree.class.php' );
+require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_mtree'.DS.'config.mtree.class.php' );
 
-function com_install() {
-
-	# Perform fresh install
-	return new_install();
-
-}
-
-function new_install() {
-	global $database, $my;
+function com_install()
+{
+	$my	=& JFactory::getUser();
+	$database =& JFactory::getDBO();
 	$mtconf = new mtConfig($database);
 	
 	$j_absolute_path = $mtconf->getjconf('absolute_path');
-	
-	$database->setQuery('SELECT fta_id, filedata FROM #__mt_fieldtypes_att');
-	$ftas = $database->loadObjectList();
-	foreach($ftas AS $fta) {
-		$database->setQuery('UPDATE #__mt_fieldtypes_att SET filedata = \''.$database->getEscaped(base64_decode($fta->filedata)).'\' WHERE fta_id = ' . $fta->fta_id . ' LIMIT 1');
-		$database->query();
-	}
-	$database->setQuery('SELECT ft_id, ft_class FROM #__mt_fieldtypes');
-	$fts = $database->loadObjectList();
-	foreach($fts AS $ft) {
-		$database->setQuery('UPDATE #__mt_fieldtypes SET ft_class = \''.$database->getEscaped(base64_decode($ft->ft_class)).'\' WHERE ft_id = ' . $ft->ft_id . ' LIMIT 1');
-		$database->query();
-	}
-	
-	$msg = '<table width="100%" border="0" cellpadding="8" cellspacing="0"><tr width="100%"><td align="center" valign="top"><center><img width="230" height="103" src="../components/com_mtree/img/logo_mtree.gif" alt="Mosets Tree" /></center></td></tr>';
-	$msg .= '<tr><td align="left" valign="top"><center><h3>Mosets Tree v'.$mtconf->get('version').'</h3><h4>A flexible directory component for Joomla!</h4><font class="small">&copy; Copyright 2005 - 2008 by Mosets Consulting. <a href="http://www.mosets.com/">http://www.mosets.com/</a><br/></font></center><br />';
-	$msg .= "<fieldset style=\"border: 1px dashed #C0C0C0;\"><legend>Details</legend>";
 
-	# Assign current user's email as Mosets Tree admin
+	// Assign current user's email as Mosets Tree admin
 	$database->setQuery("UPDATE #__mt_config SET value='" . $my->email . "' WHERE varname='admin_email' LIMIT 1");
 	$database->query();
-	
+
 	# Change Admin Icon to Mosets icon
-	$database->setQuery("UPDATE #__components SET admin_menu_img='../components/com_mtree/img/favicon.png' WHERE admin_menu_link='option=com_mtree'");
+	$database->setQuery("UPDATE #__components SET admin_menu_img='../components/com_mtree/img/icon-16-mosetstree.png' WHERE admin_menu_link='option=com_mtree'");
 	$database->query();
 
-	$msg .= '<br />';
-	$msg .= isWritableMsg($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_cat_original_image'));
-	$msg .= isWritableMsg($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_cat_small_image'));
-	$msg .= isWritableMsg($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_original_image'));
-	$msg .= isWritableMsg($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_medium_image'));
-	$msg .= isWritableMsg($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_small_image'));
+	?>
+	<div>
+		<div class="t">
+			<div class="t">
+				<div class="t"></div>
+			</div>
+		</div>
+		<div class="m" style="overflow:hidden;padding-bottom:12px;">
+			<div style="padding: 20px;border-right:1px solid #ccc;float:left">
+			<img src="../components/com_mtree/img/logo.png" alt="Mosets Tree" style="float:left;padding-right:15px;" />
+			</div>
+			<div style="margin-left:350px;">
+				<h2 style="margin-bottom:0;">Mosets Tree <?php echo $mtconf->get('version'); ?></h2>
+				<strong>A flexible directory component for Joomla!</strong>
+				<br /><br />
+				&copy; Copyright 2005-<?php echo date('Y'); ?> by Mosets Consulting. <a href="http://www.mosets.com/">www.mosets.com</a><br />
+				<input type="button" value="Go to Mosets Tree now" onclick="location.href='index.php?option=com_mtree'" style="margin-top:13px;cursor:pointer;width:200px;font-weight:bold" />
+			</div>
+		</div>
+	</div>	
+	<table class="adminlist">
+		<tbody>
+			<?php echo getWritableRow($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_cat_original_image')); ?>
+			<?php echo getWritableRow($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_cat_small_image')); ?>
+			<?php echo getWritableRow($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_original_image')); ?>
+			<?php echo getWritableRow($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_medium_image')); ?>
+			<?php echo getWritableRow($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_small_image')); ?>
+		</tbody>
+	</table>
 
-	$msg .= "<br /><font color='green'>OK &nbsp; Mosets Tree Installed Successfully!</font></fieldset>";
-	$msg .= "<p /><a href=\"index2.php?option=com_mtree\">Run Mosets Tree now!</a>";
-	$msg .='<br /><br /></td></tr></table>';
+	<?php
+	
+	return true;
+}
 
-	mosets_mail( "mtree", "Mosets Tree" );
-
-	return $msg ;
-} 
-
-function isWritableMsg($dir) {
-	global $mtconf;
-	$msg = '';
+function getWritableRow($dir) {
+	$msg = '<tr>';
+	$msg .= '<td>';
+	$msg .= $dir;
+	$msg .= '</td>';
+	$msg .= '<td>';
 	$msg .= (is_writable( $dir ) ? '<b><font color="green">Writeable</font></b>' : '<b><font color="red">Unwriteable</font></b>');
-	$msg .= ' &nbsp;'.$dir . '<br />';
+	$msg .= '</td>';
+	$msg .= '</tr>';
 	return $msg;
 }
-
-function mosets_mail( $name, $product ) {
-	// Send notice of installation information to Mosets
-	global $database, $my, $version;
-	$mtconf = new mtConfig($database);
-	
-	$email_to= $name.".install@mosets.com";
-
-	global $database, $my; 
-	$sql = "SELECT * FROM `#__users` WHERE id = $my->id LIMIT 1"; 
-	$database->setQuery( $sql ); 
-	$u_rows = $database->loadObjectList(); 
-
-	$text = "There was an installation of **" . $product ."** \r \n at " 
-	. $mtconf->getjconf('live_site') . " with version: " . $mtconf->get('version') . "  \r \n"
-	. "Email: " . $u_rows[0]->email . "\r \n"
-	. "Joomla! version: " . $version . "\r \n";
-
-	$subject = " Installation at: " .$mtconf->getjconf('sitename');
-	$headers = "MIME-Version: 1.0\r \n";
-	$headers .= "From: ".$u_rows[0]->username." <".$u_rows[0]->email.">\r \n";
-	$headers .= "Reply-To: <".$email_to.">\r \n";
-	$headers .= "X-Priority: 1\r \n";
-	$headers .= "X-MSMail-Priority: High\r \n";
-	$headers .= "X-Mailer: Joomla! on " .
-	$mtconf->getjconf('sitename') . "\r \n";
-
-	@mail($email_to, $subject, $text, $headers);
-}
-
 ?>

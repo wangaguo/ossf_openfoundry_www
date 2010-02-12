@@ -69,7 +69,7 @@ $loadBots = array( 'mosimage',
 $gid = $my->gid;
 
 $query = "SELECT folder, element, published, params"
-. "\n FROM #__mambots"
+. "\n FROM #__plugins"
 . "\n WHERE access <= $gid"
 . "\n AND folder = '$botgroup'"
 . "\n ORDER BY ordering";
@@ -85,7 +85,8 @@ foreach( $contentbots as $mambot ) {
 }
 
 // we need functions from the class HTML_content!
-require_once( $mosConfig_absolute_path.'/components/com_content/content.html.php');
+//require_once( $mosConfig_absolute_path.'/components/com_content/content.html.php');
+require_once( JPATH_ADMINISTRATOR.'/components/com_content/admin.content.html.php');
 
 /**
  * This class allows you to render content items 
@@ -103,18 +104,40 @@ class lm_contentRenderer {
 	 * @param unknown_type $nl_content
 	 * @return unknown
 	 */
-	function getContent( $nl_content ) {
+	function getContent( $nl_content) {
 		global $mosConfig_absolute_path, $lm_params;
 		/**
 		 * usage: [CONTENT id=""]
 		*/
 		if( get_magic_quotes_gpc() ) {
 			$nl_content = stripslashes( $nl_content );
+			
 		}
 		$regex = '#\[CONTENT id="(.*?)"\]#s';
+
+		/**
+			目錄的HTML by ally 2007/0612
+
+		**/
+
+		$content['html_message'] = '<table width="100%" border="0" cellpadding="0" cellspacing="0" name="catalogue" bgcolor="#EAEAEA">'
+	        .'<tr>' 
+        	.' <td height="28" colspan="2" valign="top" background="http://www.openfoundry.org/images/newsletter/cal-bg.gif"><a name="TOP"></a><img src="http://www.openfoundry.org/images/newsletter/catl.gif" width="179" height="28" border="0"></td>'
+       		.'</tr>'
+	        .'<tr>' 
+          	.'  <td height="8">&nbsp;</td>'
+       		.'</tr>';
 		
-		$content['html_message'] = preg_replace_callback( $regex, 'lm_replaceContentHtml', nl2br($nl_content) );
+		$content['html_message'] .= preg_replace_callback( $regex, 'lm_replaceTitleHtml', nl2br($nl_content) );
+		$content['html_message'] .= '<tr><td height="8">&nbsp;</td></tr></table>';
+
+		/** end **/ 
+	
+		$content['html_message'] .= preg_replace_callback( $regex, 'lm_replaceContentHtml', nl2br($nl_content) );
+		
 		$content['message'] = preg_replace_callback( $regex, 'lm_replaceContentText', $nl_content );
+
+		
 		/**
 		 * usage: [ATTACHMENT filename="{the letterman attachment_dir}/path/to/file"]
 		*/
@@ -141,7 +164,6 @@ class lm_contentRenderer {
 		$database->setQuery( $query );
 		$row = NULL;
 		$database->loadObject($row);
-		
 		if( $row ) {
 			$params = new mosParameters( $row->attribs );
 			
@@ -173,15 +195,13 @@ function lm_replaceContentHtml(&$matches){
 	global $mosConfig_live_site, $database, $_MAMBOTS, $my, $mainframe, $acl, $_VERSION;
 
 	$id = intval($matches[1]);
-
+	
 	if($id != 0){
-
+		
 		// Editor usertype check
 		$access = new stdClass();
 		$access->canEdit = $access->canEditOwn = $access->canPublish = 0;
-		
 		$row = lm_contentRenderer::retrieveContent( $id );
-		
 		if ( $row ) {
 			$params = $row->params;
 			$_Itemid = $mainframe->getItemid( $row->id, $typed=1, $link=1, $bs=1, $bc=1, $gbs=1 );
@@ -189,7 +209,6 @@ function lm_replaceContentHtml(&$matches){
 			$_MAMBOTS->trigger( 'onPrepareContent', array( &$row, &$params, 0 ), true );
 			
 			$intro_text = $row->text;
-			
 			//$intro_text = lm_replaceMosImage($row);
 			//$intro_text = lm_replacePageBreak($intro_text);
 
@@ -197,50 +216,89 @@ function lm_replaceContentHtml(&$matches){
 				$create_date = mosFormatDate( $row->created );
 			}
 
-			$content = '<table class="contentpaneopen'. $params->get( 'pageclass_sfx' ) .'">
-			<tr>
-			';
-			ob_start();
-			// displays Item Title
-			// Damn it! Open the content API and make it more flexible...
-			if( @$_VERSION->DEV_LEVEL >= 9 ) {
-				$tmp = '';
-				HTML_content::Title( $row, $params, $access );
-			}
-			else {
-				HTML_content::Title( $row, $params, '', $access );
-			}
-			$content .= ob_get_contents();
-			ob_end_clean();
-			$content .= '</tr>
-			';
-			  // displays Section & Category
-			ob_start();
-			HTML_content::Section_Category( $row, $params );
-
-			// displays Author Name
-			HTML_content::Author( $row, $params );
-
-			// displays Created Date
-			HTML_content::CreateDate( $row, $params );
-
-			// displays Urls
-			HTML_content::URL( $row, $params );
-			$content .= ob_get_contents();
-			ob_end_clean();
+			$content .= '<table class="contentpaneopen'. $params->get( 'pageclass_sfx' ) .'">
+			<tr>';
 			
+			Jtext::_('$access');
+			//ob_start();
+			//// displays Item Title
+			//// Damn it! Open the content API and make it more flexible...
+			//// 除了屬於分類ID外的文章才顯示( 分類ID 00->1028) by ally 2007/0612
+			//if ($id > 1028 || $id < 1000 ) {
+
+			//	if( @$_VERSION->DEV_LEVEL >= 9 ) {
+			//		$tmp = '';
+			//		HTML_content::Title( $row, $params, $access );
+			//	}
+			//	else {
+			//		HTML_content::Title( $row, $params, '', $access );
+			//	}
+			//}
+			//$content .= ob_get_contents();
+			//ob_end_clean();
+			//$content .= '</tr>';
+			//
+			//// displays Section & Category
+			//ob_start();
+
+		
+			//if ($id > 1028 || $id < 1000 ) {
+			//HTML_content::Section_Category( $row, $params );
+
+			//// displays Author Name
+			//HTML_content::IMAuthor( $row, $params );
+
+			//// displays Created Date
+			//HTML_content::IMCreateDate( $row, $params );
+
+			//// displays Urls
+			//HTML_content::URL( $row, $params );
+			//}
+
+			//$content .= ob_get_contents();
+			//ob_end_clean();
+//Modify by liarchen
+	//	global $database;
+	//	$query = "SELECT `id` FROM `#__letterman` Order BY `id` DESC";
+	//	$database->setQuery( $query );
+	//	$id = $database->loadResult();
+	//	$id = $database->insertid();	
+	//	$id += 1; 
+		//$url = "index.php?option=com_letterman&Itemid=144&id=".$id."&task=view"; 
+//End
+
+			if ($id > 1028 || $id < 1000 ) {	
 			$content .= '<tr>'
-			. '  <td>' .( function_exists('ampReplace') ? ampReplace( $intro_text ) : $intro_text ). '</td>'
+			. '  <td style="font-size:12px;color:#444;line-height:200%;">' .( function_exists('ampReplace') ? ampReplace( $intro_text ) : $intro_text ). '</td>'
 			. '</tr>'
 			. '<tr>'
 			. '		<td align="left" colspan="2">'
 			. '		<a href="'. $mosConfig_live_site . '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
-			. ($_Itemid ? '&amp;Itemid='.$_Itemid : "") . '" class="readon">'.
+			. '&amp;Itemid=144;isletter=1 ' . '" style="font-size:12px;color:#FD6003;"">'.	
+			//. ($_Itemid ? '&amp;Itemid='.$_Itemid : "") . '" class="readon">'.
 			_READ_MORE
 			. '		</a>'
 			. '		</td>'
 			. '	</tr>'
+			. ' <tr>'
+			. ' <td align="right"><a href="#TOP">'
+			. '<font size="2" color="#FD6003"><b>'
+			._BACK_TOP
+			.'</b></font>' 
+			. '</a></td>'
+			. ' </tr>'
+			. ' </table></br>';
+			} else {
+
+			$content .= '</br><tr>'
+			. '  <td>' .( function_exists('ampReplace') ? ampReplace( $intro_text ) : $intro_text ). '</td>'
+			. '</tr>'
+			. '<tr>'
+			. '		<td align="left" colspan="2">'
+			. '		</td>'
+			. '	</tr>'
 			. ' </table>';
+			}
 			
 			return $content;
 		}
@@ -249,44 +307,56 @@ function lm_replaceContentHtml(&$matches){
 		return 'error retrieving Content ID: '.$id.'<br/>';
 	}
 }
-
-function lm_replaceContentText(&$matches){
-	global $database, $_MAMBOTS, $my, $mainframe, $mosConfig_live_site;
+/** 目錄 by ally 2007/06/12 **/
+function lm_replaceTitleHtml(&$matches){
+	global $mosConfig_live_site, $database, $_MAMBOTS, $my, $mainframe, $acl, $_VERSION;
 
 	$id = intval($matches[1]);
-	
 	if($id != 0){
-		$row = lm_contentRenderer::retrieveContent( $id );
+
+		// Editor usertype check
+		$access = new stdClass();
+		$access->canEdit = $access->canEditOwn = $access->canPublish = 0;
 		
+		$row = lm_contentRenderer::retrieveContent( $id );
 		if ( $row ) {
 			$params = $row->params;
-			
 			$_Itemid = $mainframe->getItemid( $row->id, $typed=1, $link=1, $bs=1, $bc=1, $gbs=1 );
-
-			// strip all {mosimage} tags
-			$row->text = lm_replaceMosImage($row, true);
 			
 			$_MAMBOTS->trigger( 'onPrepareContent', array( &$row, &$params, 0 ), true );
 			
 			$intro_text = $row->text;
+			//$intro_text = lm_replaceMosImage($row);
 			//$intro_text = lm_replacePageBreak($intro_text);
-			$intro_text = strip_tags( $intro_text );
-			
-			$intro_text = lm_unHTMLSpecialCharsAll($intro_text);
 
 			if ( intval( $row->created ) != 0 ) {
 				$create_date = mosFormatDate( $row->created );
 			}
 
-			$content = "\n" . $row->title
-			. "\n\n(" .  _WRITTEN_BY . " ".( $row->created_by_alias ? $row->created_by_alias : $row->author )
-			. " )\n" . $create_date
-			. "\n\n" . $intro_text
-			. "\n\n". _READ_MORE
-			. ": \n". $mosConfig_live_site . '/index.php?option=com_content&task=view&id='.$row->id
-			. ($_Itemid ? '&Itemid='.$_Itemid : "") . "\n";
+			
+			if ($id > 1028 || $id < 1000 ) {
+			$content = '<tr>';
+			ob_start();
+			// displays Item Title
+			// Damn it! Open the content API and make it more flexible...
+			//if( @$_VERSION->DEV_LEVEL >= 9 ) {
+			//	$tmp = '';
+			//	HTML_content::CalTitle( $row, $params,  $access );
+			//}
+			//else {
+			//	HTML_content::CalTitle( $row, $params, '', $access );
+			//}
+			$content .= ob_get_contents();
+			ob_end_clean();
+			$content .= '</tr>
+			';
+			}
+			
 			return $content;
 		}
+	}
+	else {
+		return 'error retrieving Content ID: '.$id.'<br/>';
 	}
 }
 

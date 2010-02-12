@@ -205,7 +205,10 @@ class HTML_letterman {
 			    				<td><?php echo LM_ADD_CONTENT_TOOLTIP; ?></td>
 			    			</tr>
 			    			<tr>	
-			    				<td>
+			    				<td><!-- Get composelist-->
+							<!-- 2007/06/08 by Ally --> 
+							<?php echo lm_getNLContentSelectList();?>
+							<!-- end -->
 			    				 <?php echo lm_getContentSelectList(); ?> 
 			    				</td>
 			    			</tr>
@@ -394,14 +397,10 @@ class HTML_letterman {
 	}
 	
 	function editNewsletter( &$row, &$publist, $option , $glist ) {
-		global $_MAMBOTS;
-		$savetext = '';
-		$results = $_MAMBOTS->trigger( 'onGetEditorContents', array( "html_message", "html_message" ) );#
-		foreach ($results as $result) {
-			if (trim($result)) {
-				$savetext .= $result;
-	        }
-		};
+		if( function_exists( "botTinymceEditorInit" ))
+		$savetext = "tinyMCE.triggerSave();\n";
+		else
+		$savetext = "";
 	  ?>
 	  <link rel="stylesheet" type="text/css" media="all" href="../includes/js/calendar/calendar-mos.css" title="green" />
 	  <script type="text/javascript" src="../includes/js/calendar/calendar.js"></script>
@@ -706,11 +705,14 @@ class HTML_letterman {
 	function header() {
 		echo "<span class=\"sectionname\"><img align=\"middle\" alt=\"letterman logo\" src=\"components/com_letterman/letterman.gif\" /></span>\n";
 	}
-    function footer() {
-    	
-    	echo '<div align="center" class="small">Powered by <a href="http://www.thejfactory.com" target="_blank">Letterman</a></div>';
-    
-    }
+	function footer() {
+	  ?>
+		<div align="center" class="small">
+		  <a href="<?php echo $GLOBALS['lm_home'] ?>" target="_blank">Letterman Component &copy;2005 Soeren Eberhardt</a>
+		  (<a href="http://virtuemart.net/index2.php?option=com_versions&amp;catid=3&amp;myVersion=<?php echo $GLOBALS['lm_version'] ?>" onclick="javascript:void window.open('http://virtuemart.net/index2.php?option=com_versions&amp;catid=3&amp;myVersion=<?php echo $GLOBALS['lm_version'] ?>', 'win2', 'status=no,toolbar=no,scrollbars=yes,titlebar=no,menubar=no,resizable=yes,width=640,height=580,directories=no,location=no'); return false;" title="Letterman Version Check">Check for latest version</a>)
+		</div>
+	  <?php
+	}
 	function settings( $option, &$params, $id ) {
 		global $mosConfig_live_site;
 		?>

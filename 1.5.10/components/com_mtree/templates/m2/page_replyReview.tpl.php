@@ -1,4 +1,4 @@
-<h1 class="componentheading"><?php echo $this->_MT_LANG->TITLE ?></h1>
+ 
 <div id="listing">
 <h2><?php 
 $link_name = $this->fields->getFieldById(1);
@@ -11,13 +11,13 @@ if($this->review->rating > 0) {
 $this->plugin('ahref', array("path"=>"index.php?option=".$this->option."&task=viewlink&link_id=".$this->link_id."&Itemid=".$this->Itemid,"fragment"=>"rev-".$this->review->rev_id), $this->review->rev_title,'id="rev-'.$this->review->rev_id.'"'); 
 
 ?></div><div class="review-info"><?php 
-echo $this->_MT_LANG->REVIEWED_BY ?> <b><?php echo ( ($this->review->user_id) ? $this->review->username : $this->review->guest_name); ?></b>, <?php echo date("F j, Y",strtotime($this->review->rev_date)) ?>
+echo JText::_( 'Reviewed by' ) ?> <b><?php echo ( ($this->review->user_id) ? $this->review->username : $this->review->guest_name); ?></b>, <?php echo date("F j, Y",strtotime($this->review->rev_date)) ?>
 </div>
 <?php 
 echo '<div id="rhc'.$this->review->rev_id.'" class="found-helpful"'.( ($this->review->vote_total==0)?' style="display:none"':'' ).'>';
 echo '<span id="rh'.$this->review->rev_id.'">';
 if( $this->review->vote_total > 0 ) { 
-	printf( $this->_MT_LANG->PEOPLE_FIND_THIS_REVIEW_HELPFUL, $this->review->vote_helpful, $this->review->vote_total );
+	printf( JText::_( 'People find this review helpful' ), $this->review->vote_helpful, $this->review->vote_total );
 }
 echo '</span>';
 echo '</div>';
@@ -28,7 +28,7 @@ echo '</div>';
 echo trim($this->review->rev_text);
 if( !empty($this->review->ownersreply_text) && $this->review->ownersreply_approved ) {
 	echo '<div class="owners-reply">';
-	echo '<span>'.$this->_MT_LANG->OWNERS_REPLY.'</span>';
+	echo '<span>'.JText::_( 'Owners reply' ).'</span>';
 	echo '<p>' . nl2br(trim($this->review->ownersreply_text)) . '</p>';
 	echo '</div>';
 }
@@ -50,18 +50,18 @@ if( !empty($this->review->ownersreply_text) && $this->review->ownersreply_approv
 	}
 </script>
 
-<br clear="both" />
-<div class="title"><?php echo $this->_MT_LANG->REPLY_REVIEW; ?></div>
+<br clear="all" />
+<div class="title"><?php echo JText::_( 'Reply review' ); ?></div>
+<form action="<?php echo JRoute::_("index.php") ?>" method="post" name="adminForm" id="adminForm">
 <table border="0" cellpadding="3" cellspacing="0">
-	<form action="<?php echo sefRelToAbs("index.php") ?>" method="post" name="adminForm" id="adminForm">
 	<?php if( $this->user_id <= 0 ) { ?>
 	<tr>
-		<td width="20%"><?php echo $this->_MT_LANG->YOUR_NAME ?>:</td>
+		<td width="20%"><?php echo JText::_( 'Your name' ) ?>:</td>
 		<td width="80%"><input type="text" name="your_name" class="inputbox" size="40" /></td>
 	</tr>
 	<?php } ?>
-	<tr><td colspan="2"><b><?php echo $this->_MT_LANG->MESSAGE ?>:</b></td></tr>
-	<tr><td colspan="2"><textarea name="message" rows="8" cols="40" class="inputbox"></textarea></td></tr>
+	<tr><td colspan="2"><b><?php echo JText::_( 'Message' ) ?>:</b></td></tr>
+	<tr><td colspan="2"><textarea name="message" rows="8" cols="69" class="inputbox"></textarea></td></tr>
 	<tr>
 		<td colspan="2">
 			<input type="hidden" name="option" value="<?php echo $this->option ?>" />
@@ -69,9 +69,10 @@ if( !empty($this->review->ownersreply_text) && $this->review->ownersreply_approv
 			<input type="hidden" name="rev_id" value="<?php echo $this->review->rev_id ?>" />
 			<input type="hidden" name="link_id" value="<?php echo $this->review->link_id ?>" />
 			<input type="hidden" name="Itemid" value="<?php echo $this->Itemid ?>" />
-			<input type="button" value="<?php echo $this->_MT_LANG->SEND ?>" onclick="javascript:submitbutton('send_replyreview')" class="button" /> <input type="button" value="<?php echo $this->_MT_LANG->CANCEL ?>" onclick="javascript:submitbutton('cancel')" class="button" />
+			<?php echo JHTML::_( 'form.token' ); ?>
+			<input type="button" value="<?php echo JText::_( 'Send' ) ?>" onclick="javascript:submitbutton('send_replyreview')" class="button" /> <input type="button" value="<?php echo JText::_( 'Cancel' ) ?>" onclick="javascript:submitbutton('cancel')" class="button" />
 		</td>
 	</tr>
-	</form>
-</table>	
+</table>
+</form>
 </div>

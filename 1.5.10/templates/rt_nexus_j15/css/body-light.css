@@ -14,7 +14,7 @@
 body {background: #fff;}
 .s-c-s .colmid {background: #eee;}
 .s-c-s .colright {background: #fff;}
-.s-c-x .colright {background: #eee;}
+.s-c-x .colright {/*background: #eee;*/}
 .x-c-s .colright {background: #eee;}
 .x-c-x .colmask {background: #eee;}
 .side-mod .poll-line:hover {background: #eee;}
@@ -72,3 +72,5 @@ p.pageinfo {background: #fff;border: 1px solid #ddd;}
 
 /* Typography */
 ul.latestnews li a, ul.mostread li a, .blog_more ul li a, .block ul#mainlevel-nav li a, .featured-text-block li a {background: url(../images/body/light/list-arrows.png) 0 1px no-repeat;}
+
+

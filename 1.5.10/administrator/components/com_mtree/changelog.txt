@@ -1,8 +1,8 @@
 /***
 * Mosets Tree CHANGELOG
 *
-* @package Mosets Tree 2.0
-* @copyright (C) 2005-2008 Mosets Consulting
+* @package Mosets Tree 2.1
+* @copyright (C) 2005-2009 Mosets Consulting
 * @url http://www.mosets.com/
 * @author Lee Cher Yeong <mtree@mosets.com>
 */
@@ -14,6 +14,143 @@ Legend:
 ^ -> Change
 - -> Removed
 ! -> Note
+
+version 2.1.0 - April 2009 ---------------------------------------------------------------------------
++ YOU ARE NOT AUTHORIZED TO ACCESS THIS ATTACHMENT, MESGHASBANNEDTEXT, CONFIGNAME NOTIFYUSER REVIEW ADDED, REVIEW ADDED SUBJECT, REVIEW ADDED MSG, PLEASE SELECT A MP3 FILE, CONFIGNAME SHOW_CATEGORY_RSS, BETWEEN, EXACTLY ON, PENDING APPROVAL
+- COPY PAGE TO CLIPBOARD, NAVIGATION, PASSWORD HASH
+^ CONFIGNAME FE_NUM_OF_NEWLISTING to CONFIGNAME FE_NUM_OF_NEW
+^ CONFIGNAME FE_NUM_OF_MOSTFAVOURED to CONFIGNAME FE_NUM_OF_FAVOURITE
+^ CONFIGNAME FE_NUM_OF_POPULARLISTING to CONFIGNAME FE_NUM_OF_POPULAR
+^ CONFIGNAME FE_NUM_OF_RECENTLYUPDATED to CONFIGNAME FE_NUM_OF_UPDATED
+^ CONFIGNAME FE_TOTAL_NEWLISTING to CONFIGNAME FE_TOTAL_NEW
++ mod_mt_listing_pic functionality is merged to mod_mt_listing
++ mod_mt_listing now shows custom fields data
++ mod_mt_listing now have the ability to filter results based on a specific rule
+# Fixed bug in router.php where viewing page 2 of New Listing page redirects to main page
+# Fixed bug where HTML tags are stripped from fields data during JRequest::getVar() operation
++ Added support for exporting multiple categories ID in Export function
+^ Harden Mosets Tree's security in reading data from external sources and in SQL queries
+# Fixed issue when using router.php SEF URL where Page 2 of a search result is redirected to homepage.
+# Fixed layout issue in #subcats, #relcats in Safari browser
++ Added support to use link ID in SEF URLs to provide shorter and more consistent SEF URLs
+# Fixed bug where search by link_modified or link_created does not allow seeing results past first page in back-end.
++ Added support for sending notification to listing owner when a listing has a new review
+# Fixed bug where setting Rating permission to None allows everyone to submit rating.
++ Now displays RSS icon in browser when viewing category
+# Fixed bug where data field's ordering is not correct during export
+^ Save listing's redirect now check for the state of a listing and redirect to listing's details page when available
+# Fixed bug in router.php when a subdirectory is named after Search
++ Added support for pagination for top listings pages (popular, mostrated, favourite, toprated, new, updated, popular, featured)
+# Fixed formatting issue in corecreated and coremodified fieldtype
+^ Message that says there is no results during simple search only appears when there are no listings and categories returned
++ E-mail and name is pre-filled in Contact Owner and Recommend form when a user is logged in
++ Added an ability to show message for reasons why a listing is unpublished by setting the message's custom field ID in unpublished_message_cfid config.
+# Fixed removed images when listing is saved from front-end when configured not to allow image upload
+# Date field type now follows locale setting
+# Fixed downloading files with spaces in Firefox using File custom field
+# Fix no results returned issue when searching by 'Owner' field in back-end's Advanced Search
++ Attachment is now stored in filesystem at /components/com_mtree/attachments/ 
++ Added support for attachments' download counter
+! Rating stars converted to use PNG format
++ Enhanced Joomla's Core SEF URL support with alias on listings and categories URL
++ RSS Feed now shows listings' image
++ E-mail sent to reviewer upon their review's approval now contain URL to the listing
++ File field type now support image and static text
++ Added parameter to toggle 'http://' output in weblink and corewebsite field
++ Added 'My Favourites' to mod_mt_menu
+# Fixed problem 'Go'ing to URLs with https:// protocol
+# Fixed bug allowing unregistered user to vote when configured to "Registered users, except listing owner" to rate.
++ mod_mt_search's Search now will search in category's description
++ Web link field type now supports internal redirect
++ Added new parameter to M2 template to link listing name to website if available or listing details when no website is entered
++ Added new parameter to limit details view's access to registered users only
++ Supports showing google maps in front-end
+^ Improved the speed of listmostreview and listfavourite query
++ Added ability to show listings that and pending approval in 'My Page'
+# Fixed bug saving modification in front-end when user_addlisting is set to -1 (None)
++ Added support for Tag
++ Added support for select list in country field
++ Added support for custom title in categories
++ Meta description is populated from link's description if left empty
++ Listing's SEF URL now no longer has details.html
+
+version 2.0.9 - September 2008 ---------------------------------------------------------------------------
+! IMAGE_IS_NOT_SAVED_BECAUSE_IT_EXCEEDED_FILE_SIZE_LIMIT
+# Fixed error in advanced search when there is no published categories
+# Fixed layout issue when 'Read more' is enabled in Description field
+# Fixed layout issue where category is displayed incorrectly in summary view
+# Fixed javascript error when editing link if file, image or audioplayer caption has quote
+# Fixed unnecessasary message when image upload does not exceed file limit
+# Fixed missing hidden field's data when a listing is sent for modification approval
+# Fixed layout issue where #listings is spaced out far from category's header
+# Fixed slowdown on certain site when getimagesize is used (Thanks Thor!)
+# Fixed field lists layout in Print view
+# Fixed thumbnail's layout issue when set to float right
+! Updated jQuery to 1.2.6
+
+version 2.0.8 - August 2008 ---------------------------------------------------------------------------
++ CONFIGNAME_IMAGE_MAXSIZE, CONFIGDESC_IMAGE_MAXSIZE, IMAGE_IS_NOT_SAVED_BECAUSE_IT_EXCEEDED_FILE_SIZE_LIMIT
+# Fixed backend category search error caused by missing navigation (Alex)
+# Remove stripos function and use strpos and strtolower combination in listalpha_cache and Savant2_Plugin_ahrefclaim::plugin function for PHP 4 compatibility
+# Fixed File field type where file types parameter are converted to Array automatically in Joomla! 1.5
+# Fixed SEF bug when 'Search' string is present in category name
+# getLinkId() now returns Link ID in front and back-end edit screen even when a custom field has no value
+# $POST['params'] is now passed through JRequest::getVar() to bypass HTML stripping
+# Fixed missing slash in loading template.css file when accessing a directory using a custom template
+# Fixed bug where URLs are not parsed as link in description
+# Fixed bug where an empty LI element is displayed when a Checkbox field has an empty value. eg: data|
+# Remove special hack for PNG transparency in Savant2 Image plugin
+# Fixed incorrect 'Show more...' URL when mod_mt_listing and mod_mt_listing_wpic is set to list most reviews
+# Fixed error loading Joomla! 1.0 editor.php in Joomla! 1.5 site
+# Fixed escaped characters in custom fields caption under Joomla! 1.5
+# Fixed empty 'next' page in back-end's advanced search
+# Fixed error saving template page in Joomla! 1.5 caused by stripslashes function originally meant for Joomla! 1.0
++ Added a new template parameter to configure listing summary's link behaviour
++ Added the ability to set default language directly from 'Languages' section
++ Added a configurable limit on the size of image upload. Defaults to 3MB.
+# Fixed layout inconsistencies in summary view when a custom field value span more than 1 line.
+# Added additional check to prevent rating abuse
+
+version 2.0.7 - June 2008 ---------------------------------------------------------------------------
+# Fixed simple search bug when email field is simple searchable.
+^ URL displayed by weblink field type will omit the protocol (http:// and https://)
+# Fixed issue with category name with space and URLs with semi colon when running with SEF on Joomla 1.5
+# Fixed SEF issue with loading category specific RSS Feed
++ Uses Joomla's Global config for default list length
+# Fixed PHP Notices when Description field's summarChars is set to 0
+# Fixed error when root categories do not have any subcategories (Alex)
+# Fixed Date field display error where dates are displayed wrongly
+# Fixed error message during installation on Joomla 1.5. Caused by $version variable being an object type in Joomla 1.5.
+# Fixed month bug in Date field type when the current day is 29 or later.
+# Fixed bug at fields list display in summary view when viewed on IE7. Removed usage of definition list and replace by DIVs.
+# Fixed undefined variable error in back-end's advanced search results page
+# Fixed missing search results in back-end when 'Display #' is set to all
+# Fixed bug in front-end Add Images, where user can go over the image limit
+# Fixed videoplayer autostart issue
+# Fixed mod_mt_search issue when using under Joomla! 1.5 with categories enabled
+# Fixed missing mailfrom and fromame in sent e-mail
+# Fixed adding attachment bug in field type manager
+# Fixed errors when page_index.tpl.php has no listings/categories
+# Fixed bug where rating and votes are inaccurate when non-registered users are allowed to vote/rate
+# Fixed by where Claim linked does not appear
+# Fixed bug in SEF URL when 'image' is part of the URL
+# Fixed javascript error when text string contains single quote in back-end Edit screen
+# Disable Advanced Search option for coreuser field
++ Add additional check in weblink field to ensure 'http://' protocol is present before outputing the link.
++ RSS feed now pick up cat_id from listnew & listupdated URL and show feed from that category only.
++ Selecting a category in mod_mt_search while leaving the searchword empty, redirects to the selected category instead of returning empty result
+! Core fields data are now trimmed before saving to database
++ Parent category is now a link in Joomla!'s breadcrumb when viewing listing
+# Fixed issue with handling period(.) in SEF URLs 
+# Fixed SEF issue with Advanced Search.
+# Skip task= 'addlisting' SEF URL and let Joomla handle the raw URL.
+# Fixed bug saving template file under Joomla! 1.5
+# Fixed bug in changing language in Languages
+# Fixed bug preventing from saving language
+# Fixed bug in which description meta tag appears twice when META Description exists in listing or category
++ Added the ability to 'Apply' changes to template page
+# Fixed bug where Enter button does not submit the advanced search form
+- Disabled js calendar under Joomla! 1.5
 
 version 2.0.6 - March 2008 ---------------------------------------------------------------------------
 + FEATURED_ONLY, NON_FEATURED_ONLY, FREE

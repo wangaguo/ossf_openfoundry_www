@@ -116,7 +116,7 @@ define( "LM_RETURN_TO_NL", "Return to the Newsletters" );
 define( "LM_ERROR_UNSUBSCRIBE_OTHER_USER", "Sorry, but you cannot delete other Users from the List" );
 define( "LM_ERROR_SENDING_UNSUBSCRIBE", "An unsubscribe message could not be sent:" );
 define( "LM_SUCCESS_UNSUBSCRIBE", "Your email Address was removed from our Newsletter" );
-define( "LM_SUCCESS_CONFIRMATION", "Your account has been successfully confirmed" );
+define( "LM_SUCCESS_CONFIRMATION", "Your account has been sucessfully confirmed" );
 define( "LM_ERROR_CONFIRM_ACC_NOTFOUND", "The Account associated with your Confirmation Link was not found." );
 
 define( "LM_CONFIRMED_ACCOUNTS_ONLY", "Only confirmed Accounts?" );

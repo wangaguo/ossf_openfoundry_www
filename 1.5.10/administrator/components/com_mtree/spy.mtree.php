@@ -1,21 +1,24 @@
 <?php
 /**
-* Mosets Tree admin 
-*
-* @package Mosets Tree 2.0
-* @copyright (C) 2006-2008 Mosets Consulting
-* @url http://www.mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
+ * @version		$Id: spy.mtree.php 575 2009-03-10 11:44:00Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-defined( '_VALID_MOS' ) or die( 'Restricted access' );
 
-require_once( $mosConfig_absolute_path . '/administrator/components/com_mtree/spy.mtree.html.php' );
+defined('_JEXEC') or die('Restricted access');
 
-$id = mosGetParam( $_REQUEST, 'id', '0' );
-$owner = mosGetParam( $_REQUEST, 'owner', '' );
-$cid = mosGetParam( $_POST, 'cid', '0' );
-$task2 = strval( mosGetParam( $_REQUEST, 'task2', '' ) );
+require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_mtree'.DS.'spy.mtree.html.php' );
+
+$id		= JRequest::getInt( 'id', 0);
+$owner 	= JRequest::getVar( 'owner', '');
+$cid 	= JRequest::getVar( 'cid', array());
+$task2	= strval(JRequest::getCmd( 'task2', ''));
+
+JArrayHelper::toInteger($cid, array());
 
 HTML_mtspy::printStartMenu( $option, $task2 );
 
@@ -66,9 +69,11 @@ switch( $task2 ) {
 HTML_mtspy::printEndMenu( $task2 );
 
 function removeCloneAndAllLogs( $option, $id, $owner ) {
-	global $database, $_MT_LANG;
+	global $mainframe;
 	
-	$database->setQuery('SELECT id FROM #__users WHERE username = \'' . $owner . '\' LIMIT 1');
+	$database =& JFactory::getDBO();
+	
+	$database->setQuery('SELECT id FROM #__users WHERE username = ' . $database->quote($owner) . ' LIMIT 1');
 	$owner_id = $database->loadResult();
 	
 	if( $id > 0 && $owner_id > 0 ) {
@@ -90,21 +95,22 @@ function removeCloneAndAllLogs( $option, $id, $owner ) {
 		}
 
 		# Assign owner to clone
-		$database->setQuery('INSERT INTO #__mt_clone_owners (user_id,owner_id) VALUES(' . $id. ','  . $owner_id . ')');
+		$database->setQuery('INSERT INTO #__mt_clone_owners (user_id,owner_id) VALUES(' . $database->quote($id) . ','  . $database->quote($owner_id) . ')');
 		$database->query();
 	
 		removeUser($id);
 		
 	}
 		
-	// mosRedirect('index2.php?option=com_mtree&task=spy&task2=users', 'Clone successfully removed.' );
-	mosRedirect('index2.php?option=com_mtree&task=spy&task2=viewuser&id='.$owner_id, 'Clone successfully removed.' );
+	$mainframe->redirect('index2.php?option=com_mtree&task=spy&task2=viewuser&id='.$owner_id, 'Clone successfully removed.' );
 }
 
 function removeUserAndAllLogs( $option, $id ) {
-	global $database, $_MT_LANG;
+	global $mainframe;
 	
-	$database->setQuery('SELECT log_id FROM #__mt_log WHERE user_id = \'' . $id . '\'');
+	$database =& JFactory::getDBO();
+	
+	$database->setQuery('SELECT log_id FROM #__mt_log WHERE user_id = ' . $database->quote($id) );
 	$log_ids = $database->loadResultArray();
 
 	if( count($log_ids) > 0 ) {
@@ -113,31 +119,35 @@ function removeUserAndAllLogs( $option, $id ) {
 	
 	removeUser($id);
 	
-	mosRedirect('index2.php?option=com_mtree&task=spy&task2=users', $_MT_LANG->USER_SUCCESSFULLY_REMOVED );
+	$mainframe->redirect('index2.php?option=com_mtree&task=spy&task2=users', JText::_( 'User successfully removed' ) );
 }
 
 function removeLogs( $option, $cid ) {
-	global $_MT_LANG, $database;
+	global $mainframe;
+	
+	$database =& JFactory::getDBO();
+	
 	if( count($cid) > 0 ) {
-		$database->setQuery( 'SELECT user_id FROM #__mt_log WHERE log_id = \'' . $cid[0] . '\' LIMIT 1' );
+		$database->setQuery( 'SELECT user_id FROM #__mt_log WHERE log_id = ' . $database->quote($cid[0]) . ' LIMIT 1' );
 		$user_id = $database->loadResult();
 		removeLogs2( $cid );
-		mosRedirect('index2.php?option=com_mtree&task=spy&task2=viewuser&id='.$user_id, $_MT_LANG->ACTIVITIES_SUCCESSFULLY_REMOVED );
+		$mainframe->redirect('index2.php?option=com_mtree&task=spy&task2=viewuser&id='.$user_id, JText::_( 'Activities successfully removed' ) );
 	} else {
 		viewUsers( $option );
 	}
 }
 
 function removeLogs2( $cid ) {
-	global $database;
+	$database =& JFactory::getDBO();
+
 	if( count($cid) > 0 ) {
 		$database->setQuery( 'SELECT * FROM #__mt_log WHERE log_id IN (' . implode(',',$cid). ') LIMIT ' . count($cid));
 		$rows = $database->loadObjectList();
 		foreach( $rows AS $row ) {
 			switch( $row->log_type ) {
 				case 'vote':
-					$database->setQuery( 'SELECT link_rating, link_votes FROM #__mt_links WHERE link_id = \'' . $row->link_id . '\' LIMIT 1' );
-					$database->loadObject( $link );
+					$database->setQuery( 'SELECT link_rating, link_votes FROM #__mt_links WHERE link_id = ' . $database->quote($row->link_id) . ' LIMIT 1' );
+					$link = $database->loadObject();
 				
 					# Calculate and update the new rating & number of votes
 					if( $link->link_votes >= 1 ) {
@@ -155,23 +165,23 @@ function removeLogs2( $cid ) {
 							$new_link_rating = 5;
 						}
 					}
-					$database->setQuery( 'UPDATE #__mt_links SET link_rating = \'' . $new_link_rating . '\', link_votes = \'' . $new_link_votes . '\' WHERE link_id = \'' . $row->link_id . '\' LIMIT 1' );
+					$database->setQuery( 'UPDATE #__mt_links SET link_rating = ' . $database->quote($new_link_rating) . ', link_votes = ' . $database->quote($new_link_votes) . ' WHERE link_id = ' . $database->quote($row->link_id) . ' LIMIT 1' );
 					$database->query();
 					break;
 				case 'votereview':
 					if($row->value == 1) {
-						$database->setQuery( 'UPDATE #__mt_reviews SET vote_helpful = vote_helpful -1, vote_total = vote_total - 1 WHERE rev_id = \'' . $row->rev_id . '\' LIMIT 1' );
+						$database->setQuery( 'UPDATE #__mt_reviews SET vote_helpful = vote_helpful -1, vote_total = vote_total - 1 WHERE rev_id = ' . $database->quote($row->rev_id) . ' LIMIT 1' );
 					} else {
-						$database->setQuery( 'UPDATE #__mt_reviews SET vote_total = vote_total - 1 WHERE rev_id = \'' . $row->rev_id . '\' LIMIT 1' );
+						$database->setQuery( 'UPDATE #__mt_reviews SET vote_total = vote_total - 1 WHERE rev_id = ' . $database->quote($row->rev_id) . ' LIMIT 1' );
 					}
 					$database->query();
 					break;
 				case 'review':
-					$database->setQuery( 'DELETE FROM #__mt_reviews WHERE rev_id = \'' . $row->rev_id . '\' LIMIT 1' );
+					$database->setQuery( 'DELETE FROM #__mt_reviews WHERE rev_id = ' . $database->quote($row->rev_id) . ' LIMIT 1' );
 					$database->query();
 					break;
 				case 'replyreview':
-					$database->setQuery( 'UPDATE #__mt_reviews SET ownersreply_text = \'\', ownersreply_date = \'\', ownersreply_approved = \'0\' WHERE rev_id = \'' . $row->rev_id . '\' LIMIT 1' );
+					$database->setQuery( 'UPDATE #__mt_reviews SET ownersreply_text = \'\', ownersreply_date = \'\', ownersreply_approved = \'0\' WHERE rev_id = ' . $database->quote($row->rev_id) . ' LIMIT 1' );
 					$database->query();
 					break;
 				case 'addfav':
@@ -186,11 +196,9 @@ function removeLogs2( $cid ) {
 }
 
 function removeUser( $id ) {
-	global $database;
-	
-	// Remove user
-	$obj = new mosUser( $database );
-	$obj->load( $id );
+	$database =& JFactory::getDBO();
+	$user =& JUser::getInstance((int)$id);
+
 	$count = 2;
 	if ( $obj->gid == 25 ) {
 		// count number of active super admins
@@ -202,12 +210,12 @@ function removeUser( $id ) {
 		// cannot delete Super Admin where it is the only one that exists
 	} else {
 		// delete user
-		$obj->delete( $id );
+		$user->delete( $id );
 	}
 }
 
 function viewClones( $option ) {
-	global $database;
+	$database =& JFactory::getDBO();
 	
 	$database->setQuery('SELECT DISTINCT log.user_id, u.username, u.name, u.email, u.block AS user_blocked, log.log_ip, ('
 		."\n  SELECT COUNT( * ) FROM #__mt_links AS l "
@@ -247,7 +255,7 @@ function viewClones( $option ) {
 }
 
 function viewListing( $option, $id ) {
-	global $database;
+	$database =& JFactory::getDBO();
 
 	$database->setQuery( 'SELECT log.*, l.link_name, l.link_id, u.name, u.username, u.id AS user_id, u.block AS user_blocked, r.rev_title FROM #__mt_log AS log '
 		."\n LEFT JOIN #__users AS u ON u.id = log.user_id"
@@ -261,7 +269,7 @@ function viewListing( $option, $id ) {
 	$database->setQuery( 'SELECT * FROM #__mt_links AS l '
 		."\n LEFT JOIN #__users AS u ON u.id = l.user_id "
 		."\n WHERE l.link_id = '".$id."' LIMIT 1" );
-	$database->loadObject( $listing );
+	$listing = $database->loadObject();
 
 	$database->setQuery( 'SELECT r.*, log.log_ip, u.name, u.username, u.block AS user_blocked FROM #__mt_reviews AS r '
 		."\n LEFT JOIN #__mt_log AS log ON log.rev_id = r.rev_id AND (log.log_type='review' OR log.log_type=null) "
@@ -278,18 +286,20 @@ function viewListing( $option, $id ) {
 }
 
 function viewListings( $option ) {
-	global $database, $mainframe, $mtconf, $_MT_LANG;
+	global $mainframe, $mtconf;
 
-	$orderby = mosGetParam( $_REQUEST, 'orderby', 'latestusers' );
-	$limit = $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', 25 );
+	$database =& JFactory::getDBO();
+	$orderby = JRequest::getCmd( 'orderby', 'latestusers');
+	
+	$limit = $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', $mtconf->getjconf('list_limit') );
 	$limitstart = $mainframe->getUserStateFromRequest( "viewcli{$option}limitstart", 'limitstart', 0 );
 
-	$search['link_name'] = mosGetParam( $_POST, 'link_name', '' );
-	$search['link_id'] = mosGetParam( $_POST, 'link_id', '' );
+	$search['link_name'] 	= JRequest::getVar( 'link_name', '', 'post');
+	$search['link_id']		= JRequest::getInt( 'link_id', 0, 'post');
 	
 	$where = array();
-	if( !empty($search['link_name']) ) { $where['link_name'] = "l.link_name LIKE '%".$search['link_name']."%'"; }
-	if( !empty($search['link_id']) ) { $where['link_id'] = "l.link_id = '".$search['link_id']."'"; }
+	if( !empty($search['link_name']) ) { $where['link_name'] = "l.link_name LIKE '%" . $database->getEscaped($search['link_name'], true) . "%'"; }
+	if( !empty($search['link_id']) ) { $where['link_id'] = "l.link_id = " . $database->quote($search['link_id']); }
 
 	switch( $orderby ) {
 		case 'mosthits':
@@ -344,14 +354,14 @@ function viewListings( $option ) {
 	require_once("includes/pageNavigation.php");
 	$pageNav = new mosPageNav( $totallinks, $limitstart, $limit );
 
-	$orderbys[] = mosHTML::makeOption( 'latestlinks', $_MT_LANG->LATEST_LISTINGS );
-	$orderbys[] = mosHTML::makeOption( 'mostvotes', $_MT_LANG->MOST_VOTES );
-	$orderbys[] = mosHTML::makeOption( 'highestrating', $_MT_LANG->HIGHEST_RATING .' (>'.$mtconf->get('min_votes_to_show_rating').' '.strtolower($_MT_LANG->VOTES).')' );
-	$orderbys[] = mosHTML::makeOption( 'mostreviews', $_MT_LANG->MOST_REVIEWS );
-	$orderbys[] = mosHTML::makeOption( 'mosthits', $_MT_LANG->MOST_HITS );
-	$orderbys[] = mosHTML::makeOption( 'recentlyupdated', $_MT_LANG->RECENTLY_UPDATED );
-	$orderbys[] = mosHTML::makeOption( 'featured', $_MT_LANG->FEATURED_FIRST );
-	$lists['orderby'] = mosHTML::selectList( $orderbys, 'orderby', 'class="inputbox" size="1" onchange="document.adminForm.submit();"',
+	$orderbys[] = JHTML::_('select.option', 'latestlinks', JText::_( 'Latest listings' ) );
+	$orderbys[] = JHTML::_('select.option', 'mostvotes', JText::_( 'Most votes' ) );
+	$orderbys[] = JHTML::_('select.option', 'highestrating', JText::_( 'Highest rating' ) .' (>'.$mtconf->get('min_votes_to_show_rating').' '.strtolower(JText::_( 'Votes' )).')' );
+	$orderbys[] = JHTML::_('select.option', 'mostreviews', JText::_( 'Most reviews' ) );
+	$orderbys[] = JHTML::_('select.option', 'mosthits', JText::_( 'Most hits' ) );
+	$orderbys[] = JHTML::_('select.option', 'recentlyupdated', JText::_( 'Recently updated' ) );
+	$orderbys[] = JHTML::_('select.option', 'featured', JText::_( 'Featured first' ) );
+	$lists['orderby'] = JHTML::_('select.genericlist', $orderbys, 'orderby', 'class="inputbox" size="1" onchange="document.adminForm.submit();"',
 	'value', 'text', $orderby );
 
 	HTML_mtspy::viewLinks( $option, $lists, $search, $pageNav, $links );
@@ -359,7 +369,9 @@ function viewListings( $option ) {
 }
 
 function viewClone( $option, $id ) {
-	global $database;
+	global $mainframe;
+	
+	$database =& JFactory::getDBO();
 	
 	if( $id > 0 ) {
 
@@ -372,7 +384,7 @@ function viewClone( $option, $id ) {
 		$user_activities = $database->loadObjectList();
 
 		$database->setQuery( 'SELECT * FROM #__mt_archived_users WHERE id = \''.$id.'\' LIMIT 1' );
-		$database->loadObject( $user );
+		$user = $database->loadObject();
 
 		$database->setQuery( 'SELECT r.*, l.link_name, log.log_ip FROM #__mt_archived_reviews AS r '
 			."\n LEFT JOIN #__mt_links AS l ON l.link_id = r.link_id "
@@ -404,21 +416,23 @@ function viewClone( $option, $id ) {
 		HTML_mtspy::viewUser( $option, $Itemid, $user_activities, $reviews, $links, $user );
 	
 	} else {
-		mosRedirect( 'index2.php?option=com_mtree&task=spy&task2=viewusers' );
+		$mainframe->redirect( 'index2.php?option=com_mtree&task=spy&task2=viewusers' );
 	}
 
 }
 
 function viewUser( $option, $id ) {
-	global $database;
+	global $mainframe;
+	
+	$database =& JFactory::getDBO();
 	
 	if( $id > 0 ) {
 
 		$database->setQuery( 'SELECT * FROM #__users WHERE id = \''.$id.'\' LIMIT 1' );
-		$database->loadObject( $user );
+		$user = $database->loadObject();
 
 		if(is_null($user)) {
-			mosRedirect( 'index2.php?option=com_mtree&task=spy&task2=viewusers' );
+			$mainframe->redirect( 'index2.php?option=com_mtree&task=spy&task2=viewusers' );
 		} else {
 
 			$database->setQuery( 'SELECT log.*, l.link_id, l.link_name, r.rev_title, r.rev_approved, u.username FROM #__mt_log AS log '
@@ -479,15 +493,15 @@ function viewUser( $option, $id ) {
 			if(count($possible_cloners_points)>0) {
 				foreach($possible_cloners_points AS $key => $value) {
 					// if($value > 0) {
-						// $possible_cloners_output[] = mosHTML::makeOption( $key, $key );
-						$possible_cloners_output[] = mosHTML::makeOption( $key, $key . ' ('.$value.' points)' );
+						// $possible_cloners_output[] = JHTML::_('select.option', $key, $key );
+						$possible_cloners_output[] = JHTML::_('select.option', $key, $key . ' ('.$value.' points)' );
 					// }
 				}
 			}
-			$possible_cloners_output[] = mosHTML::makeOption( '-1', 'Other...' );
+			$possible_cloners_output[] = JHTML::_('select.option', '-1', 'Other...' );
 
 			if(count($possible_cloners_output) > 1) {
-				$lists['clone_owner'] = mosHTML::selectList( $possible_cloners_output, 'clone_owner', 'id="clone_owner" class="text_area" size="1" onchange="detectOther(this)"',	'value', 'text');
+				$lists['clone_owner'] = JHTML::_('select.genericlist', $possible_cloners_output, 'clone_owner', 'id="clone_owner" class="text_area" size="1" onchange="detectOther(this)"',	'value', 'text');
 			}
 
 			$clones = loadClones( $id );
@@ -497,40 +511,41 @@ function viewUser( $option, $id ) {
 		}
 	
 	} else {
-		mosRedirect( 'index2.php?option=com_mtree&task=spy&task2=viewusers' );
+		$mainframe->redirect( 'index2.php?option=com_mtree&task=spy&task2=viewusers' );
 	}
 
 }
 
 function viewUsers( $option ) {
-	global $database, $mainframe, $_MT_LANG;
+	global $mainframe, $mtconf;
+	
+	$database =& JFactory::getDBO();
+	$orderby = JRequest::getCmd( 'orderby', 'latestactivities');
+	
+	$limit = $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', $mtconf->getjconf('list_limit') );
+	$limitstart	= JRequest::getInt( 'limitstart', 0);
 
-	$orderby = mosGetParam( $_REQUEST, 'orderby', 'latestactivities' );
-	$limit = $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', 25 );
-	// $limitstart = $mainframe->getUserStateFromRequest( "viewcli{$option}limitstart", 'limitstart', 0 );
-	$limitstart = mosGetParam( $_REQUEST, 'limitstart', 0 );
-
-	$search['username_name'] = mosGetParam( $_POST, 'username_name', '' );
-	$search['username'] = mosGetParam( $_POST, 'username', '' );
-	$search['id'] = mosGetParam( $_POST, 'id', '' );
-	$search['name'] = mosGetParam( $_POST, 'name', '' );
-	$search['email'] = mosGetParam( $_POST, 'email', '' );
-	$search['password'] = mosGetParam( $_POST, 'password', '' );
-	if( empty($search['password']) ) { $search['password'] = mosGetParam( $_REQUEST, 'password', '' );	}
-	$search['ip'] = mosGetParam( $_POST, 'ip', '' );
-	if( empty($search['ip']) ) { $search['ip'] = mosGetParam( $_REQUEST, 'ip', '' );	}
+	$search['username_name'] = JRequest::getVar( 'username_name', '', 'post');
+	$search['username'] = JRequest::getVar( 'username', '', 'post');
+	$search['id'] = JRequest::getVar( 'id', '', 'post');
+	$search['name'] = JRequest::getVar( 'name', '', 'post');
+	$search['email'] = JRequest::getVar( 'email', '', 'post');
+	$search['password'] = JRequest::getVar( 'password', '', 'post');
+	if( empty($search['password']) ) { $search['password'] = JRequest::getVar( 'password', '');	}
+	$search['ip'] = JRequest::getVar( 'ip', '', 'post');
+	if( empty($search['ip']) ) { $search['ip'] = JRequest::getVar( 'ip', '');	}
 	
 	$where = array();
 
 	if( !empty($search['username_name']) ) { 
-		$where['username_name'] = "(u.username LIKE '%".$search['username_name']."%' OR u.name LIKE '%".$search['username_name']."%')";
+		$where['username_name'] = "(u.username LIKE '%" . $database->getEscaped($search['username_name'], true) . "%' OR u.name LIKE '%" . $database->getEscaped($search['username_name'], true) . "%')";
 	}
-	if( !empty($search['username']) ) { $where['username'] = "u.username LIKE '%".$search['username']."%'"; }
-	if( !empty($search['name']) ) { $where['name'] = "u.name LIKE '%".$search['name']."%'"; }
-	if( !empty($search['id']) ) { $where['id'] = "u.id = '".$search['id']."'"; }
-	if( !empty($search['email']) ) { $where['email'] = "u.email LIKE '%".$search['email']."%'"; }
-	if( !empty($search['password']) ) { $where['password'] = "u.password = '".$search['password']."'"; }
-	if( !empty($search['ip']) ) { $where['ip'] = "l.log_ip = '".$search['ip']."'"; }
+	if( !empty($search['username']) ) { $where['username'] = "u.username LIKE '%" . $database->getEscaped($search['username'], true) . "%'"; }
+	if( !empty($search['name']) ) { $where['name'] = "u.name LIKE '%" . $database->getEscaped($search['name'], true) . "%'"; }
+	if( !empty($search['id']) ) { $where['id'] = "u.id = '" . $database->getEscaped($search['id']) . "'"; }
+	if( !empty($search['email']) ) { $where['email'] = "u.email LIKE '%" . $database->getEscaped($search['email'], true) . "%'"; }
+	if( !empty($search['password']) ) { $where['password'] = "u.password = '" . $database->getEscaped($search['password']) . "'"; }
+	if( !empty($search['ip']) ) { $where['ip'] = "l.log_ip = '" . $database->getEscaped($search['ip']) . "'"; }
 	
 	// When doing a search and the orderby is set to 'latestactivities',
 	// the sort type is force set to by 'Latest Users'. 'latestactivities' 
@@ -800,15 +815,15 @@ function viewUsers( $option ) {
 	require_once("includes/pageNavigation.php");
 	$pageNav = new mosPageNav( $totalusers, $limitstart, $limit );
 
-	$orderbys[] = mosHTML::makeOption( 'latestactivities', $_MT_LANG->LATEST_ACTIVITIES );
-	$orderbys[] = mosHTML::makeOption( 'latestusers', $_MT_LANG->LATEST_USERS );
-	$orderbys[] = mosHTML::makeOption( 'mostvotes', $_MT_LANG->MOST_VOTES );
-	$orderbys[] = mosHTML::makeOption( 'mostreviews', $_MT_LANG->MOST_REVIEWS );
-	$orderbys[] = mosHTML::makeOption( 'mosthelpfuls', $_MT_LANG->MOST_HELPFULS );
-	$orderbys[] = mosHTML::makeOption( 'mostlistings', $_MT_LANG->MOST_LISTINGS );
-	$orderbys[] = mosHTML::makeOption( 'lastvisit', $_MT_LANG->RECENTLY_LOGIN );
+	$orderbys[] = JHTML::_('select.option', 'latestactivities', JText::_( 'Latest activities' ) );
+	$orderbys[] = JHTML::_('select.option', 'latestusers', JText::_( 'Latest users' ) );
+	$orderbys[] = JHTML::_('select.option', 'mostvotes', JText::_( 'Most votes' ) );
+	$orderbys[] = JHTML::_('select.option', 'mostreviews', JText::_( 'Most reviews' ) );
+	$orderbys[] = JHTML::_('select.option', 'mosthelpfuls', JText::_( 'Most helpfuls' ) );
+	$orderbys[] = JHTML::_('select.option', 'mostlistings', JText::_( 'Most listings' ) );
+	$orderbys[] = JHTML::_('select.option', 'lastvisit', JText::_( 'Recently login' ) );
 
-	$lists['orderby'] = mosHTML::selectList( $orderbys, 'orderby', 'class="inputbox" size="1" onchange="document.adminForm.limitstart.value=0;document.adminForm.submit();"',
+	$lists['orderby'] = JHTML::_('select.genericlist', $orderbys, 'orderby', 'class="inputbox" size="1" onchange="document.adminForm.limitstart.value=0;document.adminForm.submit();"',
 	'value', 'text', $orderby );
 
 	HTML_mtspy::viewUsers( $option, $lists, $search, $pageNav, $Itemid, $users );
@@ -816,7 +831,7 @@ function viewUsers( $option ) {
 }
 
 function getMTItemid() {
-	global $database;
+	$database =& JFactory::getDBO();
 	$database->setQuery("SELECT id FROM #__menu"
 		.	"\nWHERE link='index.php?option=com_mtree'"
 		.	"\nAND published='1'"
@@ -826,7 +841,7 @@ function getMTItemid() {
 }
 
 function loadClones( $user_id ) {
-	global $database;
+	$database =& JFactory::getDBO();
 
 	$sql = 'SELECT DISTINCT log.user_id, u.username, u.name, u.block AS user_blocked, log.log_ip '
 		."\n FROM #__mt_log AS log "
@@ -837,6 +852,7 @@ function loadClones( $user_id ) {
 		."\n  WHERE log2.user_id = " . $user_id
 		."\n ) "
 		."\n AND log.user_id <> " . $user_id
+		."\n AND log.log_ip <> ''"
 		."\n ORDER BY log.log_ip DESC ";
 
 	$database->setQuery( $sql );
@@ -845,7 +861,7 @@ function loadClones( $user_id ) {
 }
 
 function loadClonesUserid( $user_id ) {
-	global $database;
+	$database =& JFactory::getDBO();
 
 	$sql = 'SELECT DISTINCT log.user_id '
 		."\n FROM #__mt_log AS log "

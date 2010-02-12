@@ -2,7 +2,7 @@ h1.componentheading {
 	margin:0;
 	}
 h2.contentheading {
-	padding-left: 10px;
+/*	padding-left: 10px;*/
 	margin-bottom: 10px;
 	}
 
@@ -114,11 +114,11 @@ h2.contentheading {
 
 /* @group Subcategory & Related Category */
 #subcats, #relcats {
-	margin: 0;
-	float: left;
+	margin: 20px 0 0 0;
 	width: 100%;
-	padding-left: 10px;
-
+/*	padding-left: 10px;*/
+	clear: both; 
+	overflow: hidden;
 	}
 #subcats .title {
 	height: 24px;
@@ -127,7 +127,6 @@ h2.contentheading {
 	margin: 0 18px 0 0;
 	font-size: 1.6em;
 	border-bottom: 1px solid #ccc;
-
 	}
 #subcats ul, #relcats ul {
 	margin: 0;
@@ -169,7 +168,7 @@ h2.contentheading {
 	width: 100%;
 	overflow: hidden;
 	margin: 10px 0 0 0;
-	padding-left: 10px;
+/*	padding-left: 10px;*/
 	clear: both;
 	}
 #listings .title {
@@ -177,7 +176,7 @@ h2.contentheading {
 	border-bottom: 1px solid #ccc;
 	line-height: 24px;
 	vertical-align: middle;
-	margin: 0 11px 10px 0;
+	margin: 0;
 	font-size: 1.6em;
 	}
 .info {
@@ -203,10 +202,26 @@ h2.contentheading {
 	vertical-align: bottom;
 	margin: 5px 12px 15px 0;
 	}
-#listings .pages-links {
-	text-align: center;
-	width: 100%;
+#listings .pages-links, .reviews .pages-links {
+	background-color:#F2F2F2;
+	border-bottom:1px solid #EAEAEA;
+/*	border-top:1px solid #CCCCCC;*/
+	clear:both;
+	margin-bottom:20px;
+	overflow:hidden;
+	padding:4px 10px;
+	position:relative;
+	text-align:right;
+	
 	}
+#listings .pages-links .pagination {
+	float:right;
+	margin:0;
+	padding-right:10px;
+	background: none;
+	padding: 0 10px 0 0;
+	border-top:0;
+}
 .listing-summary {
 	float: left;
 	width: 100%;
@@ -228,13 +243,15 @@ h2.contentheading {
 	font-size: 0.9em;
 	color:#808080;
 	}
+.listing-summary .fields {
+	clear: both;
+	}
 .listing-summary .fieldRow {
-	border: 0px solid #ccc;
 	height: 22px;
-	line-height:14px;
-	float: left;
-	padding:0 7px 0 0;
+	line-height:1.5em;
+	padding:0 2px 0 0;
 	font-size: 0.9em;
+	display: inline;
 	}
 div.featured {
 	background-color: #F2F9EC; 
@@ -243,27 +260,24 @@ div.featured {
 	width: 96%;
 	}
 .fieldRow .caption {
-	float: left;
 	text-align: right;
 	color: #fff;
-	clear: left;
 	background-color: #bfbfbf;
-	padding: 0 2px;
+	padding: 1px 2px 0 2px;
 	border-bottom: 1px solid #f1f1f1;
 	border-left: 0px solid #f1f1f1;
 	border-top: 1px solid #f1f1f1;
 	font-weight: bold;
+	display: inline;
 	}
 .output {
 	background-color: #f2f2f2;
-	display: block;
-	float: left;
-	clear: right;
 	padding:0 5px 0 5px;
 	margin-right: 0;
 	border-bottom: 1px solid #f1f1f1;
 	border-right: 1px solid #f1f1f1;
 	border-top: 1px solid #f1f1f1;
+	display: inline;
 	}
 .output a:link, .output a:visited {
 	font-weight: normal;
@@ -299,6 +313,7 @@ div.featured {
 	}
 .listing-summary .category {
 	margin-bottom: 8px;
+	clear:left;
 	}
 .listing-summary .category span {
 	margin-right: 2px;
@@ -311,13 +326,14 @@ div.featured {
 	color: #009900;
 	}
 span.xlistings {
-	color:#606060;float:left;margin: 0;}
+	color:#606060;float:left;margin: 2px 0 0 0;padding: 0;}
 
-#upload_att li {
+/*#sortableimages li {
 	background-image: none;
 	margin: 0;
 	padding: 0 0 5px 0;
 	}
+*/
 .address {
 	text-align: left;
 	float: left;
@@ -354,6 +370,22 @@ span.xlistings {
 .listing-summary .actions a:hover {
 	border: none;
 	}
+.listing-summary .pendingapproval {
+	background-color: #FFFFB5;
+	font: bold 0.6em "Lucida Grande", Lucida, Verdana, sans-serif;
+	padding: 3px 10px;
+	border: 1px solid #ECEE5F;
+	position: relative;
+	top: -3px;
+}
+.unpublished {
+	background-color: #FFFFB5;
+	font: bold 0.6em "Lucida Grande", Lucida, Verdana, sans-serif;
+	padding: 3px 10px;
+	border: 1px solid #ECEE5F;
+	position: relative;
+	top: -3px;
+}
 /* @end */
 
 /* @group Listing */
@@ -373,60 +405,50 @@ span.xlistings {
 	margin:5px 0;
 	}
 	
-#listing dl {
+#listing .fields {
 	width: 100%;
-	margin: 0;
-	padding: 0;
-	float: left;
-	clear: both;
 	}
 
-#listing dl dt {
-	width: 20%;
-	float: left;
+#listing .fields .caption {
+	width:20%;float: left;
 	margin: 0 0 0 0;
 	padding: .3em;
 	border-top: 1px dotted #bebebe;
 	font-weight: bold;
 	color: #666;
 	text-align: right;
+	clear:left;
 	}
 
-/* commented backslash hack for mac-ie5 \*/
-dt { clear: both; }
-/* end hack */
-
-#listing dl dd {
+#listing .fields .data {
 	float: left;
 	width: 75%;
 	margin: 0 0 0 1px;
 	padding: .3em;
 	border-top: 1px dotted #bebebe;
 	}
-#listing dl dd a {
-	font-weight: normal;
-	text-decoration: none;
+#listing .fields .data a {
 	}
-#listing dl dd a:hover {
-	text-decoration: underline;
+#listing .fields .data a:hover {
 	}
-#listing dl dd ul{
+#listing .fields .data ul{
 	margin: 0;
 	list-style-type: disc;
 	list-style-position: inside;
 	}
 #listing .listing-desc {
 	margin: 0 18px 10px 0;
-	float: left;
 	font-size: 12px;
 	line-height: 1.4em;
-	display: inline;
+	width: 97%;
 	}
 .thumbnail {
 	float: right;
 	clear: none;
 	margin: 0 0px 5px 10px;
 	text-align: center;
+	position: relative;
+	left: 3px;
 	}
 .thumbnail-left {
 	float: left;
@@ -613,7 +635,10 @@ ul.linkcats {
 	list-style: disc inside;
 	}
 ul.linkcats li {
-	line-height: 18px;	
+	line-height: 18px;
+	padding: 0;
+	background: none;
+	list-style-type: none;
 	}
 ul.linkcats a:link, ul.linkcats a:visited {
 	color: #fff;
@@ -626,37 +651,84 @@ ul.linkcats a:link, ul.linkcats a:visited {
 ul.linkcats a:hover {
 	background-color: #4c4c4c;
 	}
+.images span {
+	margin: 0 0 0 13px;
+}
+#uploadimages {
+	overflow:hidden;
+	clear: both;
+	list-style-type: none;
+	margin: 0;
+	padding: 10px 0 0 0;
+}
+#uploadimages li {
+	margin: 0 0 10px 13px;;
+}
+.actionimages {
+	margin-left: 13px;
+}
+#sortableimages {
+	width: 600px;
+	list-style-type: none; 
+	margin: 10px 0 0 0;
+	padding: 0;
+	overflow: visible;
+}
+#sortableimages li {
+	margin: 0 0 13px 0;
+	padding: 0px; 
+	float: left; 
+	list-style-position: outside;
+	text-align: center; 
+	line-height: 100%;
+}
+#sortableimages li input {
+	position:relative;
+	left: 20px;
+	top: 10px;
+	vertical-align: top;
+	z-index: 1;
+	margin: 0;
+	padding: 0;
+}
+
 /* @end */
 
-/* @group Reviews */
+/* @group Reviews, Images & Map */
 
-.reviews {
+.reviews, .map, .images {
 	width:100%;
 	overflow: hidden;
 	clear: both;
+	margin: 20px 0;
 	}
-.reviews .title {
+.reviews .title, .map .title, .images .title {
 	clear: both;
 	height: 24px;
 	line-height: 24px;
 	vertical-align: middle;
-	margin: 0 18px 10px 10px;
+	margin: 0 0 10px 10px;
 	font-size: 1.6em;
 	border-bottom: 1px solid #ccc;
+	width: 97%;
 	}
-.reviews p {
+.reviews p, .images .content, #map {
 	margin: 0 18px 10px 10px;
 	}
+.images .more {
+	clear:both;
+}
 .reviews .pages-counter {
 	float: left;
 	width: 100%;
 	text-align: center;
 	font-weight: bold;
 	}
-.reviews .pages-links {
+/*.reviews .pages-links {
 	text-align: center;
 	width: 100%;
 	}	
+*/
 .review {
 	clear: both;
 	padding: 0 0 10px 0;
@@ -672,6 +744,7 @@ ul.linkcats a:hover {
 	clear: both;
 	background-color: #f4f4f4;
 	border-bottom: 1px solid #f4f4f4;
+	padding-top: 2px;
 	}
 .review .review-listing {
 	height: 24px;
@@ -681,8 +754,6 @@ ul.linkcats a:hover {
 	}
 .review .review-title {
 	float:left;
-	height: 1.8em;
-	line-height: 1.8em;
 	}
 .review .review-title a {
 	text-decoration: none;
@@ -692,8 +763,6 @@ ul.linkcats a:hover {
 
 .review .review-info {
 	float:left;
-	height: 1.8em;
-	line-height: 1.8em;
 	margin-left: 5px;
 	}
 .review .review-rating {
@@ -839,8 +908,7 @@ ul.linkcats a:hover {
 .users-tab {
 	border-bottom: 1px solid #ccc;
 	float: left;
-	width: 98%;
-	margin-left: 10px;
+	width: 100%;
 	}
 .users-listings span, .users-reviews span, .users-favourites span {
 	font-weight: bold;
@@ -853,7 +921,7 @@ ul.linkcats a:hover {
 	top: 1px;
 	float: left;
 	padding: 2px 10px;
-	background-color: #f4f4f4;
+	background-color: #fff;
 	margin-right: 10px;
 	}
 .users-listings-active, .users-reviews-active, .users-favourites-active {
@@ -864,7 +932,7 @@ ul.linkcats a:hover {
 	border-top: 1px solid #ccc;
 	border-left: 1px solid #ccc;
 	border-right: 1px solid #ccc;
-	background-color: #fff;
+	background-color: #F2F2F2;
 	margin-right: 10px;
 	font-weight: bold;
 	}

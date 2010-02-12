@@ -1,7 +1,17 @@
 <?php
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+/**
+ * @version		$Id: upgrade.php 638 2009-04-13 12:25:48Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-global $database;
+defined('_JEXEC') or die('Restricted access');
+
+$database =& JFactory::getDBO();
+
 if(is15xSeries()) {
 	
 	upgrade15x_157();
@@ -28,44 +38,57 @@ if(in_array($version['version']->value,array('2.0.1','2.0.3','2.0.4'))) {
 	$version['dev_version']->value = substr($version['version']->value,-1,1);
 }
 
+JToolBarHelper::title( JText::_('Mosets Tree Upgrader') );
+printStartTable();
+
 if( upgrade($version['major_version']->value,$version['minor_version']->value,$version['dev_version']->value) === false) {
-	printStartTable('Mosets Tree Upgrader');
-	printRow('No more upgrades needed.',2);
+	// printRow('You\'re currently at version ' . $version['major_version']->value . '.' . $version['minor_version']->value . '.' . $version['dev_version']->value);
+	// printRow('No more upgrades needed.',2);
 } else {
-	printStartTable('Mosets Tree Upgrader');
 	printRow('Upgrades Completed!',2);
+	printRow('<a href="index2.php?option=com_mtree">&lt; Back to Mosets Tree</a>',2);
 }
 
-printRow('<a href="index2.php?option=com_mtree">&lt; Back to Mosets Tree</a>',2);
 printEndTable();
 
 
 function is15xSeries() {
-	global $database, $mosConfig_dbprefix;
+	global $mainframe;
 
-	$database->setQuery( "SHOW TABLE STATUS LIKE '" . $mosConfig_dbprefix . "mt_config'" );
-	$database->loadObject($table);
-	if($table->Name == $mosConfig_dbprefix.'mt_config' && $table->Rows == 30) {
+	$database =& JFactory::getDBO();
+	$db_prefix = $mainframe->getCfg('dbprefix');
+
+	$database->setQuery( "SHOW TABLE STATUS LIKE '" . $db_prefix . "mt_config'" );
+	$table = $database->loadObject();
+	if($table->Name == $db_prefix.'mt_config' && $table->Rows == 30) {
 		return true;
 	}
 	return false;
 }
 
 function upgrade($major,$minor,$dev) {
-	global $mosConfig_absolute_path;
-	
 	$updated = false;
 	$nextUpgradeVersion = getNextUpgradeVersion($major,$minor,$dev);
 	$currentUpgradeVersion = array($major,$minor,$dev);
 	while($nextUpgradeVersion !== false) {
 		printStartTable('Upgrade: Mosets Tree ' . $currentUpgradeVersion[0] . '.' . $currentUpgradeVersion[1] . '.' . $currentUpgradeVersion[2] . ' - ' . implode('.',$nextUpgradeVersion));
-		require($mosConfig_absolute_path . '/administrator/components/com_mtree/upgrade/' . implode('_',$nextUpgradeVersion) . '.php');
+		require(JPATH_COMPONENT_ADMINISTRATOR.DS.'upgrade'.DS.implode('_',$nextUpgradeVersion) . '.php');
 		$className = 'mUpgrade_' . implode('_',$nextUpgradeVersion);
 		$upgrade = new $className;
 		$upgrade->upgrade();
 		
-		if($upgrade->updated()) {
+		if($upgrade->updated() === true) {
 			printRow('Successfully upgraded to <b>Mosets Tree ' . implode('.',$nextUpgradeVersion) .'</b>.');
+		} elseif( $upgrade->updated() === false ) {
+			$document=& JFactory::getDocument();
+			$document->addCustomTag('<meta http-equiv="Refresh" content="1; URL='.$upgrade->continue_url.'">');
+			if( isset($upgrade->continue_message) ) {
+				printRow($upgrade->continue_message);
+				printRow('<a href="'.$upgrade->continue_url.'">Click here to continue if page does not reload.</a>');
+			} else {
+				printRow('processing upgrade...');
+			}
+			return false;
 		} else {
 			printRow('No update required for <b>Mosets Tree ' . implode('.',$nextUpgradeVersion) .'</b>.');
 		}
@@ -80,17 +103,15 @@ function upgrade($major,$minor,$dev) {
 }
 
 function getNextUpgradeVersion($major,$minor,$dev) {
-	global $mosConfig_absolute_path;
-
 	// Look if there is a next $dev version
-	if(file_exists($mosConfig_absolute_path . '/administrator/components/com_mtree/upgrade/' . $major . '_' . $minor . '_' .($dev +1) . '.php')) {
+	if(file_exists(JPATH_COMPONENT_ADMINISTRATOR.DS.'upgrade'.DS. $major . '_' . $minor . '_' .($dev +1) . '.php')) {
 		return array($major,$minor,($dev +1));
 	// Look if there is a next $minor version
-	} elseif(file_exists($mosConfig_absolute_path . '/administrator/components/com_mtree/upgrade/' . $major . ($minor +1) . $dev . '.php')) {
-		return array($major,($minor +1),$dev);
+	} elseif(file_exists(JPATH_COMPONENT_ADMINISTRATOR.DS.'upgrade'.DS. $major . '_' . ($minor +1) . '_0.php')) {
+		return array($major,($minor +1),0);
 	// Look if there is a next $major version
-	} elseif(file_exists($mosConfig_absolute_path . '/administrator/components/com_mtree/upgrade/' . ($major +1) . $minor . $dev . '.php')) {
-		return array(($major +1),$minor,$dev);
+	} elseif(file_exists(JPATH_COMPONENT_ADMINISTRATOR.DS.'upgrade'.DS. ($major +1) . '_0_0.php')) {
+		return array(($major +1),0,0);
 	} else {
 		return false;
 	}
@@ -98,7 +119,7 @@ function getNextUpgradeVersion($major,$minor,$dev) {
 }
 
 function updateVersion($major,$minor,$dev) {
-	global $database;
+	$database =& JFactory::getDBO();
 
 	$database->setQuery('SELECT value FROM #__mt_config WHERE varname = \'major_version\' LIMIT 1');
 	if($database->loadResult() == '') {
@@ -129,7 +150,9 @@ function updateVersion($major,$minor,$dev) {
 }
 
 function upgrade158_200() {
-	global $mosConfig_absolute_path, $mt_listing_image_dir, $mt_cat_image_dir, $database;
+	global $mt_listing_image_dir, $mt_cat_image_dir;
+	
+	$database =& JFactory::getDBO();
 	
 	printStartTable('Upgrade: Mosets Tree 1.58 - 2.00');
 	$updated = false;
@@ -314,7 +337,7 @@ function upgrade158_200() {
 	$link_wimages = $database->loadObjectList();
 	if(count($link_wimages)>0) {
 		foreach($link_wimages AS $link_wimage) {
-			$image_fullpath = $mosConfig_absolute_path . '/components/com_mtree/img/listings/' . $link_wimage->link_image;
+			$image_fullpath = JPATH_COMPONENT_SITE.DS.'img'.DS.'listings'.DS. $link_wimage->link_image;
 			if(file_exists($image_fullpath)) {
 				$database->setQuery( "INSERT INTO #__mt_images (link_id, filename, ordering) "
 					.	"\n VALUES('" . $link_wimage->link_id . "', '" . $link_wimage->link_image . "', '1')" );
@@ -326,9 +349,9 @@ function upgrade158_200() {
 				$file_extension = pathinfo($link_wimage->link_image);
 				$file_extension = strtolower($file_extension['extension']);
 
-				copy($image_fullpath, $mosConfig_absolute_path . '/components/com_mtree/img/listings/o/' . $img_id . '.' . $file_extension);
-				copy($image_fullpath, $mosConfig_absolute_path . '/components/com_mtree/img/listings/m/' . $img_id . '.' . $file_extension);
-				copy($image_fullpath, $mosConfig_absolute_path . '/components/com_mtree/img/listings/s/' . $img_id . '.' . $file_extension);
+				copy($image_fullpath, JPATH_COMPONENT_SITE.DS.'img'.DS.'listings'.DS.'o'.DS. $img_id . '.' . $file_extension);
+				copy($image_fullpath, JPATH_COMPONENT_SITE.DS.'img'.DS.'listings'.DS.'m'.DS. $img_id . '.' . $file_extension);
+				copy($image_fullpath, JPATH_COMPONENT_SITE.DS.'img'.DS.'listings'.DS.'s'.DS. $img_id . '.' . $file_extension);
 				unlink($image_fullpath);
 				$database->setQuery("UPDATE #__mt_images SET filename = '" . $img_id . '.' . $file_extension . "' WHERE img_id = '" . $img_id . "'");
 				$database->query();
@@ -338,85 +361,21 @@ function upgrade158_200() {
 		printRow('Total of ' . count($link_wimages) . ' listing images are processed.', 1 );
 	}
 	
-	// X - Transfer all link images from the filesystem to database
-	/*
-	$link_wimages = array();
-	$database->setQuery( 'SELECT link_id, link_image FROM #__mt_links WHERE link_image <> \'\'' );
-	$link_wimages = $database->loadObjectList();
-	if(count($link_wimages)>0) {
-		foreach($link_wimages AS $link_wimage) {
-			// $image_fullpath = $mosConfig_absolute_path . $mt_listing_image_dir . $link_wimage->link_image;
-			$image_fullpath = $mosConfig_absolute_path . '/components/com_mtree/img/listings/' . $link_wimage->link_image;
-			if(file_exists($image_fullpath)) {
-				$small_filedata = addslashes(file_get_contents($image_fullpath));
-				$small_filesize = strlen($small_filedata);
-				$database->setQuery( "INSERT INTO #__mt_images (link_id, filename, small_filedata, small_filesize, medium_filedata, medium_filesize, original_filedata, original_filesize, extension, ordering) "
-					.	"\n VALUES("
-					.	"'" . $link_wimage->link_id . "', "
-					.	"'" . $link_wimage->link_image . "', "
-					.	"'" . $small_filedata . "', "
-					.	"'" . $small_filesize . "', "
-					.	"'" . $small_filedata . "', "
-					.	"'" . $small_filesize . "', "
-					.	"'" . $small_filedata . "', "
-					.	"'" . $small_filesize . "', "
-					.	"'image/" . substr($image_fullpath,strrpos($image_fullpath,'.')+1) . "', "
-					.	"'1')" 
-					);
-				if(!$database->query()) {
-					echo '<br />' . $database->getErrorMsg();
-				}
-			}
-			unset($small_filedata);
-		}
-		printRow('Total of ' . count($link_wimages) . ' listing images are transfered to database.', 1 );
-	}*/
-	
 	// Copy all categories' images to ~/o, and ~/s directories
 	$cat_wimages = array();
 	$database->setQuery( 'SELECT cat_id, cat_image FROM #__mt_cats WHERE cat_image <> \'\'' );
 	$cat_wimages = $database->loadObjectList();
 	if(count($cat_wimages)>0) {
 		foreach($cat_wimages AS $cat_wimage) {
-			$image_fullpath = $mosConfig_absolute_path . '/components/com_mtree/img/cats/' . $cat_wimage->cat_image;
+			$image_fullpath = JPATH_COMPONENT_SITE.DS.'img'.DS.'cats'.DS. $cat_wimage->cat_image;
 			if(file_exists($image_fullpath)) {
-				copy($image_fullpath, $mosConfig_absolute_path . '/components/com_mtree/img/cats/o/' . $cat_wimage->cat_image);
-				copy($image_fullpath, $mosConfig_absolute_path . '/components/com_mtree/img/cats/s/' . $cat_wimage->cat_image);
+				copy($image_fullpath, JPATH_COMPONENT_SITE.DS.'img'.DS.'cats'.DS.'o'.DS. $cat_wimage->cat_image);
+				copy($image_fullpath, JPATH_COMPONENT_SITE.DS.'img'.DS.'cats'.DS.'s'.DS. $cat_wimage->cat_image);
 				unlink($image_fullpath);
 			}
 		}
 		printRow('Total of ' . count($cat_wimages) . ' category images are processed.', 1 );
 	}
-	
-	// X - Transfer all category images from the filesystem to database
-	/*
-	$cat_wimages = array();
-	$database->setQuery( 'SELECT cat_id, cat_image FROM #__mt_cats WHERE cat_image <> \'\'' );
-	$cat_wimages = $database->loadObjectList();
-	if(count($cat_wimages)>0) {
-		foreach($cat_wimages AS $cat_wimage) {
-			// $image_fullpath = $mosConfig_absolute_path . $mt_cat_image_dir . $cat_wimage->cat_image;
-			$image_fullpath = $mosConfig_absolute_path . '/components/com_mtree/img/cats/' . $cat_wimage->cat_image;
-			if(file_exists($image_fullpath)) {
-				$small_filedata = addslashes(file_get_contents($image_fullpath));
-				$small_filesize = strlen($small_filedata);
-				$database->setQuery( "INSERT INTO #__mt_cats_images (cat_id, filename, small_filedata, small_filesize, original_filedata, original_filesize, extension) "
-					.	"\n VALUES("
-					.	"'" . $link_wimage->cat_id . "', "
-					.	"'" . $link_wimage->cat_image . "', "
-					.	"'" . $small_filedata . "', "
-					.	"'" . $small_filesize . "', "
-					.	"'" . $small_filedata . "', "
-					.	"'" . $small_filesize . "', "
-					.	"'image/" . substr($image_fullpath,strripos($image_fullpath,'.')+1) . "'"
-					);
-				$database->query();
-			}
-			unset($small_filedata);
-		}
-		printRow('Total of ' . count($cat_wimages) . ' category images are transfered to database.', 1 );
-	}
-	*/
 
 	// Drop all cust_# columns & link_image from #__mt_links
 	$database->setQuery( 'ALTER TABLE `#__mt_links` DROP `link_image`, DROP `cust_1`, DROP `cust_2`, DROP `cust_3`, DROP `cust_4`, DROP `cust_5`, DROP `cust_6`, DROP `cust_7`, DROP `cust_8`, DROP `cust_9`, DROP `cust_10`, DROP `cust_11`, DROP `cust_12`, DROP `cust_13`, DROP `cust_14`, DROP `cust_15`, DROP `cust_16`, DROP `cust_17`, DROP `cust_18`, DROP `cust_19`, DROP `cust_20`, DROP `cust_21`, DROP `cust_22`, DROP `cust_23`, DROP `cust_24`, DROP `cust_25`, DROP `cust_26`, DROP `cust_27`, DROP `cust_28`, DROP `cust_29`, DROP `cust_30`;' );
@@ -440,16 +399,16 @@ function upgrade158_200() {
 			array('explorer_tree_level', 'admin', '', '9', 'text', 11600, 1),
 			array('fe_num_of_featured', 'listing', '', '20', 'text', 6700, 1),
 			array('fe_num_of_links', 'listing', '', '20', 'text', 5500, 1),
-			array('fe_num_of_mostfavoured', 'listing', '', '20', 'text', 6100, 1),
+			array('fe_num_of_favourite', 'listing', '', '20', 'text', 6100, 1),
 			array('fe_num_of_mostrated', 'listing', '', '20', 'text', 6300, 1),
 			array('fe_num_of_mostreview', 'listing', '', '20', 'text', 6500, 1),
-			array('fe_num_of_newlisting', 'listing', '', '20', 'text', 5800, 1),
-			array('fe_num_of_popularlisting', 'listing', '', '20', 'text', 5700, 1),
-			array('fe_num_of_recentlyupdated', 'listing', '', '20', 'text', 6000, 1),
+			array('fe_num_of_new', 'listing', '', '20', 'text', 5800, 1),
+			array('fe_num_of_popular', 'listing', '', '20', 'text', 5700, 1),
+			array('fe_num_of_updated', 'listing', '', '20', 'text', 6000, 1),
 			array('fe_num_of_reviews', 'listing', '', '20', 'text', 5600, 1),
 			array('fe_num_of_searchresults', 'listing', '', '20', 'text', 6600, 1),
 			array('fe_num_of_toprated', 'listing', '', '20', 'text', 6400, 1),
-			array('fe_total_newlisting', 'listing', '', '60', 'text', 5900, 1),
+			array('fe_total_new', 'listing', '', '60', 'text', 5900, 1),
 			array('first_cat_order1', 'category', '', 'cat_name', 'cat_order', 1400, 1),
 			array('first_cat_order2', 'category', '', 'asc', 'sort_direction', 1500, 1),
 			array('first_listing_order1', 'listing', '', 'link_rating', 'listing_order', 1800, 1),
@@ -511,9 +470,8 @@ function upgrade158_200() {
 			array('predefined_reply_from_email', 'ratingreview', '', '', 'text', 10030, 1),
 			array('predefined_reply_from_name', 'ratingreview', '', '', 'text', 10020, 1),
 			array('rate_once', 'ratingreview', '', '0', 'yesno', 1400, 1),
-			array('relative_path_to_attachment_php', 'image', '', '/components/com_mtree/attachment.php', 'text', 2000, 0),
 			array('relative_path_to_js_library', 'core', '', '/components/com_mtree/js/jquery-1.1.3.1.pack.js', 'text', 0, 0),
-			array('require_rating_with_review', 'ratingreview', '', '1', 'yesno', 1800, 0),
+			array('require_rating_with_review', 'ratingreview', '', '1', 'yesno', 2675, 1),
 			array('resize_cat_size', 'image', '', '80', 'text', 1300, 1),
 			array('resize_listing_size', 'image', '', '140', 'text', 1000, 1),
 			array('resize_medium_listing_size', 'image', '', '600', 'text', 1050, 1),
@@ -578,10 +536,10 @@ function upgrade158_200() {
 			array('use_wysiwyg_editor_in_admin', 'admin', '', '0', 'yesno', 12000, 1),
 			array('version', 'core', '2.00', '-1', '', 0, 0)
 			));
-		include( $mosConfig_absolute_path . '/administrator/components/com_mtree/config.mtree.php' );
-		global $database;
+		include( JPATH_COMPONENT_ADMINISTRATOR.DS.'config.mtree.php' );
+
 		$mt_template = 'm2'; // Set default template to m2
-		$mt_configs = array('mt_template', 'mt_language', 'mt_map', 'mt_admin_email', 'mt_listing_image_dir', 'mt_cat_image_dir', 'mt_resize_method', 'mt_resize_quality', 'mt_resize_listing_size', 'mt_img_impath', 'mt_img_netpbmpath', 'mt_resize_cat_size', 'mt_first_cat_order1', 'mt_first_cat_order2', 'mt_second_cat_order1', 'mt_second_cat_order2', 'mt_first_listing_order1', 'mt_first_listing_order2', 'mt_second_listing_order1', 'mt_second_listing_order2', 'mt_fulltext_search', 'mt_first_search_order1', 'mt_first_search_order2', 'mt_second_search_order1', 'mt_second_search_order2', 'mt_display_empty_cat', 'mt_display_alpha_index', 'mt_allow_listings_submission_in_root', 'mt_display_listings_in_root', 'mt_display_cat_count_in_root', 'mt_display_listing_count_in_root', 'mt_display_cat_count_in_subcat', 'mt_display_listing_count_in_subcat', 'mt_show_map', 'mt_show_print', 'mt_show_recommend', 'mt_show_rating', 'mt_show_review', 'mt_show_visit', 'mt_show_contact', 'mt_use_owner_email', 'mt_show_report', 'mt_show_claim', 'mt_show_ownerlisting', 'mt_fe_num_of_subcats', 'mt_fe_num_of_chars', 'mt_fe_num_of_links', 'mt_fe_num_of_reviews', 'mt_fe_num_of_popularlisting', 'mt_fe_num_of_newlisting', 'mt_fe_total_newlisting', 'mt_fe_num_of_mostrated', 'mt_fe_num_of_toprated', 'mt_fe_num_of_mostreview', 'mt_fe_num_of_searchresults', 'mt_fe_num_of_featured', 'mt_rate_once', 'mt_min_votes_for_toprated', 'mt_min_votes_to_show_rating', 'mt_user_review_once', 'mt_user_rating', 'mt_user_review', 'mt_user_recommend', 'mt_user_addlisting', 'mt_user_addcategory', 'mt_user_allowmodify', 'mt_user_allowdelete', 'mt_needapproval_addlisting', 'mt_needapproval_modifylisting', 'mt_needapproval_addcategory', 'mt_needapproval_addreview', 'mt_link_new', 'mt_link_popular', 'mt_hit_lag', 'mt_notifyuser_newlisting', 'mt_notifyadmin_newlisting', 'mt_notifyuser_modifylisting', 'mt_notifyadmin_modifylisting', 'mt_notifyadmin_newreview', 'mt_notifyuser_approved', 'mt_notifyuser_review_approved', 'mt_notifyadmin_delete', 'mt_use_internal_notes', 'mt_allow_imgupload', 'mt_admin_use_explorer', 'mt_explorer_tree_level', 'mt_fullmenu_tree_level');
+		$mt_configs = array('mt_template', 'mt_language', 'mt_map', 'mt_admin_email', 'mt_listing_image_dir', 'mt_cat_image_dir', 'mt_resize_method', 'mt_resize_quality', 'mt_resize_listing_size', 'mt_img_impath', 'mt_img_netpbmpath', 'mt_resize_cat_size', 'mt_first_cat_order1', 'mt_first_cat_order2', 'mt_second_cat_order1', 'mt_second_cat_order2', 'mt_first_listing_order1', 'mt_first_listing_order2', 'mt_second_listing_order1', 'mt_second_listing_order2', 'mt_fulltext_search', 'mt_first_search_order1', 'mt_first_search_order2', 'mt_second_search_order1', 'mt_second_search_order2', 'mt_display_empty_cat', 'mt_display_alpha_index', 'mt_allow_listings_submission_in_root', 'mt_display_listings_in_root', 'mt_display_cat_count_in_root', 'mt_display_listing_count_in_root', 'mt_display_cat_count_in_subcat', 'mt_display_listing_count_in_subcat', 'mt_show_map', 'mt_show_print', 'mt_show_recommend', 'mt_show_rating', 'mt_show_review', 'mt_show_visit', 'mt_show_contact', 'mt_use_owner_email', 'mt_show_report', 'mt_show_claim', 'mt_show_ownerlisting', 'mt_fe_num_of_subcats', 'mt_fe_num_of_chars', 'mt_fe_num_of_links', 'mt_fe_num_of_reviews', 'mt_fe_num_of_popular', 'mt_fe_num_of_new', 'mt_fe_total_new', 'mt_fe_num_of_mostrated', 'mt_fe_num_of_toprated', 'mt_fe_num_of_mostreview', 'mt_fe_num_of_searchresults', 'mt_fe_num_of_featured', 'mt_rate_once', 'mt_min_votes_for_toprated', 'mt_min_votes_to_show_rating', 'mt_user_review_once', 'mt_user_rating', 'mt_user_review', 'mt_user_recommend', 'mt_user_addlisting', 'mt_user_addcategory', 'mt_user_allowmodify', 'mt_user_allowdelete', 'mt_needapproval_addlisting', 'mt_needapproval_modifylisting', 'mt_needapproval_addcategory', 'mt_needapproval_addreview', 'mt_link_new', 'mt_link_popular', 'mt_hit_lag', 'mt_notifyuser_newlisting', 'mt_notifyadmin_newlisting', 'mt_notifyuser_modifylisting', 'mt_notifyadmin_modifylisting', 'mt_notifyadmin_newreview', 'mt_notifyuser_approved', 'mt_notifyuser_review_approved', 'mt_notifyadmin_delete', 'mt_use_internal_notes', 'mt_allow_imgupload', 'mt_admin_use_explorer', 'mt_explorer_tree_level', 'mt_fullmenu_tree_level');
 		foreach($mt_configs AS $mt_config) {
 			if(isset($$mt_config) && !empty($$mt_config)) {
 				$database->setQuery( 'UPDATE #__mt_config SET value = \'' . $$mt_config . '\' WHERE varname = \'' . substr($mt_config,3) . '\' LIMIT 1' );
@@ -599,7 +557,11 @@ function upgrade158_200() {
 	printEndTable();
 }
 function addRows($table, $rows) {
-	global $database, $mosConfig_dbprefix;
+	global $mainframe;
+	
+	$database =& JFactory::getDBO();
+	$db_prefix = $mainframe->getCfg('dbprefix');
+	
 	if(!is_array($rows) || empty($rows) || !isset($rows[0])) {
 		return false;
 	} else {
@@ -621,10 +583,10 @@ function addRows($table, $rows) {
 			} else {
 				$affected_rows = 1;
 			}
-			printRow($affected_rows . ' rows added to table: ' . $mosConfig_dbprefix . 'mt_' . $table);
+			printRow($affected_rows . ' rows added to table: ' . $db_prefix . 'mt_' . $table);
 			return true;
 		} else {
-			printRow('Error adding rows to table: ' . $mosConfig_dbprefix . 'mt_' . $table . '. Error Message: ' . $database->getErrorMsg(), 0);
+			printRow('Error adding rows to table: ' . $db_prefix . 'mt_' . $table . '. Error Message: ' . $database->getErrorMsg(), 0);
 			// echo '<pre align="left">' . $database->getQuery() . '</pre>';
 			return false;
 		}
@@ -645,8 +607,6 @@ function upgrade15x_157() {
 	printEndTable();
 }
 function upgrade157_158() {
-	global $database;
-
 	$updated = false;
 	
 	printStartTable('Upgrade: Mosets Tree 1.57 - 1.58');
@@ -669,11 +629,14 @@ function upgrade157_158() {
 }
 
 function createTable($table, $create_definitions, $drop_table_if_exists=false, $engine='MyISAM') {
-	global $database, $mosConfig_dbprefix;
+	global $mainframe;
+	
+	$database =& JFactory::getDBO();
+	$db_prefix = $mainframe->getCfg('dbprefix');
 	
 	$safe_to_create = false;
 	
-	$database->setQuery( "SHOW TABLE STATUS LIKE '" . $mosConfig_dbprefix . "mt_" . $table . "'" );
+	$database->setQuery( "SHOW TABLE STATUS LIKE '" . $db_prefix . "mt_" . $table . "'" );
 	$database->query();
 	if($database->getNumRows() == 1) {
 		$table_exists = true;
@@ -681,7 +644,7 @@ function createTable($table, $create_definitions, $drop_table_if_exists=false, $
 		$table_exists = false;
 	}
 	if($drop_table_if_exists && $table_exists) {
-		$database->setQuery( "DROP TABLE `" . $mosConfig_dbprefix . "mt_" . $table . "`" );
+		$database->setQuery( "DROP TABLE `" . $db_prefix . "mt_" . $table . "`" );
 		$database->query();
 		$safe_to_create = true;
 	} elseif(!$table_exists) {
@@ -696,7 +659,7 @@ function createTable($table, $create_definitions, $drop_table_if_exists=false, $
 		}
 		$database->setQuery( $sql );
 		if ( $database->query() ) {
-			printRow('Created table: ' . $mosConfig_dbprefix . 'mt_' . $table);
+			printRow('Created table: ' . $db_prefix . 'mt_' . $table);
 			return true;
 		} else {
 			printRow( $database->getErrorMsg(), -1);
@@ -704,15 +667,16 @@ function createTable($table, $create_definitions, $drop_table_if_exists=false, $
 		}
 		// echo '<pre align="left">' . $database->getQuery() . '</pre>';
 	} else {
-		printRow('table: ' . $mosConfig_dbprefix . 'mt_' . $table . ' already exists.', 0);
+		printRow('table: ' . $db_prefix . 'mt_' . $table . ' already exists.', 0);
 		return false;
 	}
 	return false;
 }
 function changeColumnType($table, $column_name, $new_column_data_type, $new_column_definition) {
-	global $database, $mosConfig_dbprefix;
+	$database =& JFactory::getDBO();
+
 	$database->setQuery( 'DESCRIBE #__mt_' . $table . ' ' . $column_name );
-	$database->loadObject( $tmp );
+	$tmp = $database->loadObject();
 	if( strtolower($tmp->Type) <> strtolower($new_column_data_type) ) {
 		$database->setQuery( "ALTER TABLE #__mt_" . $table . " CHANGE `" . $column_name . "` `" . $column_name . "` " . strtoupper($new_column_data_type) . " " . $new_column_definition );
 		if ( $database->query() ) {
@@ -729,13 +693,17 @@ function changeColumnType($table, $column_name, $new_column_data_type, $new_colu
 }
 
 function addIndex($table, $index_name, $fields) {
-	global $database, $mosConfig_dbprefix;
+	global $mainframe;
+	
+	$database =& JFactory::getDBO();
+	$db_prefix = $mainframe->getCfg('dbprefix');
+
 	$database->setQuery( 'SHOW INDEX FROM #__mt_' . $table . ' WHERE Key_name = "' . $index_name . '" ' );
 	$tmp = $database->loadObjectList();
 	if( count($tmp) == 0 && count($fields) > 0 ) {
 		$database->setQuery( 'ALTER TABLE #__mt_' . $table . ' ADD INDEX `' . $index_name . '` ( `' . implode('` , `',$fields) . '` )' );
 		if ( $database->query() ) {
-			printRow('Added index:' . $index_name . ' to table: ' . $mosConfig_dbprefix . 'mt_' . $table );
+			printRow('Added index:' . $index_name . ' to table: ' . $db_prefix . 'mt_' . $table );
 			return true;
 		} else {
 			printRow($database->getErrorMsg(). -1);
@@ -747,7 +715,11 @@ function addIndex($table, $index_name, $fields) {
 	}
 }
 function addColumn($table, $column_name, $column_info='', $after='') {
-	global $database, $mosConfig_dbprefix;
+	global $mainframe;
+	
+	$database =& JFactory::getDBO();
+	$db_prefix = $mainframe->getCfg('dbprefix');
+
 	$database->setQuery( 'SHOW COLUMNS FROM #__mt_' . $table . ' LIKE "' . $column_name . '"' );
 	$tmp = $database->loadResult();
 	if ( $tmp == $column_name ) {
@@ -760,7 +732,7 @@ function addColumn($table, $column_name, $column_info='', $after='') {
 		}
 		$database->setQuery( $sql );
 		if( $database->query() ) {
-			printRow('Added column:' . $column_name . ' to table: ' . $mosConfig_dbprefix . 'mt_' . $table );
+			printRow('Added column:' . $column_name . ' to table: ' . $db_prefix . 'mt_' . $table );
 			return true;
 		} else {
 			printRow($database->getErrorMsg(). -1);

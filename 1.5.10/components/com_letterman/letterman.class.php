@@ -73,7 +73,7 @@ class mosLetterman extends mosDBTable {
 			if( empty($lm_params->_params->newsletter_css)) {
 				$database->setQuery('SELECT template FROM `#__templates_menu` WHERE client_id=0 ORDER BY menuid ASC LIMIT 0, 1');
 				$cur_template = $database->loadResult();
-				$template_css_file = $mosConfig_absolute_path."/templates/$cur_template/css/template_css.css";
+				$template_css_file = $mosConfig_absolute_path."/templates/$cur_template/css/newsletter.css";
 				if( file_exists($template_css_file)) {
 					
 					$template_css = str_replace( "\r\n", "\n", file_get_contents( $template_css_file ));
@@ -279,12 +279,14 @@ function lm_sendMail() {
 	}
 
 	// Get newsletter
-	$database->setQuery( "SELECT subject, message, html_message FROM `#__letterman` WHERE id='$id'");
+	$database->setQuery( "SELECT subject, message, html_message, created  FROM `#__letterman` WHERE id='$id'");
 	$database->loadObject( $newsletter );
 
 	// Build e-mail message format
 	$subject = $newsletter->subject;
 	$message = $newsletter->message;
+	$created = substr( $newsletter->created ,0, 10 );
+
 	$unsub_link = sefRelToAbs("index.php?option=$option&task=unsubscribe&Itemid=$Itemid");
 	if( substr( $unsub_link, 0, 4 ) != "http" ) {
 		$unsub_link = $mosConfig_live_site ."/". $unsub_link;
@@ -301,21 +303,84 @@ function lm_sendMail() {
 	
 	// Prevent HTML tags in the text message
 	$footer_text = strip_tags( $footer_text );
-
+	$LEW= LM_EMPOWER_WAY; 
+	$LAN= LM_ABOUTNEWSLETTER;
+	$LPM= LM_PUBLISH_MODE;
+	$LSN= LM_SUBSCRIBEORNOT;
+	$LES= LM_EDITORIAL_STAFF;
+	$LS= LM_SUGGESTION;
+/** 加入HTML刊頭及刊尾　by ally 2007/06/12 **/
 	$html_message = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">
-					  <html>
-						  <head>
-							  <title>$mosConfig_sitename :: $subject</title>
-							  <base href=\"$mosConfig_live_site/\" />
-							  <style type=\"text/css\">
-							  ".strip_tags( $lm_params->get('newsletter_css'))."
-							  </style>
-						  </head>
-						  <body>"
+<html>
+  <head>
+	  <title>$mosConfig_sitename :: $subject</title>
+	  <style type=\"text/css\">
+	  ".strip_tags( $lm_params->get('newsletter_css'))."
+	  </style>
+      <meta http-equiv=\"Content-Type\" content=\"text/html; charset=BIG5\" />
+  </head>
+<body BGCOLOR=#FFFFFF >
+<table width=\"631\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" align=\"center\" background=\"http://www.openfoundry.org/images/newsletter/bg.gif\">
+  <!--DWLayoutTable-->
+  <tr> 
+    <td height=\"134\" colspan=\"3\" valign=\"top\">
+<table width=\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" background=\"http://www.openfoundry.org/images/newsletter/banner.gif\" >
+        <!--DWLayoutTable-->
+        <tr> 
+          <td height=\"91\" colspan=\"3\" valign=\"top\"><a href=\"http://www.openfoundry.org/index.php?option=com_letterman&Itemid=144\"><img src=\"http://www.openfoundry.org/images/newsletter/banner1.gif\" alt=\"Image\" border=\"0\" /></a></td>
+
+	</tr>
+        <tr>
+          <td height=\"22\">&nbsp;</td>
+          <td align=\"right\" valign=\"bottom\" style=\"font-size:12px;color:#FD6003;\" ><b>$subject</b></td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr> 
+          <td height=\"21\"></td>
+          <td align=\"right\" valign=\"bottom\"><font size=\"2\"> $created</font></td>
+          <td></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td width=\"19\" height=\"16\">&nbsp;</td>
+    <td width=\"593\">&nbsp;</td>
+    <td width=\"19\">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td height=\"104\"></td>
+    <td valign=\"top\">
+"
 							. $newsletter->html_message
-							. "<p>$footer_html</p>" 
-							. '<p style="font-size:8px;color:grey;">'._CMN_EMAIL.': [EMAIL]</p>'
-							. "</body>
+							. "
+  <tr> 
+    <td height=\"67\"></td>
+    <td>&nbsp;</td>
+    <td></td>
+  </tr>
+<tr> 
+    <td height=\"22\"></td>
+    <td valign=\"top\">
+	<table width=i\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+        <!--DWLayoutTable-->
+        <tr> 
+          <td width=\"593\" height=\"22\" align=\"center\" valign=\"middle\"> <font color=\"006AE1\" size=\"2\"><strong><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=143#nl01\">$LAN</a></strong></font><font size=\"2\"><strong><font size=\"3\"> 
+            &nbsp;&nbsp;|&nbsp;&nbsp;</font></strong> <strong><font color=\"006AE1\"><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=143#nl02\">$LPM</a></font><font siz\"3\"> 
+            &nbsp;&nbsp;|&nbsp;&nbsp;</font></strong> <strong><font color=\"006AE1\"><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=143#nl03\">$LEW</a></font><font col=\"#000000\" size=\"3\"> 
+            &nbsp;&nbsp;|&nbsp;&nbsp;</font><font color=\"006AE1\"> <a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=1052&Itemid=143\">
+$LSN</a></font><font size=\"3\"> &nbsp;&nbsp;| &nbsp;&nbsp;</font><font color=\"006AE1\"><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=143#nl04\">$LES</a></font><font s=\"3\"> 
+            &nbsp;&nbsp;|&nbsp;&nbsp;</font></strong> <strong><font color=\"006AE1\"><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=143#nl05\">$LS</a></font></strong></font></td>
+        </tr>
+      </table>
+    </td>
+    <td></td>
+  </tr>
+  <tr> 
+    <td height=\"19\" valign=\"top\"><img src=\"http://www.openfoundry.org/images/newsletter/leftdown.gif\" width=\"19\" height=\"19\"></td>
+    <td  background=\"http://www.openfoundry.org/images/newsletter/down-bg.gif\"><img src=\"http://www.openfoundry.org/images/newsletter/down.gif\" width=\"585\" height=\"19\"></td>
+    <td valign=\"top\"><img src=\"http://www.openfoundry.org/images/newsletter/rightdown.gif\" width=\"19\" height=\"19\"></td>
+  </tr>
+</table></body>
 					  </html>";
 	
 	$html_message = str_replace( "../../..", $mosConfig_live_site, $html_message );
@@ -327,16 +392,14 @@ function lm_sendMail() {
 	// Patch to get correct Line Endings
 	switch( substr( strtoupper( PHP_OS ), 0, 3 ) ) {
 		case "WIN":
-			$mymail->LE = "\r\n";
-			break;
+		$mail->LE = "\r\n";
+		break;
 		case "MAC": // fallthrough
 		case "DAR": // Does PHP_OS return 'Macintosh' or 'Darwin' ?
-			$mymail->LE = "\r";
+		$mail->LE = "\r";
 		default: // change nothing
-			break;
+		break;
 	}
-	
-	$mymail->Encoding = 'base64';
 	
 	$mymail->AddReplyTo( $replyto, $mosConfig_fromname );
 	
@@ -430,7 +493,17 @@ function lm_sendMail() {
 		
 		// Set alternative Body with Text Message
 		$mymail->AltBody = str_replace( "[NAME]", $name, $message . $footer_text );
-
+         
+        //add by Eddy 20060720
+        if($mosConfig_lang=="traditional_chinese"){
+            $mymail->Body=mb_convert_encoding($mymail->Body, "BIG5","UTF-8");
+            $mymail->AltBody=mb_convert_encoding($mymail->AltBody,"BIG5","UTF-8");
+        }else if($mosConfig_lang=="simplified_chinese"){
+        	 $mymail->Body=mb_convert_encoding($mymail->Body, "GB2312","UTF-8");
+            $mymail->AltBody=mb_convert_encoding($mymail->AltBody,"GB2312","UTF-8");
+        }
+		//end add
+		
 		$mymail->ClearAddresses();
 		$mymail->AddAddress( $row->email, $row->name );
 

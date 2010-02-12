@@ -1,68 +1,78 @@
 <?php
 /**
-* Mosets Tree 
-*
-* @package Mosets Tree 2.00
-* @copyright (C) 2005-2008 Mosets Consulting
-* @url http://www.mosets.com/
-* @author Lee Cher Yeong <mtree@mosets.com>
-**/
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+ * @version		$Id: mtree.php 711 2009-05-25 14:35:34Z CY $
+ * @package		Mosets Tree
+ * @copyright	(C) 2005-2009 Mosets Consulting. All rights reserved.
+ * @license		GNU General Public License
+ * @author		Lee Cher Yeong <mtree@mosets.com>
+ * @url			http://www.mosets.com/tree/
+ */
 
-if( $GLOBALS['_VERSION']->RELEASE == '1.0' ) {
-	global $$mosConfig_absolute_path;
-	require( $mosConfig_absolute_path . '/components/com_mtree/init.php');
-	require_once( $mtconf->getjconf('absolute_path').'/administrator/components/com_mtree/admin.mtree.class.php');
-	require_once( $mtconf->getjconf('absolute_path').'/components/com_mtree/mtree.class.php');
-	require_once( $mtconf->getjconf('absolute_path').'/components/com_mtree/mtree.tools.php');
-} elseif( $GLOBALS['_VERSION']->RELEASE == '1.5' ) {
-	require_once(  JPATH_COMPONENT.DS.'init.php' );
-	global $mtconf;
-	$database =& JFactory::getDBO();
-	$mtconf = new mtConfig($database);
-	global $no_html;
-	$no_html = intval( mosGetParam( $_REQUEST, 'no_html', 0 ) );
-	global $task, $link_id, $cat_id, $user_id, $img_id, $start, $limitstart;
-	require_once( JPATH_ADMINISTRATOR.DS.'components' .DS.'com_mtree'.DS.'admin.mtree.class.php' );
-	require_once( JPATH_COMPONENT.DS.'mtree.class.php' );
-	require_once( JPATH_COMPONENT.DS.'mtree.tools.php' );
-	DEFINE( '_NOT_EXIST', JText::_( 'The page you are trying to access does not exist.<br />Please select a page from the Main Menu.' ) );
-}
+defined('_JEXEC') or die('Restricted access');
+
+global $task, $link_id, $cat_id, $user_id, $img_id, $start, $limitstart, $mtconf;
+
+require_once(  JPATH_COMPONENT.DS.'init.php' );
+$database 	=& JFactory::getDBO();
+$my			=& JFactory::getUser();
+$document	=& JFactory::getDocument();
+
+require_once( JPATH_ADMINISTRATOR.DS.'components' .DS.'com_mtree'.DS.'admin.mtree.class.php' );
+require_once( JPATH_COMPONENT.DS.'mtree.class.php' );
+require_once( JPATH_COMPONENT.DS.'mtree.tools.php' );
+DEFINE( '_NOT_EXIST', JText::_( 'The page you are trying to access does not exist.<br />Please select a page from the Main Menu.' ) );
 
 # Caches
 global $cache_cat_names, $cache_paths, $cache_lft_rgt;
 $cache_cat_names = array();
 $cache_paths = array();
 $cache_lft_rgt = array();
+$cache =& JFactory::getCache('com_mtree');
 
 # Savant Class
-require_once( $mtconf->getjconf('absolute_path').'/components/com_mtree/Savant2.php');
+require_once( JPATH_COMPONENT_SITE.DS.'Savant2.php');
 
-$task = trim( mosGetParam( $_REQUEST, 'task', '' ) );
-$link_id = intval( mosGetParam( $_REQUEST, 'link_id', 0 ) );
-$cat_id = intval( mosGetParam( $_REQUEST, 'cat_id', 0 ) );
-$user_id = intval( mosGetParam( $_REQUEST, 'user_id', 0 ) );
-$img_id = intval( mosGetParam( $_REQUEST, 'img_id', 0 ) );
-$alpha = substr(trim( mosGetParam( $_REQUEST, 'alpha', '' ) ), 0, 3);
-$limitstart = intval( mosGetParam( $_REQUEST, 'limitstart', 0 ) );
+$task		= JRequest::getCmd('task', '');
+$link_id	= JRequest::getInt('link_id', 0);
+$cat_id		= JRequest::getInt('cat_id', 0);
+$user_id	= JRequest::getInt('user_id', 0);
+$img_id		= JRequest::getInt('img_id', 0);
+$cf_id 		= JRequest::getInt( 'cf_id'		,0 	);
+$alpha		= JString::substr(JString::trim(JRequest::getVar('alpha', '')), 0, 3);
+$limitstart = JRequest::getInt('limitstart', 0);
 
-$now = date( 'Y-m-d H:i:s', time() + $mtconf->getjconf('offset') * 60 * 60 );
+# Itemid
+global $Itemid;
+$menu = &JSite::getMenu();
+$items	= $menu->getItems('link', 'index.php?option=com_mtree');
+if(isset($items[0])) {
+	$Itemid = $items[0]->id;
+}
+
+$jdate 		= JFactory::getDate();
+$now		= $jdate->toMySQL();
 
 global $savantConf;
 $savantConf = array (
-		'template_path' => $mtconf->getjconf('absolute_path')."/components/com_mtree/templates/" . $mtconf->get('template') . "/",
-		'plugin_path' => $mtconf->getjconf('absolute_path').'/components/com_mtree/Savant2/',
-		'filter_path' => $mtconf->getjconf('absolute_path').'/components/com_mtree/Savant2/'
+		'template_path' => JPATH_SITE.DS.'components'.DS.'com_mtree'.DS.'templates'.DS.$mtconf->get('template').DS,
+		'plugin_path' => JPATH_SITE.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS,
+		'filter_path' => JPATH_SITE.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS
 );
-
-# cache activation
-global $cache;
-$cache = mosCache::getCache( 'com_mtree' );
 
 mtAppendPathWay( $option, $task, $cat_id, $link_id, $img_id );
 
 switch ($task) {
 	
+	case "att_download":
+		$field_type	= JRequest::getCmd( 'ft'		,''	);
+		$ordering	= JRequest::getInt( 'o'			,0 	);
+		$filename 	= JRequest::getVar( 'file'		,''	);
+		$link_id 	= JRequest::getInt( 'link_id'	,0 	);
+		$img_id 	= JRequest::getInt( 'img_id'	,0 	);
+		$size 		= JRequest::getInt( 'size'		,0	);
+		att_download( $field_type, $ordering, $filename, $link_id, $cf_id, $img_id, $size );
+		break;
+		
 	case "viewimage":
 		viewimage( $img_id, $option );
 		break;
@@ -72,27 +82,35 @@ switch ($task) {
 		break;
 
 	case "viewlink":
-		viewlink( $link_id, $limitstart, $option );
+		viewlink( $link_id, $my, $limitstart, $option );
 		break;
 
 	case "print":
-		$cache->call( 'printlink', $link_id, $option );
+		printlink( $link_id, $option );
 		break;
 
 	/* RSS feed */
 	case 'rss':
-		$type = trim( mosGetParam( $_REQUEST, 'type', 'new' ) );
-		if( ($type == 'new' && $mtconf->get('show_listnewrss') == 0) || ($type == 'type' && $mtconf->get('show_listupdatedrss') ==  0) ) {
-			echo _NOT_EXISTS;
+		$type = JRequest::getCmd('type', 'new');
+		$token = JRequest::getCmd('token', '');
+		$rss_secret_token = $mtconf->get( 'rss_secret_token');
+		if( 
+			($type == 'new' && $mtconf->get('show_listnewrss') == 0) 
+			|| 
+			($type == 'type' && $mtconf->get('show_listupdatedrss') ==  0) 
+		) {
+			echo JText::_("ALERTNOTAUTH");
+		} elseif( !empty($rss_secret_token) && $token != $rss_secret_token ) {
+			echo JText::_("ALERTNOTAUTH");
 		} else {
-			require_once( $mtconf->getjconf('absolute_path').'/components/com_mtree/rss.php');
+			require_once( JPATH_SITE.DS.'components'.DS.'com_mtree'.DS.'rss.php');
 			rss( $option, $type, $cat_id );
 		}
 		break;
 
 	/* Visit a URL */
 	case "visit":
-		visit( $link_id );
+		visit( $link_id, $cf_id );
 		break;
 
 	/* Reviews */
@@ -100,7 +118,6 @@ switch ($task) {
 		writereview( $link_id, $option );
 		break;
 	case "addreview":
-		mosCache::cleanCache( 'com_mtree' );
 		addreview( $link_id, $option );
 		break;
 
@@ -109,40 +126,39 @@ switch ($task) {
 		rate( $link_id, $option );
 		break;
 	case "addrating":
-		mosCache::cleanCache( 'com_mtree' );
 		addrating( $link_id, $option );
 		break;
 	
 	/* Favourite */
 	case "fav":
-		$action = intval( mosGetParam( $_REQUEST, 'action', 1 ) );
+		$action = JRequest::getInt('action', 1);
 		fav( $link_id, $action, $option );
 		break;
 
 	/* Vote review */
 	case 'votereview':
-		$rev_vote = intval( mosGetParam( $_REQUEST, 'vote', 0 ) );
-		$rev_id = intval( mosGetParam( $_REQUEST, 'rev_id', 0 ) );
+		$rev_vote	= JRequest::getInt('vote', 0);
+		$rev_id		= JRequest::getInt('rev_id', 0);
 		votereview( $rev_id, $rev_vote, $option );
 		break;
 
 	/* Report review */
 	case "reportreview":
-		$rev_id = intval( mosGetParam( $_REQUEST, 'rev_id', 0 ) );
+		$rev_id	= JRequest::getInt('rev_id', 0);
 		reportreview( $rev_id, $option );
 		break;
 	case "send_reportreview":
-		$rev_id = intval( mosGetParam( $_REQUEST, 'rev_id', 0 ) );
+		$rev_id	= JRequest::getInt('rev_id', 0);
 		send_reportreview( $rev_id, $option );
 		break;
 
 	/* Reply review */
 	case 'replyreview':
-		$rev_id = intval( mosGetParam( $_REQUEST, 'rev_id', 0 ) );
+		$rev_id	= JRequest::getInt('rev_id', 0);
 		replyreview( $rev_id, $option );
 		break;
 	case 'send_replyreview':
-		$rev_id = intval( mosGetParam( $_REQUEST, 'rev_id', 0 ) );
+		$rev_id	= JRequest::getInt('rev_id', 0);
 		send_replyreview( $rev_id, $option );
 		break;
 
@@ -186,6 +202,7 @@ switch ($task) {
 		editlisting( $link_id, $option );
 		break;
 	case "savelisting":
+		require_once( JPATH_COMPONENT_SITE.DS.'includes'.DS.'diff.php');
 		savelisting( $option );
 		break;
 
@@ -202,14 +219,12 @@ switch ($task) {
 		deletelisting( $link_id, $option );
 		break;
 	case "confirmdelete":
-		mosCache::cleanCache( 'com_mtree' );
 		confirmdelete( $link_id, $option );
 		break;
 
 	/* My Page */
 	case "mypage":
-		//mypage( $limitstart, $option );
-		global $my; viewowner( $my->id, $limitstart, $option );
+		viewowner( $my->id, $limitstart, $option );
 		break;
 
 	/* All listing from this owner */
@@ -241,13 +256,16 @@ switch ($task) {
 	case "listupdated":
 	case "listfeatured":
 	case "listfavourite":
-		require_once( $mtconf->getjconf('absolute_path').'/components/com_mtree/listlisting.php');
-		listlisting( $cat_id, $option, $task, $limitstart );
+		require_once( JPATH_SITE.'/components/com_mtree/listlisting.php');
+		listlisting( $cat_id, $option, $my, $task, $limitstart );
 		break;
 
 	/* Search */
 	case "search":
 		search( $option );
+		break;
+	case "searchby":
+		searchby( $option );
 		break;
 	case "advsearch":
 		advsearch( $option );
@@ -264,40 +282,44 @@ switch ($task) {
 	/* Default Main Index */
 	case "listcats":
 	default:
-		showTree( $cat_id, $limitstart, $option );
+		showTree( $cat_id, $limitstart, $option, $my );
 		break;
 }
 
 // Append CSS file to Head
-if ( file_exists( $savantConf['template_path'] . '/template.css' ) ) {
-	$mainframe->addCustomHeadTag( "<link href=\"" . str_replace($mtconf->getjconf('absolute_path'),$mtconf->getjconf('live_site'),$savantConf['template_path'] . (defined('JVERSION')?'':'/') . 'template.css') . "\" rel=\"stylesheet\" type=\"text/css\"/>" );
-} elseif ( file_exists( $mtconf->getjconf('absolute_path') . '/components/com_mtree/templates/' . $mtconf->get('template') . '/template.css' ) ) {
-	$mainframe->addCustomHeadTag( "<link href=\"". $mtconf->getjconf('live_site') ."/components/com_mtree/templates/".$mtconf->get('template')."/template.css\" rel=\"stylesheet\" type=\"text/css\"/>" );
-} else {
-	$mainframe->addCustomHeadTag( "<link href=\"". $mtconf->getjconf('live_site') ."/components/com_mtree/templates/m2/template.css\" rel=\"stylesheet\" type=\"text/css\"/>" );
+if( $mtconf->get('load_css') && $document->getType() == 'html')
+{
+	if ( file_exists( $savantConf['template_path'] . 'template.css' ) ) {
+		$document->addCustomTag("<link href=\"" . str_replace(DS,'/',str_replace($mtconf->getjconf('absolute_path'),$mtconf->getjconf('live_site'),$savantConf['template_path'] . 'template.css')) . "\" rel=\"stylesheet\" type=\"text/css\"/>");
+	} elseif ( file_exists( $mtconf->getjconf('absolute_path') . '/components/com_mtree/templates/' . $mtconf->get('template') . '/template.css' ) ) {
+		$document->addCustomTag("<link href=\"". $mtconf->getjconf('live_site') ."/components/com_mtree/templates/".$mtconf->get('template')."/template.css\" rel=\"stylesheet\" type=\"text/css\"/>");
+	} else {
+		$document->addCustomTag("<link href=\"". $mtconf->getjconf('live_site') ."/components/com_mtree/templates/m2/template.css\" rel=\"stylesheet\" type=\"text/css\"/>");
+	}
 }
 
 function getCats( $parent_cat_id ) {
-	global $database, $_MT_LANG;
+
+	$database =& JFactory::getDBO();
 
 	# Get pathway
 	$mtPathWay = new mtPathWay($parent_cat_id);
 	$return = $mtPathWay->printPathWayFromCat_withCurrentCat($parent_cat_id,0);
 	$return .= "\n";
 	
-	$database->setQuery( 'SELECT cat_id, cat_name FROM #__mt_cats WHERE cat_parent = '. $parent_cat_id . ' && cat_published = 1 && cat_approved = 1 ORDER BY cat_name ASC' );
+	$database->setQuery( 'SELECT cat_id, cat_name FROM #__mt_cats WHERE cat_parent = ' . $database->quote($parent_cat_id) . ' && cat_published = 1 && cat_approved = 1 ORDER BY cat_name ASC' );
 	$cats = $database->loadObjectList();
 	if($parent_cat_id > 0) {
-		$database->setQuery("SELECT cat_parent FROM #__mt_cats WHERE cat_id = '$parent_cat_id' && cat_published = 1 && cat_approved = 1 LIMIT 1");
+		$database->setQuery( 'SELECT cat_parent FROM #__mt_cats WHERE cat_id = ' . $database->quote($parent_cat_id) . ' && cat_published = 1 && cat_approved = 1 LIMIT 1');
 		$browse_cat_parent = $database->loadResult();
-		$return .= $browse_cat_parent . "|" . $_MT_LANG->ARROW_BACK;
-		if(count($cats)>0) {
+		$return .= $browse_cat_parent . "|" . JText::_( 'Arrow back' );
+		if(!empty($cats)) {
 			$return .= "\n";
 		}
 	} else {
 		//
 	}
-	if(count($cats)>0) {
+	if(!empty($cats)) {
 		foreach( $cats as $key => $cat )
 		{
 			$return .= $cat->cat_id . '|' . $cat->cat_name;
@@ -310,102 +332,148 @@ function getCats( $parent_cat_id ) {
 	return true;
 }
 
-function showTree( $cat_id, $limitstart, $option ) {
-	global $database, $mainframe, $cache, $_MT_LANG, $mtconf;
+function showTree( $cat_id, $limitstart, $option, $my ) {
+	global $mtconf;
 
-	$database->setQuery( "SELECT cat.cat_id, cat_name, cat_desc, cat_template, cat_image, cat_allow_submission, metakey, metadesc, cat_published, cat_usemainindex, cat_show_listings FROM #__mt_cats AS cat"
-		.	"\n WHERE cat.cat_id='".$cat_id."' AND cat_published='1' LIMIT 1" );
-	$database->loadObject( $cat );
+	$database	=& JFactory::getDBO();
+	$document	=& JFactory::getDocument();
+	
+	$database->setQuery( 'SELECT * FROM #__mt_cats '
+		.	'WHERE cat_id=' . $database->quote($cat_id) . ' AND cat_published = 1 LIMIT 1' );
+	$cat = $database->loadObject();
 
 	if ( $cat ) {
 		# Set Page Title
 		if ( $cat_id == 0 ) {
-			$mainframe->setPageTitle( $_MT_LANG->ROOT );
+			$document->setTitle(JText::_( 'Root' ));
 			$cat->cat_allow_submission = $mtconf->get('allow_listings_submission_in_root');
+		} elseif( !empty($cat->title) ) {
+			$document->setTitle($cat->title);
 		} else {
-			$mainframe->setPageTitle( html_entity_decode_utf8($cat->cat_name) );
+			$document->setTitle($cat->cat_name);
 		}
 
 		# Add META tags
 		if ($mtconf->getjconf('MetaTitle')=='1') {
-			$mainframe->addMetaTag( 'title' , $cat->cat_name );
+			$document->setMetadata( 'title' , htmlspecialchars($cat->cat_name) );
 		}
 
-		if ($cat->metadesc <> '') $mainframe->prependMetaTag( 'description', $cat->metadesc );
-		if ($cat->metakey <> '') $mainframe->prependMetaTag( 'keywords', $cat->metakey );
+		$rss_secret_token = $mtconf->get( 'rss_secret_token');
+		if( $mtconf->get( 'show_category_rss' ) && empty($rss_secret_token) ) {
+			$document->addCustomTag( '<link rel="alternate" type="application/rss+xml" title="' . $mtconf->getjconf('sitename') . ' - ' . $cat->cat_name . '" href="index.php?option=com_mtree&task=rss&type=new&cat_id=' . $cat_id . '" />' );
+		}
+
+		if ($cat->metadesc <> '') {
+			$document->setDescription( htmlspecialchars($cat->metadesc) );
+		}
+		
+		if ($cat->metakey <> '') {
+			$document->setMetaData('keywords', htmlspecialchars($cat->metakey));
+		}
 	}
 
-	$cache->call( 'showTree_cache', $cat, $limitstart, $option );
+	$cache =& JFactory::getCache('com_mtree');
+	$cache->call( 'showTree_cache', $cat, $limitstart, $option, $my );
 }
 
-function showTree_cache( $cat, $limitstart, $option ) {
-	global $database, $_MT_LANG, $Itemid, $savantConf, $mtconf, $_MAMBOTS;
+function showTree_cache( $cat, $limitstart, $option, $my ) {
+	global $Itemid, $savantConf, $mtconf;
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	$database	=& JFactory::getDBO();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
+	$nullDate	= $database->getNullDate();
+
 	if ( empty($cat->cat_id) ) {
 		$cat_id = 0;
 	} else {
 		$cat_id = $cat->cat_id;
 	}
 
-	if ( is_object($cat) && $cat->cat_published == 0 && $cat_id > 0 ) {
+	if ( isset($cat->cat_published) && $cat->cat_published == 0 && $cat_id > 0 ) {
 		
 		echo _NOT_EXIST;
 
 	} else {
 
 		# Page Navigation
-		$database->setQuery("SELECT COUNT(*) FROM (#__mt_links AS l, #__mt_cl AS cl) WHERE l.link_published='1' AND l.link_approved='1' && cl.cat_id ='".$cat_id."' "
-			. "\n AND ( l.publish_up = '0000-00-00 00:00:00' OR l.publish_up <= '$now'  ) "
-			. "\n AND ( l.publish_down = '0000-00-00 00:00:00' OR l.publish_down >= '$now' ) "
-			.	"\n AND cl.link_id = l.link_id "
+		$database->setQuery( 'SELECT COUNT(*) FROM (#__mt_links AS l, #__mt_cl AS cl) WHERE l.link_published = 1 AND l.link_approved = 1 && cl.cat_id = ' . $database->quote($cat_id)
+			. "\n AND ( l.publish_up = ".$database->Quote($nullDate)." OR l.publish_up <= '$now'  ) "
+			. "\n AND ( l.publish_down = ".$database->Quote($nullDate)." OR l.publish_down >= '$now' ) "
+			. "\n AND cl.link_id = l.link_id "
 		);
 		$total_links = $database->loadResult();
 
-		require_once($mtconf->getjconf('absolute_path')."/includes/pageNavigation.php");
-		$pageNav = new mosPageNav( $total_links, $limitstart, $mtconf->get('fe_num_of_links') );
+		jimport('joomla.html.pagination');
+		$pageNav = new JPagination($total_links, $limitstart, $mtconf->get('fe_num_of_links'));
 
 		# Retrieve categories
-		$sql = "SELECT cat.* FROM #__mt_cats AS cat ";
-		$sql .= "\nWHERE cat_published=1 && cat_approved=1 && cat_parent='".$cat_id."' ";
-		if ( !$mtconf->get('display_empty_cat') ) { $sql .= " && ( cat_cats > 0 || cat_links > 0 ) ";	}
-		$sql .= "\nORDER BY " . $mtconf->get('first_cat_order1') . " " . $mtconf->get('first_cat_order2') .', ' . $mtconf->get('second_cat_order1') . ' ' . $mtconf->get('second_cat_order2');
+		$sql = 'SELECT cat.* FROM #__mt_cats AS cat ';
+		$sql .= 'WHERE cat_published=1 && cat_approved=1 && cat_parent= ' . $database->quote($cat_id);
+
+		if ( !$mtconf->get('display_empty_cat') ) { $sql .= ' && ( cat_cats > 0 || cat_links > 0 ) ';	}
+
+		if( $mtconf->get('first_cat_order1') != '' )
+		{
+			$sql .= ' ORDER BY ' . $mtconf->get('first_cat_order1') . ' ' . $mtconf->get('first_cat_order2');
+			if( $mtconf->get('second_cat_order1') != '' )
+			{
+				$sql .= ', ' . $mtconf->get('second_cat_order1') . ' ' . $mtconf->get('second_cat_order2');
+			}
+		}
 
 		$database->setQuery( $sql );
 		$cats = $database->loadObjectList("cat_id");
 
 		$cat_desc = '';
 		$related_categories = null;
-
+		$cat_ids = array();
+		
 		foreach ( $cats AS $c ) {
 			$cat_ids[] = $c->cat_id;
 		}
 
+		$sub_cats = array();
+		
 		# Only shows sub-cat if this is a root category
 		if ( ($cat_id == 0 || $cat->cat_usemainindex == 1) && $mtconf->getTemParam('numOfSubcatsToDisplay',3) != '0') {
 			# Get all sub-cats
 			$sql = "SELECT cat_id, cat_name, cat_cats, cat_links, cat_parent FROM #__mt_cats WHERE cat_parent IN (".implode(',',$cat_ids).") && cat_published='1' && cat_approved='1' ";
-			if ( !$mtconf->get('display_empty_cat') ) { $sql .= " && ( cat_cats > 0 || cat_links > 0 ) ";	}
-			$sql .= "\nORDER BY cat_featured DESC, " . $mtconf->get('first_cat_order1') . " " . $mtconf->get('first_cat_order2') . ', ' . $mtconf->get('second_cat_order1') . ' ' . $mtconf->get('second_cat_order2');
-			$database->setQuery( $sql );
-			$sub_cats_tmp = $database->loadObjectList();
 
-			foreach($sub_cats_tmp AS $sub_cat) {
-				if( isset($sub_cats[$sub_cat->cat_parent]) ) {
-					if( $mtconf->getTemParam('numOfSubcatsToDisplay',3) > 0 && count($sub_cats[$sub_cat->cat_parent]) < $mtconf->getTemParam('numOfSubcatsToDisplay',3) ) {
-						array_push($sub_cats[$sub_cat->cat_parent],$sub_cat);
-					}
-				} else {
-					$sub_cats[$sub_cat->cat_parent] = array($sub_cat);
-				}
-				if(!isset($sub_cats_total[$sub_cat->cat_parent])) {
-					$total_sub_cats = $cats[$sub_cat->cat_parent]->cat_cats;
-					$sub_cats_total[$sub_cat->cat_parent] = (($total_sub_cats) ? $total_sub_cats : 0 );
+			if ( !$mtconf->get('display_empty_cat') ) { $sql .= " && ( cat_cats > 0 || cat_links > 0 ) ";	}
+			
+			if( $mtconf->get('first_cat_order1') != '' )
+			{
+				$sql .= "\nORDER BY cat_featured DESC, " . $mtconf->get('first_cat_order1') . ' ' . $mtconf->get('first_cat_order2');
+				if( $mtconf->get('second_cat_order1') != '' )
+				{
+					$sql .= ', ' . $mtconf->get('second_cat_order1') . ' ' . $mtconf->get('second_cat_order2');
 				}
 			}
-			foreach($cat_ids AS $c) {
-				if(!array_key_exists($c,$sub_cats)) {
-					$sub_cats[$c] = array();
+			
+			$database->setQuery( $sql );
+			$sub_cats_tmp = $database->loadObjectList();
+			
+			if(!empty($sub_cats_tmp)) {
+				foreach($sub_cats_tmp AS $sub_cat) {
+					if( isset($sub_cats[$sub_cat->cat_parent]) ) {
+						if( $mtconf->getTemParam('numOfSubcatsToDisplay',3) > 0 && count($sub_cats[$sub_cat->cat_parent]) < $mtconf->getTemParam('numOfSubcatsToDisplay',3) ) {
+							array_push($sub_cats[$sub_cat->cat_parent],$sub_cat);
+						}
+					} else {
+						$sub_cats[$sub_cat->cat_parent] = array($sub_cat);
+					}
+					if(!isset($sub_cats_total[$sub_cat->cat_parent])) {
+						$total_sub_cats = $cats[$sub_cat->cat_parent]->cat_cats;
+						$sub_cats_total[$sub_cat->cat_parent] = (($total_sub_cats) ? $total_sub_cats : 0 );
+					}
+				}
+			}
+			if (isset($sub_cats)) {
+				foreach($cat_ids AS $c) {
+					if(!array_key_exists($c,$sub_cats)) {
+						$sub_cats[$c] = array();
+					}
 				}
 			}
 			unset($sub_cats_tmp);
@@ -413,9 +481,9 @@ function showTree_cache( $cat, $limitstart, $option ) {
 		} else {
 
 			# Get related categories
-			$database->setQuery( "SELECT r.rel_id FROM #__mt_relcats AS r "
-				.	"LEFT JOIN #__mt_cats AS c ON c.cat_id = r.rel_id "
-				.	"WHERE r.cat_id='".$cat_id."' AND c.cat_published = '1'" );
+			$database->setQuery( 'SELECT r.rel_id FROM #__mt_relcats AS r '
+				.	'LEFT JOIN #__mt_cats AS c ON c.cat_id = r.rel_id '
+				.	'WHERE r.cat_id = ' . $database->quote($cat_id) . ' AND c.cat_published = 1' );
 			$related_categories = $database->loadResultArray();
 
 		}
@@ -426,8 +494,8 @@ function showTree_cache( $cat, $limitstart, $option ) {
 			$sql = "SELECT l.link_id, link_name, cl.cat_id FROM #__mt_links AS l "
 				.	"\n LEFT JOIN #__mt_cl AS cl ON cl.link_id = l.link_id "
 				.	"\n WHERE link_published='1' && link_approved='1' && cl.cat_id IN (".implode(',',$cat_ids).')'
-				.	"\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-				.	"\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) ";
+				.	"\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+				.	"\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) ";
 			if( $mtconf->get('min_votes_to_show_rating') > 0 && $mtconf->get('first_listing_order1') == 'link_rating' ) {
 				$sql .= "\n ORDER BY link_votes >= " . $mtconf->get('min_votes_to_show_rating') . ' DESC, ' . $mtconf->get('first_listing_order1') . ' ' . $mtconf->get('first_listing_order2') . ', ' . $mtconf->get('second_listing_order1') . ' ' . $mtconf->get('second_listing_order2');
 			} else {
@@ -436,13 +504,15 @@ function showTree_cache( $cat, $limitstart, $option ) {
 
 			$database->setQuery( $sql );
 			$cat_links_tmp = $database->loadObjectList();
-			foreach($cat_links_tmp AS $cat_link) {
-				if(isset($cat_links[$cat_link->cat_id])) {
-					if($mtconf->getTemParam('numOfLinksToDisplay',3) > 0 && count($cat_links[$cat_link->cat_id]) < $mtconf->getTemParam('numOfLinksToDisplay',3)) {
-						array_push($cat_links[$cat_link->cat_id],$cat_link);
+			if(!empty($cat_links_tmp)) {
+				foreach($cat_links_tmp AS $cat_link) {
+					if(isset($cat_links[$cat_link->cat_id])) {
+						if($mtconf->getTemParam('numOfLinksToDisplay',3) > 0 && count($cat_links[$cat_link->cat_id]) < $mtconf->getTemParam('numOfLinksToDisplay',3)) {
+							array_push($cat_links[$cat_link->cat_id],$cat_link);
+						}
+					} else {
+						$cat_links[$cat_link->cat_id] = array($cat_link);
 					}
-				} else {
-					$cat_links[$cat_link->cat_id] = array($cat_link);
 				}
 			}
 			foreach($cat_ids AS $c) {
@@ -459,9 +529,9 @@ function showTree_cache( $cat, $limitstart, $option ) {
 			.	"\n LEFT JOIN #__users AS u ON u.id = l.user_id "
 			.	"\n LEFT JOIN #__mt_cats AS cat ON cl.cat_id = cat.cat_id "
 			.	"\n LEFT JOIN #__mt_images AS img ON img.link_id = l.link_id AND img.ordering = 1 "
-			.	"\n WHERE link_published='1' && link_approved='1' && cl.cat_id='".$cat_id."' "
-			.	"\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-			.	"\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) ";
+			.	"\n WHERE link_published='1' && link_approved='1' && cl.cat_id = " . $database->quote($cat_id) . ' '
+			.	"\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+			.	"\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) ";
 		
 		if( $mtconf->get('min_votes_to_show_rating') > 0 && $mtconf->get('first_listing_order1') == 'link_rating' ) {
 			$sql .= "\n ORDER BY link_votes >= " . $mtconf->get('min_votes_to_show_rating') . ' DESC, ' . $mtconf->get('first_listing_order1') . ' ' . $mtconf->get('first_listing_order2') . ', ' . $mtconf->get('second_listing_order1') . ' ' . $mtconf->get('second_listing_order2');
@@ -489,16 +559,16 @@ function showTree_cache( $cat, $limitstart, $option ) {
 		if( isset($cat_id) )$cat->id = $cat_id;
 		if( isset($cat->cat_name) )$cat->title = $cat->cat_name;
 		if($mtconf->get('cat_parse_plugin')) {
-			$params =& new mosParameters( '' );
-			$_MAMBOTS->loadBotGroup( 'content' );
-			$results = $_MAMBOTS->trigger( 'onPrepareContent', array( &$cat, &$params, 0 ), true );
+			$params =& new JParameter( '' );
+			$dispatcher	=& JDispatcher::getInstance();
+			JPluginHelper::importPlugin('content');
+			$results = $dispatcher->trigger('onPrepareContent', array (& $cat, & $params->params, 0));
 		}
 
 		# Savant Template
 		$savant = new Savant2($savantConf);
 		assignCommonListlinksVar( $savant, $links, $pathWay, $pageNav );
 		$savant->assign('user_addlisting', $mtconf->get('user_addlisting'));
-		// $savant->assign('cat_image_dir', $mtconf->getjconf('live_site').$mtconf->get('cat_image_dir'));
 		
 		if (isset($cat->cat_allow_submission)) {
 			$savant->assign('cat_allow_submission',$cat->cat_allow_submission);
@@ -537,35 +607,211 @@ function showTree_cache( $cat, $limitstart, $option ) {
 }
 
 /***
+* Search By
+*/
+function searchby( $option )
+{
+	global $mtconf, $savantConf;
+	
+	$database 	=& JFactory::getDBO();
+	$uri 		=& JURI::getInstance();
+	$nullDate	= $database->getNullDate();
+
+	$value 		= JRequest::getString( 'value', '' );
+	$cf_id 		= JRequest::getInt( 'cf_id', '' );
+	$limitstart	= JRequest::getInt('limitstart', 0);
+	$search_cat	= JRequest::getInt('cat_id', 0);
+	if( $limitstart < 0 ) $limitstart = 0;
+
+	if( empty($value) ) {
+		JError::raiseError(404, JText::_('Resource Not Found'));
+	}
+
+	$only_subcats_sql = '';
+	if ( $search_cat > 0 ) {
+		$mtCats = new mtCats( $database );
+		$subcats = $mtCats->getSubCats_Recursive( $search_cat, true );
+		$subcats[] = $search_cat;
+		if ( !empty($subcats) ) {
+			$only_subcats_sql = "\n AND c.cat_id IN (" . implode( ", ", $subcats ) . ")";
+		}
+	}
+
+	$jdate = JFactory::getDate();
+	$now = $jdate->toMySQL();
+	
+	# Retrieve information about custom field
+	$database->setQuery( 'SELECT * FROM #__mt_customfields AS cf'
+		. ' WHERE cf.cf_id = ' . $database->Quote($cf_id) . ' AND published = 1 AND tag_search = 1 LIMIT 1');
+	$customfield = $database->loadObject();
+	
+	if( is_null($customfield) ) {
+		JError::raiseError(404, JText::_('Resource Not Found'));
+	}
+	
+	# Retrieve links
+	$sql = 'SELECT ';
+	$sql .= 'l.*, u.username, c.*, img.filename AS link_image FROM (#__mt_links AS l, #__mt_cl AS cl';
+	$sql .= ")";
+	if( !$customfield->iscore ) {
+		$sql .= "\n LEFT JOIN #__mt_cfvalues AS cfv ON cfv.link_id = l.link_id AND cfv.cf_id = " . $database->Quote($cf_id);
+	}
+	$sql .=	"\n	LEFT JOIN #__mt_images AS img ON img.link_id = l.link_id AND img.ordering = 1 " 
+		.	"\n	LEFT JOIN #__mt_cats AS c ON c.cat_id = cl.cat_id " 
+		.	"\n LEFT JOIN #__users AS u ON u.id = l.user_id "
+		.	"\n	WHERE " 
+		. 	"\n	link_published='1' AND link_approved='1' AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' )"
+		.	"\n AND cl.link_id = l.link_id "
+		.	"\n AND cl.main = 1 ";
+	if( !$customfield->iscore ) {
+		$sql .= "\n AND cfv.value LIKE " . $database->Quote('%'.$value.'%');
+	} else {
+		$sql .= "\n AND l.".substr($customfield->field_type,4)." LIKE " . $database->Quote('%'.$value.'%');
+	}
+	$sql .=	( (!empty($only_subcats_sql)) ? $only_subcats_sql : '' );
+	
+	if( $mtconf->get('min_votes_to_show_rating') > 0 && $mtconf->get('first_listing_order1') == 'link_rating' ) {
+		$sql .= "\n ORDER BY link_votes >= " . $mtconf->get('min_votes_to_show_rating') . ' DESC, ' . $mtconf->get('first_listing_order1') . ' ' . $mtconf->get('first_listing_order2') . ', ' . $mtconf->get('second_listing_order1') . ' ' . $mtconf->get('second_listing_order2') . ' ';
+	} else {
+		$sql .= "\n ORDER BY " . $mtconf->get('first_search_order1') . ' ' . $mtconf->get('first_search_order2') . ', ' . $mtconf->get('second_search_order1') . ' ' . $mtconf->get('second_search_order2');
+	}
+	
+	$sql .=	"\n LIMIT $limitstart, " . $mtconf->get('fe_num_of_searchresults');
+	$database->setQuery( $sql );
+	$links = $database->loadObjectList();	
+	
+	# Get total
+	$sql = "SELECT COUNT(DISTINCT l.link_id) FROM (#__mt_links AS l, #__mt_cl AS cl";
+		$sql .= ")";
+		if( !$customfield->iscore ) {
+			$sql .= "\n LEFT JOIN #__mt_cfvalues AS cfv ON cfv.link_id = l.link_id AND cfv.cf_id = " . $database->Quote($cf_id);
+		}
+		$sql .=	"\n	LEFT JOIN #__mt_cats AS c ON c.cat_id = cl.cat_id " 
+			.	"\n	WHERE " 
+			.	"link_published='1' AND link_approved='1' AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' )"
+			.	"\n AND cl.link_id = l.link_id "
+			.	"\n AND cl.main = 1 ";
+		if( !$customfield->iscore ) {
+			$sql .= "\n AND cfv.value LIKE " . $database->Quote('%'.$value.'%');
+		} else {
+			$sql .= "\n AND l.".substr($customfield->field_type,4)." LIKE " . $database->Quote('%'.$value.'%');
+		}
+		$sql .= ( (!empty($only_subcats_sql)) ? $only_subcats_sql : '' );
+		$database->setQuery( $sql );
+
+	$total = $database->loadResult();
+	
+	jimport('joomla.html.pagination');
+	$pageNav = new JPagination($total, $limitstart, $mtconf->get('fe_num_of_searchresults'));
+
+	$document=& JFactory::getDocument();
+	$document->setTitle(JText::sprintf( 'Search By Title', $customfield->caption, $value ));
+
+	# Pathway
+	$pathWay = new mtPathWay();
+
+	# Savant Template
+	$savant = new Savant2($savantConf);
+	assignCommonListlinksVar( $savant, $links, $pathWay, $pageNav );
+
+	$savant->assign('searchword', $value);
+	$savant->assign('customfieldcaption', $customfield->caption);
+	$savant->assign('cat_id', $search_cat);
+	$savant->assign('total_listing', $total);
+
+	$savant->display( 'page_searchByResults.tpl.php' );
+}
+
+/***
 * Simple Search
 */
 function search( $option ) {
-	global $database, $_MT_LANG, $savantConf, $Itemid, $custom404, $mtconf;
+	global $savantConf, $Itemid, $custom404, $mtconf, $mainframe;
+
+	$database 	=& JFactory::getDBO();
+	$uri 		=& JURI::getInstance();
+	$nullDate	= $database->getNullDate();
 
 	# Search word
-	$searchword = trim(mosGetParam( $_REQUEST, 'searchword', ''));
+	$post['searchword'] = JRequest::getString('searchword', null, 'post');
+	$post['cat_id'] = JRequest::getInt('cat_id', 0, 'post');
+
+	if( is_null($uri->getVar( 'searchword' )) && isset($post['searchword']) && !empty($post['searchword']) ) {
+		$uri->setVar('option', 'com_mtree');
+		$uri->setVar('task', 'search');
+		$uri->setVar('searchword', $post['searchword']);
+		$uri->setVar('cat_id', $post['cat_id']);
+
+		// set Itemid id for links
+		$menu = &JSite::getMenu();
+		$items	= $menu->getItems('link', 'index.php?option=com_mtree');
+		if(isset($items[0])) {
+			$uri->setVar('Itemid', $items[0]->id);
+		}
+
+		$mainframe->redirect(JRoute::_('index.php'.$uri->toString(array('query', 'fragment')), false));
+	}
+
+	# slashes cause errors, <> get stripped anyway later on. # causes problems.
+	$badchars = array('#','>','<','\\'); 
+	$searchword = trim(str_replace($badchars, '', JRequest::getString('searchword', null)));
 	
+	# if searchword enclosed in double quotes, strip quotes and do exact match
+	if (substr($searchword,0,1) == '"' && substr($searchword, -1) == '"') { 
+		$post['searchword'] = substr($searchword,1,-1);
+	}
+	else {
+		$post['searchword'] = $searchword;
+	}
+	// $searchword = $post['searchword'];
+	
+	# limit searchword to 20 characters
+	$restriction = false;
+	if ( JString::strlen( $searchword ) > 20 ) {
+		$searchword 	= JString::substr( $searchword, 0, 19 );
+		$restriction 	= true;
+	}
+
+	// searchword must contain a minimum of 3 characters
+	if ( $searchword && JString::strlen( $searchword ) < 3 ) {
+		$searchword 	= '';
+		$restriction 	= true;
+	}
+	
+	if($restriction)
+	{
+		$mainframe->enqueueMessage(JText::_('SEARCH_MESSAGE'));
+	}
+
 	# Using Built in SEF feature in Joomla!
 	if ( !isset($custom404) && $mtconf->getjconf('sef') ) {
 		$searchword = urldecode($searchword);
 	}
 
 	# Search Category
-	$search_cat = mosGetParam( $_REQUEST, 'cat_id', 0 );
+	$search_cat	= JRequest::getInt('cat_id', 0);
+	
+	# Redirect to category page if searchword is empty and a category is selected
+	if(!empty($search_cat) && empty($searchword)) {
+		$mainframe->redirect( JRoute::_("index.php?option=$option&task=listcats&cat_id=$search_cat&Itemid=$Itemid") );
+	}
+	
 	$only_subcats_sql = '';
 	if ( $search_cat > 0 ) {
 		$mtCats = new mtCats( $database );
 		$subcats = $mtCats->getSubCats_Recursive( $search_cat, true );
 		$subcats[] = $search_cat;
-		if ( count($subcats) > 0 ) {
+		if ( !empty($subcats) ) {
 			$only_subcats_sql = "\n AND c.cat_id IN (" . implode( ", ", $subcats ) . ")";
 		}
 	}
 
 	# Page Navigation
-	$limitstart = trim( mosGetParam( $_REQUEST, 'limitstart', 0 ) );
-
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	$limitstart	= JRequest::getInt('limitstart', 0);
+	if( $limitstart < 0 ) $limitstart = 0;
+	
+	$jdate = JFactory::getDate();
+	$now = $jdate->toMySQL();
 	
 	$cats = array(0);
 	
@@ -576,15 +822,10 @@ function search( $option ) {
 	$cats = array();
 
 	if(!empty($searchword) || $searchword == '0') {
-		if(get_magic_quotes_gpc()) {
-			$searchword = stripslashes($searchword);
-		} else {
-			$searchword = $searchword;
-		}
 		$words = parse_words($searchword);
 		
 		foreach($words AS $key => $value) {
-			$words[$key] = addslashes($value);
+			$words[$key] = $database->getEscaped( $value, true );
 		}
 		
 		$database->setQuery("SELECT field_type,published,simple_search FROM #__mt_customfields WHERE iscore = 1");
@@ -599,6 +840,7 @@ function search( $option ) {
 		$wheres1 = array();
 		foreach ($words as $word) {
 			$wheres_cat[] = "\nLOWER(c.cat_name) LIKE '%$word%'";
+			$wheres_cat[] = "\nLOWER(c.cat_desc) LIKE '%$word%'";
 
 			foreach( $link_fields AS $lf ) {
 				if ( 
@@ -606,7 +848,7 @@ function search( $option ) {
 					OR
 					(array_key_exists('core'.$lf,$searchable_core_fields) && $searchable_core_fields['core'.$lf]->published == 1 && $searchable_core_fields['core'.$lf]->simple_search == 1)
 				) {
-					if(in_array($lf,array('metakey','metadesc'))) {
+					if(in_array($lf,array('metakey','metadesc','email'))) {
 						$wheres0[] = "\n LOWER(l.$lf) LIKE '%$word%'";
 					} else {
 						$wheres0[] = "\n LOWER($lf) LIKE '%$word%'";
@@ -614,14 +856,13 @@ function search( $option ) {
 				}
 			}
 			if($searchable_custom_fields_count > 0) {
-				// $wheres0[] = "\n" .' (cf.hidden = 0 AND cf.simple_search = 1 AND cf.published = 1 AND LOWER(cfv.value) LIKE \'%' . $word . '%\')';
 				$wheres0[] = "\n" .' (cf.simple_search = 1 AND cf.published = 1 AND LOWER(cfv.value) LIKE \'%' . $word . '%\')';
 			}
 			$wheres1[] = "\n (" . implode( ' OR ', $wheres0 ) . ")";
 			unset($wheres0);
 		}
 		$where = "(\n" . implode( "\nAND\n", $wheres1 ) . "\n)";
-		$where_cat = '(' . implode( ') AND (', $wheres_cat ) . ')';
+		$where_cat = '(' . implode( ') OR (', $wheres_cat ) . ')';
 
 		# Retrieve categories
 		if ( $limitstart == 0 ) {
@@ -634,8 +875,12 @@ function search( $option ) {
 			$cats = $database->loadObjectList();
 		}
 		# Retrieve links
-		$sql = "SELECT DISTINCT l.link_id, l.*, u.username, c.*, img.filename AS link_image FROM (#__mt_links AS l, #__mt_cl AS cl";
-		if($searchable_custom_fields_count > 0) {
+		$sql = 'SELECT ';
+		if( !empty($searchable_custom_fields_count) ) {
+			$sql .= 'DISTINCT ';
+		}
+		$sql .= 'l.link_id, l.*, u.username, c.*, img.filename AS link_image FROM (#__mt_links AS l, #__mt_cl AS cl';
+		if( !empty($searchable_custom_fields_count) ) {
 			$sql .= ", #__mt_customfields AS cf";
 		}
 		$sql .= ")";
@@ -646,13 +891,19 @@ function search( $option ) {
 			.	"\n	LEFT JOIN #__mt_cats AS c ON c.cat_id = cl.cat_id " 
 			.	"\n LEFT JOIN #__users AS u ON u.id = l.user_id "
 			.	"\n	WHERE " 
-			. 	"\n	link_published='1' AND link_approved='1' AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' )"
+			. 	"\n	link_published='1' AND link_approved='1' AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' )"
 			.	"\n AND cl.link_id = l.link_id "
 			.	"\n AND cl.main = 1 ";
 		$sql .= "\n AND ".$where
-			.	( (!empty($only_subcats_sql)) ? $only_subcats_sql : '' )
-			.	"\n ORDER BY " . $mtconf->get('first_search_order1') . ' ' . $mtconf->get('first_search_order2') . ', ' . $mtconf->get('second_search_order1') . ' ' . $mtconf->get('second_search_order2')
-			.	"\n LIMIT $limitstart, " . $mtconf->get('fe_num_of_searchresults');
+			.	( (!empty($only_subcats_sql)) ? $only_subcats_sql : '' );
+		
+		if( $mtconf->get('min_votes_to_show_rating') > 0 && $mtconf->get('first_listing_order1') == 'link_rating' ) {
+			$sql .= "\n ORDER BY link_votes >= " . $mtconf->get('min_votes_to_show_rating') . ' DESC, ' . $mtconf->get('first_listing_order1') . ' ' . $mtconf->get('first_listing_order2') . ', ' . $mtconf->get('second_listing_order1') . ' ' . $mtconf->get('second_listing_order2') . ' ';
+		} else {
+			$sql .= "\n ORDER BY " . $mtconf->get('first_search_order1') . ' ' . $mtconf->get('first_search_order2') . ', ' . $mtconf->get('second_search_order1') . ' ' . $mtconf->get('second_search_order2');
+		}
+	
+		$sql .=	"\n LIMIT $limitstart, " . $mtconf->get('fe_num_of_searchresults');
 		$database->setQuery( $sql );
 		$links = $database->loadObjectList();
 
@@ -667,7 +918,7 @@ function search( $option ) {
 			}
 			$sql .=	"\n	LEFT JOIN #__mt_cats AS c ON c.cat_id = cl.cat_id " 
 				.	"\n	WHERE " 
-				.	"link_published='1' AND link_approved='1' AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' )"
+				.	"link_published='1' AND link_approved='1' AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' )"
 				.	"\n AND cl.link_id = l.link_id "
 				.	"\n AND cl.main = 1 ";
 			$sql .=	"\n AND ".$where
@@ -677,8 +928,11 @@ function search( $option ) {
 		$total = $database->loadResult();
 	}
 
-	require_once($mtconf->getjconf('absolute_path')."/includes/pageNavigation.php");
-	$pageNav = new mosPageNav( $total, $limitstart, $mtconf->get('fe_num_of_searchresults') );
+	jimport('joomla.html.pagination');
+	$pageNav = new JPagination($total, $limitstart, $mtconf->get('fe_num_of_searchresults'));
+
+	$document=& JFactory::getDocument();
+	$document->setTitle(JText::sprintf( 'SEARCH RESULTS FOR KEYWORD', $searchword ));
 
 	# Pathway
 	$pathWay = new mtPathWay();
@@ -687,7 +941,7 @@ function search( $option ) {
 	$savant = new Savant2($savantConf);
 	assignCommonListlinksVar( $savant, $links, $pathWay, $pageNav );
 
-	$savant->assign('searchword', stripslashes($searchword));
+	$savant->assign('searchword', $searchword);
 	$savant->assign('cat_id', $search_cat);
 	$savant->assign('total_listing', $total);
 	if ( $limitstart == 0 ) {
@@ -703,34 +957,36 @@ function search( $option ) {
 */
 
 function advsearch( $option ) {
-	global $cache, $_MT_LANG, $mainframe;
+	$document=& JFactory::getDocument();
+	$document->setTitle(JText::_( 'Advanced search' ));
 
-	$mainframe->setPageTitle( $_MT_LANG->ADVANCED_SEARCH ); 
-
-	$cache->call( 'advsearch_cache', $option );
+	advsearch_cache( $option );
 }
 
 function advsearch_cache( $option ) {
-	global $savantConf, $_MT_LANG, $database, $Itemid, $mtconf;
+	global $savantConf, $Itemid, $mtconf;
 
-	require_once( $mtconf->getjconf('absolute_path') . '/administrator/components/com_mtree/mfields.class.php' );
+	$database =& JFactory::getDBO();
+
+	require_once( JPATH_COMPONENT_ADMINISTRATOR.DS.'mfields.class.php' );
 
 	# Pathway
 	$pathWay = new mtPathWay();
 
 	# Get category's tree
 	getCatsSelectlist( 0, $cat_tree, 0 );
-	$cat_options[] = mosHTML::makeOption( "", "" );
-	foreach( $cat_tree AS $ct ) {
-		$cat_options[] = mosHTML::makeOption( $ct["cat_id"], str_repeat("&nbsp;",($ct["level"]*3)) .(($ct["level"]>0) ? " -":''). $ct["cat_name"] );
+	if( !empty($cat_tree) ) {
+		$cat_options[] = JHTML::_('select.option', '', '');
+		foreach( $cat_tree AS $ct ) {
+			$cat_options[] = JHTML::_('select.option', $ct["cat_id"], str_repeat("&nbsp;",($ct["level"]*3)) .(($ct["level"]>0) ? " -":''). $ct["cat_name"]);
+		}
+		$catlist = JHTML::_('select.genericlist', $cat_options, 'cat_id', 'class="text_area"', 'value', 'text', '');
 	}
-	$catlist = mosHTML::selectList( $cat_options, "cat_id", 'class="text_area"', 'value', 'text', "" );
-
+	
 	# Search condition
-	$searchConditions[] = mosHTML::makeOption( 1, strtolower($_MT_LANG->ANY) );
-	$searchConditions[] = mosHTML::makeOption( 2, strtolower($_MT_LANG->ALL) );
-	$lists['searchcondition'] = mosHTML::selectList( $searchConditions, 'searchcondition', 'class="inputbox" size="1"',
-	'value', 'text', 1 );
+	$searchConditions[] = JHTML::_('select.option', 1, strtolower(JText::_( 'Any' )));
+	$searchConditions[] = JHTML::_('select.option', 2, strtolower(JText::_( 'All' )));
+	$lists['searchcondition'] = JHTML::_('select.genericlist', $searchConditions, 'searchcondition', 'class="inputbox" size="1"', 'value', 'text', $mtconf->get('default_search_condition'));
 
 	# Load all CORE and custom fields
 	$database->setQuery( "SELECT cf.*, '0' AS link_id, '' AS value, '0' AS attachment, ft.ft_class FROM #__mt_customfields AS cf "
@@ -744,50 +1000,53 @@ function advsearch_cache( $option ) {
 	$savant->assignRef('catlist', $catlist);
 	$savant->assignRef('fields', $fields);
 	$savant->assignRef('lists', $lists);
-
-	$savant->_MT_LANG =& $_MT_LANG;
 	$savant->display( 'page_advSearch.tpl.php' );
 
 }
 
 function advsearch2( $option ) {
-	global $database, $mainframe, $savantConf, $_MT_LANG, $Itemid, $mtconf;
-	require_once( $mtconf->getjconf('absolute_path') . '/administrator/components/com_mtree/mfields.class.php' );
-	require_once( $mtconf->getjconf('absolute_path') . '/administrator/components/com_mtree/mAdvancedSearch.class.php' );
+	global $savantConf, $Itemid, $mtconf;
 
-	$mainframe->setPageTitle( $_MT_LANG->ADVANCED_SEARCH_RESULTS ); 
+	$database =& JFactory::getDBO();
+	$document=& JFactory::getDocument();
+
+	require_once( JPATH_COMPONENT_ADMINISTRATOR.DS.'mfields.class.php' );
+	require_once( JPATH_COMPONENT_ADMINISTRATOR.DS.'mAdvancedSearch.class.php' );
+
+	$document->setTitle(JText::_( 'Advanced search results' ));
 
 	# Load up search ID if available
-	$search_id = intval( mosGetParam( $_REQUEST, 'search_id', 0 ) );
+	$search_id	= JRequest::getInt('search_id', 0);
 	
 	if ($search_id > 0) {
-		$database->setQuery("SELECT search_text FROM #__mt_searchlog WHERE search_id ='".$search_id."'");
-		$_POST = unserialize(str_replace("'","\'",$database->loadResult()));
-	}
+		$database->setQuery( 'SELECT search_text FROM #__mt_searchlog WHERE search_id = ' . $database->quote($search_id) );
+		$post = unserialize($database->loadResult());
+	} else { $post = JRequest::get( 'post' ); }
 
 	# Load all published CORE & custom fields
 	$database->setQuery( "SELECT cf.*, '0' AS link_id, '' AS value, '0' AS attachment, ft.ft_class FROM #__mt_customfields AS cf "
 		.	"\nLEFT JOIN #__mt_fieldtypes AS ft ON ft.field_type=cf.field_type"
 		.	"\nWHERE cf.published='1' ORDER BY ordering ASC" );
 	$fields = new mFields($database->loadObjectList());
-	$searchParams = $fields->loadSearchParams($_POST);
+	$searchParams = $fields->loadSearchParams($post);
 	
 	$advsearch = new mAdvancedSearch( $database );
-	if( intval(mosGetParam( $_POST, 'searchcondition', 1 )) == '2' ) {
+	if( intval( $post['searchcondition'] ) == 2 ) {
 		$advsearch->useAndOperator();
 	} else {
 		$advsearch->useOrOperator();
 	}
 
 	# Search Category
-	$search_cat = intval(mosGetParam( $_POST, 'cat_id', 0 ));
+	$search_cat	= intval( $post['cat_id'] );
+
 	$only_subcats_sql = '';
 
 	if ( $search_cat > 0 && is_int($search_cat) ) {
 		$mtCats = new mtCats( $database );
 		$subcats = $mtCats->getSubCats_Recursive( $search_cat, true );
 		$subcats[] = $search_cat;
-		if ( count($subcats) > 0 ) {
+		if ( !empty($subcats) ) {
 			$advsearch->limitToCategory( $subcats );
 		}
 	}
@@ -801,7 +1060,7 @@ function advsearch2( $option ) {
 			foreach( $searchFields AS $searchField ) {
 				$searchFieldValues[] = $searchParams[$searchField];
 			}
-			if( count($searchFieldValues) > 0 && $searchFieldValues[0] != '' ) {
+			if( !empty($searchFieldValues) && $searchFieldValues[0] != '' ) {
 				if( is_array($searchFieldValues[0]) && empty($searchFieldValues[0][0]) ) {
 					// Do nothing
 				} else {
@@ -817,8 +1076,9 @@ function advsearch2( $option ) {
 		$fields->next();
 	}
 
-	$limit = mosGetParam( $_GET, 'limit', $mtconf->get('fe_num_of_searchresults') );
-	$limitstart = mosGetParam( $_GET, 'limitstart', 0 );
+	$limit		= JRequest::getInt('limit', $mtconf->get('fe_num_of_searchresults'), 'get');
+	$limitstart	= JRequest::getInt('limitstart', 0, 'get');
+	if( $limitstart < 0 ) $limitstart = 0;
 
 	$advsearch->search(1,1);
 	
@@ -829,7 +1089,7 @@ function advsearch2( $option ) {
 
 		# Store search for later retrieval.
 		if ( $search_id < 1 ) {
-			$database->setQuery("INSERT INTO #__mt_searchlog (search_text) VALUES ('".serialize($_POST)."')");		
+			$database->setQuery("INSERT INTO #__mt_searchlog (search_text) VALUES ('".serialize($post)."')");		
 			if(!$database->query())
 			{
 				echo $database->getErrorMsg();
@@ -837,23 +1097,23 @@ function advsearch2( $option ) {
 		}
 
 		# Get the above search ID
-		$database->setQuery("SELECT search_id FROM #__mt_searchlog WHERE search_text ='".serialize($_POST)."'");		
+		$database->setQuery("SELECT search_id FROM #__mt_searchlog WHERE search_text ='".serialize($post)."'");		
 		$database->query();
 		$search_id = $database->loadResult();
 
-		$mainframe->addCustomHeadTag('<meta http-equiv="Refresh" content="1; URL='.sefRelToAbs("index.php?option=com_mtree&task=advsearch2&search_id=$search_id&Itemid=$Itemid").'">');
+		$document->addCustomTag('<meta http-equiv="Refresh" content="1; URL='.JRoute::_("index.php?option=com_mtree&task=advsearch2&search_id=$search_id&Itemid=$Itemid").'">');
+
 		# Savant template
 		$savant = new Savant2($savantConf);
-		$savant->_MT_LANG =& $_MT_LANG;
-		$savant->assign('redirect_url', sefRelToAbs("index.php?option=com_mtree&task=advsearch2&search_id=$search_id&Itemid=$Itemid"));
+		$savant->assign('redirect_url', JRoute::_("index.php?option=com_mtree&task=advsearch2&search_id=$search_id&Itemid=$Itemid"));
 		$savant->display( 'page_advSearchRedirect.tpl.php' );
 
 	} else {
 		$links = $advsearch->loadResultList( $limitstart, $limit );
 
 		# Page Navigation
-		require_once($mtconf->getjconf('absolute_path')."/includes/pageNavigation.php");
-		$pageNav = new mosPageNav( $total, $limitstart, $limit );
+		jimport('joomla.html.pagination');
+		$pageNav = new JPagination($total, $limitstart, $limit);
 
 		# Pathway
 		$pathWay = new mtPathWay();
@@ -870,37 +1130,41 @@ function advsearch2( $option ) {
 }
 
 function listalpha( $cat_id, $alpha, $limitstart, $option ) {
-	global $cache, $_MT_LANG, $mainframe, $database;
+	$database =& JFactory::getDBO();
+	$document=& JFactory::getDocument();
 	
-	$database->setQuery( "SELECT cat_name FROM #__mt_cats WHERE cat_id = '".$cat_id."' LIMIT 1" );
+	$database->setQuery( 'SELECT cat_name FROM #__mt_cats WHERE cat_id = ' . $database->quote($cat_id) . ' LIMIT 1' );
 	$cat_name = $database->loadResult();
 
-	$mainframe->setPageTitle( sprintf($_MT_LANG->LIST_ALPHA_BY_LISTINGS_AND_CATS, strtoupper($alpha), $cat_name) ); 
+	$document->setTitle(sprintf(JText::_( 'List alpha by listings and cats' ), strtoupper($alpha), $cat_name));
 
-	$cache->call( 'listalpha_cache', $cat_id, $alpha, $limitstart, $option );
+	listalpha_cache( $cat_id, $alpha, $limitstart, $option );
 }
 
 function listalpha_cache( $cat_id, $alpha, $limitstart, $option ) {
-	global $database, $savantConf, $_MT_LANG, $Itemid, $mainframe, $mtconf;
+	global $savantConf, $Itemid, $mtconf;
 	
+	$database	=& JFactory::getDBO();
+	$nullDate	= $database->getNullDate();
+
 	$where = array();
 	
 	# Number (0-9)
 	if ( $alpha == '0' ) {
 		for( $i=48; $i <= 57; $i++) {
-			$cond_seq_link[] = "link_name LIKE '".chr($i)."%'";
-			$cond_seq_cat[] = "cat1.cat_name LIKE '".chr($i)."%'";
+			$cond_seq_link[] = "link_name LIKE '" . $database->getEscaped( chr($i), true ) . "%'";
+			$cond_seq_cat[] = "cat1.cat_name LIKE '" . $database->getEscaped( chr($i), true ) . "%'";
 		}
 		$where[] = "(".implode(" OR ",$cond_seq_link).")";
 		$where_cat[] = "(".implode(" OR ",$cond_seq_cat).")";
 
 	# Alphabets (A-Z)
-	} elseif ( eregi("[a-z0-9]{1}[0-9]*", $alpha) OR ($mtconf->get('alpha_index_additional_chars') <> '' AND stripos($mtconf->get('alpha_index_additional_chars'),$alpha) !== false ) ) {
-		$where[] = "link_name LIKE '".urldecode($alpha)."%'";
-		$where_cat[] = "cat1.cat_name LIKE '".urldecode($alpha)."%'";
+	} elseif ( eregi("[a-z0-9]{1}[0-9]*", $alpha) OR ($mtconf->get('alpha_index_additional_chars') <> '' AND JString::strpos(JString::strtolower($mtconf->get('alpha_index_additional_chars')),JString::strtolower($alpha)) !== false ) ) {
+		$where[] = "link_name LIKE '" . $database->getEscaped( $alpha, true ) . "%'";
+		$where_cat[] = "cat1.cat_name LIKE '" . $database->getEscaped( $alpha, true ) . "%'";
 	}
 
-	if(count($where) > 0) {
+	if(!empty($where)) {
 	
 		# SQL condition to display category specific results
 		$subcats = implode(", ",getSubCats_Recursive($cat_id));
@@ -909,17 +1173,18 @@ function listalpha_cache( $cat_id, $alpha, $limitstart, $option ) {
 		if ($subcats) $where_cat[] = "cat1.cat_parent IN (" . $subcats . ")";
 
 		// Get Total results - Links
-		$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+		$jdate = JFactory::getDate();
+		$now = $jdate->toMySQL();
 
 		$sql = "SELECT COUNT(*) FROM (#__mt_links AS l, #__mt_cl AS cl) ";
 		$where[] = "l.link_id = cl.link_id";
 		$where[] = "cl.main = '1'";
 		$where[] = "link_approved = '1'";
 		$where[] = "link_published = '1'";
-		$where[] = "( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  )";
-		$where[] = "( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' )";
+		$where[] = "( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  )";
+		$where[] = "( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' )";
 	
-		$sql .= (count( $where ) ? " WHERE " . implode( ' AND ', $where ) : "");
+		$sql .= (!empty( $where ) ? " WHERE " . implode( ' AND ', $where ) : "");
 
 		$database->setQuery( $sql );
 		$total = $database->loadResult();
@@ -928,9 +1193,16 @@ function listalpha_cache( $cat_id, $alpha, $limitstart, $option ) {
 		$link_sql = "SELECT l.*, u.username, cl.cat_id AS cat_id, img.filename AS link_image FROM (#__mt_links AS l, #__mt_cl AS cl) ";
 		$link_sql .= " LEFT JOIN #__mt_images AS img ON img.link_id = l.link_id AND img.ordering = 1 ";
 		$link_sql .= " LEFT JOIN #__users AS u ON u.id = l.user_id ";
-		$link_sql .= (count( $where ) ? " WHERE " . implode( ' AND ', $where ) : "");
+		$link_sql .= (!empty( $where ) ? " WHERE " . implode( ' AND ', $where ) : "");
 		$link_sql .= " AND l.link_id = cl.link_id AND cl.main = '1' ";
-		$link_sql .= "ORDER BY link_featured DESC, link_name ASC ";
+		
+		if( $mtconf->get('min_votes_to_show_rating') > 0 && $mtconf->get('first_listing_order1') == 'link_rating' ) {
+			$link_sql .= "\n ORDER BY link_votes >= " . $mtconf->get('min_votes_to_show_rating') . ' DESC, ' . $mtconf->get('first_listing_order1') . ' ' . $mtconf->get('first_listing_order2') . ', ' . $mtconf->get('second_listing_order1') . ' ' . $mtconf->get('second_listing_order2') . ' ';
+		} else {
+			$link_sql .= "\n ORDER BY " . $mtconf->get('first_listing_order1') . ' ' . $mtconf->get('first_listing_order2') . ', ' . $mtconf->get('second_listing_order1') . ' ' . $mtconf->get('second_listing_order2') . ' ';
+		}
+		
+		
 		$link_sql .= "LIMIT $limitstart, " . $mtconf->get('fe_num_of_links');
 
 		# Shows categories if this is the first page. ie: $limitstart = 0
@@ -954,7 +1226,7 @@ function listalpha_cache( $cat_id, $alpha, $limitstart, $option ) {
 			$database->setQuery( $sql );
 			$same_name_cats = $database->loadResultArray();
 		
-			if( count($same_name_cats) > 0 ) {
+			if( !empty($same_name_cats) ) {
 				$mtcat = new mtCats( $database );
 				for( $i=0; $i<count($categories); $i++ ) {
 					if( in_array( $categories[$i]->cat_name, $same_name_cats ) ) {
@@ -972,8 +1244,8 @@ function listalpha_cache( $cat_id, $alpha, $limitstart, $option ) {
 		$links = $database->loadObjectList();
 
 		# Page Navigation
-		require_once($mtconf->getjconf('absolute_path')."/includes/pageNavigation.php");
-		$pageNav = new mosPageNav( $total, $limitstart, $mtconf->get('fe_num_of_links') );
+		jimport('joomla.html.pagination');
+		$pageNav = new JPagination($total, $limitstart, $mtconf->get('fe_num_of_links'));
 	
 		# Pathway
 		$pathWay = new mtPathWay( 0 );
@@ -997,36 +1269,52 @@ function listalpha_cache( $cat_id, $alpha, $limitstart, $option ) {
 	}
 }
 
-function listlisting( $cat_id, $option, $task, $limitstart ) {
-	global $cache, $database, $mainframe, $_MT_LANG, $mtconf, $Itemid;
+function listlisting( $cat_id, $option, $my, $task, $limitstart ) {
+	global $mtconf, $Itemid;
 
-	$listListing = new mtListListing( $task );
+	$database		=& JFactory::getDBO();
+	$listListing	= new mtListListing( $task );
 	$listListing->setLimitStart( $limitstart );
+	$document=& JFactory::getDocument();
 	
 	if( $cat_id == 0 ) {
-		$database->setQuery( "SELECT cat_name FROM #__mt_cats WHERE cat_id = '".$cat_id."' || cat_parent = '-1' LIMIT 1" );
-		$cat_name = $database->loadResult();
+		$cat_name = JText::_( 'Root' );
 	} else {
-		$database->setQuery( "SELECT cat_name FROM #__mt_cats WHERE cat_id = '".$cat_id."' LIMIT 1" );
+		$database->setQuery( 'SELECT cat_name FROM #__mt_cats WHERE cat_id = ' . $database->quote($cat_id) . ' LIMIT 1' );
 		$cat_name = $database->loadResult();
 	}
 
-	$mainframe->setPageTitle( $listListing->getTitle() . $cat_name ); 
+	$document->setTitle($listListing->getTitle() . $cat_name);
+
 	if(in_array($task,array('listnew','listupdated')) && $mtconf->get('show_list' . substr($task,4) . 'rss') ) {
-		$mainframe->addCustomHeadTag( '<link rel="alternate" type="application/rss+xml" title="' . $mtconf->getjconf('sitename') . ' - ' . (($task=='listnew')?$_MT_LANG->NEW_LISTING:$_MT_LANG->RECENTLY_UPDATED_LISTING) . '" href="index.php?option=com_mtree&task=rss&type=' . substr($task,4) . '&Itemid=' . $Itemid . '" />' );
+		$document->addCustomTag(
+			'<link rel="alternate" type="application/rss+xml" title="' . $mtconf->getjconf('sitename') 
+			. ' - ' 
+			. (
+				($task=='listnew')
+				?
+				JText::_( 'New listing' )
+				:
+				JText::_( 'Recently updated listing' )
+				) 
+			. '" href="index.php?option=com_mtree&task=rss&type=' . substr($task,4) . '&Itemid=' . $Itemid . '" />'
+		);
 	}
 
-	$cache->call( 'listlisting_cache', $cat_id, $option, $listListing );
+	$cache =& JFactory::getCache('com_mtree');
+	$cache->call('listlisting_cache', $cat_id, $option, $listListing);
 }
 
 function listlisting_cache( $cat_id, $option, $listListing ) {
-	global $database, $_MT_LANG, $savantConf, $Itemid;
+	global $savantConf, $Itemid;
 
+	$database =& JFactory::getDBO();
+	
 	# Retrieve Links
 	$listListing->setSubcats( getSubCats_Recursive($cat_id) );
 
-	$database->setQuery( $listListing->getSQL() );
-	$links = $database->loadObjectList();
+	$listListing->prepareQuery();
+	$links = $listListing->getListings();
 
 	# Load custom template
 	loadCustomTemplate( $cat_id, $savantConf);
@@ -1040,15 +1328,16 @@ function listlisting_cache( $cat_id, $option, $listListing ) {
 }
 
 function viewowner( $user_id, $limitstart, $option ) {
-	global $cache, $database, $_MT_LANG, $mainframe;
-
-	# Get owner's info
-	$database->setQuery( "SELECT id, name, username, email FROM #__users WHERE id = '".$user_id."'" );
-	$database->loadObject( $owner );
+	$database 	=& JFactory::getDBO();
+	$document	=& JFactory::getDocument();
 	
-	if( count($owner) == 1 ) {
-		$mainframe->setPageTitle( sprintf($_MT_LANG->LISTING_BY, $owner->username) );
-		$cache->call( 'viewowner_cache', $owner, $limitstart, $option );
+	# Get owner's info
+	$database->setQuery( 'SELECT id, name, username, email FROM #__users WHERE id = ' . $database->quote($user_id) . ' LIMIT 1' );
+	$owner = $database->loadObject();
+
+	if( !empty($owner) ) {
+		$document->setTitle(sprintf(JText::_( 'Listing by' ), $owner->username));
+		viewowner_cache( $owner, $limitstart, $option );
 	} else {
 		echo _NOT_EXIST;
 	}
@@ -1056,35 +1345,54 @@ function viewowner( $user_id, $limitstart, $option ) {
 }
 
 function viewowner_cache( $owner, $limitstart, $option ) {
-	global $database, $my, $_MT_LANG, $Itemid, $savantConf, $mtconf;
+	global $Itemid, $savantConf, $mtconf;
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
-	$user_id = $owner->id;
-
+	$database 	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
+	$user_id 	= $owner->id;
+	$nullDate	= $database->getNullDate();
+	
 	if ( $owner ) {
-
+		
+		if( $mtconf->get( 'display_pending_approval_listings_to_owners' ) && $my->id == $user_id ) {
+			$show_approved_and_published_listings_only = false;
+		} else {
+			$show_approved_and_published_listings_only = true;
+		}
+		
 		# Page Navigation
 		$database->setQuery("SELECT COUNT(*) FROM #__mt_links WHERE "
-			. "\n	link_published='1' AND link_approved='1' AND user_id ='".$user_id."'"
-			. "\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-			. "\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) "
+			. "\n " . (($show_approved_and_published_listings_only) ? "link_published='1' AND link_approved='1' AND " : '') 
+			. "\n user_id ='".$user_id."'"
+			. "\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+			. "\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) "
 			);
 		$total_links = $database->loadResult();
 
-		require_once($mtconf->getjconf('absolute_path')."/includes/pageNavigation.php");
-		$pageNav = new mosPageNav( $total_links, $limitstart, $mtconf->get('fe_num_of_links') );
+		jimport('joomla.html.pagination');
+		$pageNav = new JPagination($total_links, $limitstart, $mtconf->get('fe_num_of_links'));
 
 		# Retrieve Links
-		$database->setQuery( "SELECT l.*, u.username, cat.*, img.filename AS link_image FROM (#__mt_links AS l, #__mt_cl AS cl, #__mt_cats AS cat)"
+		$sql = "SELECT l.*, u.username, cat.*, img.filename AS link_image FROM (#__mt_links AS l, #__mt_cl AS cl, #__mt_cats AS cat)"
 			. "\n LEFT JOIN #__mt_images AS img ON img.link_id = l.link_id AND img.ordering = 1 "
 			. "\n LEFT JOIN #__users AS u ON u.id = l.user_id "
-			. "\n WHERE link_published='1' AND link_approved='1' AND user_id='".$user_id."' "
+			. "\n WHERE " . (($show_approved_and_published_listings_only) ? "link_published='1' AND link_approved='1' AND " : '') 
+			. "\n user_id='".$user_id."' "
 			. "\n AND l.link_id = cl.link_id AND cl.main = '1'"
-			. "\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-			. "\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) "
-			. "\n AND cl.cat_id = cat.cat_id "
-			.	"\n ORDER BY link_featured DESC, l.ordering ASC "
-			.	"\n LIMIT $limitstart, " . $mtconf->get('fe_num_of_links') );
+			. "\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+			. "\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) "
+			. "\n AND cl.cat_id = cat.cat_id ";
+		
+		if( $mtconf->get('min_votes_to_show_rating') > 0 && $mtconf->get('first_listing_order1') == 'link_rating' ) {
+			$sql .= "\n ORDER BY link_votes >= " . $mtconf->get('min_votes_to_show_rating') . ' DESC, ' . $mtconf->get('first_listing_order1') . ' ' . $mtconf->get('first_listing_order2') . ', ' . $mtconf->get('second_listing_order1') . ' ' . $mtconf->get('second_listing_order2') . ' ';
+		} else {
+			$sql .= "\n ORDER BY " . $mtconf->get('first_listing_order1') . ' ' . $mtconf->get('first_listing_order2') . ', ' . $mtconf->get('second_listing_order1') . ' ' . $mtconf->get('second_listing_order2') . ' ';
+		}
+		
+		$sql .= "\n LIMIT $limitstart, " . $mtconf->get('fe_num_of_links');
+		$database->setQuery( $sql );
 		$links = $database->loadObjectList();
 		
 		# Get total reviews
@@ -1116,15 +1424,18 @@ function viewowner_cache( $owner, $limitstart, $option ) {
 }
 
 function viewusersreview( $user_id, $limitstart, $option ) {
-	global $cache, $database, $_MT_LANG, $mainframe, $mtconf;
+	global $mtconf;
+
+	$database =& JFactory::getDBO();
+	$document=& JFactory::getDocument();
 
 	# Get owner's info
 	$database->setQuery( "SELECT id, name, username, email FROM #__users WHERE id = '".$user_id."'" );
-	$database->loadObject( $owner );
+	$owner = $database->loadObject();
 	
 	if( count($owner) == 1 && $mtconf->get('show_review') ) {
-		$mainframe->setPageTitle( sprintf($_MT_LANG->REVIEWS_BY, $owner->username) );
-		$cache->call( 'viewusersreview_cache', $owner, $limitstart, $option );
+		$document->setTitle(sprintf(JText::_( 'Reviews by' ), $owner->username));
+		viewusersreview_cache( $owner, $limitstart, $option );
 	} else {
 		echo _NOT_EXIST;
 	}
@@ -1132,13 +1443,17 @@ function viewusersreview( $user_id, $limitstart, $option ) {
 }
 
 function viewusersreview_cache( $owner, $limitstart, $option ) {
-	global $database, $my, $_MT_LANG, $savantConf, $mtconf;
+	global $savantConf, $mtconf;
 
-	$user_id = $owner->id;
+	$database 	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$user_id 	= $owner->id;
+	$nullDate	= $database->getNullDate();
 
 	if ( $owner ) {
 
-		$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+		$jdate = JFactory::getDate();
+		$now = $jdate->toMySQL();
 
 		# Page Navigation
 		$database->setQuery("SELECT COUNT(*) FROM #__mt_reviews AS r"
@@ -1147,11 +1462,11 @@ function viewusersreview_cache( $owner, $limitstart, $option ) {
 			);
 		$total_reviews = $database->loadResult();
 
-		require_once($mtconf->getjconf('absolute_path')."/includes/pageNavigation.php");
-		$pageNav = new mosPageNav( $total_reviews, $limitstart, $mtconf->get('fe_num_of_links') );
+		jimport('joomla.html.pagination');
+		$pageNav = new JPagination($total_reviews, $limitstart, $mtconf->get('fe_num_of_links'));
 
 		# Retrieve reviews
-		$database->setQuery( "SELECT DISTINCT r.*, l.*, u.username, log.value AS rating, img.filename AS link_image FROM #__mt_reviews AS r"
+		$database->setQuery( "SELECT r.*, l.*, u.username, log.value AS rating, img.filename AS link_image FROM #__mt_reviews AS r"
 			.	"\nLEFT JOIN #__mt_log AS log ON log.user_id = r.user_id AND log.link_id = r.link_id AND log_type = 'vote' AND log.rev_id = r.rev_id"
 			.	"\nLEFT JOIN #__mt_links AS l ON l.link_id = r.link_id"
 			.	"\nLEFT JOIN #__mt_images AS img ON img.link_id = l.link_id AND img.ordering = 1"
@@ -1170,8 +1485,8 @@ function viewusersreview_cache( $owner, $limitstart, $option ) {
 		# Get total links
 		$database->setQuery("SELECT COUNT(*) FROM #__mt_links WHERE "
 			. "\n	link_published='1' AND link_approved='1' AND user_id ='".$user_id."'"
-			. "\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-			. "\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) "
+			. "\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+			. "\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) "
 			);
 		$total_links = $database->loadResult();
 
@@ -1198,15 +1513,18 @@ function viewusersreview_cache( $owner, $limitstart, $option ) {
 }
 
 function viewusersfav( $user_id, $limitstart, $option ) {
-	global $cache, $database, $_MT_LANG, $mainframe, $mtconf;
+	global $mtconf;
+
+	$database =& JFactory::getDBO();
+	$document=& JFactory::getDocument();
 
 	# Get owner's info
 	$database->setQuery( "SELECT id, name, username, email FROM #__users WHERE id = '".$user_id."'" );
-	$database->loadObject( $owner );
+	$owner = $database->loadObject();
 	
 	if( count($owner) == 1 && $mtconf->get('show_favourite')) {
-		$mainframe->setPageTitle( sprintf($_MT_LANG->REVIEWS_BY, $owner->username) );
-		$cache->call( 'viewusersfav_cache', $owner, $limitstart, $option );
+		$document->setTitle(sprintf(JText::_( 'Favourites by' ), $owner->username));
+		viewusersfav_cache( $owner, $limitstart, $option );
 	} else {
 		echo _NOT_EXIST;
 	}
@@ -1214,10 +1532,14 @@ function viewusersfav( $user_id, $limitstart, $option ) {
 }
 
 function viewusersfav_cache( $owner, $limitstart, $option ) {
-	global $database, $my, $_MT_LANG, $Itemid, $savantConf, $mtconf;
+	global $Itemid, $savantConf, $mtconf;
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
-	$user_id = $owner->id;
+	$database 	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
+	$user_id 	= $owner->id;
+	$nullDate	= $database->getNullDate();
 
 	if ( $owner ) {
 
@@ -1226,39 +1548,47 @@ function viewusersfav_cache( $owner, $limitstart, $option ) {
 			.	"\n LEFT JOIN #__mt_links AS l ON l.link_id = f.link_id "
 			. "\n WHERE "
 			. "\n	l.link_published='1' AND l.link_approved='1' AND f.user_id ='".$user_id."'"
-			. "\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-			. "\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) "
+			. "\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+			. "\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) "
 			);
 		$total_favourites = $database->loadResult();
 
-		require_once($mtconf->getjconf('absolute_path')."/includes/pageNavigation.php");
-		$pageNav = new mosPageNav( $total_favourites, $limitstart, $mtconf->get('fe_num_of_links') );
+		jimport('joomla.html.pagination');
+		$pageNav = new JPagination($total_favourites, $limitstart, $mtconf->get('fe_num_of_links'));
 
 		# Retrieve Links
-		$database->setQuery( "SELECT DISTINCT l.*, u.username, cat.*, img.filename AS link_image FROM (#__mt_links AS l, #__mt_cl AS cl, #__mt_cats AS cat, #__mt_favourites AS f)"
+		$sql = "SELECT DISTINCT l.*, u.username, cat.*, img.filename AS link_image "
+			. "FROM (#__mt_links AS l, #__mt_cl AS cl, #__mt_cats AS cat, #__mt_favourites AS f)"
 			. "\n LEFT JOIN #__mt_images AS img ON img.link_id = l.link_id AND img.ordering = 1 "
 			. "\n LEFT JOIN #__users AS u ON u.id = l.user_id "
 			. "\n WHERE link_published='1' AND link_approved='1' AND f.user_id='".$user_id."' AND f.link_id = l.link_id "
 			. "\n AND l.link_id = cl.link_id AND cl.main = '1'"
-			. "\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-			. "\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) "
-			. "\n AND cl.cat_id = cat.cat_id "
-			.	"\n ORDER BY link_featured DESC, l.ordering ASC "
-			.	"\n LIMIT $limitstart, " . $mtconf->get('fe_num_of_links') );
+			. "\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+			. "\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) "
+			. "\n AND cl.cat_id = cat.cat_id ";
+		
+		if( $mtconf->get('min_votes_to_show_rating') > 0 && $mtconf->get('first_listing_order1') == 'link_rating' ) {
+			$sql .= "\n ORDER BY link_votes >= " . $mtconf->get('min_votes_to_show_rating') . ' DESC, ' . $mtconf->get('first_listing_order1') . ' ' . $mtconf->get('first_listing_order2') . ', ' . $mtconf->get('second_listing_order1') . ' ' . $mtconf->get('second_listing_order2') . ' ';
+		} else {
+			$sql .= "\n ORDER BY " . $mtconf->get('first_listing_order1') . ' ' . $mtconf->get('first_listing_order2') . ', ' . $mtconf->get('second_listing_order1') . ' ' . $mtconf->get('second_listing_order2') . ' ';
+		}
+		
+		$sql .= "\n LIMIT $limitstart, " . $mtconf->get('fe_num_of_links') ;
+		$database->setQuery( $sql );
 		$links = $database->loadObjectList();
 		
 		# Get total reviews
 		$database->setQuery("SELECT COUNT(*) FROM #__mt_reviews AS r"
-			.	"\nLEFT JOIN #__mt_links AS l ON l.link_id = r.link_id"
-			.	"\nWHERE r.user_id = '".$user_id."' AND rev_approved='1' AND l.link_published='1' AND l.link_approved='1'"
+			. "\nLEFT JOIN #__mt_links AS l ON l.link_id = r.link_id"
+			. "\nWHERE r.user_id = '".$user_id."' AND rev_approved='1' AND l.link_published='1' AND l.link_approved='1'"
 			);
 		$total_reviews = $database->loadResult();
 
 		# Get total links
 		$database->setQuery("SELECT COUNT(*) FROM #__mt_links WHERE "
 			. "\n	link_published='1' AND link_approved='1' AND user_id ='".$user_id."'"
-			. "\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-			. "\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) "
+			. "\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+			. "\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) "
 			);
 		$total_links = $database->loadResult();
 
@@ -1280,38 +1610,65 @@ function viewusersfav_cache( $owner, $limitstart, $option ) {
 * Visit URL
 */
 
-function visit( $link_id ) {
-	global $database, $my, $mtconf;
+function visit( $link_id, $cf_id ) {
+	global $mtconf, $mainframe;
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	$database 	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
+	$nullDate	= $database->getNullDate();
 
 	$database->setQuery( "SELECT website FROM #__mt_links"
 		.	"\n	WHERE link_published='1' AND link_approved > 0 AND link_id='".$link_id."' " 
-		. "\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-		. "\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) "
+		. "\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+		. "\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) "
 	);
 
-	$database->loadObject( $link );
+	$link = $database->loadObject();
 
+	// Checks if the listing is an approved & published listing
 	if (empty($link)) {
 		
 		echo _NOT_EXIST;
 
 	} else {
 		
-		$mtLog = new mtLog( $database, $mtconf->getjconf('offset'), getenv( 'REMOTE_ADDR' ), $my->id, $link_id );
-		$mtLog->logVisit();
+		if( !empty($cf_id) ) {
+			
+			// Get custom field link
+			$database->setQuery( 'SELECT value FROM #__mt_cfvalues WHERE cf_id = ' . $database->Quote($cf_id) . ' AND link_id = ' . $database->Quote($link_id) . ' LIMIT 1' );
+			$url = $database->loadResult();
+			if( !empty($url) ) {
+				$mainframe->redirect( 
+					(
+						substr($url,0,7) == 'http://' 
+						|| 
+						substr($url,0,8) == 'https://') 
+						? 
+						$url : 'http://'.$url 
+					);
+			} else {
+				echo _NOT_EXIST;
+			}
+			
+		} else {
+			if($mtconf->get('log_visit'))
+			{
+				$remote_addr = JRequest::getCmd( 'REMOTE_ADDR', '', 'server');
+				$mtLog = new mtLog( $database, $remote_addr, $my->id, $link_id );
+				$mtLog->logVisit();
+			}
 
-		# Update #__mt_links table
-		$database->setQuery( "UPDATE #__mt_links "
-			.	" SET link_visited = link_visited + 1 "
-			.	"WHERE link_id = '$link_id' ");
-		if (!$database->query()) {
-			echo "<script> alert('".$database->stderr()."');</script>\n";
-			exit();
+			# Update #__mt_links table
+			$database->setQuery( 'UPDATE #__mt_links SET link_visited = link_visited + 1 WHERE link_id = ' . $database->quote($link_id) );
+			if (!$database->query()) {
+				echo "<script> alert('".$database->stderr()."');</script>\n";
+				exit();
+			}
+
+			$mainframe->redirect( (substr($link->website,0,7) == 'http://' || substr($link->website,0,8) == 'https://') ? $link->website : 'http://'.$link->website );
 		}
-
-		mosRedirect( (substr($link->website,0,7) == 'http://' || substr($link->website,0,8) == 'https://') ? $link->website : 'http://'.$link->website );
 
 	}
 
@@ -1321,17 +1678,19 @@ function visit( $link_id ) {
 * View Gallery
 */
 function viewgallery( $link_id, $option ) {
-	global $database, $savantConf, $mainframe, $_MT_LANG;
+	global $savantConf;
 	
-	$link = loadLink( $link_id, $savantConf, $fields, $params );
+	$database 	=& JFactory::getDBO();
+	$link 		= loadLink( $link_id, $savantConf, $fields, $params );
+	$document	=& JFactory::getDocument();
 
 	if($link === false)	{
 		echo _NOT_EXIST;
 	} else {
 
-		$mainframe->setPageTitle( sprintf($_MT_LANG->GALLERY2, $link->link_name) );
+		$document->setTitle(sprintf(JText::_( 'Gallery2' ), $link->link_name));
 	
-		$database->setQuery('SELECT img_id, filename FROM #__mt_images WHERE link_id = \'' . $link_id . '\' ORDER BY ordering ASC');
+		$database->setQuery('SELECT img_id, filename FROM #__mt_images WHERE link_id = ' . $database->quote($link_id) . ' ORDER BY ordering ASC');
 		$images = $database->loadObjectList();
 		
 		$savant = new Savant2($savantConf);
@@ -1345,10 +1704,13 @@ function viewgallery( $link_id, $option ) {
 * View Image
 */
 function viewimage( $img_id, $option ) {
-	global $database, $savantConf, $mainframe, $_MT_LANG;
+	global $savantConf;
 	
-	$database->setQuery('SELECT img_id, link_id, filename, ordering from #__mt_images WHERE img_id = \'' . $img_id . '\' LIMIT 1');
-	$database->loadObject($image);
+	$database 	=& JFactory::getDBO();
+	$document	=& JFactory::getDocument();
+
+	$database->setQuery('SELECT img_id, link_id, filename, ordering from #__mt_images WHERE img_id = ' . $database->quote($img_id) . ' LIMIT 1');
+	$image = $database->loadObject();
 	
 	if(isset($image) && $image->link_id > 0) {
 		$link = loadLink( $image->link_id, $savantConf, $fields, $params );
@@ -1359,10 +1721,10 @@ function viewimage( $img_id, $option ) {
 	if($link === false)	{
 		echo _NOT_EXIST;
 	} else {
-		$database->setQuery('SELECT img_id, filename FROM #__mt_images WHERE link_id = \'' . $image->link_id . '\' ORDER BY ordering ASC');
+		$database->setQuery('SELECT img_id, filename FROM #__mt_images WHERE link_id = ' . $database->quote($image->link_id) . ' ORDER BY ordering ASC');
 		$images = $database->loadObjectList();
 
-		// $mainframe->setPageTitle( sprintf($_MT_LANG->GALLERY2, $link->link_name) );
+		$document->setTitle(sprintf(JText::_( 'Image2' ), $link->link_name));
 
 		$savant = new Savant2($savantConf);
 		assignCommonViewlinkVar( $savant, $link, $fields, $pathWay, $params );
@@ -1375,56 +1737,129 @@ function viewimage( $img_id, $option ) {
 /***
 * View Listing
 */
-function viewlink( $link_id, $limitstart, $option ) {
-	global $cache, $savantConf, $mainframe, $_MT_LANG, $mtconf;
+function viewlink( $link_id, $my, $limitstart, $option ) {
+	global $savantConf, $mtconf;
 
-	$link = loadLink( $link_id, $savantConf, $fields, $params );
+	$link 		= loadLink( $link_id, $savantConf, $fields, $params );
+	$document	=& JFactory::getDocument();
 	
 	if($link === false)	{
-		echo _NOT_EXIST;
+		if( $mtconf->get('unpublished_message_cfid') > 0 )
+		{
+			$database =& JFactory::getDBO();
+			$database->setQuery( 
+				'SELECT l.*, u.username AS username FROM #__mt_links AS l '
+				. 'LEFT JOIN #__users AS u ON u.id = l.user_id '
+				. 'WHERE link_id = ' 
+				. $database->quote($link_id) 
+				. ' LIMIT 1' );
+			$link = $database->loadObject();
+			if( $link->link_published == 0 )
+			{
+				$database->setQuery( 
+					'SELECT value FROM #__mt_cfvalues WHERE link_id = ' . $database->quote($link_id) 
+					. ' AND cf_id = ' . $database->quote($mtconf->get('unpublished_message_cfid'))
+					. ' LIMIT 1' );
+				$unpublished_message = $database->loadResult();
+
+				if( !empty($unpublished_message) ) {
+
+					$params =& new JParameter( $link->attribs );
+					$savant = new Savant2($savantConf);
+					$fields = loadFields($link);
+
+					assignCommonViewlinkVar( $savant, $link, $fields, $pathWay, $params );
+					
+					$unpublished_message_cf = $fields->getFieldById($mtconf->get('unpublished_message_cfid'));
+					$unpublished_message = $unpublished_message_cf->getOutput();
+					
+					$savant->assign('error_msg', JText::sprintf( 'This listing has been unpublished for the following reason:', $unpublished_message ));
+					$savant->assign('my', $my);
+					$savant->display( 'page_errorListing.tpl.php' );
+					
+				} else {
+					JError::raiseError(404, JText::_('Resource Not Found'));
+				}
+			} else {
+				JError::raiseError(404, JText::_('Resource Not Found'));
+			}
+		}
+		else
+		{
+			JError::raiseError(404, JText::_('Resource Not Found'));
+		}
 	} else {
 	
 		# Set Page Title
-		$mainframe->setPageTitle( html_entity_decode_utf8($link->link_name) ); 
-
+		$document->setTitle($link->link_name);
+		
 		# Add META tags
 		if ($mtconf->getjconf('MetaTitle')=='1') {
-			$mainframe->addMetaTag( 'title' , $link->link_name );
+			$document->setMetadata( 'title', htmlspecialchars($link->link_name));
 		}
 		if ($mtconf->getjconf('MetaAuthor')=='1') {
-			$mainframe->addMetaTag( 'author' , $link->owner );
+			$document->setMetadata( 'author' , htmlspecialchars($link->owner) );
 		}
 
-		if ($link->metadesc <> '') $mainframe->prependMetaTag( 'description', $link->metadesc );
-		if ($link->metakey <> '') $mainframe->prependMetaTag( 'keywords', $link->metakey );
+		if ( !empty($link->metadesc) )
+		{
+			$document->setDescription( htmlspecialchars($link->metadesc) );
+		}
+		elseif( !empty($link->link_desc) )
+		{
+			$metadesc_maxlength = 300;
+			
+			// Get the first 300 characters
+			$metadesc = JString::trim(strip_tags($link->link_desc));
+			$metadesc = JString::str_ireplace("\r\n","",$metadesc);
+			$metadesc = JString::substr($metadesc,0,$metadesc_maxlength);
+			
+			// Make sure the meta description is complete and is not truncated in the middle of a sentence.
+			if( JString::strlen($link->link_desc) > $metadesc_maxlength && substr($metadesc,-1,1) != '.') {
+				if( strrpos($metadesc,'.') !== false )
+				{
+					$metadesc = JString::substr($metadesc,0,JString::strrpos($metadesc,'.')+1);
+				}
+			}
+			$document->setDescription( htmlspecialchars($metadesc) );
+		}
+		
+		if ($link->metakey <> '') $document->setMetaData( 'keywords', $link->metakey );
 
-		$mainframe->addCustomHeadTag(' <script src="'.$mtconf->getjconf('live_site') . $mtconf->get('relative_path_to_js_library') . '" type="text/javascript"></script>');
-		$mainframe->addCustomHeadTag(' <script src="'.$mtconf->getjconf('live_site').'/components/com_mtree/js/vote.js" type="text/javascript"></script>');
+		$document->addCustomTag(' <script src="'.$mtconf->getjconf('live_site') . $mtconf->get('relative_path_to_js_library') . '" type="text/javascript"></script>');
+		$document->addCustomTag(' <script src="'.$mtconf->getjconf('live_site').'/components/com_mtree/js/vote.js" type="text/javascript"></script>');
 
 		# Predefine variables:
 		$prevar = " <script type=\"text/javascript\"><!-- \n";
 		$prevar .= "jQuery.noConflict();\n";
+		$prevar .= "var mtoken=\"".JUtility::getToken()."\";\n";
 		$prevar .= "var mosConfig_live_site=\"".$mtconf->getjconf('live_site')."\";\n";
-		$prevar .= "var indexphp=\"index" . ((defined('JVERSION'))?'':'2') . ".php\";\n";
-		$prevar .= "var langRateThisListing=\"".$_MT_LANG->RATE_THIS_LISTING."\";\n";
+		$prevar .= "var langRateThisListing=\"" . JText::_( 'Rate this listing' , true) . "\";\n";
 		$prevar .= "var ratingText=new Array();\n";
-		$prevar .= "ratingText[5]=\"".$_MT_LANG->RATING_5."\";\n";
-		$prevar .= "ratingText[4]=\"".$_MT_LANG->RATING_4."\";\n";
-		$prevar .= "ratingText[3]=\"".$_MT_LANG->RATING_3."\";\n";
-		$prevar .= "ratingText[2]=\"".$_MT_LANG->RATING_2."\";\n";
-		$prevar .= "ratingText[1] =\"".$_MT_LANG->RATING_1."\";\n";
+		$prevar .= "ratingText[5]=\"" . JText::_( 'Rating 5', true) . "\";\n";
+		$prevar .= "ratingText[4]=\"" . JText::_( 'Rating 4', true) . "\";\n";
+		$prevar .= "ratingText[3]=\"" . JText::_( 'Rating 3', true) . "\";\n";
+		$prevar .= "ratingText[2]=\"" . JText::_( 'Rating 2', true) . "\";\n";
+		$prevar .= "ratingText[1]=\"" . JText::_( 'Rating 1', true) . "\";\n";
 		$prevar .= "//--></script>";
-		$mainframe->addCustomHeadTag($prevar);
-	
-		$cache->call( 'viewlink_cache', $link, $limitstart, $fields, $params, $option );
+		$document->addCustomTag($prevar);
+		
+		if( !empty($my->id) && !$mtconf->get('cache_registered_viewlink') ) {
+			viewlink_cache( $link, $limitstart, $fields, $params, $my, $option );
+		} else {
+			$cache = &JFactory::getCache('com_mtree');
+			$cache->call( 'viewlink_cache', $link, $limitstart, $fields, $params, $my, $option );
+		}
 	}
 }
 
-function viewlink_cache( $link, $limitstart, $fields, $params, $option ) {
-	global $database, $my, $_MT_LANG, $savantConf, $Itemid, $mtconf;
+function viewlink_cache( $link, $limitstart, $fields, $params, $my, $option ) {
+	global $savantConf, $Itemid, $mtconf;
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
-	$link_id = $link->link_id;
+	$database	=& JFactory::getDBO();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
+	$link_id	= $link->link_id;
 	
 	if ( !isset($link->link_id) || $link->link_id <= 0 ) {
 		echo _NOT_EXIST;
@@ -1432,7 +1867,7 @@ function viewlink_cache( $link, $limitstart, $fields, $params, $option ) {
 
 		# Increase 1 hit
 		$cookiename = "mtlink_hit$link->link_id";
-		$visited = mosGetParam( $_COOKIE, $cookiename, '0' );
+		$visited = JRequest::getVar( $cookiename, '0', 'COOKIE', 'INT');
 		
 		if (!$visited) {
 			$database->setQuery( "UPDATE #__mt_links SET link_hits=link_hits+1 WHERE link_id='".$link_id."'" );
@@ -1444,12 +1879,25 @@ function viewlink_cache( $link, $limitstart, $fields, $params, $option ) {
 		# Get reviews
 		$database->setQuery( "SELECT COUNT(*) FROM #__mt_reviews AS r WHERE link_id = '".$link_id."' AND r.rev_approved = 1" );
 		$total_reviews = $database->loadResult();
-		$database->setQuery( "SELECT DISTINCT r.*, u.username, log.value AS rating FROM #__mt_reviews AS r"
+		
+		$sql = "SELECT r.*, u.username, log.value AS rating FROM #__mt_reviews AS r"
 			.	"\n LEFT JOIN #__users AS u ON u.id = r.user_id"
 			.	"\n LEFT JOIN #__mt_log AS log ON log.user_id = r.user_id AND log.link_id = r.link_id AND log_type = 'vote' AND log.rev_id = r.rev_id"
-			.	"\n WHERE r.link_id = '".$link_id."' AND r.rev_approved = 1 ORDER BY " . $mtconf->get('first_review_order1') . ' ' . $mtconf->get('first_review_order2') . ', ' . $mtconf->get('second_review_order1') . ' ' . $mtconf->get('second_review_order2') . ', ' . $mtconf->get('third_review_order1') . ' ' . $mtconf->get('third_review_order2')
-			.	"\n LIMIT $limitstart, " . $mtconf->get('fe_num_of_reviews')
-			);
+			.	"\n WHERE r.link_id = '".$link_id."' AND r.rev_approved = 1 ";
+		if( $mtconf->get('first_review_order1') != '' )
+		{
+			$sql .= "\n ORDER BY " . $mtconf->get('first_review_order1') . ' ' . $mtconf->get('first_review_order2') ;
+			if( $mtconf->get('second_review_order1') != '' )
+			{
+				$sql .= ', ' . $mtconf->get('second_review_order1') . ' ' . $mtconf->get('second_review_order2');
+				if( $mtconf->get('third_review_order1') != '' )
+				{
+					$sql .= ', ' . $mtconf->get('third_review_order1') . ' ' . $mtconf->get('third_review_order2');
+				}
+			}
+		}
+		$sql .= "\n LIMIT $limitstart, " . $mtconf->get('fe_num_of_reviews');
+		$database->setQuery( $sql );
 		$reviews = $database->loadObjectList();
 
 		# Add <br /> to all new lines & gather an array of review_ids
@@ -1470,8 +1918,8 @@ function viewlink_cache( $link, $limitstart, $fields, $params, $option ) {
 		$images = $database->loadObjectList();
 		
 		# Page Navigation
-		require_once($mtconf->getjconf('absolute_path')."/includes/pageNavigation.php");
-		$pageNav = new mosPageNav( $total_reviews, $limitstart, $mtconf->get('fe_num_of_reviews') );
+		jimport('joomla.html.pagination');
+		$pageNav = new JPagination($total_reviews, $limitstart, $mtconf->get('fe_num_of_reviews'));
 
 		# Pathway
 		$pathWay = new mtPathWay( $link->cat_id );
@@ -1481,7 +1929,7 @@ function viewlink_cache( $link, $limitstart, $fields, $params, $option ) {
 		$page = 0;
 
 		# Load Parameters
-		$params =& new mosParameters( $link->attribs );
+		$params =& new JParameter( $link->attribs );
 		$mtconf->set('show_rating',$params->def( 'show_rating', $mtconf->get('show_rating') ));
 		$mtconf->set('show_review',$params->def( 'show_review', $mtconf->get('show_review') ));
 		
@@ -1508,10 +1956,12 @@ function viewlink_cache( $link, $limitstart, $fields, $params, $option ) {
 }
 
 function printlink( $link_id, $option ) {
-	global $database, $_MAMBOTS, $_MT_LANG, $savantConf, $Itemid, $mtconf;
+	global $_MAMBOTS, $savantConf, $Itemid, $mtconf;
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
-	$link = loadLink( $link_id, $savantConf, $fields, $params );
+	$database	=& JFactory::getDBO();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
+	$link 		= loadLink( $link_id, $savantConf, $fields, $params );
 
 	if (empty($link)) {
 		echo _NOT_EXIST;
@@ -1540,16 +1990,20 @@ function printlink( $link_id, $option ) {
 * Report Listing
 */
 function report( $link_id, $option ) {
-	global $cache, $_MT_LANG, $mainframe, $savantConf;
+	global $savantConf;
+
+	$document=& JFactory::getDocument();
 
 	$link = loadLink( $link_id, $savantConf, $fields, $params );
-	$mainframe->setPageTitle( $_MT_LANG->REPORT2 . $link->link_name );
+	$document->setTitle(JText::_( 'Report2' ) . $link->link_name);
 
-	$cache->call( 'report_cache', $link, $fields, $params, $option );
+	report_cache( $link, $fields, $params, $option );
 }
 
 function report_cache( $link, $fields, $params, $option ) {
-	global $database, $savantConf, $my, $_MT_LANG, $mtconf;
+	global $savantConf, $mtconf;
+
+	$my			=& JFactory::getUser();
 
 	# Pathway
 	$pathWay = new mtPathWay( $link->cat_id );
@@ -1562,19 +2016,24 @@ function report_cache( $link, $fields, $params, $option ) {
 		echo _NOT_EXIST;
 	} elseif ( $mtconf->get('user_report') == 1 && $my->id < 1 ) {
 		# User is not logged in
-		$savant->assign('error_msg', $_MT_LANG->PLEASE_LOGIN_BEFORE_REPORT);
+		$savant->assign('error_msg', JText::_( 'Please login before report' ));
 		$savant->display( 'page_errorListing.tpl.php' );
 	} else {
-		$savant->assign('validate', josSpoofValue());
 		$savant->display( 'page_report.tpl.php' );
 	}
 
 }
 
 function send_report( $link_id, $option ) {
-	global $database, $_MT_LANG, $Itemid, $my, $mtconf;
+	global $Itemid, $mtconf, $mainframe;
 
-	josSpoofCheck(1);
+	// Check for request forgeries
+	JRequest::checkToken() or jexit( 'Invalid Token' );
+
+	$database 	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
 
 	if ( $mtconf->get('show_report') == 0 ) {
 		echo _NOT_EXIST;
@@ -1586,37 +2045,46 @@ function send_report( $link_id, $option ) {
 		$link = new mtLinks( $database );
 		$link->load( $link_id );
 
-		$your_name = trim( mosGetParam( $_POST, 'your_name', '' ) );
-		$report_type = trim( mosGetParam( $_POST, 'report_type', '' ) );
-		$report_type2 = "REPORT_PROBLEM_".$report_type;
+		$your_name	= JRequest::getString('your_name', '', 'post');
+		$report_type= JRequest::getInt('report_type', '', 'post');
+		$report_type2 = "REPORT PROBLEM ".$report_type;
 
-		$message = trim( mosGetParam( $_POST, 'message', '' ) );
-		$text = sprintf( $_MT_LANG->REPORT_EMAIL, sefRelToAbs("index.php?option=com_mtree&task=viewlink&link_id=$link_id&Itemid=$Itemid"), (($my->id>0)?$my->username:$your_name), $_MT_LANG->$report_type2, $link_id, $message);
+		$message = JRequest::getVar( 'message',	'', 'post');
 
-		$subject = $_MT_LANG->REPORT." - ".$mtconf->getjconf('sitename');
+		$uri =& JURI::getInstance();
+		$text = JText::sprintf( 
+			'Report email', 
+			$uri->toString(array( 'scheme', 'host', 'port' )) . JRoute::_("index.php?option=com_mtree&task=viewlink&link_id=$link_id&Itemid=$Itemid"), 
+			$link->link_name,
+			JText::_( $report_type2 ), 
+			$link_id, 
+			$message);
 
-		mosMailToAdmin( $subject, $text );
+		$subject = JText::_( 'Report' )." - ".$mtconf->getjconf('sitename');
 
-		if( $my->id > 0 )  {
-			# User is logged on, store user ID
-			$database->setQuery( "INSERT INTO #__mt_reports "
-				.	"( `link_id` , `user_id` , `subject` , `comment`, created ) "
-				.	"VALUES ($link_id, $my->id, '".$_MT_LANG->$report_type2."', '".$message."', '".date( 'Y-m-d H:i:s', time() + $mtconf->getjconf('offset') * 60 * 60 )."')");
-			
-		} else {
-			# User is not logged on, store Guest name
-			$database->setQuery( "INSERT INTO #__mt_reports "
-				.	"( `link_id` , `guest_name` , `subject` , `comment`, created ) "
-				.	"VALUES ($link_id, '".$your_name."', '".$_MT_LANG->$report_type2."', '".$message."', '".date( 'Y-m-d H:i:s', time() + $mtconf->getjconf('offset') * 60 * 60 )."')");
+		if( mosMailToAdmin( $subject, $text ) )
+		{
+			if( $my->id > 0 )  {
+				# User is logged on, store user ID
+				$database->setQuery( "INSERT INTO #__mt_reports "
+					.	"( `link_id` , `user_id` , `subject` , `comment`, created ) "
+					.	'VALUES (' . $database->quote($link_id) . ', ' . $database->quote($my->id) . ', ' . $database->quote( JText::_($report_type2) ) . ', ' . $database->quote($message) . ', ' . $database->quote($now) . ')');
 
+			} else {
+				# User is not logged on, store Guest name
+				$database->setQuery( "INSERT INTO #__mt_reports "
+					.	"( `link_id` , `guest_name` , `subject` , `comment`, created ) "
+					.	'VALUES (' . $database->quote($link_id) . ', ' . $database->quote($your_name) . ', ' . $database->quote( JText::_( $report_type2 ) ) . ', ' . $database->quote($message) . ', ' . $database->quote($now) . ')');
+
+			}
+
+			if (!$database->query()) {
+				echo "<script> alert('".$database->stderr()."');</script>\n";
+				exit();
+			}
+
+			$mainframe->redirect( JRoute::_("index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid"), JText::_( 'Report have been sent' ) );
 		}
-		
-		if (!$database->query()) {
-			echo "<script> alert('".$database->stderr()."');</script>\n";
-			exit();
-		}
-
-		mosRedirect( "index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid", $_MT_LANG->REPORT_HAVE_BEEN_SENT);
 	}
 
 }
@@ -1625,19 +2093,23 @@ function send_report( $link_id, $option ) {
 * Report Listing
 */
 function claim( $link_id, $option ) {
-	global $cache, $_MT_LANG, $mainframe, $savantConf;
+	global $savantConf;
+
+	$document=& JFactory::getDocument();
 
 	$link = loadLink( $link_id, $savantConf, $fields, $params );
-	$mainframe->setPageTitle( $_MT_LANG->CLAIM_LISTING .": ". $link->link_name );
+	$document->setTitle(JText::_( 'Claim listing' ) . ': ' . $link->link_name);
 
-	$cache->call( 'claim_cache', $link, $fields, $params, $option );
+	claim_cache( $link, $fields, $params, $option );
 }
 
 function claim_cache( $link, $fields, $params, $option ) {
-	global $database, $_MAMBOTS, $_MT_LANG, $savantConf, $Itemid, $my, $mainframe, $mtconf;
+	global $_MAMBOTS, $savantConf, $Itemid, $mtconf;
 
+	$my			=& JFactory::getUser();
 	$page = 0;
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	$jdate = JFactory::getDate();
+	$now = $jdate->toMySQL();
 
 	# Pathway
 	$pathWay = new mtPathWay( $link->cat_id );
@@ -1649,7 +2121,7 @@ function claim_cache( $link, $fields, $params, $option ) {
 	if ( $my->id <= 0 ) {
 		
 		# User is not logged in
-		$savant->assign('error_msg', $_MT_LANG->PLEASE_LOGIN_BEFORE_CLAIM);
+		$savant->assign('error_msg', JText::_( 'Please login before claim' ));
 		$savant->display( 'page_errorListing.tpl.php' );
 
 	} elseif( $mtconf->get('show_claim') == 0 || empty($link) ) {
@@ -1664,35 +2136,47 @@ function claim_cache( $link, $fields, $params, $option ) {
 }
 
 function send_claim( $link_id, $option ) {
-	global $database, $_MT_LANG, $Itemid, $my, $mtconf;
-
+	global $Itemid, $mtconf, $mainframe;
+	
+	// Check for request forgeries
+	JRequest::checkToken() or jexit( 'Invalid Token' );
+	
+	$my 		=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
+	
 	if ( $mtconf->get('show_claim') == 0 || $my->id <= 0 ) {
 		
 		echo _NOT_EXIST;
 
 	} else {
+		$database 	=& JFactory::getDBO();
+		$my			=& JFactory::getUser();
 
 		$link = new mtLinks( $database );
 		$link->load( $link_id );
 
-		$message = trim( mosGetParam( $_POST, 'message', '' ) );
-		$text = sprintf( $_MT_LANG->CLAIM_EMAIL, sefRelToAbs("index.php?option=com_mtree&task=viewlink&link_id=$link_id&Itemid=$Itemid"), $link->link_name, $link_id, $message);
-
-		$subject = $_MT_LANG->CLAIM." - ".$mtconf->getjconf('sitename');
-
-		mosMailToAdmin( $subject, stripslashes ($text) );
-
-		# User is logged on, store user ID
-		$database->setQuery( "INSERT INTO #__mt_claims "
-			.	"( `link_id` , `user_id` , `comment`, `created` ) "
-			.	"VALUES ($link_id, $my->id, '".$message."', '".date( 'Y-m-d H:i:s', time() + $mtconf->getjconf('offset') * 60 * 60 )."')");
+		$message = JRequest::getVar( 'message',	'', 'post');
 		
-		if (!$database->query()) {
-			echo "<script> alert('".$database->stderr()."');</script>\n";
-			exit();
-		}
+		$uri =& JURI::getInstance();
+		$text = sprintf( JText::_( 'Claim email' ), $uri->toString(array( 'scheme', 'host', 'port' )) . JRoute::_("index.php?option=com_mtree&task=viewlink&link_id=$link_id&Itemid=$Itemid"), $link->link_name, $link_id, $message);
 
-		mosRedirect( "index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid", $_MT_LANG->CLAIM_HAVE_BEEN_SENT );
+		$subject = JText::_( 'Claim' ) . ' - ' . $mtconf->getjconf('sitename');
+
+		if( mosMailToAdmin( $subject, stripslashes ($text) ) )
+		{
+			# User is logged on, store user ID
+			$database->setQuery( "INSERT INTO #__mt_claims "
+				.	"( `link_id` , `user_id` , `comment`, `created` ) "
+				.	'VALUES (' . $database->quote($link_id) . ', ' . $database->quote($my->id) . ', ' . $database->quote($message) . ', ' . $database->quote($now) . ')');
+
+			if (!$database->query()) {
+				echo "<script> alert('".$database->stderr()."');</script>\n";
+				exit();
+			}
+
+			$mainframe->redirect( JRoute::_("index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid"), JText::_( 'Claim have been sent' ) );
+		}
 	}
 
 }
@@ -1701,9 +2185,11 @@ function send_claim( $link_id, $option ) {
 * Delete Listing
 */
 function deletelisting( $link_id, $option ) {
-	global $database, $savantConf, $_MT_LANG, $Itemid, $my, $mtconf;
+	global $savantConf, $Itemid, $mtconf;
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	$my		=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
 
 	$link = loadLink( $link_id, $savantConf, $fields, $params );
 
@@ -1725,31 +2211,37 @@ function deletelisting( $link_id, $option ) {
 }
 
 function confirmdelete( $link_id, $option ) {
-	global $database, $my, $_MT_LANG, $mtconf;
-	// $mt_user_allowdelete, $mt_notifyadmin_delete, $mt_admin_email, 
+	global $mtconf, $mainframe, $Itemid;
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	// Check for request forgeries
+	JRequest::checkToken() or jexit( 'Invalid Token' );
+
+	$database 	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
+	$nullDate	= $database->getNullDate();
 
 	$database->setQuery( "SELECT * FROM #__mt_links WHERE "
-		.	"\n	link_published='1' AND link_approved > 0 AND link_id='".$link_id."'" 
-		. "\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-		. "\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) "
+		. "\n link_published='1' AND link_approved > 0 AND link_id='".$link_id."'" 
+		. "\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+		. "\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) "
 		);
-	$database->loadObject( $link );
+	$link = $database->loadObject();
 
 	if ($mtconf->get('user_allowdelete') && $my->id == $link->user_id && $my->id > 0 ) {
 		
 		$link = new mtLinks( $database );
 		$link->load( $link_id );
-
+		
 		if ( $mtconf->get('notifyadmin_delete') == 1 ) {
 
 			// Get owner's email
 			$database->setQuery( "SELECT email FROM #__users WHERE id = '".$my->id."' LIMIT 1" );
 			$my_email = $database->loadResult();
 
-			$subject = $_MT_LANG->ADMIN_NOTIFY_DELETE_SUBJECT;
-			$body = sprintf($_MT_LANG->ADMIN_NOTIFY_DELETE_MSG, $link->link_name, $link->link_name, $link->link_id, $my->username, $my_email, $link->link_created);
+			$subject = JText::_( 'Admin notify delete subject' );
+			$body = sprintf(JText::_( 'Admin notify delete msg' ), $link->link_name, $link->link_name, $link->link_id, $my->username, $my_email, $link->link_created);
 
 			mosMailToAdmin( $subject, $body );
 			
@@ -1758,7 +2250,10 @@ function confirmdelete( $link_id, $option ) {
 		$link->updateLinkCount( -1 );
 		$link->delLink();
 
-		mosRedirect( "index.php?option=$option&task=viewowner&user_id=".$my->id."&Itemid=$Itemid", $_MT_LANG->LISTING_HAVE_BEEN_DELETED );
+		$cache = &JFactory::getCache('com_mtree');
+		$cache->clean();
+
+		$mainframe->redirect( JRoute::_("index.php?option=$option&task=viewowner&user_id=".$my->id."&Itemid=$Itemid"), JText::_( 'Listing have been deleted' ) );
 
 	} else {
 		echo _NOT_EXIST;
@@ -1770,18 +2265,23 @@ function confirmdelete( $link_id, $option ) {
 * Review
 */
 function writereview( $link_id, $option ) {
-	global $cache, $_MT_LANG, $mainframe, $savantConf;
+	global $savantConf;
+
+	$document=& JFactory::getDocument();
 
 	$link = loadLink( $link_id, $savantConf, $fields, $params );
-	$mainframe->setPageTitle( $_MT_LANG->REVIEW ." ". $link->link_name );
+	$document->setTitle(JText::_( 'Review' ) ." ". $link->link_name);
 	
-	$cache->call( 'writereview_cache', $link, $fields, $params, $option );
+	writereview_cache( $link, $fields, $params, $option );
 }
 
 function writereview_cache( $link, $fields, $params, $option ) {
-	global $database, $_MAMBOTS, $_MT_LANG, $savantConf, $Itemid, $my, $mainframe, $mtconf;
+	global $_MAMBOTS, $savantConf, $Itemid, $mtconf;
 	
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	$database	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
 
 	if (empty($link) || $mtconf->get('show_review') == 0) {
 		echo _NOT_EXIST;
@@ -1811,23 +2311,27 @@ function writereview_cache( $link, $fields, $params, $option ) {
 
 		if ( count($user_rev) > 0 &&  $mtconf->get('user_review_once') == '1') {
 			# This user has already reviewed this listing
-			$savant->assign('error_msg', $_MT_LANG->YOU_CAN_ONLY_REVIEW_ONCE);
+			$savant->assign('error_msg', JText::_( 'You can only review once' ));
 			$savant->display( 'page_errorListing.tpl.php' );
 		} elseif ( $mtconf->get('user_review') == 1 && $my->id < 1 ) {
 			# User is not logged in
-			$savant->assign('error_msg', $_MT_LANG->PLEASE_LOGIN_BEFORE_REVIEW);
+			$savant->assign('error_msg', JText::_( 'Please login before review' ));
 			$savant->display( 'page_errorListing.tpl.php' );
-		} elseif ( $mtconf->get('user_review') == 2 && $my->id > 0 && $my->id == $link->user_id ) {
+		} elseif ( 
+			$mtconf->get('user_review') == 2 && ( ($my->id > 0 && $my->id == $link->user_id) || $my->id == 0) 
+			||
+			$mtconf->get('user_review') == -1
+			) {
 			# Listing owners are not allowed to review
-			$savant->assign('error_msg', $_MT_LANG->YOU_ARE_NOT_ALLOWED_TO_REVIEW);
+			# Display error when user_review is set to None (-1)
+			$savant->assign('error_msg', JText::_( 'You are not allowed to review' ));
 			$savant->display( 'page_errorListing.tpl.php' );
 		} elseif( $mtconf->get('allow_owner_review_own_listing') == 0 && $my->id == $link->user_id ) {
 			# Owner is trying to review own listing
-			$savant->assign('error_msg', $_MT_LANG->YOU_RE_NOT_ALLOWED_TO_REVIEW_OWN_LISTING);
+			$savant->assign('error_msg', JText::_( 'You re not allowed to review own listing' ));
 			$savant->display( 'page_errorListing.tpl.php' );
 		} else {
 			# OK. User is allowed to review
-			$savant->assign('validate', josSpoofValue());
 			$savant->assign('user_rating', (($user_rating>0)?$user_rating:0));
 			$savant->display( 'page_writeReview.tpl.php' );
 
@@ -1837,14 +2341,20 @@ function writereview_cache( $link, $fields, $params, $option ) {
 }
 
 function addreview( $link_id, $option ) {
-	global $database, $_MT_LANG, $savantConf, $Itemid, $my, $mtconf;
+	global $savantConf, $Itemid, $mtconf, $mainframe;
 
-	josSpoofCheck(1);
+	// Check for request forgeries
+	JRequest::checkToken() or jexit( 'Invalid Token' );
+
+	$database 	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
 
 	# Get the review text
-	$rev_text = trim( mosGetParam( $_POST, 'rev_text', '' ) );
-	$rev_title = trim( strip_tags(mosGetParam( $_POST, 'rev_title', '' )) );
-	$guest_name = trim( strip_tags(mosGetParam( $_POST, 'guest_name', '' )) );
+	$rev_text	= JRequest::getString( 'rev_text', '', 'post');
+	$rev_title 	= JRequest::getString( 'rev_title', '', 'post');
+	$guest_name	= JRequest::getString( 'guest_name', '', 'post');
+
+	$remote_addr = JRequest::getCmd( 'REMOTE_ADDR', '', 'server');
 
 	$link = loadLink( $link_id, $savantConf, $fields, $params );
 
@@ -1859,17 +2369,17 @@ function addreview( $link_id, $option ) {
 	) {
 		$rating = 0;
 	} else {
-		$rating = intval( mosGetParam( $_POST, 'rating', 0 ) );
+		$rating	= JRequest::getInt('rating', 0, 'post');
 	}
 
 	$user_rev = array();
 	if( $my->id > 0 ) {
 		# Check if this user has reviewed this listing previously
-		$database->setQuery( "SELECT rev_id FROM #__mt_reviews WHERE link_id = '".$link->link_id."' AND user_id = '".$my->id."' LIMIT 1" );
+		$database->setQuery( 'SELECT rev_id FROM #__mt_reviews WHERE link_id = ' . $database->quote($link->link_id) . ' AND user_id = ' . $database->quote($my->id) . ' LIMIT 1' );
 		$user_rev = $database->loadObjectList();
 	} elseif ( $my->id == 0 && $mtconf->get('user_review') == 0 ) {
 		# Check log if this user's IP has been used to review this listing before
-		$database->setQuery( "SELECT rev_id FROM #__mt_log WHERE link_id = '".$link->link_id."' AND log_ip = '".getenv( 'REMOTE_ADDR' )."' AND log_type = 'review' LIMIT 1" );
+		$database->setQuery( 'SELECT rev_id FROM #__mt_log WHERE link_id = ' . $database->quote($link->link_id) . ' AND log_ip = ' . $database->quote($remote_addr) . ' AND log_type = \'review\' LIMIT 1' );
 		$user_rev = $database->loadObjectList();
 	}
 	
@@ -1882,12 +2392,16 @@ function addreview( $link_id, $option ) {
 		assignCommonViewlinkVar( $savant, $link, $fields, $pathWay, $params );
 		
 		# This user has already reviewed this listing
-		$savant->assign('error_msg', $_MT_LANG->YOU_CAN_ONLY_REVIEW_ONCE);
+		$savant->assign('error_msg', JText::_( 'You can only review once' ));
 		$savant->display( 'page_errorListing.tpl.php' );
 
 	} elseif( $mtconf->get('allow_owner_review_own_listing') == 0 && $my->id == $link->user_id ) {
+		# Savant Template
+		$savant = new Savant2($savantConf);
+		assignCommonViewlinkVar( $savant, $link, $fields, $pathWay, $params );
+		
 		# Owner is trying to review own listing
-		$savant->assign('error_msg', $_MT_LANG->YOU_RE_NOT_ALLOWED_TO_REVIEW_OWN_LISTING);
+		$savant->assign('error_msg', JText::_( 'You re not allowed to review own listing' ));
 		$savant->display( 'page_errorListing.tpl.php' );
 
 	} elseif (empty($link) || $mtconf->get('show_review') == 0) {
@@ -1906,12 +2420,12 @@ function addreview( $link_id, $option ) {
 
 	} elseif ( $rev_text == '' ) {
 		# Review text is empty
-		echo "<script> alert('".$_MT_LANG->PLEASE_FILL_IN_REVIEW."'); window.history.go(-1); </script>\n";
+		echo "<script> alert('".JText::_( 'Please fill in review' )."'); window.history.go(-1); </script>\n";
 		exit();
 		
 	} elseif ( $rev_title == '' ) {
 		# Review title is empty
-		echo "<script> alert('".$_MT_LANG->PLEASE_FILL_IN_TITLE."'); window.history.go(-1); </script>\n";
+		echo "<script> alert('".JText::_( 'Please fill in title' )."'); window.history.go(-1); </script>\n";
 		exit();
 		
 	} elseif ( 
@@ -1928,48 +2442,52 @@ function addreview( $link_id, $option ) {
 			||
 			($mtconf->get('user_rating') == '2' && $my->id > 0 && $my->id != $link->user_id)
 		)
-		
 	) {
 		# No rating given
-		echo "<script> alert('".$_MT_LANG->PLEASE_FILL_IN_RATING."'); window.history.go(-1); </script>\n";
+		echo "<script> alert('".JText::_( 'Please fill in rating' )."'); window.history.go(-1); </script>\n";
 		exit();
 
 	} else {
 		# Everything is ok, add the review
-		$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+		$jdate = JFactory::getDate();
+		$now = $jdate->toMySQL();
 		
 		if ( $mtconf->get('needapproval_addreview') == 1 ) {
 			$rev_approved = 0;
 		} else {
 			$rev_approved = 1;
+			
+			// Clean cache only when a review is auto-approved
+			$cache = &JFactory::getCache('com_mtree');
+			$cache->clean();
 		}
 
-		if ( $my->id > 0 ) {
-
+		if ( $my->id > 0 )
+		{
 			# User is logged on, store user ID
-			$database->setQuery( "INSERT INTO #__mt_reviews "
-				.	"( `link_id` , `user_id` , `rev_title` , `rev_text` , `rev_date` , `rev_approved` ) "
-				.	"VALUES ($link_id, $my->id, '".$rev_title."', '".$rev_text."', '$now', '$rev_approved')");
-
-		} else {
-
+			$database->setQuery( 'INSERT INTO #__mt_reviews '
+				. '( `link_id` , `user_id` , `rev_title` , `rev_text` , `rev_date` , `rev_approved` ) '
+				. 'VALUES (' . $database->quote($link_id) . ', ' . $database->quote($my->id) . ', ' . $database->quote($rev_title) . ', ' . $database->quote($rev_text) . ', ' . $database->quote($now) . ', ' . $database->quote($rev_approved) . ')');
+		}
+		else
+		{
 			# User is not logged on, store Guest name
-			$database->setQuery( "INSERT INTO #__mt_reviews "
-				.	"( `link_id` , `guest_name` , `rev_title` , `rev_text` , `rev_date` , `rev_approved` ) "
-				.	"VALUES ($link_id, '".$guest_name."', '".$rev_title."', '".$rev_text."', '$now', '$rev_approved')");
-
+			$database->setQuery( 'INSERT INTO #__mt_reviews '
+				. '( `link_id` , `guest_name` , `rev_title` , `rev_text` , `rev_date` , `rev_approved` ) '
+				. 'VALUES (' . $database->quote($link_id) . ', ' . $database->quote($guest_name) . ', ' . $database->quote($rev_title) . ', ' . $database->quote($rev_text) . ', ' . $database->quote($now) . ', ' . $database->quote($rev_approved) . ')');
 		}
 
-		if (!$database->query()) {
+		if (!$database->query())
+		{
 			echo "<script> alert('".$database->stderr()."');</script>\n";
 			exit();
 		}
 		$rev_id = $database->insertid();
 
-		$mtLog = new mtLog( $database, $mtconf->getjconf('offset'), getenv( 'REMOTE_ADDR' ), $my->id, $link_id, $rev_id );
+		$mtLog = new mtLog( $database, $remote_addr, $my->id, $link_id, $rev_id );
 		$mtLog->logReview();
 
-		if( $rating > 0 ) {
+		if( $rating > 0 && $rating <= 5 ) {
 
 			$users_last_rating = $mtLog->getUserLastRating();
 
@@ -1993,9 +2511,10 @@ function addreview( $link_id, $option ) {
 				$new_rating = ((($link->link_rating * $link->link_votes) + $rating) / ++$link->link_votes);
 
 				# Update #__mt_links table
-				$database->setQuery( "UPDATE #__mt_links "
-					.	" SET link_rating = '$new_rating', link_votes = '$link->link_votes' "
-					.	"WHERE link_id = '$link_id' ");
+				$database->setQuery( 'UPDATE #__mt_links '
+					. ' SET link_rating = ' . $database->quote($new_rating)
+					. ', link_votes = ' . $database->quote($link->link_votes)
+					. ' WHERE link_id = ' . $database->quote($link_id));
 				if (!$database->query()) {
 					echo "<script> alert('".$database->stderr()."');</script>\n";
 					exit();
@@ -2010,26 +2529,27 @@ function addreview( $link_id, $option ) {
 		if ( $mtconf->get('notifyadmin_newreview') == 1 ) {
 			
 			$database->setQuery( "SELECT * FROM #__mt_links WHERE link_id = '".$link_id."' LIMIT 1" );
-			$database->loadObject($link);
+			$link = $database->loadObject();
 			
 			if ( $my->id > 0 ) {
 				$database->setQuery( "SELECT name, username, email FROM #__users WHERE id = '".$my->id."' LIMIT 1" );
-				$database->loadObject( $author );
+				$author = $database->loadObject();
 				$author_name = $author->name;
 				$author_username = $author->username;
 				$author_email = $author->email;
 			} else {
 				$author_name = $guest_name;
-				$author_username = $_MT_LANG->GUEST;
+				$author_username = JText::_( 'Guest' );
 				$author_email = '';
 			}
 
 			if ( $rev_approved == 0 ) {
-				$subject = sprintf($_MT_LANG->NEW_REVIEW_EMAIL_SUBJECT_WAITING_APPROVAL, $link->link_name);
-				$msg = sprintf($_MT_LANG->ADMIN_NEW_REVIEW_MSG_WAITING_APPROVAL, $link->link_name, $rev_title, $author_name, $author_username, $author_email, stripslashes(html_entity_decode($rev_text)));
+				$subject = sprintf(JText::_( 'New review email subject waiting approval' ), $link->link_name);
+				$msg = sprintf(JText::_( 'Admin new review msg waiting approval' ), $link->link_name, $rev_title, $author_name, $author_username, $author_email, stripslashes(html_entity_decode($rev_text)));
 			} else {
-				$subject = sprintf($_MT_LANG->NEW_REVIEW_EMAIL_SUBJECT_APPROVED, $link->link_name);
-				$msg = sprintf($_MT_LANG->ADMIN_NEW_REVIEW_MSG_APPROVED, $link->link_name, sefRelToAbs("index.php?option=com_mtree&task=viewlink&link_id=$link_id&Itemid=$Itemid"), $rev_title, $author_name, $author_username, $author_email, stripslashes(html_entity_decode($rev_text)));
+				$uri =& JURI::getInstance();
+				$subject = sprintf(JText::_( 'New review email subject approved' ), $link->link_name);
+				$msg = sprintf(JText::_( 'Admin new review msg approved' ), $link->link_name, $uri->toString(array( 'scheme', 'host', 'port' )) . JRoute::_("index.php?option=com_mtree&task=viewlink&link_id=$link_id&Itemid=$Itemid"), $rev_title, $author_name, $author_username, $author_email, stripslashes(html_entity_decode($rev_text)));
 			}
 
 			mosMailToAdmin( $subject, $msg );
@@ -2037,9 +2557,9 @@ function addreview( $link_id, $option ) {
 		}
 
 		if ( $mtconf->get('needapproval_addreview') == 1 ) {
-			mosRedirect( "index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid", $_MT_LANG->REVIEW_WILL_BE_REVIEWED );
+			$mainframe->redirect( JRoute::_("index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid"), JText::_( 'Review will be reviewed' ) );
 		} else {
-			mosRedirect( "index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid", $_MT_LANG->REVIEW_HAVE_BEEN_SUCCESSFULLY_ADDED );
+			$mainframe->redirect( JRoute::_("index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid"), JText::_( 'Review have been successfully added' ) );
 		}
 
 	}
@@ -2049,22 +2569,27 @@ function addreview( $link_id, $option ) {
 * Rating
 */
 function rate( $link_id, $option ) {
-	global $cache, $mainframe, $_MT_LANG, $savantConf;
+	global $savantConf;
+
+	$document=& JFactory::getDocument();
 
 	$link = loadLink( $link_id, $savantConf, $fields, $params );
-	$mainframe->setPageTitle( $_MT_LANG->RATE . $link->link_name );
+	$document->setTitle(JText::_( 'Rate' ) . $link->link_name);
 
-	$cache->call( 'rate_cache', $link, $fields, $params, $option );
+	rate_cache( $link, $fields, $params, $option );
 
 }
 
 function rate_cache( $link, $fields, $params, $option ) {
-	global $database, $_MAMBOTS, $_MT_LANG, $savantConf, $Itemid, $my, $mainframe, $mtconf, $REMOVE_ADDR;
+	global $_MAMBOTS, $savantConf, $Itemid, $mtconf;
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	$database 	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
 
 	# User IP Address
-	$vote_ip = getenv( 'REMOTE_ADDR' );
+	$vote_ip = JRequest::getCmd( 'REMOTE_ADDR', '', 'server');
 
 	if (empty($link)) {
 		echo _NOT_EXIST;
@@ -2081,9 +2606,9 @@ function rate_cache( $link, $fields, $params, $option ) {
 
 		# Check if this user has voted before
 		if ( $my->id == 0 ) {
-			$database->setQuery( "SELECT log_date FROM #__mt_log WHERE link_id ='".$link->link_id."' AND log_ip = '".$vote_ip."' AND log_type = 'vote'" );
+			$database->setQuery( 'SELECT log_date FROM #__mt_log WHERE link_id =' . $database->quote($link->link_id) . ' AND log_ip = ' . $database->quote($vote_ip) . ' AND log_type = \'vote\'' );
 		} else {
-			$database->setQuery( "SELECT log_date FROM #__mt_log WHERE link_id ='".$link->link_id."' AND user_id = '".$my->id."' AND log_type = 'vote'" );
+			$database->setQuery( 'SELECT log_date FROM #__mt_log WHERE link_id =' . $database->quote($link->link_id) . ' AND user_id = ' . $database->quote($my->id) . ' AND log_type = \'vote\'' );
 		}
 		
 		$voted = false;
@@ -2091,22 +2616,22 @@ function rate_cache( $link, $fields, $params, $option ) {
 
 		if ( $mtconf->get('user_rating') == '1' && $my->id < 1) {
 			# Error. Please login before you can vote
-			$savant->assign('error_msg', $_MT_LANG->PLEASE_LOGIN_BEFORE_RATE);
+			$savant->assign('error_msg', JText::_( 'Please login before rate' ));
 			$savant->display( 'page_errorListing.tpl.php' );
 			
 		} elseif( $mtconf->get('user_rating') == '2' && $my->id > 0 && $my->id == $link->user_id ) {
 			# Error. Listing owner is not allow to rate
-			$savant->assign('error_msg', $_MT_LANG->YOU_ARE_NOT_ALLOWED_TO_RATE);
+			$savant->assign('error_msg', JText::_( 'You are not allowed to rate' ));
 			$savant->display( 'page_errorListing.tpl.php' );
 
 		} elseif ( $voted && $mtconf->get('rate_once') == '1') {
 			# This user has already voted this listing
-			$savant->assign('error_msg', $_MT_LANG->YOU_CAN_ONLY_RATE_ONCE);
+			$savant->assign('error_msg', JText::_( 'You can only rate once' ));
 			$savant->display( 'page_errorListing.tpl.php' );
 
 		} elseif( $mtconf->get('allow_owner_rate_own_listing') == 0 && $my->id == $link->user_id ) {
 			# Owner is trying to vote own listing
-			$savant->assign('error_msg', $_MT_LANG->YOU_RE_NOT_ALLOWED_TO_RATE_OWN_LISTING);
+			$savant->assign('error_msg', JText::_( 'You re not allowed to rate own listing' ));
 			$savant->display( 'page_errorListing.tpl.php' );
 
 		} else {
@@ -2119,82 +2644,94 @@ function rate_cache( $link, $fields, $params, $option ) {
 }
 
 function addrating( $link_id, $option ) {
-	global $database, $no_html, $_MT_LANG;
+	$database =& JFactory::getDBO();
 
 	# Get the rating
-	$rating = intval( mosGetParam( $_POST, 'rating', 0 ) );
+	$rating	= JRequest::getInt('rating', 0);
 
 	$result = saverating( $link_id, $rating );
 
+	$cache = &JFactory::getCache('com_mtree');
+	$cache->clean();
+
 	if( $result ) {
-		if( $no_html ) {
-			$database->setQuery( "SELECT link_votes FROM #__mt_links WHERE link_id = '".$link_id."' LIMIT 1" );
-			$total_votes = $database->loadResult();
-			echo $_MT_LANG->THANKS_FOR_RATING . '|' . $total_votes . ' ' . strtolower($_MT_LANG->VOTES);
-		} else {
-			mosRedirect( "index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid", $_MT_LANG->RATING_HAVE_BEEN_SUCCESSFULLY_ADDED );
-		}
+		$database->setQuery( "SELECT link_votes FROM #__mt_links WHERE link_id = '".$link_id."' LIMIT 1" );
+		$total_votes = $database->loadResult();
+		echo JText::_( 'Thanks for rating' ) . '|' . $total_votes . ' ' . strtolower(JText::_( 'Votes' ));
 	} else {
-		if( $no_html ) {
-			echo 'NA';
-		} else {
-			mosRedirect ( "index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid", $_MT_LANG->YOU_CAN_ONLY_RATE_ONCE );
-		}
+		echo 'NA';
 	}
 
 }
 
 function saverating( $link_id, $rating ) {
-	global $database, $_MT_LANG, $savantConf, $Itemid, $my, $mtconf;
+	global $savantConf, $Itemid, $mtconf;
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	// Check for request forgeries
+	JRequest::checkToken() or jexit( 'Invalid Token' );
+
+	$database 	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
+	$nullDate	= $database->getNullDate();
 
 	$database->setQuery( "SELECT * FROM #__mt_links WHERE "
 		.	"\n	link_published='1' AND link_approved > 0 AND link_id='".$link_id."'" 
-		. "\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-		. "\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) "
+		. "\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+		. "\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) "
 		);
-	$database->loadObject( $link );
+	$link = $database->loadObject();
 
 	# User IP Address
-	$vote_ip = getenv( 'REMOTE_ADDR' );
+	$vote_ip = JRequest::getCmd( 'REMOTE_ADDR', '', 'server');
 
 	if (empty($link)) {
 		# Link does not exists, or is not published
 		echo _NOT_EXIST;
 		return false;
-
-	} elseif ( $mtconf->get('user_rating') == '1' && $my->id < 1) {
+	
+	} elseif ($mtconf->get('user_rating') == '-1') {
+		# Rating is disabled
+		echo _NOT_EXIST;
+		return false;
+	
+	} elseif ( 
+		$mtconf->get('user_rating') == '1' && $my->id < 1
+		||
+		($mtconf->get('user_rating') == '2' && $my->id == 0)
+	) {
 		# User is not logged in
 		echo _NOT_EXIST;
 		return false;
 
 	} elseif ( $mtconf->get('user_rating') == '2' && $my->id > 0 && $my->id == $link->user_id ) {
 		# Listing owners are not allowed to rate
-		echo $_MT_LANG->YOU_ARE_NOT_ALLOWED_TO_RATE;
+		echo JText::_( 'You are not allowed to rate' );
 		return false;
 		
-	} elseif ( $rating == 0 || $rating > 5 ) {
+	} elseif ( $rating <= 0 || $rating > 5 ) {
 		# Invalid rating. User did not fill in rating, or attempt misuse
-		echo $_MT_LANG->PLEASE_SELECT_A_RATING;
+		echo JText::_( 'Please select a rating' );
 		return false;
 		
 	} elseif( $mtconf->get('allow_owner_rate_own_listing') == 0 && $my->id == $link->user_id ) {
 		# Owner is trying to vote own listing
-		echo $_MT_LANG->YOU_RE_NOT_ALLOWED_TO_RATE_OWN_LISTING;
+		echo JText::_( 'You re not allowed to rate own listing' );
 
 	} else {
 
 		# Everything is ok, add the rating
-		$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+		$jdate = JFactory::getDate();
+		$now = $jdate->toMySQL();
 
 		if ( $my->id < 1 ) $my->id = 0;
 
 		# Check if this user has voted before
 		if ( $my->id == 0 ) {
-			$database->setQuery( "SELECT log_date FROM #__mt_log WHERE link_id ='".$link_id."' AND log_ip = '".$vote_ip."' AND log_type = 'vote'" );
+			$database->setQuery( 'SELECT log_date FROM #__mt_log WHERE link_id =' . $database->quote($link_id) . ' AND log_ip = ' . $database->quote($vote_ip) . ' AND log_type = \'vote\'' );
 		} else {
-			$database->setQuery( "SELECT log_date FROM #__mt_log WHERE link_id ='".$link_id."' AND user_id = '".$my->id."' AND log_type = 'vote'" );
+			$database->setQuery( 'SELECT log_date FROM #__mt_log WHERE link_id =' . $database->quote($link_id) . ' AND user_id = ' . $database->quote($my->id) . ' AND log_type = \'vote\'' );
 		}
 		
 		$voted = false;
@@ -2202,7 +2739,7 @@ function saverating( $link_id, $rating ) {
 		
 		if ( !$voted || ($voted && !$mtconf->get('rate_once')) ) {
 
-			$mtLog = new mtLog( $database, $mtconf->getjconf('offset'), $vote_ip, $my->id, $link_id );
+			$mtLog = new mtLog( $database, $vote_ip, $my->id, $link_id );
 			$mtLog->logVote( $rating );
 
 			$new_rating = ((($link->link_rating * $link->link_votes) + $rating) / ++$link->link_votes);
@@ -2212,7 +2749,6 @@ function saverating( $link_id, $rating ) {
 				.	" SET link_rating = '$new_rating', link_votes = '$link->link_votes' "
 				.	"WHERE link_id = '$link_id' ");
 			if (!$database->query()) {
-				/*echo "<script> alert('".$database->stderr()."');</script>\n";*/
 				echo $database->stderr();
 				exit();
 				return false;
@@ -2229,22 +2765,19 @@ function saverating( $link_id, $rating ) {
 }
 
 function fav( $link_id, $action, $option ) {
-	global $database, $no_html, $_MT_LANG;
-
+	$database =& JFactory::getDBO();
 	$result = savefav( $link_id, $action, $option );
 
 	if( $result ) {
-		if( $no_html ) {
-			$database->setQuery( "SELECT COUNT(*) FROM #__mt_favourites WHERE link_id = '".$link_id."'" );
-			$total_fav = $database->loadResult();
-			if( !is_numeric($total_fav) || $total_fav < 0 ) {
-				$total_fav = 0;
-			}
-			if( $action == 1 ) {
-				echo $_MT_LANG->ADDED_AS_FAVOURITE . '|' . $total_fav;
-			} else {
-				echo $_MT_LANG->FAVOURITE_REMOVED . '|' . $total_fav;
-			}
+		$database->setQuery( "SELECT COUNT(*) FROM #__mt_favourites WHERE link_id = '".$link_id."'" );
+		$total_fav = $database->loadResult();
+		if( !is_numeric($total_fav) || $total_fav < 0 ) {
+			$total_fav = 0;
+		}
+		if( $action == 1 ) {
+			echo JText::_( 'Added as favourite' ) . '|' . $total_fav;
+		} else {
+			echo JText::_( 'Favourite removed' ) . '|' . $total_fav;
 		}
 	} else {
 		echo 'NA';
@@ -2252,21 +2785,30 @@ function fav( $link_id, $action, $option ) {
 }
 
 function savefav( $link_id, $action ) {
-	global $database, $_MT_LANG, $savantConf, $Itemid, $my, $mtconf;
+	global $savantConf, $Itemid, $mtconf;
+
+	// Check for request forgeries
+	JRequest::checkToken() or jexit( 'Invalid Token' );
+
+	$database 	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
 
 	if($mtconf->get('show_favourite') == 0) {
 		return false;
 	}
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	$jdate = JFactory::getDate();
+	$now = $jdate->toMySQL();
+	$nullDate	= $database->getNullDate();
+
 	if ( $my->id < 1 ) $my->id = 0;
 
 	$database->setQuery( "SELECT * FROM #__mt_links WHERE "
 		.	"\n	link_published='1' AND link_approved > 0 AND link_id='".$link_id."'" 
-		. "\n AND ( publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now'  ) "
-		. "\n AND ( publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now' ) "
+		. "\n AND ( publish_up = ".$database->Quote($nullDate)." OR publish_up <= '$now'  ) "
+		. "\n AND ( publish_down = ".$database->Quote($nullDate)." OR publish_down >= '$now' ) "
 		);
-	$database->loadObject( $link );
+	$link = $database->loadObject();
 
 	$database->setQuery( "SELECT COUNT(*) FROM #__mt_favourites WHERE user_id = '".$my->id."' AND link_id = '".$link_id."' LIMIT 1" );
 	if( $action == 1 ) {
@@ -2282,7 +2824,7 @@ function savefav( $link_id, $action ) {
 	}
 
 	# User IP Address
-	$vote_ip = getenv( 'REMOTE_ADDR' );
+	$vote_ip = JRequest::getCmd( 'REMOTE_ADDR', '', 'server');
 
 	if (empty($link)) {
 		# Link does not exists, or is not published
@@ -2302,7 +2844,7 @@ function savefav( $link_id, $action ) {
 
 		# Everything is ok, add the rating
 
-		$mtLog = new mtLog( $database, $mtconf->getjconf('offset'), $vote_ip, $my->id, $link_id );
+		$mtLog = new mtLog( $database, $vote_ip, $my->id, $link_id );
 		$mtLog->logFav($action);
 
 		# Add favourite
@@ -2334,30 +2876,19 @@ function savefav( $link_id, $action ) {
 * @param int review vote. 1 = helpful, -1 = not helpful
 * @param string option
 */
-// todo add global var to toggle usage of 'helpful reviews'
 function votereview( $rev_id, $rev_vote, $option ) {
-	global $database, $_MT_LANG, $Itemid, $no_html;
+	$database =& JFactory::getDBO();
 
 	$database->setQuery( "SELECT * FROM #__mt_reviews WHERE rev_approved='1' AND rev_id='".$rev_id."' LIMIT 1" );
-	$database->loadObject( $review );
+	$review = $database->loadObject();
 	$result = savevotereview( $review, $rev_vote, $option );
 	
 	if( $result ) {
-		if( $no_html ) {
-			$return = sprintf( $_MT_LANG->PEOPLE_FIND_THIS_REVIEW_HELPFUL, (($rev_vote == 1)? $review->vote_helpful +1:$review->vote_helpful), ($review->vote_total +1) );
-			//$return .= '|'.(($rev_vote == 1)? $_MT_LANG->YES:$_MT_LANG->NO);
-			$return .= '|'.$_MT_LANG->THANKS_FOR_YOUR_VOTE;
-			
-			echo $return;
-		} else {
-			mosRedirect( "index.php?option=$option&task=viewlink&link_id=".$review->link_id."&Itemid=$Itemid", $_MT_LANG->REVIEW_RATING_HAVE_BEEN_SUCCESSFULLY_ADDED );
-		}
+		$return = sprintf( JText::_( 'People find this review helpful' ), (($rev_vote == 1)? $review->vote_helpful +1:$review->vote_helpful), ($review->vote_total +1) );
+		$return .= '|'.JText::_( 'Thanks for your vote' );
+		echo $return;
 	} else {
-		if( $no_html ) {
-			echo 'NA';
-		} else {
-			mosRedirect ( "index.php?option=$option&task=viewlink&link_id=".$review->link_id."&Itemid=$Itemid", $_MT_LANG->YOU_CAN_ONLY_RATE_ONCE_FOR_EVERY_REVIEW );
-		}
+		echo 'NA';
 	}
 
 }
@@ -2370,10 +2901,16 @@ function votereview( $rev_id, $rev_vote, $option ) {
 * @return TRUE=save is successful, FALSE=save is not successful or vote has been recorded in the past
 */
 function savevotereview( $review, $rev_vote, $option ) {
-	global $database, $my, $mtconf;
+	global $mtconf;
 
+	// Check for request forgeries
+	JRequest::checkToken() or jexit( 'Invalid Token' );
+
+	$database 	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	
 	# User IP Address
-	$vote_ip = getenv( 'REMOTE_ADDR' );
+	$vote_ip = JRequest::getCmd( 'REMOTE_ADDR', '', 'server');
 
 	if (empty($review)) {
 		# Review does not exists, or is not published
@@ -2398,15 +2935,16 @@ function savevotereview( $review, $rev_vote, $option ) {
 	} else {
 
 		# Everything is ok, add the rating
-		$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+		$jdate = JFactory::getDate();
+		$now = $jdate->toMySQL();
 
 		if ( $my->id < 1 ) $my->id = 0;
 
 		# Check if this user has voted before
 		if ( $my->id == 0 ) {
-			$database->setQuery( "SELECT log_date FROM #__mt_log WHERE rev_id ='".$review->rev_id."' AND log_ip = '".$vote_ip."' AND log_type = 'votereview'" );
+			$database->setQuery( 'SELECT log_date FROM #__mt_log WHERE rev_id =' . $database->quote($review->rev_id) . ' AND log_ip = ' . $database->quote($vote_ip) . ' AND log_type = \'votereview\'' );
 		} else {
-			$database->setQuery( "SELECT log_date FROM #__mt_log WHERE rev_id ='".$review->rev_id."' AND user_id = '".$my->id."' AND log_type = 'votereview'" );
+			$database->setQuery( 'SELECT log_date FROM #__mt_log WHERE rev_id =' . $database->quote($review->rev_id) . ' AND user_id = ' . $database->quote($my->id) . ' AND log_type = \'votereview\'' );
 		}
 		
 		$voted = false;
@@ -2415,9 +2953,9 @@ function savevotereview( $review, $rev_vote, $option ) {
 		if ( !$voted ) {
 
 			# Update #__mt_log table
-			$database->setQuery( "INSERT INTO #__mt_log "
-				.	"( `log_ip` , `log_type`, `user_id` , `log_date` , `link_id`, `rev_id`, `value` )"
-				.	"VALUES ( '$vote_ip', 'votereview', '$my->id', '$now', '$review->link_id', '$review->rev_id', '".( ($rev_vote == -1) ? '-1':'1' )."')");
+			$database->setQuery( 'INSERT INTO #__mt_log '
+				. ' ( `log_ip` , `log_type`, `user_id` , `log_date` , `link_id`, `rev_id`, `value` )'
+				. ' VALUES ( ' . $database->quote($vote_ip) . ', ' . $database->quote('votereview') . ', ' . $database->quote($my->id) . ', ' . $database->quote($now) . ', ' . $database->quote($review->link_id) . ', ' . $database->quote($review->rev_id) . ', ' . $database->quote( ($rev_vote == -1) ? '-1':'1' ) . ')');
 			if (!$database->query()) {
 				echo $database->stderr();
 				return false;
@@ -2447,7 +2985,11 @@ function savevotereview( $review, $rev_vote, $option ) {
 * Report Review
 */
 function reportreview( $rev_id, $option ) {
-	global $database, $cache, $_MT_LANG, $mainframe, $savantConf, $mtconf, $my;
+	global $savantConf, $mtconf;
+	
+	$database 	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$document	=& JFactory::getDocument();
 	
 	if( $mtconf->get('user_report_review') == -1 || ($mtconf->get('user_report_review') == 1 && $my->id == 0) ) {
 		echo _NOT_EXIST;
@@ -2456,14 +2998,14 @@ function reportreview( $rev_id, $option ) {
 			.	"\nLEFT JOIN #__users AS u ON u.id = r.user_id"
 			.	"\nLEFT JOIN #__mt_log AS l ON l.user_id = r.user_id AND l.link_id = r.link_id AND log_type = 'vote'"
 			.	"\nWHERE r.rev_id = '".$rev_id."' LIMIT 1" );
-		$database->loadObject( $review );
+		$review = $database->loadObject();
 
 		if( $review->link_id > 0 ) {
 
 			$link = loadLink( $review->link_id, $savantConf, $fields, $params );
-			$mainframe->setPageTitle( $_MT_LANG->REPORT_REVIEW . ': ' . $review->rev_title );
+			$document->setTitle(JText::_( 'Report review' ) . ': ' . $review->rev_title);
 
-			$cache->call( 'reportreview_cache', $review, $link, $fields, $params, $option );
+			reportreview_cache( $review, $link, $fields, $params, $option );
 	
 		} else {
 			echo _NOT_EXIST;
@@ -2472,7 +3014,7 @@ function reportreview( $rev_id, $option ) {
 }
 
 function reportreview_cache( $review, $link, $fields, $params, $option ) {
-	global $database, $savantConf;
+	global $savantConf;
 
 	# Pathway
 	$pathWay = new mtPathWay( $link->cat_id );
@@ -2486,17 +3028,22 @@ function reportreview_cache( $review, $link, $fields, $params, $option ) {
 	if (empty($link)) {
 		echo _NOT_EXIST;
 	} else {
-		$savant->assign('validate', josSpoofValue());
 		$savant->display( 'page_reportReview.tpl.php' );
 	}
 
 }
 
 function send_reportreview( $rev_id, $option ) {
-	global $database, $_MT_LANG, $Itemid, $my, $mtconf;
+	global $Itemid, $mtconf, $mainframe;
 
-	josSpoofCheck(1);
+	// Check for request forgeries
+	JRequest::checkToken() or jexit( 'Invalid Token' );
 
+	$database 	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
+	
 	if( $mtconf->get('user_report_review') == -1 || ($mtconf->get('user_report_review') == 1 && $my->id == 0) ) {
 		
 		echo _NOT_EXIST;
@@ -2508,45 +3055,46 @@ function send_reportreview( $rev_id, $option ) {
 			. "\n WHERE rev_id ='".$rev_id."' AND r.rev_approved = 1 AND l.link_published = 1 AND l.link_approved = 1" 
 			. "\n LIMIT 1"
 			);
-		$database->loadObject( $link );
+		$link = $database->loadObject();
 
 		if( count($link) == 1 && $link->link_id > 0 ) {
 			
 			if( $my->id > 0 ) {
-				$database->setQuery( "SELECT name, username FROM #__users WHERE id = '".$my->id."' LIMIT 1" );
-				$database->loadObject( $my_user );
-				$your_name = $my_user->name.' ('.$my_user->username.')';
+				$your_name = $my->name.' ('.$my->username.')';
 			} else {
-				$your_name = trim( mosGetParam( $_POST, 'your_name', '' ) );
+				$your_name = JRequest::getVar( 'your_name', '', 'post');
 			}
 
-			$message = trim( mosGetParam( $_POST, 'message', '' ) );
-			$text = sprintf( $_MT_LANG->REPORT_REVIEW_EMAIL, sefRelToAbs("index.php?option=com_mtree&task=viewlink&link_id=$link->link_id&Itemid=$Itemid"), $your_name, $message, $link->rev_title, $link->link_name, $link->rev_text, $link->rev_text );
-
-			$subject = $_MT_LANG->REPORT_REVIEW." - ".$link->rev_title;
-
-			mosMailToAdmin( $subject, $text );
-
-			if( $my->id > 0 )  {
-				# User is logged on, store user ID
-				$database->setQuery( "INSERT INTO #__mt_reports "
-					.	"( `link_id` , `rev_id` , `user_id` , `comment`, created ) "
-					.	"VALUES ($link->link_id, $rev_id, $my->id, '".$message."', '".date( 'Y-m-d H:i:s', time() + $mtconf->getjconf('offset') * 60 * 60 )."')");
-				
-			} else {
-				# User is not logged on, store Guest name
-				$database->setQuery( "INSERT INTO #__mt_reports "
-					.	"( `link_id` , `rev_id` , `guest_name` , `comment`, created ) "
-					.	"VALUES ($link->link_id, $rev_id, '".$your_name."', '".$message."', '".date( 'Y-m-d H:i:s', time() + $mtconf->getjconf('offset') * 60 * 60 )."')");
-
-			}
+			$message = JRequest::getVar( 'message', '', 'post');
 			
-			if (!$database->query()) {
-				echo "<script> alert('".$database->stderr()."');</script>\n";
-				exit();
-			}
+			$uri =& JURI::getInstance();
+			$text = sprintf( JText::_( 'Report review email' ), $uri->toString(array( 'scheme', 'host', 'port' )) . JRoute::_("index.php?option=com_mtree&task=viewlink&link_id=$link->link_id&Itemid=$Itemid"), $your_name, $message, $link->rev_title, $link->link_name, $link->rev_text, $link->rev_text );
 
-			mosRedirect( "index.php?option=$option&task=viewlink&link_id=$link->link_id&Itemid=$Itemid", $_MT_LANG->REPORT_HAVE_BEEN_SENT);
+			$subject = JText::_( 'Report review' ) . ' - ' . $link->rev_title;
+
+			if( mosMailToAdmin( $subject, $text ) )
+			{
+				if( $my->id > 0 )  {
+					# User is logged on, store user ID
+					$database->setQuery( 'INSERT INTO #__mt_reports '
+						. '( `link_id` , `rev_id` , `user_id` , `comment`, created ) '
+						. 'VALUES (' . $database->quote($link->link_id) . ', ' . $database->quote($rev_id) . ', ' . $database->quote($my->id) . ', ' . $database->quote($message) . ', ' . $database->quote($now) . ')');
+
+				} else {
+					# User is not logged on, store Guest name
+					$database->setQuery( 'INSERT INTO #__mt_reports '
+						. ' ( `link_id` , `rev_id` , `guest_name` , `comment`, created ) '
+						. ' VALUES (' . $database->quote($link->link_id) . ', ' . $database->quote($rev_id) . ', ' . $database->quote($your_name) . ', ' . $database->quote($message) . ', ' . $database->quote($now) . ')');
+
+				}
+
+				if (!$database->query()) {
+					echo "<script> alert('".$database->stderr()."');</script>\n";
+					exit();
+				}
+
+				$mainframe->redirect( JRoute::_("index.php?option=$option&task=viewlink&link_id=$link->link_id&Itemid=$Itemid"), JText::_( 'Report have been sent' ));
+			}
 
 		}
 
@@ -2558,13 +3106,17 @@ function send_reportreview( $rev_id, $option ) {
 * Reply Review
 */
 function replyreview( $rev_id, $option ) {
-	global $database, $cache, $_MT_LANG, $mainframe, $savantConf, $my, $mtconf;
+	global $savantConf, $mtconf;
 
+	$database	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$document	=& JFactory::getDocument();
+	
 	$database->setQuery( "SELECT r.*, u.username, l.value AS rating FROM #__mt_reviews AS r "
 		.	"\nLEFT JOIN #__users AS u ON u.id = r.user_id"
 		.	"\nLEFT JOIN #__mt_log AS l ON l.user_id = r.user_id AND l.link_id = r.link_id AND log_type = 'vote'"
 		.	"\nWHERE r.rev_id = '".$rev_id."' LIMIT 1" );
-	$database->loadObject( $review );
+	$review = $database->loadObject();
 	
 	# Replying review are restricted to the listing owner only.
 	if( isset($review) && $review->link_id > 0 && $my->id > 0 && $mtconf->get('owner_reply_review') ) {
@@ -2572,8 +3124,8 @@ function replyreview( $rev_id, $option ) {
 		$link = loadLink( $review->link_id, $savantConf, $fields, $params );
 
 		if( $link->user_id == $my->id ) {
-			$mainframe->setPageTitle( $_MT_LANG->REPLY_REVIEW . ': ' . $review->rev_title );
-			$cache->call( 'replyreview_cache', $review, $link, $fields, $params, $option );
+			$document->setTitle(JText::_( 'Reply review' ) . ': ' . $review->rev_title);
+			replyreview_cache( $review, $link, $fields, $params, $option );
 		} else {
 			echo _NOT_EXIST;
 		}
@@ -2584,7 +3136,7 @@ function replyreview( $rev_id, $option ) {
 }
 
 function replyreview_cache( $review, $link, $fields, $params, $option ) {
-	global $database, $savantConf, $_MT_LANG;
+	global $savantConf;
 
 	# Pathway
 	$pathWay = new mtPathWay( $link->cat_id );
@@ -2598,7 +3150,7 @@ function replyreview_cache( $review, $link, $fields, $params, $option ) {
 	if (empty($link)) {
 		echo _NOT_EXIST;
 	} elseif ( !empty($review->ownersreply_text) ) {
-		$savant->assign('error_msg', $_MT_LANG->YOU_CAN_ONLY_REPLY_A_REVIEW_ONCE);
+		$savant->assign('error_msg', JText::_( 'You can only reply a review once' ));
 		$savant->display( 'page_errorListing.tpl.php' );
 	} else {
 		$savant->display( 'page_replyReview.tpl.php' );
@@ -2607,9 +3159,17 @@ function replyreview_cache( $review, $link, $fields, $params, $option ) {
 }
 
 function send_replyreview( $rev_id, $option ) {
-	global $database, $_MT_LANG, $Itemid, $my, $mtconf;
+	global $Itemid, $mtconf, $mainframe;
 	
-	$message = trim( mosGetParam( $_POST, 'message', '' ) );
+	// Check for request forgeries
+	JRequest::checkToken() or jexit( 'Invalid Token' );
+
+	$database	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
+	
+	$message = JRequest::getVar( 'message', '', 'post');
 
 	if ( !$mtconf->get('owner_reply_review') ) {
 
@@ -2619,7 +3179,7 @@ function send_replyreview( $rev_id, $option ) {
 
 		if ( $message == '' ) {
 			# Reply text is empty
-			echo "<script> alert('".$_MT_LANG->PLEASE_FILL_IN_REPLY."'); window.history.go(-1); </script>\n";
+			echo "<script> alert('".JText::_( 'Please fill in reply' )."'); window.history.go(-1); </script>\n";
 			exit();
 		}
 
@@ -2634,47 +3194,49 @@ function send_replyreview( $rev_id, $option ) {
 			. "\n WHERE rev_id ='".$rev_id."' AND r.rev_approved = 1 AND l.link_published = 1 AND l.link_approved = 1" 
 			. "\n LIMIT 1"
 			);
-		$database->loadObject( $link );
+		$link = $database->loadObject();
 
 		if( count($link) == 1 && empty($link->ownersreply_text) && $link->link_id > 0 && $my->id > 0 && $link->link_owner_user_id == $my->id ) {
 
-			$database->setQuery( "UPDATE #__mt_reviews SET ownersreply_text = '" . $message . "', ownersreply_date = '" . date( 'Y-m-d H:i:s', time() + $mtconf->getjconf('offset') * 60 * 60 ) . "', ownersreply_approved = '" . $rr_approved . "' WHERE rev_id = '" . $rev_id . "'" );
-			
-			if (!$database->query()) {
-				echo "<script> alert('".$database->stderr()."');</script>\n";
-				exit();
-			}
-
-			$mtLog = new mtLog( $database, $mtconf->getjconf('offset'), getenv( 'REMOTE_ADDR' ), $my->id, $link->link_id, $rev_id );
-			$mtLog->logReplyReview();
-			
 			# Notify Admin
 			if ( $my->id > 0 ) {
 				$database->setQuery( "SELECT name, username, email FROM #__users WHERE id = '".$my->id."' LIMIT 1" );
-				$database->loadObject( $author );
+				$author = $database->loadObject();
 				$author_name = $author->name;
 				$author_username = $author->username;
 				$author_email = $author->email;
 			} else {
 				$author_name = $guest_name;
-				$author_username = $_MT_LANG->GUEST;
+				$author_username = JText::_( 'Guest' );
 				$author_email = '';
 			}
 
 			if ( $rr_approved == 0 ) {
-				$subject = sprintf($_MT_LANG->NEW_REVIEW_REPLY_EMAIL_SUBJECT_WAITING_APPROVAL, $link->link_name);
-				$msg = sprintf( $_MT_LANG->ADMIN_NEW_REVIEW_REPLY_MSG_WAITING_APPROVAL, $my->name, $message, $link->rev_title, $link->link_name, $link->rev_text, $link->rev_text );
+				$subject = sprintf(JText::_( 'New review reply email subject waiting approval' ), $link->link_name);
+				$msg = sprintf( JText::_( 'Admin new review reply msg waiting approval' ), $my->name, $message, $link->rev_title, $link->link_name, $link->rev_text, $link->rev_text );
 			} else {
-				$subject = sprintf($_MT_LANG->NEW_REVIEW_REPLY_EMAIL_SUBJECT_APPROVED, $link->link_name);
-				$msg = sprintf( $_MT_LANG->ADMIN_NEW_REVIEW_REPLY_MSG_APPROVED, $my->name, $message, $link->rev_title, $link->link_name, $link->rev_text, $link->rev_text );
+				$subject = sprintf(JText::_( 'New review reply email subject approved' ), $link->link_name);
+				$msg = sprintf( JText::_( 'Admin new review reply msg approved' ), $my->name, $message, $link->rev_title, $link->link_name, $link->rev_text, $link->rev_text );
 			}
 
-			mosMailToAdmin( $subject, $msg );
+			if( mosMailToAdmin( $subject, $msg ) )
+			{
+				$database->setQuery( 'UPDATE #__mt_reviews SET ownersreply_text = ' . $database->quote($message) . ', ownersreply_date = ' . $database->quote($now) . ', ownersreply_approved = ' . $database->quote($rr_approved) . ' WHERE rev_id = ' . $database->quote($rev_id) );
 
-			if ( $mtconf->get('needapproval_replyreview') == 1 ) {
-				mosRedirect( "index.php?option=$option&task=viewlink&link_id=$link->link_id&Itemid=$Itemid", $_MT_LANG->REPLY_REVIEW_WILL_BE_REVIEWED);
-			} else {
-				mosRedirect( "index.php?option=$option&task=viewlink&link_id=$link->link_id&Itemid=$Itemid", $_MT_LANG->REPLY_REVIEW_HAVE_BEEN_SUCCESSFULLY_ADDED);
+				if (!$database->query()) {
+					echo "<script> alert('".$database->stderr()."');</script>\n";
+					exit();
+				}
+
+				$remote_addr = JRequest::getCmd( 'REMOTE_ADDR', '', 'server');
+				$mtLog = new mtLog( $database, $remote_addr, $my->id, $link->link_id, $rev_id );
+				$mtLog->logReplyReview();
+
+				if ( $mtconf->get('needapproval_replyreview') == 1 ) {
+					$mainframe->redirect( JRoute::_("index.php?option=$option&task=viewlink&link_id=$link->link_id&Itemid=$Itemid"), JText::_( 'Reply review will be reviewed' ));
+				} else {
+					$mainframe->redirect( JRoute::_("index.php?option=$option&task=viewlink&link_id=$link->link_id&Itemid=$Itemid"), JText::_( 'Reply review have been successfully added' ));
+				}
 			}
 
 		} else {
@@ -2691,19 +3253,23 @@ function send_replyreview( $rev_id, $option ) {
 */
 
 function recommend( $link_id, $option ) {
-	global $cache, $_MT_LANG, $mainframe, $savantConf;
+	global $savantConf;
+
+	$document=& JFactory::getDocument();
 
 	$link = loadLink( $link_id, $savantConf, $fields, $params );
-	$mainframe->setPageTitle( $_MT_LANG->RECOMMEND ." ". $link->link_name );
+	$document->setTitle(JText::_( 'Recommend' ) ." ". $link->link_name);
 
-	$cache->call( 'recommend_cache', $link, $fields, $params, $option );
+	recommend_cache( $link, $fields, $params, $option );
 
 }
 
 function recommend_cache( $link, $fields, $params, $option ) {
-	global $database, $_MAMBOTS, $_MT_LANG, $savantConf, $Itemid, $my, $mainframe, $mtconf;
+	global $_MAMBOTS, $savantConf, $Itemid, $mtconf;
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	$my		=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
 
 	$page = 0;
 
@@ -2714,55 +3280,62 @@ function recommend_cache( $link, $fields, $params, $option ) {
 	$savant = new Savant2($savantConf);
 	assignCommonViewlinkVar( $savant, $link, $fields, $pathWay, $params );
 
-	if (empty($link)) {
+	if ( empty($link) || $mtconf->get('user_recommend') == -1 ) {
 		echo _NOT_EXIST;
 
 	} elseif ( $mtconf->get('user_recommend') == '1' && $my->id < 1 ) {
 		# Error. Please login before you can recommend
-		$savant->assign('error_msg', $_MT_LANG->PLEASE_LOGIN_BEFORE_RECOMMEND);
+		$savant->assign('error_msg', JText::_( 'Please login before recommend' ));
 		$savant->display( 'page_errorListing.tpl.php' );
 
 	} else {
-		$savant->assign('validate', josSpoofValue());
 		$savant->display( 'page_recommend.tpl.php' );
 	}
 
 }
 
 function send_recommend( $link_id, $option ) {
-	global $_MT_LANG, $Itemid, $my, $mtconf;
+	global $Itemid, $mtconf, $mainframe;
 
-	josSpoofCheck(1);
+	// Check for request forgeries
+	JRequest::checkToken() or jexit( 'Invalid Token' );
 
-	if ( $mtconf->get('show_recommend') == 0 || ($mtconf->get('user_recommend') == '1' && $my->id < 1) ) {
+	$my			=& JFactory::getUser();
+
+	if ( $mtconf->get('show_recommend') == 0 || ($mtconf->get('user_recommend') == '1' && $my->id < 1) || $mtconf->get('user_recommend') == -1 ) {
 		echo _NOT_EXIST;
 
 	} else {
 
-		$your_name = trim( mosGetParam( $_POST, 'your_name', '' ) );
-		$your_email = trim( mosGetParam( $_POST, 'your_email', '' ) );
-		$friend_name = trim( mosGetParam( $_POST, 'friend_name', '' ) );
-		$friend_email = trim( mosGetParam( $_POST, 'friend_email', '' ) );
+		$your_name		= JRequest::getVar( 'your_name', '', 'post');
+		$your_email		= JRequest::getVar( 'your_email', '', 'post');
+		$friend_name	= JRequest::getVar( 'friend_name', '', 'post');
+		$friend_email	= JRequest::getVar( 'friend_email', '', 'post');
 
 		if (!$your_email || !$friend_email || (is_email($your_email)==false) || (is_email($friend_email)==false) ){
-			echo "<script>alert (\"".$_MT_LANG->YOU_MUST_ENTER_VALID_EMAIL."\"); window.history.go(-1);</script>";
+			echo "<script>alert (\"".JText::_( 'You must enter valid email' )."\"); window.history.go(-1);</script>";
 			exit(0);
 		}
 
-		$msg = sprintf( $_MT_LANG->RECOMMEND_MSG,
+		$uri =& JURI::getInstance();
+		$msg = sprintf( JText::_( 'Recommend msg' ),
 			$mtconf->getjconf('sitename'),
 			$your_name,
 			$your_email,
-			sefRelToAbs('index.php?option=com_mtree&task=viewlink&link_id='.$link_id.'&Itemid='.$Itemid)
+			$uri->toString(array( 'scheme', 'host', 'port' )) . JRoute::_('index.php?option=com_mtree&task=viewlink&link_id='.$link_id.'&Itemid='.$Itemid, false)
 			);
 
-		$subject = sprintf($_MT_LANG->RECOMMEND_SUBJECT, $your_name);
+		$subject = sprintf(JText::_( 'Recommend subject' ), $your_name);
 
-		mosMail( $your_email, $your_name, $friend_email, $subject, wordwrap($msg) );
-
-		mosRedirect( "index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid", sprintf($_MT_LANG->RECOMMEND_EMAIL_HAVE_BEEN_SENT, $friend_name) );
+		if  (!validateInputs( $friend_email, $subject, $msg ) ) {
+			$document =& JFactory::getDocument();
+			JError::raiseWarning( 0, $document->getError() );
+			return false;
+		} else {
+			JUTility::sendMail( $your_email, $your_name, $friend_email, $subject, wordwrap($msg) );
+			$mainframe->redirect( JRoute::_("index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid"), sprintf(JText::_( 'Recommend email have been sent' ), $friend_name) );
+		}
 	}
-
 }
 
 /***
@@ -2770,19 +3343,23 @@ function send_recommend( $link_id, $option ) {
 */
 
 function contact( $link_id, $option ) {
-	global $cache, $_MT_LANG, $mainframe, $savantConf;
+	global $savantConf;
+
+	$document=& JFactory::getDocument();
 
 	$link = loadLink( $link_id, $savantConf, $fields, $params );
-	$mainframe->setPageTitle( $_MT_LANG->CONTACT2 . $link->link_name );
+	$document->setTitle(JText::_( 'Contact2' ) . $link->link_name);
 
-	$cache->call( 'contact_cache', $link, $fields, $params, $option );
+	contact_cache( $link, $fields, $params, $option );
 
 }
 
 function contact_cache( $link, $fields, $params, $option ) {
-	global $database, $_MAMBOTS, $_MT_LANG, $savantConf, $Itemid, $my, $mtconf;
+	global $_MAMBOTS, $savantConf, $Itemid, $mtconf;
 
-	$now = date( "Y-m-d H:i:s", time()+$mtconf->getjconf('offset')*60*60 );
+	$my		=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
 	$page = 0;
 
 	# Pathway
@@ -2791,7 +3368,6 @@ function contact_cache( $link, $fields, $params, $option ) {
 	# Savant Template
 	$savant = new Savant2($savantConf);
 	assignCommonViewlinkVar( $savant, $link, $fields, $pathWay, $params );
-	$savant->assign('validate', josSpoofValue());
 
 	if (
 		empty($link)
@@ -2799,12 +3375,14 @@ function contact_cache( $link, $fields, $params, $option ) {
 		$mtconf->get( 'show_contact' ) == 0
 		OR
 		$mtconf->get( 'use_owner_email' ) == 0 && empty($link->email)
+		OR
+		$mtconf->get( 'user_contact' ) == -1
 	) {
 		echo _NOT_EXIST;
 
 	} elseif ( $mtconf->get('user_contact') == '1' && $my->id < 1 ) {
 		# Error. Please login before you can contact the owner
-		$savant->assign('error_msg', $_MT_LANG->PLEASE_LOGIN_BEFORE_CONTACT);
+		$savant->assign('error_msg', JText::_( 'Please login before contact' ));
 		$savant->display( 'page_errorListing.tpl.php' );
 
 	} else {
@@ -2814,9 +3392,13 @@ function contact_cache( $link, $fields, $params, $option ) {
 }
 
 function send_contact( $link_id, $option ) {
-	global $database, $_MT_LANG, $Itemid, $my, $mtconf;
+	global $Itemid, $mtconf, $mainframe;
 
-	josSpoofCheck(1);
+	// Check for request forgeries
+	JRequest::checkToken() or jexit( 'Invalid Token' );
+
+	$database	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
 
 	$link = new mtLinks( $database );
 	$link->load( $link_id );
@@ -2827,21 +3409,26 @@ function send_contact( $link_id, $option ) {
 		($mtconf->get('user_contact') == '1' && $my->id < 1)
 		OR
 		$mtconf->get( 'use_owner_email' ) == 0 && empty($link->email)
+		OR
+		$mtconf->get( 'user_contact' ) == -1
 	) {
 		echo _NOT_EXIST;
 
 	} else {
 
-		$your_name = trim( mosGetParam( $_POST, 'your_name', '' ) );
-		$your_email = trim( mosGetParam( $_POST, 'your_email', '' ) );
-		$message = sprintf( $_MT_LANG->CONTACT_MESSAGE, $your_name, $your_email, $link->link_name, sefReltoAbs("index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid"), trim( mosGetParam( $_POST, 'message', '' ) ) );
+		$your_name	= JRequest::getVar( 'your_name', '', 'post');
+		$your_email	= JRequest::getVar( 'your_email', '', 'post');
+
+		$uri =& JURI::getInstance();
+
+		$message = sprintf( JText::_( 'Contact message' ), $your_name, $your_email, $link->link_name, $uri->toString(array( 'scheme', 'host', 'port' )) . JRoute::_( "index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid", false ), JRequest::getVar( 'message', '', 'post') );
 
 		if (!$your_email || (is_email($your_email)==false) ){
-			echo "<script>alert (\"".$_MT_LANG->YOU_MUST_ENTER_VALID_EMAIL."\"); window.history.go(-1);</script>";
+			echo "<script>alert (\"".JText::_( 'You must enter valid email' )."\"); window.history.go(-1);</script>";
 			exit(0);
 		}
 
-		$subject = sprintf($_MT_LANG->CONTACT_SUBJECT, $mtconf->getjconf('sitename'), $link->link_name);
+		$subject = sprintf(JText::_( 'Contact subject' ), $mtconf->getjconf('sitename'), $link->link_name);
 		
 		if( empty($link->email) ) {
 			$database->setQuery( 'SELECT email FROM #__users WHERE id = '.$link->user_id.' LIMIT 1' );
@@ -2850,9 +3437,14 @@ function send_contact( $link_id, $option ) {
 			$email = $link->email;
 		}
 
-		mosMail( $your_email, $your_name, $email, $subject, wordwrap($message) );
-
-		mosRedirect( "index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid", $_MT_LANG->CONTACT_EMAIL_HAVE_BEEN_SENT);
+		if  (!validateInputs( $email, $subject, $message ) ) {
+			$document =& JFactory::getDocument();
+			JError::raiseWarning( 0, $document->getError() );
+			return false;
+		} else {
+			JUTility::sendMail( $your_email, $your_name, $email, $subject, wordwrap($message) );
+			$mainframe->redirect( JRoute::_("index.php?option=$option&task=viewlink&link_id=$link_id&Itemid=$Itemid"), JText::_( 'Contact email have been sent' ));
+		}
 	}
 
 }
@@ -2870,16 +3462,20 @@ function is_email($email){
 * Edit Listing
 */
 function editlisting( $link_id, $option ) {
-	global $database, $_MT_LANG, $savantConf, $Itemid, $my, $mainframe, $mtconf;
+	global $savantConf, $Itemid, $mtconf;
 
-	require_once( $mtconf->getjconf('absolute_path') . '/administrator/components/com_mtree/mfields.class.php' );
+	$database	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$document	=& JFactory::getDocument();
+
+	require_once( JPATH_COMPONENT_ADMINISTRATOR.DS.'mfields.class.php' );
 
 	# Get cat_id if user is adding new listing. 
-	$cat_id = intval( mosGetParam( $_REQUEST, 'cat_id', 0 ) );
-
+	$cat_id	= JRequest::getInt('cat_id', 0);
+	
 	// This var retrieve the link_id for adding listing
-	$link_id_passfromurl = intval( mosGetParam( $_REQUEST, 'link_id', 0 ) );
-
+	$link_id_passfromurl = JRequest::getInt('link_id', 0);
+	
 	if ( $link_id_passfromurl > 0 && $cat_id == 0 ) {
 		$database->setQuery( "SELECT cat_id FROM (#__mt_links AS l, #__mt_cl AS cl) WHERE l.link_id ='".$link_id_passfromurl."' AND cl.link_id = l.link_id" );
 		$cat_id = $database->loadResult();
@@ -2892,12 +3488,10 @@ function editlisting( $link_id, $option ) {
 		$link->load( 0 );
 	} else {
 		$link->load( $link_id );
-		// if ( $link_id == 0 ) $link->website = "http://";
-		// $link->link_name = htmlspecialchars($link->link_name);
 	}
 
 	# Load all published CORE & custom fields
-	$sql = "SELECT cf.*, cfv.link_id, cfv.value AS value, cfv.attachment, ft.ft_class FROM #__mt_customfields AS cf "
+	$sql = "SELECT cf.*, " . ($link_id ? $link_id : 0) . " AS link_id, cfv.value AS value, cfv.attachment, cfv.counter, ft.ft_class FROM #__mt_customfields AS cf "
 		.	"\nLEFT JOIN #__mt_cfvalues AS cfv ON cf.cf_id=cfv.cf_id AND cfv.link_id = " . $link_id
 		.	"\nLEFT JOIN #__mt_fieldtypes AS ft ON ft.field_type=cf.field_type"
 		.	"\nWHERE cf.hidden ='0' AND cf.published='1' ORDER BY ordering ASC";
@@ -2913,12 +3507,17 @@ function editlisting( $link_id, $option ) {
 	
 	# Get current category's template
 	$database->setQuery( "SELECT cat_name, cat_parent, cat_template, metakey, metadesc FROM #__mt_cats WHERE cat_id='".$cat_id."' AND cat_published='1' LIMIT 1" );
-	$database->loadObject( $cat );
+	$cat = $database->loadObject();
 	
-	if( $cat ) {
-		$mainframe->setPageTitle( sprintf($_MT_LANG->ADD_LISTING2, $cat->cat_name) );
+	if( $link->link_id == 0 )
+	{
+		if( $cat ) {
+			$document->setTitle(sprintf(JText::_( 'Add listing2' ), $cat->cat_name));
+		} else {
+			$document->setTitle(JText::_( 'Add listing' ));
+		}
 	} else {
-		$mainframe->setPageTitle( $_MT_LANG->ADD_LISTING );
+		$document->setTitle(sprintf(JText::_( 'Edit listing2' ), $link->link_name));
 	}
 
 	if ( isset($cat->cat_template) && $cat->cat_template <> '' ) {
@@ -2934,9 +3533,9 @@ function editlisting( $link_id, $option ) {
 	$pw_cats = $pathWay->getPathWayWithCurrentCat( $cat_id );
 	$pathWayToCurrentCat = '';
 	$mtCats = new mtCats($database);
-	$pathWayToCurrentCat = ' <a href="'.sefRelToAbs("index.php?option=com_mtree&task=listcats&Itemid=".$Itemid).'">'.$_MT_LANG->ROOT."</a>";
+	$pathWayToCurrentCat = ' <a href="'.JRoute::_("index.php?option=com_mtree&task=listcats&Itemid=".$Itemid).'">'.JText::_( 'Root' )."</a>";
 	foreach( $pw_cats AS $pw_cat ) {
-		$pathWayToCurrentCat .= $_MT_LANG->ARROW .' <a href="'.sefRelToAbs("index.php?option=com_mtree&task=listcats&cat_id=".$pw_cat."&Itemid=".$Itemid).'">'.$mtCats->getName($pw_cat)."</a>";
+		$pathWayToCurrentCat .= JText::_( 'Arrow' ) .' <a href="'.JRoute::_("index.php?option=com_mtree&task=listcats&cat_id=".$pw_cat."&Itemid=".$Itemid).'">'.$mtCats->getName($pw_cat)."</a>";
 	}
 
 	# Savant Template
@@ -2951,10 +3550,16 @@ function editlisting( $link_id, $option ) {
 	$savant->assignRef('fields',$fields);
 	$savant->assignRef('images',$images);
 
+	if( $mtconf->get('image_maxsize') > 1048576 ) {
+		$savant->assign('image_size_limit', round(($mtconf->get('image_maxsize')/1048576),1) . 'MB' );
+	} else {
+		$savant->assign('image_size_limit', round($mtconf->get('image_maxsize')/1024) . 'KB' );
+	}
+
 	# Check permission
 	if ( ($mtconf->get('user_addlisting') == 1 && $my->id < 1) || ($link_id > 0 && $my->id == 0) ) {
 
-		$savant->assign('error_msg', $_MT_LANG->PLEASE_LOGIN_BEFORE_ADDLISTING);
+		$savant->assign('error_msg', JText::_( 'Please login before addlisting' ));
 		$savant->display( 'page_error.tpl.php' );
 	
 	} elseif( ($link_id > 0 && $my->id <> $link->user_id) || ($mtconf->get('user_allowmodify') == 0 && $link_id > 0) || ($mtconf->get('user_addlisting') == -1 && $link_id == 0) || ($mtconf->get('user_addlisting') == 1 && $my->id == 0) ) {
@@ -2962,34 +3567,7 @@ function editlisting( $link_id, $option ) {
 		echo _NOT_EXIST;
 
 	} else {
-	# OK, you can edit
-		/*
-		// Get custom field's caption
-		$database->setQuery( "SELECT  CONCAT( 'cust_', cf_id ) AS name, caption AS value FROM #__mt_customfield" );
-		$savant->assign('custom_fields', $database->loadObjectList('name'));
-
-		// Get custom field's data
-		foreach( $savant->custom_fields AS $cf ) {
-			$database->setQuery( "SELECT $cf->name FROM #__mt_links WHERE link_id = '$link_id' LIMIT 1" );
-			$val = $database->loadResult();
-			if (isset($val)) {
-				$savant->custom_data[$cf->name] = $val;
-			} else {
-				$savant->custom_data[$cf->name] = '';
-			}
-		}
-		*/
-		/*
-		for($i=0;$i<30;$i++) {
-			$val = $mtconf->get('cust_'.($i+1));
-			if( !empty($val) ) {
-				$savant->custom_data['cust_'.($i+1)] = $val;
-			} else {
-				$savant->custom_data['cust_'.($i+1)] = '';
-			}
-		}
-		*/
-		
+		// OK, you can edit
 		$database->setQuery( "SELECT CONCAT('cust_',cf_id) as varname, caption As value, field_type, prefix_text_mod, suffix_text_mod FROM #__mt_customfields WHERE hidden <> '1' AND published = '1'" );
 		$custom_fields = $database->loadObjectList('varname');
 		$savant->assign('custom_fields', $custom_fields);
@@ -3011,27 +3589,23 @@ function editlisting( $link_id, $option ) {
 		if($mtconf->get('allow_changing_cats_in_addlisting')) {
 			getCatsSelectlist( $cat_id, $cat_tree, 1 );
 			if ( $cat_id > 0 ) {
-				$cat_options[] = mosHTML::makeOption( $cat->cat_parent, $_MT_LANG->ARROW_BACK );
+				$cat_options[] = JHTML::_('select.option', $cat->cat_parent, JText::_( 'Arrow back' ));
+				
 			}
 			
 			if( $mtconf->get('allow_listings_submission_in_root') ) {
-				$cat_options[] = mosHTML::makeOption( "0", $_MT_LANG->ROOT );
+				$cat_options[] = JHTML::_('select.option', '0', JText::_( 'Root' ));
 			}
 			if(count($cat_tree)>0) {
 				foreach( $cat_tree AS $ct ) {
 					if( $ct["cat_allow_submission"] == 1 ) {
-						$cat_options[] = mosHTML::makeOption( $ct["cat_id"], str_repeat("&nbsp;",($ct["level"]*3)) .(($ct["level"]>0) ? " -":''). $ct["cat_name"] );
+						$cat_options[] = JHTML::_('select.option', $ct["cat_id"], str_repeat("&nbsp;",($ct["level"]*3)) .(($ct["level"]>0) ? " -":''). $ct["cat_name"]);
 					} else {
-						$cat_options[] = mosHTML::makeOption( ($ct["cat_id"]*-1), str_repeat("&nbsp;",($ct["level"]*3)) .(($ct["level"]>0) ? " -":''). "(".$ct["cat_name"].")" );
+						$cat_options[] = JHTML::_('select.option', ($ct["cat_id"]*-1), str_repeat("&nbsp;",($ct["level"]*3)) .(($ct["level"]>0) ? " -":''). "(".$ct["cat_name"].")");
 					}
 				}
 			}
-
-			if( $GLOBALS['_VERSION']->RELEASE == '1.0' ) {
-				$catlist = mosHTML::selectList( $cat_options, "new_cat_id", 'size=8 class="text_area" id="browsecat"', 'value', 'text', "" );
-			} elseif( $GLOBALS['_VERSION']->RELEASE == '1.5' ) {
-				$catlist = mosHTML::selectList( $cat_options, "new_cat_id", 'size=8 class="text_area"', 'value', 'text', "", 'browsecat' );
-			}
+			$catlist = JHTML::_('select.genericlist', $cat_options, 'new_cat_id', 'size=8 class="text_area"', 'value', 'text', '', 'browsecat' );
 			$savant->assignRef('catlist', $catlist );
 		}
 		
@@ -3045,26 +3619,41 @@ function editlisting( $link_id, $option ) {
 			}
 		}
 		$savant->assign('pathWay', $pathWay);
-		$savant->assign('validate', josSpoofValue());
 		$savant->display( 'page_addListing.tpl.php' );
 	}
 }
 
 function savelisting( $option ) {
-	global $database, $_MT_LANG, $Itemid, $my, $mtconf;
+	global $Itemid, $mtconf, $mainframe, $link_id;
 
-	josSpoofCheck(1);
+	// Check for request forgeries
+	JRequest::checkToken() or jexit( 'Invalid Token' );
 
-	require_once( $mtconf->getjconf('absolute_path') . '/administrator/components/com_mtree/mfields.class.php' );
-	require_once( $mtconf->getjconf('absolute_path') . '/administrator/components/com_mtree/tools.mtree.php' );
+	$database	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
 
+	require_once( JPATH_COMPONENT_ADMINISTRATOR.DS.'mfields.class.php' );
+	require_once( JPATH_COMPONENT_ADMINISTRATOR.DS.'tools.mtree.php' );
+	
+	$raw_filenames = array();
+	
 	# Get cat_id / remove_image / link_image
-	$cat_id = intval( mosGetParam( $_REQUEST, 'cat_id', 0 ) );
-	// $new_cat_id = intval( mosGetParam( $_POST, 'new_cat_id', 0 ) );
-	$other_cats = explode(',', mosGetParam( $_POST, 'other_cats', '' ));
-
+	$cat_id	= JRequest::getInt('cat_id', 0);
+	
+	$other_cats = explode(',', JRequest::getString('other_cats', null, 'post'));
+	JArrayHelper::toInteger($other_cats);
+	if( isset($other_cats) && empty($other_cats[0]) ) {
+		$other_cats = array();
+	}
+	
 	# Check if any malicious user is trying to submit link
-	if ( ($mtconf->get('user_addlisting') == 1 && $my->id < 1) || $mtconf->get('user_addlisting') == -1 ) {
+	if ( 
+		($mtconf->get('user_addlisting') == 1 && $my->id < 1 && $link_id == 0) 
+		|| 
+		($mtconf->get('user_addlisting') == -1 && $link_id == 0)
+		||
+		($mtconf->get('user_allowmodify') == 0 && $link_id > 0) 
+		) {
 		
 		echo _NOT_EXIST;
 
@@ -3072,28 +3661,32 @@ function savelisting( $option ) {
 	# Allowed
 		
 		$row = new mtLinks( $database );
-		if (!@$row->bind( $_POST )) {
+		$post = JRequest::get( 'post' );
+		if (!@$row->bind( $post )) {
 			echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 			exit();
 		}
 		
-		// if ( $new_cat_id <> $row->cat_id AND $new_cat_id > 0 ) {
-		// 	$row->cat_id = $new_cat_id;
-		// }
-
 		$isNew = ($row->link_id < 1) ? 1 : 0;
 
 		# Assignment for new record
 		if ($isNew) {
 
-			$row->link_created = date( 'Y-m-d H:i:s', time() + ( $mtconf->getjconf('offset') * 60 * 60 ) );
-			$row->ordering = 999;
+			$jdate				= JFactory::getDate();
+			$row->link_created 	= $jdate->toMySQL();
+			$row->publish_up 	= $jdate->toMySQL();
+			$row->ordering 		= 999;
 
 			if ( $my->id > 0) {
 				$row->user_id = $my->id;
 			} else {
-				$database->setQuery( "SELECT id FROM #__users WHERE usertype = 'Super Administrator' LIMIT 1" );
+				$database->setQuery( 'SELECT id FROM #__users WHERE usertype = \'Super Administrator\' LIMIT 1' );
 				$row->user_id = $database->loadResult();
+			}
+
+			if( empty($row->alias) )
+			{
+				$row->alias = JFilterOutput::stringURLSafe($row->link_name);
 			}
 
 			// Approval for adding listing
@@ -3102,8 +3695,9 @@ function savelisting( $option ) {
 			} else {
 				$row->link_approved = 1;
 				$row->link_published = 1;
-				mosCache::cleanCache( 'com_mtree' );
 				$row->updateLinkCount( 1 );
+				$cache = &JFactory::getCache('com_mtree');
+				$cache->clean();
 			}
 
 		# Modification to existing record
@@ -3120,34 +3714,44 @@ function savelisting( $option ) {
 				// Get the name of the old photo and last modified date
 				$sql="SELECT link_id, link_modified, link_created FROM #__mt_links WHERE link_id='".$row->link_id."'";
 				$database->setQuery($sql);
-				$database->loadObject($old);
-
-				// $old_image = $old->link_image;
+				$old = $database->loadObject();
 
 				// Retrive last modified date
 				$old_modified = $old->link_modified;
 				$link_created = $old->link_created;
 
-				$row->link_published = 1;
+				// $row->link_published = 1;
 				$row->user_id = $my->id;
 				
 				// Get other info from original listing
-				$database->setQuery( "SELECT link_desc, link_hits, link_votes, link_rating, link_featured, link_created, link_visited, ordering, publish_down, publish_up, attribs, internal_notes FROM #__mt_links WHERE link_id = '$row->link_id'" );
-				$database->loadObject( $original );
+				// $database->setQuery( "SELECT link_name, link_desc, link_hits, link_votes, link_rating, link_featured, link_created, link_visited, ordering, publish_down, publish_up, attribs, internal_notes, link_published, link_approved FROM #__mt_links WHERE link_id = '$row->link_id'" );
+				$database->setQuery( "SELECT * FROM #__mt_links WHERE link_id = '$row->link_id'" );
+				$original = $database->loadObject();
 				$original_link_id = $row->link_id;
 				
-				$row->link_modified = $row->getLinkModified( $original_link_id, $_POST );
+				$row->link_modified = $row->getLinkModified( $original_link_id, $post );
 
 				foreach( $original AS $k => $v ) {
-					if( in_array($k,array('link_hits', 'link_votes', 'link_rating', 'link_featured', 'link_created', 'link_visited', 'ordering', 'publish_down', 'publish_up', 'attribs', 'internal_notes')) ) {
+					if( in_array($k,array('link_hits', 'link_votes', 'link_rating', 'link_featured', 'link_created', 'link_visited', 'ordering', 'publish_down', 'publish_up', 'attribs', 'internal_notes', 'link_published', 'link_approved')) ) {
 						$row->$k = $v;
 					}
 				}
 				
+				if( !isset($row->metadesc) && isset($original->metadesc) && !empty($original->metadesc) ) {
+					$row->metadesc = $original->metadesc;
+				}
+
+				if( !isset($row->metakey) && isset($original->metakey) && !empty($original->metakey) ) {
+					$row->metakey = $original->metakey;
+				}
+
 				// Remove any listing that is waiting for approval for this listing
 				$database->setQuery( 'SELECT link_id FROM #__mt_links WHERE link_approved = \''.(-1*$row->link_id).'\' LIMIT 1' );
 				$tmp_pending_link_id = $database->loadResult();
 				if( $tmp_pending_link_id > 0 ) {
+					$database->setQuery( 'SELECT CONCAT(' . $database->quote(JPATH_SITE.$mtconf->get('relative_path_to_attachments')) . ',raw_filename) FROM #__mt_cfvalues_att WHERE link_id = ' . $database->quote($tmp_pending_link_id) );
+					$raw_filenames = array_merge($raw_filenames,$database->loadResultArray());
+					
 					$database->setQuery( "DELETE FROM #__mt_cfvalues WHERE link_id = '".$tmp_pending_link_id."'" );
 					$database->query();
 					$database->setQuery( "DELETE FROM #__mt_cfvalues_att WHERE link_id = '".$tmp_pending_link_id."'" );
@@ -3167,22 +3771,27 @@ function savelisting( $option ) {
 					}
 					$database->setQuery( "DELETE FROM #__mt_images WHERE link_id = '".$tmp_pending_link_id."'" );
 					$database->query();
-				}				
+				}
+				
 				// Approval for modify listing
-				if ( $mtconf->get('needapproval_modifylisting') ) {
-					$row->link_approved = (-1 * $row->link_id);
-					$row->link_id = null;
-				} else {
-					$row->link_approved = 1;
-					mosCache::cleanCache( 'com_mtree' );
-					
-					// Get old state (approved, published)
-					$database->setQuery( "SELECT cat_id FROM #__mt_cl AS cl WHERE link_id ='".$row->link_id."' AND main = 1 LIMIT 1" );
-					$database->loadObject( $old_state );
-					if($row->cat_id <> $old_state->cat_id) {
-						$row->updateLinkCount( 1 );
-						$row->updateLinkCount( -1, $old_state->cat_id );
-					}
+				if( $original->link_published && $original->link_approved )
+				{
+					if ( $mtconf->get('needapproval_modifylisting') ) {
+						$row->link_approved = (-1 * $row->link_id);
+						$row->link_id = null;
+					} else {
+						$row->link_approved = 1;
+						$cache = &JFactory::getCache('com_mtree');
+						$cache->clean();
+
+						// Get old state (approved, published)
+						$database->setQuery( "SELECT cat_id FROM #__mt_cl AS cl WHERE link_id ='".$row->link_id."' AND main = 1 LIMIT 1" );
+						$old_state = $database->loadObject();
+						if($row->cat_id <> $old_state->cat_id) {
+							$row->updateLinkCount( 1 );
+							$row->updateLinkCount( -1, $old_state->cat_id );
+						}
+					}					
 				}
 
 			}
@@ -3199,9 +3808,24 @@ function savelisting( $option ) {
 			}
 		}
 
+		# Load original custom field values, for use in mosetstree plugins
+		$sql="SELECT cf_id, value FROM #__mt_cfvalues WHERE link_id='".$row->link_id."' AND attachment <= 0";
+		if( !empty($hidden_cfs) ) {
+			$sql .= " AND cf_id NOT IN (" . implode(',',$hidden_cfs) . ")";
+		}
+		$database->setQuery($sql);
+		$original_cfs = $database->loadAssocList('cf_id');
+		if( !empty($original_cfs) )
+		{
+			foreach( $original_cfs AS $key_cf_id => $value )
+			{
+				$original_cfs[$key_cf_id] = $value['value'];
+			}
+		}
+		
 		# Erase Previous Records, make way for the new data
 		$sql="DELETE FROM #__mt_cfvalues WHERE link_id='".$row->link_id."' AND attachment <= 0";
-		if(count($hidden_cfs)>0) {
+		if( !empty($hidden_cfs) ) {
 			$sql .= " AND cf_id NOT IN (" . implode(',',$hidden_cfs) . ")";
 		}
 		$database->setQuery($sql);
@@ -3210,7 +3834,7 @@ function savelisting( $option ) {
 			exit();
 		}
 
-		if(count($fieldtype) > 0 ) {
+		if( !empty($fieldtype) ) {
 			$load_ft = array();
 			foreach( $fieldtype AS $ft ) {
 				if(!in_array($ft->field_type,$load_ft)) {
@@ -3228,24 +3852,28 @@ function savelisting( $option ) {
 		$active_cfs = array();
 		$additional_cfs = array();
 		$core_params = array();
-		foreach($_POST AS $k => $v) {
-			$v = mosStripslashes($v);
+		foreach($post AS $k => $v) {
+			$v = JRequest::getVar( $k, '', 'post', '', 2);
 			if ( substr($k,0,2) == "cf" && ( (!is_array($v) && (!empty($v) || $v == '0')) || (is_array($v) && !empty($v[0])) ) ) {
 				if(strpos(substr($k,2),'_') === false && is_numeric(substr($k,2))) {
 					// This custom field uses only one input. ie: cf17, cf23, cf2
-					$active_cfs[substr($k,2)] = $v;
+					$active_cfs[intval(substr($k,2))] = $v;
+					if( is_array($v) && array_key_exists(intval(substr($k,2)),$original_cfs) ) {
+						$original_cfs[intval(substr($k,2))] = explode('|',$original_cfs[intval(substr($k,2))]);
+						
+					}
 				} else {
 					// This custom field uses more than one input. The date field is an example of cf that uses this. ie: cf13_0, cf13_1, cf13_2
 					$ids = explode('_',substr($k,2));
 					if(count($ids) == 2 && is_numeric($ids[0]) && is_numeric($ids[1]) ) {
-						$additional_cfs[$ids[0]][$ids[1]] = $v;
+						$additional_cfs[intval($ids[0])][intval($ids[1])] = $v;
 					}
 				}
 			} elseif( substr($k,0,7) == 'keep_cf' ) {
-				$cf_id = substr($k,7);
+				$cf_id = intval(substr($k,7));
 				$keep_att_ids[] = $cf_id;
 
-		# Perform parseValue on Core Fields
+			# Perform parseValue on Core Fields
 			} elseif( substr($k,0,2) != "cf" && isset($row->{$k}) ) {
 				if(strpos(strtolower($k),'link_') === false) {
 					$core_field_type = 'core' . $k;
@@ -3256,7 +3884,7 @@ function savelisting( $option ) {
 
 				if(class_exists($class)) {
 					if(empty($core_params)) {
-						$database->setQuery('SELECT field_type, params FROM #__mt_customfields WHERE iscore = 1 ');
+						$database->setQuery('SELECT field_type, params FROM #__mt_customfields WHERE iscore = 1');
 						$core_params = $database->loadObjectList('field_type');
 					}
 					$mFieldTypeObject = new $class(array('params'=>$core_params[$core_field_type]->params));
@@ -3274,11 +3902,11 @@ function savelisting( $option ) {
 			if( !$isNew && $row->link_id > 0 ) {
 				// Find if there are any additional categories assigned to the listinig
 				if( $original_link_id <> $row->link_id ) {
-					$database->setQuery( 'SELECT DISTINCT cat_id FROM #__mt_cl WHERE link_id = \''.$original_link_id.'\' and main=\'0\' ' );
+					$database->setQuery( 'SELECT DISTINCT cat_id FROM #__mt_cl WHERE link_id = '.$database->Quote($original_link_id).' and main=\'0\' ' );
 					$tmp_cats = $database->loadResultArray();
-					if( count($tmp_cats)>0 ){
+					if( !empty($tmp_cats) ){
 						foreach( $tmp_cats AS $tmp_cat_id ) {
-							$database->setQuery( 'INSERT INTO #__mt_cl (`link_id`,`cat_id`,`main`) VALUES(\''.$row->link_id.'\',\''.$tmp_cat_id.'\',\'0\')');
+							$database->setQuery( 'INSERT INTO #__mt_cl (`link_id`,`cat_id`,`main`) VALUES('.$database->Quote($row->link_id).','.$database->Quote($tmp_cat_id).',\'0\')');
 							$database->query();
 						}
 					}
@@ -3305,14 +3933,15 @@ function savelisting( $option ) {
 		// loop
 		$file_values = array();
 
-		foreach($_FILES AS $k => $v) {
+		$files = JRequest::get( 'files' );
+		foreach($files AS $k => $v) {
 			if ( substr($k,0,2) == "cf" && is_numeric(substr($k,2)) && $v['error'] == 0) {
-				$active_cfs[substr($k,2)] = $v;
+				$active_cfs[intval(substr($k,2))] = $v;
 				$file_cfs[] = substr($k,2);
 			}
 		}
 
-		if(count($active_cfs)>0) {
+		if( !empty($active_cfs) ) {
 			$database->setQuery('SELECT cf_id, params FROM #__mt_customfields WHERE iscore = 0 AND cf_id IN (\'' . implode('\',\'',array_keys($active_cfs)). '\') LIMIT ' . count($active_cfs));
 			$params = $database->loadObjectList('cf_id');
 
@@ -3326,10 +3955,11 @@ function savelisting( $option ) {
 				# Perform parseValue on Custom Fields
 				
 				$mFieldTypeObject = new $class(array('id'=>$cf_id,'params'=>$params[$cf_id]->params));
-				if(array_key_exists($cf_id,$additional_cfs) && count($additional_cfs[$cf_id]) > 0) {
+				if(array_key_exists($cf_id,$additional_cfs) && !empty($additional_cfs[$cf_id]) ) {
 					$arr_v = $additional_cfs[$cf_id];
 					array_unshift($arr_v, $v);
 					$v = &$mFieldTypeObject->parseValue($arr_v);
+					$active_cfs[$cf_id] = $v;
 				} else {
 					$v = &$mFieldTypeObject->parseValue($v);
 				}
@@ -3340,8 +3970,8 @@ function savelisting( $option ) {
 
 				if( (!empty($v) || $v == '0') && !in_array($cf_id,$file_cfs)) {
 					# -- Now add the row
-					$sql = "INSERT INTO #__mt_cfvalues (`cf_id`, `link_id`, `value`)"
-						. "\nVALUES ('".$cf_id."', '".$row->link_id."', '".$database->getEscaped((is_array($v)) ? implode("|",$v) : $v)."')";
+					$sql = 'INSERT INTO #__mt_cfvalues (`cf_id`, `link_id`, `value`)'
+						. ' VALUES (' . $database->quote($cf_id) . ', ' . $database->quote($row->link_id) . ', ' . $database->quote((is_array($v)) ? implode("|",$v) : $v) . ')';
 					$database->setQuery($sql);
 					if (!$database->query()) {
 						echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
@@ -3352,106 +3982,182 @@ function savelisting( $option ) {
 			} // End of foreach
 		}
 		
+		# If this link is pending approval for modification, copy over hidden values
+		if ( !$isNew && $mtconf->get('needapproval_modifylisting') && !empty($hidden_cfs) ) {
+			$sql = 'INSERT INTO #__mt_cfvalues (`cf_id`, `link_id`, `value`)'
+				. ' SELECT `cf_id`, \'' . $row->link_id . '\', `value` FROM #__mt_cfvalues WHERE link_id = ' . $original_link_id . ' AND cf_id IN (' . implode(',',$hidden_cfs) . ')';
+			$database->setQuery($sql);
+			$database->query();
+		}
+		
 		# Remove all attachment except those that are kept
-		if(isset($keep_att_ids) && count($keep_att_ids)>0) {
+		if(isset($keep_att_ids) && !empty($keep_att_ids) ) {
+			$database->setQuery( 'SELECT CONCAT(' . $database->quote(JPATH_SITE.$mtconf->get('relative_path_to_attachments')) . ',raw_filename) FROM #__mt_cfvalues_att WHERE link_id = ' . $database->quote($row->link_id) . ' AND cf_id NOT IN (\'' . implode('\',\'',$keep_att_ids) . '\')');
+			$raw_filenames = array_merge($raw_filenames,$database->loadResultArray());
+
 			$database->setQuery('DELETE FROM #__mt_cfvalues_att WHERE link_id = \'' . $row->link_id . '\' AND cf_id NOT IN (\'' . implode('\',\'',$keep_att_ids) . '\')' );
 			$database->query();
 			$database->setQuery('DELETE FROM #__mt_cfvalues WHERE link_id = \'' . $row->link_id . '\' AND cf_id NOT IN (\'' . implode('\',\'',$keep_att_ids) . '\') AND attachment > 0' );
 			$database->query();
 		} else {
+			$database->setQuery( 'SELECT CONCAT(' . $database->quote(JPATH_SITE.$mtconf->get('relative_path_to_attachments')) . ',raw_filename) FROM #__mt_cfvalues_att WHERE link_id = ' . $database->quote($row->link_id) );
+			$raw_filenames = array_merge($raw_filenames,$database->loadResultArray());
+
 			$database->setQuery('DELETE FROM #__mt_cfvalues_att WHERE link_id = \'' . $row->link_id . '\'' );
 			$database->query();
 			$database->setQuery('DELETE FROM #__mt_cfvalues WHERE link_id = \'' . $row->link_id . '\' AND attachment > 0' );
 			$database->query();
 		}
 
-		$database->setQuery('SET GLOBAL max_allowed_packet =10485760');
-		$database->query();
-		
-		if(!$isNew && isset($keep_att_ids) && count($keep_att_ids)>0 && $mtconf->get('needapproval_modifylisting')) {
-			$database->setQuery('INSERT INTO #__mt_cfvalues_att (link_id,cf_id,filename,filedata,filesize,extension) '
-				.	"\nSELECT '" . $row->link_id . "',cf_id,filename,filedata,filesize,extension FROM #__mt_cfvalues_att WHERE link_id = '" . $original_link_id . "' AND cf_id IN ('" . implode("','",$keep_att_ids) . "')");
-			$database->query();
-			$database->setQuery('INSERT INTO #__mt_cfvalues (cf_id,link_id,value,attachment) '
-				.	"\nSELECT cf_id,'" . $row->link_id . "',value,attachment FROM #__mt_cfvalues WHERE link_id = '" . $original_link_id . "' AND cf_id IN ('" . implode("','",$keep_att_ids) . "')");
+		if(!$isNew && isset($keep_att_ids) && !empty($keep_att_ids) && $mtconf->get('needapproval_modifylisting')) {
+
+			$database->setQuery( "SELECT * FROM #__mt_cfvalues_att WHERE link_id = '" . $original_link_id . "' AND cf_id IN ('" . implode("','",$keep_att_ids) . "')" );
+			$listing_atts = $database->loadObjectList();
+			foreach($listing_atts AS $listing_att) {
+				$file_extension = pathinfo($listing_att->raw_filename);
+				$file_extension = strtolower($file_extension['extension']);
+			
+				$database->setQuery( 
+					'INSERT INTO #__mt_cfvalues_att (`link_id`,`cf_id`,`raw_filename`,`filename`,`filesize`,`extension`) '
+					. 'VALUES (' . $row->link_id . ', ' . $database->Quote($listing_att->cf_id). ', ' . $database->Quote($listing_att->raw_filename). ', ' . $database->Quote($listing_att->filename). ', ' . $database->Quote($listing_att->filesize). ', ' . $database->Quote($listing_att->extension). ')' );
+				$database->query();
+				$att_id = $database->insertid();
+				
+				$database->setQuery( 'UPDATE #__mt_cfvalues_att SET raw_filename = ' . $database->Quote($att_id . '.' . $file_extension) . ' WHERE att_id = ' . $database->Quote($att_id) . ' LIMIT 1' );
+				$database->query();
+				
+				copy( 
+					$mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_attachments') . $listing_att->raw_filename,
+					$mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_attachments') . $att_id . "." . $file_extension 
+				);
+			}
+			
+			$database->setQuery(
+				'INSERT INTO #__mt_cfvalues (cf_id,link_id,value,attachment) '
+				. "\nSELECT cf_id,'" . $row->link_id . "',value,attachment "
+				. "FROM #__mt_cfvalues "
+				. "WHERE link_id = '" . $original_link_id . "' AND cf_id IN ('" . implode("','",$keep_att_ids) . "')");
 			$database->query();
 			
 		}
 
-		foreach($_FILES AS $k => $v) {
+		jimport('joomla.filesystem.file');
+
+		foreach($files AS $k => $v) {
 			if ( substr($k,0,2) == "cf" && is_numeric(substr($k,2)) && $v['error'] == 0 ) {
-				$cf_id = substr($k,2);
+				$cf_id = intval(substr($k,2));
 
 				if(array_key_exists($cf_id,$file_values)) {
 					$file = $file_values[$cf_id];
 					if(!empty($file['data'])) {
 						$data = $file['data'];
 					} else {
-						$data = fread(fopen($v['tmp_name'], "r"), $v['size']);
+						$fp = fopen($v['tmp_name'], "r");
+						$data = fread($fp, $v['size']);
+						fclose($fp);
 					}
 				} else {
 					$file = $v;
-					$data = fread(fopen($v['tmp_name'], "r"), $v['size']);
+					$fp = fopen($v['tmp_name'], "r");
+					$data = fread($fp, $v['size']);
+					fclose($fp);
 				}
 
-				$database->setQuery('DELETE FROM #__mt_cfvalues_att WHERE link_id = \'' . $row->link_id . '\' AND cf_id =\'' . $cf_id . '\'');
+				$database->setQuery( 'SELECT CONCAT(' . $database->quote(JPATH_SITE.$mtconf->get('relative_path_to_attachments')) . ',raw_filename) FROM #__mt_cfvalues_att WHERE link_id = ' . $database->quote($row->link_id) . ' AND cf_id = ' . $database->quote($cf_id));
+				$raw_filenames = array_merge($raw_filenames,$database->loadResultArray());
+
+				$database->setQuery('DELETE FROM #__mt_cfvalues_att WHERE link_id = ' . $database->quote($row->link_id) . ' AND cf_id = ' . $database->quote($cf_id));
 				$database->query();
 
-				$database->setQuery('DELETE FROM #__mt_cfvalues WHERE cf_id = \'' . $cf_id  . '\' AND link_id = \'' . $row->link_id . '\' AND attachment > 0' );
+				$database->setQuery('DELETE FROM #__mt_cfvalues WHERE cf_id = ' . $database->quote($cf_id) . ' AND link_id = ' . $database->quote($row->link_id) . ' AND attachment > 0' );
 				$database->query();
 
-				$database->setQuery( "INSERT INTO #__mt_cfvalues_att (link_id, cf_id, filename, filedata, filesize, extension) "
-					.	"\n VALUES("
-					.	"'" . $row->link_id . "', "
-					.	"'" . $cf_id . "', "
-					.	"'" . $file['name'] . "', "
-					.	"'" . addslashes($data) . "', "
-					.	"'" . $file['size'] . "', "
-					.	"'" . $file['type'] . "')"
+				$database->setQuery( 'INSERT INTO #__mt_cfvalues_att (link_id, cf_id, raw_filename, filename, filesize, extension) '
+					. ' VALUES('
+					. $database->quote($row->link_id) . ', '
+					. $database->quote($cf_id) . ', '
+					. $database->quote($file['name']) . ', '
+					. $database->quote($file['name']) . ', '
+					. $database->quote($file['size']) . ', '
+					. $database->quote($file['type']) . ')'
 					);
-				$database->query();
 
-				$sql = "INSERT INTO #__mt_cfvalues (`cf_id`, `link_id`, `value`, `attachment`)"
-					. "\nVALUES ('".$cf_id."', '".$row->link_id."', '".$database->getEscaped($file['name'])."','1')";
-				$database->setQuery($sql);
-				$database->query();
+				if($database->query() !== false) {
+					$att_id = $database->insertid();
+
+					$file_extension = strrchr($file['name'],'.');
+					if( $file_extension === false ) {
+						$file_extension = '';
+					}
+
+					if(JFile::write( JPATH_SITE.$mtconf->get('relative_path_to_attachments').$att_id.$file_extension, $data ))
+					{
+						$database->setQuery( 'UPDATE #__mt_cfvalues_att SET raw_filename = ' . $database->quote($att_id . $file_extension) . ' WHERE att_id = ' . $database->quote($att_id) . ' LIMIT 1' );
+						$database->query();
+
+						$sql = 'INSERT INTO #__mt_cfvalues (`cf_id`, `link_id`, `value`, `attachment`) '
+							. 'VALUES (' . $database->quote($cf_id) . ', ' . $database->quote($row->link_id) . ', ' . $database->quote($file['name']) . ',1)';
+						$database->setQuery($sql);
+						$database->query();
+					} else {
+						// Move failed, remove record from previously INSERTed row in #__mt_cfvalues_att
+						$database->setQuery('DELETE FROM #__mt_cfvalues_att WHERE att_id = ' . $database->quote($att_id) . ' LIMIT 1');
+						$database->query();
+					}
+				}
 			}
 		}
 		
-		if($mtconf->get('allow_imgupload')) {
+		if( !empty($raw_filenames) )
+		{
+			JFile::delete($raw_filenames);
+		}
+
+		if(
+			$mtconf->get('allow_imgupload')
+			||
+			(!$mtconf->get('allow_imgupload') && $mtconf->get('needapproval_modifylisting'))
+		) {
+			
+			if($mtconf->get('allow_imgupload')) {
+				$keep_img_ids = JRequest::getVar( 'keep_img', null, 'post');
+				JArrayHelper::toInteger($keep_img_ids, array());
+
+			// If image upload is disabled, it will get the image IDs from database and make sure 
+			// the images are not lost after approval
+			} else {
+				$database->setQuery('SELECT img_id FROM #__mt_images WHERE link_id = ' . $database->quote($original_link_id) );
+				$keep_img_ids = $database->loadResultArray();
+			}
+			
 			$redirectMsg = '';
 			if(is_writable($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_small_image')) && is_writable($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_medium_image')) && is_writable($mtconf->getjconf('absolute_path').$mtconf->get('relative_path_to_listing_original_image'))) {
-			
-				$keep_img_ids = mosGetParam( $_POST, 'keep_img', null );
 		
-				if(!$isNew && count($keep_img_ids)>0 && $mtconf->get('needapproval_modifylisting')) {
+				// Duplicate listing images for approval
+				if(!$isNew && !empty($keep_img_ids) && is_array($keep_img_ids) && $mtconf->get('needapproval_modifylisting')) {
 					foreach($keep_img_ids AS $keep_img_id) {
-						$database->setQuery("SELECT * FROM #__mt_images WHERE link_id = '" . $original_link_id . "' AND img_id = '" . $keep_img_id . "' LIMIT 1");
-						$database->loadObject($original_image);
+						$database->setQuery('SELECT * FROM #__mt_images WHERE link_id = ' . $database->quote($original_link_id) . ' AND img_id = ' . $database->quote($keep_img_id) . ' LIMIT 1');
+						$original_image = $database->loadObject();
 						$file_extension = pathinfo($original_image->filename);
 						$file_extension = strtolower($file_extension['extension']);
 					
 						$database->setQuery('INSERT INTO #__mt_images (link_id,filename,ordering) '
 							.	"\n VALUES ('" . $row->link_id . "', '" . $original_image->filename . '_' . $row->link_id . "', '" . $original_image->ordering . "')");
 						$database->query();
-						// $new_img_id = $database->insertid();
+
 						$new_img_ids[$keep_img_id] = $database->insertid();
 						$database->setQuery("UPDATE #__mt_images SET filename = '" . $new_img_ids[$keep_img_id] .  '_' . $row->link_id . '.' . $file_extension . "' WHERE img_id = '" . $new_img_ids[$keep_img_id] . "' LIMIT 1");
 						$database->query();
 						copy( $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_small_image') . $original_image->filename, $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_small_image') . $new_img_ids[$keep_img_id] .  '_' . $row->link_id . '.' . $file_extension );
 						copy( $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_medium_image') . $original_image->filename, $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_medium_image') . $new_img_ids[$keep_img_id] .  '_' . $row->link_id . '.' . $file_extension );
 						copy( $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_original_image') . $original_image->filename, $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_original_image') . $new_img_ids[$keep_img_id] .  '_' . $row->link_id . '.' . $file_extension );
-					
-						// $database->setQuery('INSERT INTO #__mt_images (link_id,filename,small_filedata,small_filesize,medium_filedata,medium_filesize,original_filedata,original_filesize,extension,ordering) '
-						// 	.	"\nSELECT '" . $row->link_id . "',filename,small_filedata,small_filesize,medium_filedata,medium_filesize,original_filedata,original_filesize,extension,ordering FROM #__mt_images WHERE link_id = '" . $original_link_id . "' AND img_id = '" . $keep_img_id . "'");
-						// $database->query();
 					}
 				}
 		
 				# Remove all images except those that are kept when modification does not require approval
 				$image_filenames = array();
 				if(!$mtconf->get('needapproval_modifylisting')) {
-					if(isset($keep_img_ids) && count($keep_img_ids)>0) {
+					if(isset($keep_img_ids) && !empty($keep_img_ids)) {
 						$database->setQuery('SELECT filename FROM #__mt_images WHERE link_id = \'' . $row->link_id . '\' AND img_id NOT IN (\'' . implode('\',\'',$keep_img_ids) . '\')' );
 						$image_filenames = $database->loadResultArray();
 						$database->setQuery('DELETE FROM #__mt_images WHERE link_id = \'' . $row->link_id . '\' AND img_id NOT IN (\'' . implode('\',\'',$keep_img_ids) . '\')' );
@@ -3463,27 +4169,32 @@ function savelisting( $option ) {
 						$database->query();
 					}
 				}
-				if(count($image_filenames)) {
+				if(!empty($image_filenames)) {
 					foreach($image_filenames AS $image_filename) {
 						unlink($mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_small_image') . $image_filename);
 						unlink($mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_medium_image') . $image_filename);
 						unlink($mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_original_image') . $image_filename);
 					}
 				}
-
-				if( isset($_FILES['image']) ) {
-					for($i=0;$i<count($_FILES['image']['name']) && ($i<($mtconf->get('images_per_listing') - count($keep_img_ids)) || $mtconf->get('images_per_listing') == '0');$i++) {
-						if ( !empty($_FILES['image']['name'][$i]) && $_FILES['image']['error'][$i] == 0 &&  $_FILES['image']['size'][$i] > 0 ) {
-							$file_extension = pathinfo($_FILES['image']['name'][$i]);
+				
+				$files_exceed_limit = false;
+				
+				if( isset($files['image']) ) {
+					for($i=0;$i<count($files['image']['name']) && ($i<($mtconf->get('images_per_listing') - count($keep_img_ids)) || $mtconf->get('images_per_listing') == '0');$i++) {
+						if( $mtconf->get('image_maxsize') > 0 && $files['image']['size'][$i] > $mtconf->get('image_maxsize') ) {
+							// Uploaded file exceed file limit
+							$files_exceed_limit = true;
+						} elseif ( !empty($files['image']['name'][$i]) && $files['image']['error'][$i] == 0 &&  $files['image']['size'][$i] > 0 ) {
+							$file_extension = pathinfo($files['image']['name'][$i]);
 							$file_extension = strtolower($file_extension['extension']);
 
 							$mtImage = new mtImage();
 							$mtImage->setMethod( $mtconf->get('resize_method') );
 							$mtImage->setQuality( $mtconf->get('resize_quality') );
 							$mtImage->setSize( $mtconf->get('resize_listing_size') );
-							$mtImage->setTmpFile( $_FILES['image']['tmp_name'][$i] );
-							$mtImage->setType( $_FILES['image']['type'][$i] );
-							$mtImage->setName( $_FILES['image']['name'][$i] );
+							$mtImage->setTmpFile( $files['image']['tmp_name'][$i] );
+							$mtImage->setType( $files['image']['type'][$i] );
+							$mtImage->setName( $files['image']['name'][$i] );
 							$mtImage->setSquare( $mtconf->get('squared_thumbnail') );
 							$mtImage->resize();
 							$mtImage->setDirectory( $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_small_image') );
@@ -3494,34 +4205,44 @@ function savelisting( $option ) {
 							$mtImage->resize();
 							$mtImage->setDirectory( $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_medium_image') );
 							$mtImage->saveToDirectory();
-							move_uploaded_file($_FILES['image']['tmp_name'][$i],$mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_original_image') . $_FILES['image']['name'][$i]);
+							move_uploaded_file($files['image']['tmp_name'][$i],$mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_original_image') . $files['image']['name'][$i]);
 
-							$database->setQuery( "INSERT INTO #__mt_images (link_id, filename, ordering) "
-								.	"\n VALUES('" . $row->link_id . "', '".$_FILES['image']['name'][$i]."', '9999')");
+							$database->setQuery( 'INSERT INTO #__mt_images (link_id, filename, ordering) '
+								. ' VALUES(' . $database->quote($row->link_id) . ', ' . $database->quote($files['image']['name'][$i]) . ', \'9999\')');
 							$database->query();
 							$img_id = $database->insertid();
-							rename($mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_small_image') . $_FILES['image']['name'][$i], $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_small_image') . $img_id . '.' . $file_extension);
-							rename($mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_medium_image') . $_FILES['image']['name'][$i], $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_medium_image') . $img_id . '.' . $file_extension);
-							rename($mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_original_image') . $_FILES['image']['name'][$i], $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_original_image') . $img_id . '.' . $file_extension);
-							$database->setQuery("UPDATE #__mt_images SET filename = '" . $img_id . '.' . $file_extension . "' WHERE img_id = '" . $img_id . "'");
+							rename($mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_small_image') . $files['image']['name'][$i], $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_small_image') . $img_id . '.' . $file_extension);
+							rename($mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_medium_image') . $files['image']['name'][$i], $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_medium_image') . $img_id . '.' . $file_extension);
+							rename($mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_original_image') . $files['image']['name'][$i], $mtconf->getjconf('absolute_path') . $mtconf->get('relative_path_to_listing_original_image') . $img_id . '.' . $file_extension);
+							$database->setQuery('UPDATE #__mt_images SET filename = ' . $database->quote($img_id . '.' . $file_extension) . ' WHERE img_id = ' . $database->quote($img_id));
 							$database->query();
 						}
 					}
 				}
 		
-				$img_sort_hash = mosGetParam( $_POST, 'img_sort_hash', null );
+				if( $files_exceed_limit ) {
+					if( $mtconf->get('image_maxsize') > 1048576 ) {
+						$image_upload_limit = round($mtconf->get('image_maxsize')/1048576) . 'MB';
+					} else {
+						$image_upload_limit = round($mtconf->get('image_maxsize')/1024) . 'KB';
+					}
+					$redirectMsg .= sprintf( JText::_( 'Image is not saved because it exceeded file size limit' ), $image_upload_limit );
+				}
+		
+				$img_sort_hash = JRequest::getVar( 'img_sort_hash', null, 'post');
+				
 				if(!empty($img_sort_hash)) {
-					$arr_img_sort_hashes = split("[&]*upload_att\[\]=img_\d*", $img_sort_hash);
+					$arr_img_sort_hashes = split("[&]*img\[\]=\d*", $img_sort_hash);
 					$i=1;
 					foreach($arr_img_sort_hashes AS $arr_img_sort_hash) {
 						if(!empty($arr_img_sort_hash) && $arr_img_sort_hash > 0) {
-							$sql = "UPDATE #__mt_images SET ordering = '" . $i . "' WHERE img_id = '";
-							if(isset($new_img_ids) && count($new_img_ids) > 0) {
-								$sql .= $new_img_ids[$arr_img_sort_hash];
+							$sql = 'UPDATE #__mt_images SET ordering = ' . $database->quote($i) . ' WHERE img_id = ';
+							if(isset($new_img_ids) && !empty($new_img_ids)) {
+								$sql .= $database->quote(intval($new_img_ids[$arr_img_sort_hash]));
 							} else {
-								$sql .= $arr_img_sort_hash;
+								$sql .= $database->quote(intval($arr_img_sort_hash));
 							}
-							$sql .= "' LIMIT 1";
+							$sql .= ' LIMIT 1';
 							$database->setQuery( $sql );
 							$database->query();
 							$i++;
@@ -3529,9 +4250,11 @@ function savelisting( $option ) {
 					}
 				}
 				$images = new mtImages( $database );
-				$images->updateOrder('link_id='.$row->link_id);
+				$images->reorder('link_id='.$row->link_id);
 			} else {
-				$redirectMsg .= $_MT_LANG->IMAGE_DIRECTORIES_NOT_WRITABLE;
+				if( isset($files['image']) ) {
+					$redirectMsg .= JText::_( 'Image directories not writable' );
+				}
 			}
 
 		}
@@ -3540,16 +4263,18 @@ function savelisting( $option ) {
 		// Get owner's email
 		if( $my->id > 0 ) {
 			$database->setQuery( "SELECT email, name, username FROM #__users WHERE id = '".$my->id."' LIMIT 1" );
-			$database->loadObject( $author );
+			$author = $database->loadObject();
 		} else {
 			if( !empty($row->email) ) {
 				$author->email = $row->email;
 			} else {
-				$author->email = $_MT_LANG->NOT_SPECIFIED;
+				$author->email = JText::_( 'Not specified' );
 			}
-			$author->username = $_MT_LANG->NONE;
-			$author->name = $_MT_LANG->NON_REGISTERED_USER;
+			$author->username = JText::_( 'None' );
+			$author->name = JText::_( 'Non registered user' );
 		}
+
+		$uri =& JURI::getInstance();
 
 		if ( $isNew ) {
 
@@ -3560,25 +4285,25 @@ function savelisting( $option ) {
 			) ) {
 				
 				if ( $row->link_approved == 0 ) {
-					$subject = sprintf($_MT_LANG->NEW_LISTING_EMAIL_SUBJECT_WAITING_APPROVAL, $row->link_name);
-					$msg = $_MT_LANG->NEW_LISTING_EMAIL_MSG_WAITING_APPROVAL;
+					$subject = sprintf(JText::_( 'New listing email subject waiting approval' ), $row->link_name);
+					$msg = JText::_( 'New listing email msg waiting approval' );
 				} else {
-					$subject = sprintf($_MT_LANG->NEW_LISTING_EMAIL_SUBJECT_APPROVED, $row->link_name);
-					$msg = sprintf($_MT_LANG->NEW_LISTING_EMAIL_MSG_APPROVED, $row->link_name, sefRelToAbs("index.php?option=com_mtree&task=viewlink&link_id=$row->link_id&Itemid=$Itemid"),$mtconf->getjconf('fromname'));
+					$subject = sprintf(JText::_( 'New listing email subject approved' ), $row->link_name);
+					$msg = sprintf(JText::_( 'New listing email msg approved' ), $row->link_name, $uri->toString(array( 'scheme', 'host', 'port' )) . JRoute::_("index.php?option=com_mtree&task=viewlink&link_id=$row->link_id&Itemid=$Itemid"),$mtconf->getjconf('fromname'));
 				}
 
-				mosMail( $mtconf->getjconf('mailfrom'), $mtconf->getjconf('fromname'), $author->email, $subject, wordwrap($msg) );
+				JUTility::sendMail( $mtconf->getjconf('mailfrom'), $mtconf->getjconf('fromname'), $author->email, $subject, wordwrap($msg) );
 			}
 
 			# To Admin
 			if ( $mtconf->get('notifyadmin_newlisting') == 1 ) {
 				
 				if ( $row->link_approved == 0 ) {
-					$subject = sprintf($_MT_LANG->NEW_LISTING_EMAIL_SUBJECT_WAITING_APPROVAL, $row->link_name);
-					$msg = sprintf($_MT_LANG->ADMIN_NEW_LISTING_MSG_WAITING_APPROVAL, $row->link_name, $row->link_name, $row->link_id, $author->name, $author->username, $author->email);
+					$subject = sprintf(JText::_( 'New listing email subject waiting approval' ), $row->link_name);
+					$msg = sprintf(JText::_( 'Admin new listing msg waiting approval' ), $row->link_name, $row->link_name, $row->link_id, $author->name, $author->username, $author->email);
 				} else {
-					$subject = sprintf($_MT_LANG->NEW_LISTING_EMAIL_SUBJECT_APPROVED, $row->link_name);
-					$msg = sprintf($_MT_LANG->ADMIN_NEW_LISTING_MSG_APPROVED, $row->link_name, sefRelToAbs("index.php?option=com_mtree&task=viewlink&link_id=$row->link_id&Itemid=$Itemid"), $row->link_name, $row->link_id, $author->name, $author->username, $author->email);
+					$subject = sprintf(JText::_( 'New listing email subject approved' ), $row->link_name);
+					$msg = sprintf(JText::_( 'Admin new listing msg approved' ), $row->link_name, $uri->toString(array( 'scheme', 'host', 'port' )) . JRoute::_("index.php?option=com_mtree&task=viewlink&link_id=$row->link_id&Itemid=$Itemid"), $row->link_name, $row->link_id, $author->name, $author->username, $author->email);
 				}
 
 				mosMailToAdmin( $subject, $msg );
@@ -3588,27 +4313,31 @@ function savelisting( $option ) {
 		}
 
 		# Send e-mail notification to user/admin upon modifying an existing listing
-		else {
+		# E-mail is sent for modifying published extension. Unpublished extension means that they are pending approval
+		# and we don't want to know about the changes during this time.
+		elseif( $row->link_published == 1 ) {
+
+			$dispatcher 	= & JDispatcher::getInstance();
+			JPluginHelper::importPlugin('mosetstree');
+			$dispatcher->trigger('onAfterModifyListing', array((array)$original,$original_cfs,(array)$row,$active_cfs, $old->link_id, $cat_id) );
 
 			# To User
 			if ( $mtconf->get('notifyuser_modifylisting') == 1 && $my->id > 0 ) {
 				
 				if ( $row->link_approved < 0 ) {
-					$subject = sprintf($_MT_LANG->MODIFY_LISTING_EMAIL_SUBJECT_WAITING_APPROVAL, $row->link_name);
-					$msg = sprintf($_MT_LANG->MODIFY_LISTING_EMAIL_MSG_WAITING_APPROVAL, $row->link_name, sefRelToAbs("index.php?option=com_mtree&task=viewlink&link_id=$old->link_id&Itemid=$Itemid") );
+					$subject = sprintf(JText::_( 'Modify listing email subject waiting approval' ), $row->link_name);
+					$msg = sprintf(JText::_( 'Modify listing email msg waiting approval' ), $row->link_name, $uri->toString(array( 'scheme', 'host', 'port' )) . JRoute::_("index.php?option=com_mtree&task=viewlink&link_id=$old->link_id&Itemid=$Itemid") );
 				} else {
-					$subject = sprintf($_MT_LANG->MODIFY_LISTING_EMAIL_SUBJECT_APPROVED, $row->link_name);
-					$msg = sprintf($_MT_LANG->MODIFY_LISTING_EMAIL_MSG_APPROVED, $row->link_name, sefRelToAbs("index.php?option=com_mtree&task=viewlink&link_id=$old->link_id&Itemid=$Itemid"),$mtconf->getjconf('fromname'));
+					$subject = sprintf(JText::_( 'Modify listing email subject approved' ), $row->link_name);
+					$msg = sprintf(JText::_( 'Modify listing email msg approved' ), $row->link_name, $uri->toString(array( 'scheme', 'host', 'port' )) . JRoute::_("index.php?option=com_mtree&task=viewlink&link_id=$old->link_id&Itemid=$Itemid"),$mtconf->getjconf('fromname'));
 				}
 
-				mosMail( $mtconf->getjconf('mailfrom'), $mtconf->getjconf('fromname'), $author->email, $subject, wordwrap($msg) );
+				JUTility::sendMail( $mtconf->getjconf('mailfrom'), $mtconf->getjconf('fromname'), $author->email, $subject, wordwrap($msg) );
 			}
 
 			# To Admin
 			if ( $mtconf->get('notifyadmin_modifylisting') == 1 ) {
 
-				require( $mtconf->getjconf('absolute_path') . '/components/com_mtree/includes/diff.php');
-				
 				$diff_desc = diff_main( $original->link_desc, $row->link_desc, true );
 				diff_cleanup_semantic($diff_desc);
 				$diff_desc = diff_prettyhtml( $diff_desc );
@@ -3620,13 +4349,13 @@ function savelisting( $option ) {
 
 				if ( $row->link_approved < 0 ) {
 					
-					$subject = sprintf($_MT_LANG->MODIFY_LISTING_EMAIL_SUBJECT_WAITING_APPROVAL, $row->link_name);
-					$msg .= nl2br(sprintf($_MT_LANG->ADMIN_MODIFY_LISTING_MSG_WAITING_APPROVAL, $row->link_name, sefRelToAbs("index.php?option=com_mtree&task=viewlink&link_id=$old->link_id&Itemid=$Itemid"), $row->link_name, $row->link_id, $author->name, $author->username, $author->email, $diff_desc));
+					$subject = sprintf(JText::_( 'Modify listing email subject waiting approval' ), $row->link_name);
+					$msg .= nl2br(sprintf(JText::_( 'Admin modify listing msg waiting approval' ), $row->link_name, $uri->toString(array( 'scheme', 'host', 'port' )) . JRoute::_("index.php?option=com_mtree&task=viewlink&link_id=$old->link_id&Itemid=$Itemid"), $row->link_name, $row->link_id, $author->name, $author->username, $author->email, $diff_desc));
 
 				} else {
 
-					$subject = sprintf($_MT_LANG->MODIFY_LISTING_EMAIL_SUBJECT_APPROVED, $row->link_name);
-					$msg .= nl2br(sprintf($_MT_LANG->ADMIN_MODIFY_LISTING_MSG_APPROVED, $row->link_name, sefRelToAbs("index.php?option=com_mtree&task=viewlink&link_id=$old->link_id&Itemid=$Itemid"), $row->link_name, $row->link_id, $author->name, $author->username, $author->email, $diff_desc));
+					$subject = sprintf(JText::_( 'Modify listing email subject approved' ), $row->link_name);
+					$msg .= nl2br(sprintf(JText::_( 'Admin modify listing msg approved' ), $row->link_name, $uri->toString(array( 'scheme', 'host', 'port' )) . JRoute::_("index.php?option=com_mtree&task=viewlink&link_id=$old->link_id&Itemid=$Itemid"), $row->link_name, $row->link_id, $author->name, $author->username, $author->email, $diff_desc));
 
 				}
 
@@ -3635,8 +4364,41 @@ function savelisting( $option ) {
 
 		}
 
-		mosRedirect( "index.php?option=$option&task=listcats&cat_id=$cat_id&Itemid=$Itemid", ( ($isNew) ? ( ($mtconf->get('needapproval_addlisting')) ? $_MT_LANG->LISTING_WILL_BE_REVIEWED : $_MT_LANG->LISTING_HAVE_BEEN_ADDED) : ( ($mtconf->get('needapproval_modifylisting')) ? $_MT_LANG->LISTING_MODIFICATION_WILL_BE_REVIEWED : $_MT_LANG->LISTING_HAVE_BEEN_UPDATED ) ) . (!empty($redirectMsg)?'<br /> '.$redirectMsg:'') );
+		if( isset($original) && $original->link_published && $original->link_approved )
+		{
+			if( ($isNew && $mtconf->get('needapproval_addlisting')) ) {
+				$redirect_url = "index.php?option=$option&task=listcats&cat_id=$cat_id&Itemid=$Itemid";
+			} elseif (!$isNew && $mtconf->get('needapproval_modifylisting')) {
+				$redirect_url = "index.php?option=$option&task=viewlink&link_id=$old->link_id&Itemid=$Itemid";
+			} else {
+				$redirect_url = "index.php?option=$option&task=viewlink&link_id=$row->link_id&Itemid=$Itemid";
+			} 
+		} else {
+			$redirect_url = "index.php?option=$option&task=mypage&Itemid=$Itemid";
+		}
 
+		$mainframe->redirect( 
+			JRoute::_($redirect_url), 
+			(
+				($isNew) ? ( 
+					($mtconf->get('needapproval_addlisting')) 
+					? 
+					JText::_( 'Listing will be reviewed' ) 
+					: 
+					JText::_( 'Listing have been added' )
+				) 
+				: 
+				( 
+					($mtconf->get('needapproval_modifylisting')) 
+					? 
+					JText::_( 'Listing modification will be reviewed' ) 
+					: 
+					JText::_( 'Listing have been updated' ) 
+				) 
+			)
+			.
+			(!empty($redirectMsg)?'<br /> '.$redirectMsg:'') 
+		);
 	}
 }
 
@@ -3644,11 +4406,15 @@ function savelisting( $option ) {
 * Add Category
 */
 function addcategory( $option ) {
-	global $database, $_MT_LANG, $savantConf, $Itemid, $my, $mainframe, $mtconf;
+	global $savantConf, $Itemid, $mtconf;
+	
+	$database	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$document	=& JFactory::getDocument();
 	
 	# Get cat_id / link_id
-	$cat_id = intval( mosGetParam( $_REQUEST, 'cat_id', 0 ) );
-	$link_id = intval( mosGetParam( $_REQUEST, 'link_id', 0 ) );
+	$cat_id	= JRequest::getInt('cat_id', 0);
+	$link_id	= JRequest::getInt('link_id', 0);
 
 	if ( $cat_id == 0 && $link_id > 0 ) {
 		$database->setQuery( "SELECT cl.cat_id FROM (#__mt_links AS l, #__mt_cl AS cl) WHERE l.link_id = cl.link_id AND cl.main = '1' AND link_id ='".$link_id."'" );
@@ -3660,7 +4426,7 @@ function addcategory( $option ) {
 	$database->setQuery( "SELECT cat_name FROM #__mt_cats WHERE cat_id = '".$cat_parent."' LIMIT 1" );
 	$cat_name = $database->loadResult();
 
-	$mainframe->setPageTitle( sprintf($_MT_LANG->ADD_CAT2, $cat_name) );
+	$document->setTitle(sprintf(JText::_( 'Add cat2' ), $cat_name));
 
 	# Pathway
 	$pathWay = new mtPathWay( $cat_parent );
@@ -3673,23 +4439,28 @@ function addcategory( $option ) {
 
 	if ( $mtconf->get('user_addcategory') == '1' && $my->id < 1 ) {
 		# Error. Please login before you can add category
-		$savant->assign('error_msg', $_MT_LANG->PLEASE_LOGIN_BEFORE_ADDCATEGORY);
+		$savant->assign('error_msg', JText::_( 'Please login before addcategory' ));
 		$savant->display( 'page_error.tpl.php' );
 	} else {
 		# OK. User is allowed to add category
-		$savant->assign('validate', josSpoofValue());
 		$savant->display( 'page_addCategory.tpl.php' );
 	}
 
 }
 
 function addcategory2( $option ) {
-	global $database, $_MT_LANG, $Itemid, $my, $mtconf;
+	global $Itemid, $mtconf, $mainframe;
 
-	josSpoofCheck(1);
+	// Check for request forgeries
+	JRequest::checkToken() or jexit( 'Invalid Token' );
+
+	$database	=& JFactory::getDBO();
+	$my			=& JFactory::getUser();
+	$jdate		= JFactory::getDate();
+	$now		= $jdate->toMySQL();
 
 	# Get cat_parent
-	$cat_parent = intval( mosGetParam( $_REQUEST, 'cat_parent', 0 ) );
+	$cat_parent	= JRequest::getInt('cat_parent', 0);
 
 	# Check if any malicious user is trying to submit link
 	if ( $mtconf->get('user_addcategory') == 1 && $my->id <= 0 ) {
@@ -3698,8 +4469,9 @@ function addcategory2( $option ) {
 	} else {
 	# Allowed
 
+		$post = JRequest::get( 'post' );
 		$row = new mtCats( $database );
-		if (!$row->bind( $_POST )) {
+		if (!$row->bind( $post )) {
 			echo "<script> alert('".$row->getError()."'); window.history.go(-1); </script>\n";
 			exit();
 		}
@@ -3707,7 +4479,8 @@ function addcategory2( $option ) {
 
 		# Assignment for new record
 		if ($isNew) {
-			$row->cat_created = date( 'Y-m-d H:i:s', time() + ( $mtconf->getjconf('offset') * 60 * 60 ) );
+			$jdate		= JFactory::getDate();
+			$row->cat_created = $now;
 
 			// Required approval
 			if ( $mtconf->get('needapproval_addcategory') ) {
@@ -3715,12 +4488,13 @@ function addcategory2( $option ) {
 			} else {
 				$row->cat_approved = 1;
 				$row->cat_published = 1;
-				mosCache::cleanCache( 'com_mtree' );
+				$cache = &JFactory::getCache('com_mtree');
+				$cache->clean();
 			}
 
 		} else {
 		# Assignment for exsiting record
-			$row->cat_modified = date( 'Y-m-d H:i:s', time() + ( $mtconf->getjconf('offset') * 60 * 60 ) );
+			$row->cat_modified = $now;
 		}
 
 		# OK. Store new category into database
@@ -3734,8 +4508,75 @@ function addcategory2( $option ) {
 			$row->updateCatCount( 1 );
 		}
 
-		mosRedirect( "index.php?option=$option&task=listcats&cat_id=$cat_parent&Itemid=$Itemid", ( ($mtconf->get('needapproval_addcategory')) ?  $_MT_LANG->CATEGORY_WILL_BE_REVIEWED : $_MT_LANG->CATEGORY_HAVE_BEEN_ADDED) );
+		$mainframe->redirect( JRoute::_("index.php?option=$option&task=listcats&cat_id=$cat_parent&Itemid=$Itemid"), ( ($mtconf->get('needapproval_addcategory')) ?  JText::_( 'Category will be reviewed' ) : JText::_( 'Category have been added' )) );
 
+	}
+}
+
+function att_download( $field_type, $ordering, $filename, $link_id, $cf_id, $img_id, $size ) {
+	global $mainframe, $Itemid, $mtconf;
+	
+	$database	=& JFactory::getDBO();
+	
+	# Fieldtype's attachment
+	if ( !empty($field_type) ) {
+		if($ordering > 0) {
+			$database->setQuery('SELECT fta.* FROM #__mt_fieldtypes_att AS fta '
+				. ' LEFT JOIN #__mt_fieldtypes AS ft ON ft.ft_id=fta.ft_id '
+				. ' WHERE ft.field_type = ' . $database->quote($field_type) . ' AND ordering = ' . $database->quote($ordering) . ' LIMIT 1'
+				);
+		} elseif( !empty($filename) ) {
+			$database->setQuery('SELECT fta.* FROM #__mt_fieldtypes_att AS fta '
+				. ' LEFT JOIN #__mt_fieldtypes AS ft ON ft.ft_id=fta.ft_id '
+				. ' WHERE ft.field_type = ' . $database->quote($field_type) . ' AND fta.filename = ' . $database->quote($filename) . ' LIMIT 1'
+				);
+		}
+		$attachment = $database->loadObject();
+
+	# Custom field's attachment
+	} elseif( $link_id > 0 && $cf_id > 0) {
+		$database->setQuery('SELECT cfva.* FROM #__mt_cfvalues_att AS cfva '
+			. ' WHERE cfva.link_id = ' . $database->quote($link_id) . ' && cf_id = ' . $database->quote($cf_id) . ' LIMIT 1'
+			);
+		$attachment = $database->loadObject();
+		$attachment->filedata = null;
+		
+		if( !is_null($attachment) ) {
+			$filepath = JPATH_SITE.$mtconf->get('relative_path_to_attachments').$attachment->raw_filename;
+			$handle = fopen($filepath, 'rb');
+			
+			$attachment->filedata = fread( $handle, $attachment->filesize );
+			fclose( $handle );
+		} else {
+			$mainframe->redirect( JRoute::_('index.php?option=com_mtree&Itemid='.$Itemid), JText::_( 'You are not authorized to access this attachment' ) );
+		}
+
+	} else {
+		$mainframe->redirect( JRoute::_('index.php?option=com_mtree&Itemid='.$Itemid), JText::_( 'You are not authorized to access this attachment' ) );
+	}
+
+
+	if (!empty($attachment) && !empty($attachment->filedata)) {
+		
+		// Increase the counter
+		$database->setQuery( 'UPDATE #__mt_cfvalues SET counter = counter + 1 WHERE link_id = ' . $database->quote($link_id) . ' && cf_id = ' . $database->quote($cf_id) . ' LIMIT 1' );
+		$database->query();
+		
+		header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+		header('Cache-Control: max-age=86400'); // Cache for 24 hours
+		header("Content-type: ".$attachment->extension);
+		if($attachment->filesize>0) {
+			header("Content-length: ".$attachment->filesize);
+		}
+		header('Content-Disposition: inline; filename="'.$attachment->filename.'";');
+		header('Content-transfer-encoding: binary');
+		header("Connection: close");
+
+		echo $attachment->filedata;
+		
+		die();
+	} else {
+		$mainframe->redirect(JRoute::_('index.php?option=com_mtree&Itemid='.$Itemid), JText::_( 'You are not authorized to access this attachment' ));
 	}
 }
 
@@ -3747,9 +4588,78 @@ function mosMailToAdmin( $subject, $body, $mode=0) {
 	} else {
 		$recipient_emails = explode(',', $mtconf->get('admin_email'));
 	}
+	for($i=0;$i<count($recipient_emails);$i++) {
+		$recipient_emails[$i] = trim($recipient_emails[$i]);
+	}
+	
+	// Input validation
+	if  (!validateInputs( $recipient_emails, $subject, $body ) ) {
+		$document =& JFactory::getDocument();
+		JError::raiseWarning( 0, $document->getError() );
+		return false;
+	}
+	
+	JUTility::sendMail( $mtconf->getjconf('mailfrom'), $mtconf->getjconf('fromname'), $recipient_emails, $subject, wordwrap($body), $mode );
+	return true;
+}
 
-	mosMail( $mtconf->getjconf('mailfrom'), $mtconf->getjconf('fromname'), $recipient_emails, $subject, wordwrap($body), $mode );
+/**
+ * Validates e-mail input. Method is modified based on com_contact's _validateInputs.
+ *
+ * @param String|Array	$email		Email address
+ * @param String		$subject	Email subject
+ * @param String		$body		Email body
+ * @return Boolean
+ * @access public
+ * @since 2.1
+ */
+function validateInputs( $email, $subject, $body ) {
+	global $mtconf;
 
+	$document =& JFactory::getDocument();
+
+	// Prevent form submission if one of the banned text is discovered in the email field
+	if(false === checkText($email, $mtconf->get('banned_email') )) {
+		$document->setError( JText::sprintf( 'Mesghasbannedtext', 'Email') );
+		return false;
+	}
+
+	// Prevent form submission if one of the banned text is discovered in the subject field
+	if(false === checkText($subject, $mtconf->get('banned_subject'))) {
+		$document->setError( JText::sprintf( 'Mesghasbannedtext', 'Subject') );
+		return false;
+	}
+
+	// Prevent form submission if one of the banned text is discovered in the text field
+	if(false === checkText( $body, $mtconf->get('banned_text') )) {
+		$document->setError( JText::sprintf( 'Mesghasbannedtext', 'Message') );
+		return false;
+	}
+
+	// test to ensure that only one email address is entered
+	if( is_string($email) )
+	{
+		$check = explode( '@', $email );
+		if ( strpos( $email, ';' ) || strpos( $email, ',' ) || strpos( $email, ' ' ) || count( $check ) > 2 ) {
+			$document->setError( JText::_( 'You cannot enter more than one email address', true ) );
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function checkText($text, $list) {
+	if(empty($list) || empty($text)) return true;
+	$array = explode(';', $list);
+	foreach ($array as $value) {
+		$value = trim($value);
+		if(empty($value)) continue;
+		if ( JString::stristr($text, $value) !== false ) {
+			return false;
+		}
+	}
+	return true;
 }
 
 ?>

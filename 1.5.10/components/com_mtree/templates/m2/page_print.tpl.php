@@ -1,11 +1,12 @@
 <div style="text-align:right;margin-bottom:10px;">
-	<a href="#" onclick="javascript:window.print(); return false" title="<?php echo $this->_MT_LANG->PRINT ?>"><?php echo $this->_MT_LANG->PRINT ?></a>&nbsp;|&nbsp;
-	<a href="#" onclick="window.close(); return false" title="<?php echo $this->_MT_LANG->CLOSE_THIS_WINDOW ?>"><?php echo $this->_MT_LANG->CLOSE_THIS_WINDOW ?></a>
+	<a href="#" onclick="javascript:window.print(); return false" title="<?php echo JText::_( 'Print' ) ?>"><?php echo JText::_( 'Print' ) ?></a>&nbsp;|&nbsp;
+	<a href="#" onclick="window.close(); return false" title="<?php echo JText::_( 'Close this window' ) ?>"><?php echo JText::_( 'Close this window' ) ?></a>
 </div>
 <div id="listing">
 <h2><?php 
 $link_name = $this->fields->getFieldById(1);
 $this->plugin( 'ahreflisting', $this->link, $link_name->getOutput(1), '', array("edit"=>false,"delete"=>true) ) ?></h2>
+<div class="fields">
 <?php
 $this->fields->resetPointer();
 while( $this->fields->hasNext() ) {
@@ -13,15 +14,15 @@ while( $this->fields->hasNext() ) {
 	$value = $f->getValue();
 	if( ( (!$f->hasInputField() && !$f->isCore() && empty($value)) || !empty($value) ) && !in_array($f->getName(),array('link_name','link_desc','city','state','country','postcode')) ) {
 
-		echo '<dl>';
 		$this->fields->resetPointer();
 		while( $this->fields->hasNext() ) {
 			$field = $this->fields->getField();
 			$value = $field->getValue();
 			if( ( (!$field->hasInputField() && !$field->isCore() && empty($value)) || !empty($value) ) && !in_array($field->getName(),array('link_name','link_desc','city','state','country','postcode')) ) {
+				echo '<div class="row">';
 				if($field->id == 4) {
-					echo '<dt>' . $field->getCaption() . '</dt>';
-					echo '<dd>';
+					echo '<div class="caption">' . $field->getCaption() . '</div>';
+					echo '<div class="data">';
 					echo $field->getOutput(); 
 					if($field5 = $this->fields->getFieldById(5)) {
 						echo ', ' . $field5->getValue();
@@ -35,29 +36,28 @@ while( $this->fields->hasNext() ) {
 					if($field7 = $this->fields->getFieldById(7)) {
 						echo ', ' . $field7->getValue();
 					}
-					echo '</dd>';
+					echo '</div>';
 				} else { 
-					echo '<dt>';
+					echo '<div class="caption">';
 					if($field->hasCaption()) {
 						echo $field->getCaption() . '';
 					}
-					echo '</dt>';
-					echo '<dd>';
+					echo '</div>';
+					echo '<div class="data">';
 					echo $field->getDisplayPrefixText(); 
 					echo $field->getOutput(1);
 					echo $field->getDisplaySuffixText(); 
-					echo '</dd>';
-					
+					echo '</div>';
 				}
+				echo '</div>';
 			}
 			$this->fields->next();
 		}
-		echo '</dl>';
 		break;
 	}
 	$this->fields->next();
 }
-?><?php 
+?></div><?php 
 
 if ($this->link->link_image) { 
 	echo '<div class="thumbnail' . (($this->config->getTemParam('imageDirectionListingSummary','right')=='right') ? '':'-left') . '">';
@@ -65,7 +65,7 @@ if ($this->link->link_image) {
 	$this->plugin( 'mt_image', $this->link->link_image, '3', $this->link->link_name );
 	echo '</a>';
 	if( $this->total_images > 1 ) {
-		echo '<div><a href="index.php?option=com_mtree&task=viewgallery&link_id=' . $this->link->link_id . '&Itemid=' . $this->Itemid . '">' . $this->_MT_LANG->VIEW_GALLERY . '</a></div>';
+		echo '<div><a href="index.php?option=com_mtree&task=viewgallery&link_id=' . $this->link->link_id . '&Itemid=' . $this->Itemid . '">' . JText::_( 'View gallery' ) . '</a></div>';
 	}
 	echo '</div>';
 }
@@ -78,6 +78,6 @@ echo '</span>';
 
 </div>
 <div style="text-align:right;margin-bottom:10px;">
-	<a href="#" onclick="javascript:window.print(); return false" title="<?php echo $this->_MT_LANG->PRINT ?>"><?php echo $this->_MT_LANG->PRINT ?></a>&nbsp;|&nbsp;
-	<a href="#" onclick="window.close(); return false" title="<?php echo $this->_MT_LANG->CLOSE_THIS_WINDOW ?>"><?php echo $this->_MT_LANG->CLOSE_THIS_WINDOW ?></a>
+	<a href="#" onclick="javascript:window.print(); return false" title="<?php echo JText::_( 'Print' ) ?>"><?php echo JText::_( 'Print' ) ?></a>&nbsp;|&nbsp;
+	<a href="#" onclick="window.close(); return false" title="<?php echo JText::_( 'Close this window' ) ?>"><?php echo JText::_( 'Close this window' ) ?></a>
 </div>

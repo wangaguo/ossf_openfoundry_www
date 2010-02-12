@@ -1,11 +1,10 @@
 <?php
-defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
+defined('_JEXEC') or die('Restricted access');
 
 /**
 * Base filter class.
 */
-global $mosConfig_absolute_path;
-require_once $mosConfig_absolute_path.'/components/com_mtree/Savant2/Filter.php';
+require_once JPATH_ROOT.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS.'Filter.php';
 
 /**
 * 
@@ -13,7 +12,7 @@ require_once $mosConfig_absolute_path.'/components/com_mtree/Savant2/Filter.php'
 * 
 * @author Paul M. Jones <pmjones@ciaweb.net>
 * 
-* $Id: Savant2_Filter_colorizeCode.php,v 1.1 2004/10/04 01:52:23 pmjones Exp $
+* $Id: Savant2_Filter_colorizeCode.php 432 2008-10-09 08:42:32Z cy $
 * 
 * @author Paul M. Jones <pmjones@ciaweb.net>
 * 

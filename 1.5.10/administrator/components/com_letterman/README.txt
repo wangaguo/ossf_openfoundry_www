@@ -62,5 +62,11 @@ Facts you better know of:
 
 * you can configure some email texts / footers in /administrator/components/com_letterman/language/english.messages.php
 
+Feature Request? Bug Report?
+-------------------------
+Go here please:
+http://virtuemart.net/index.php?tasks=all&project=2&option=com_flyspray&Itemid=83
+
+
 That's all.
 thanks to Mark Lindeman & Adam van Dongen for the work on their components, this component is based of.
