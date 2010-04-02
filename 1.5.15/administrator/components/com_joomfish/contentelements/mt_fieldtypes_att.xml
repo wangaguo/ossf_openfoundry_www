@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>Mosets Tree Field Types Attribute</name>
+  <author>Ivo Apostolov</author>
+  <version>2.2</version>
+  <description>Definition for the mosets tree field types attribute</description>
+  <reference type="mt_fieldtypes_att">
+  	<table name="mt_fieldtypes_att">
+  		<field type="referenceid" name="fta_id" translate="0">ID</field>
+  		<field type="titletext" name="filename"  length="50" maxlength="250" translate="1">File Name</field>
+  		<field type="textarea" name="filedata" translate="1">File Data</field>
+  		<field type="text" name="extension"  length="50" maxlength="250" translate="1">Field Extension</field>
+	</table>
+  </reference>
+</joomfish>

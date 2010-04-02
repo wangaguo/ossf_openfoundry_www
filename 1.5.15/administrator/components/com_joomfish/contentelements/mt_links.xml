@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>Mosets Tree Links</name>
+  <author>Ivo Apostolov</author>
+  <version>2.2</version>
+  <description>Definition for the mosets links</description>
+  <reference type="mt_links">
+  	<table name="mt_links">
+  		<field type="referenceid" name="link_id" translate="0">ID</field>
+  		<field type="titletext" name="link_name"  length="50" maxlength="250" translate="1">Link Title</field>
+  		<field type="text" name="alias"  translate="1">Alias</field>
+  		<field type="htmltext" name="link_desc"  translate="1">Link Description</field>
+  		<field type="textarea" name="attribs"  translate="1">Attributes</field>
+  		<field type="textarea" name="metakey"  translate="1">Meta Keywords</field>
+  		<field type="textarea" name="metadesc"  translate="1">Meta Description</field>
+  		<field type="text" name="address"  translate="1">Address</field>
+  		<field type="text" name="city"  translate="1">City</field>
+  		<field type="text" name="state"  translate="1">State</field>
+  		<field type="text" name="country"  translate="1">Country</field>
+  		<field type="text" name="postcode"  translate="1">Post Code</field>
+  		<field type="text" name="telephone"  translate="1">Telephone</field>
+  		<field type="text" name="fax"  translate="1">Fax</field>
+  		<field type="text" name="email"  translate="1">E-mail</field>
+  		<field type="text" name="website"  translate="1">Web Site</field>
+  		<field type="text" name="price"  translate="1">Price</field>
+	</table>
+  </reference>
+  <translationfilters>
+          <keyword>link_name</keyword>
+          <id>link_id</id>
+  </translationfilters>
+</joomfish>

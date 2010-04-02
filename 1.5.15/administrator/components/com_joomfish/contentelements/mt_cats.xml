@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>Mosets Tree Categories</name>
+  <author>Ivo Apostolov</author>
+  <version>2.2</version>
+  <description>Definition for the mosets tree categories</description>
+  <reference type="mt_cats">
+  	<table name="mt_cats">
+  		<field type="referenceid" name="cat_id" translate="0">ID</field>
+  		<field type="titletext" name="cat_name"  length="50" maxlength="250" translate="1">Category Title</field>
+  		<field type="text" name="alias"  length="50" maxlength="250" translate="1">Alias</field>
+  		<field type="textarea" name="metakey"  length="50" maxlength="250" translate="1">Category Meta Key</field>
+  		<field type="text" name="metadesc"  length="50" maxlength="250" translate="1">Categoty Meta Description</field>
+	</table>
+  </reference>
+</joomfish>
