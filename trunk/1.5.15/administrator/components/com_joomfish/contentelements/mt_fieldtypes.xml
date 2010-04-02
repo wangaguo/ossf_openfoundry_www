@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>Mosets Tree Field Types</name>
+  <author>Ivo Apostolov</author>
+  <version>2.2</version>
+  <description>Definition for the mosets tree field types</description>
+  <reference type="mt_fieldtypes">
+  	<table name="mt_fieldtypes">
+  		<field type="referenceid" name="ft_id" translate="0">ID</field>
+  		<field type="titletext" name="field_type"  length="50" maxlength="250" translate="1">Field Type</field>
+  		<field type="text" name="ft_caption"  length="50" maxlength="250" translate="1">Field Type Caption/field>
+	</table>
+  </reference>
+</joomfish>

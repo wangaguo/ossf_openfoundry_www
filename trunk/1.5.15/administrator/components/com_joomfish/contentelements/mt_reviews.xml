@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>Mosets Tree Reviews</name>
+  <author>Ivo Apostolov</author>
+  <version>2.2</version>
+  <description>Definition for the mosets tree reviews</description>
+  <reference type="mt_reviews">
+  	<table name="mt_reviews">
+  		<field type="referenceid" name="rev_id" translate="0">ID</field>
+  		<field type="titletext" name="rev_title"  length="50" maxlength="250" translate="1">Review Title</field>
+  		<field type="textarea" name="rev_text"  translate="1">Review Text</field>
+  		<field type="textarea" name="ownersreply_text"  translate="1">Oweners reply</field>
+  		<field type="text" name="guest_name"  length="50" maxlength="250" translate="1">Guest Name</field>
+	</table>
+  </reference>
+</joomfish>

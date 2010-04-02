@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>Mosets Tree Claims</name>
+  <author>Ivo Apostolov</author>
+  <version>2.2</version>
+  <description>Definition for the mosets tree claims</description>
+  <reference type="mt_claims">
+  	<table name="mt_claims">
+  		<field type="id" name="claim_id" translate="0">ID</field>
+  		<field type="titletext" name="comment"  length="50" maxlength="250" translate="1">Comment</field>
+  		<field type="textarea" name="admin_note"  length="50" maxlength="250" translate="1">Admin Note</field>
+	</table>
+  </reference>
+</joomfish>
