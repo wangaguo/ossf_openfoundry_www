@@ -374,3 +374,108 @@ float: left;
 div.el_box_right {
 float: right;
 }
+
+
+#customers th {
+    background-color:#629DE3;
+    color:#FFFFFF;
+    padding-bottom:4px;
+    padding-top:5px;
+    text-align:left;
+}
+
+#customers td {
+    border:1px solid #14498a;
+    padding:8px 7px 8px;
+}
+
+#customers th {
+    padding:5px 7px 5px;
+    border:1px solid #14498a;
+    text-align:center;
+}
+
+#customers tr.alt td {
+    background-color:#b2daea;
+}
+
+#customers
+{
+    font-family: Arial, Helvetica, sans-serif;
+    width:100%;
+    border-collapse:collapse;
+    line-height:150%;
+    font-size:120%;
+}
+
+blockquote {
+    background: #f9f9f9 url(../images/blockquote.png) 0 0 no-repeat;
+    color: #666;
+/*  font-style: italic;*/
+    font-size: 120%;
+    line-height: 150%;
+}
+
+div.event-workshop {
+    background: #f9f9f9 url(../images/event.png) 0 0 no-repeat;
+    color: #666;
+/*  font-style: italic;*/
+    font-size: 120%;
+    line-height: 150%;
+    margin:15px 0;
+    padding:10px 10px 10px 80px;
+    width:auto;
+}
+
+div.bulletin-workshop {
+    background: #f9f9f9 url(../images/bulletin.png) 0 0 no-repeat;
+    color: #666;
+/*  font-style: italic;*/
+    font-size: 120%;
+    line-height: 150%;
+    margin:15px 0;
+    padding:10px 10px 10px 80px;
+    width:auto;
+}
+
+
+
+div.info-workshop {
+     background: #f9f9f9 url(../images/info.png) 0 0 no-repeat;
+     color: #666;
+ /*  font-style: italic;*/
+     font-size: 120%;
+     line-height: 150%;
+     margin:15px 0;
+     padding:10px 10px 10px 80px;
+     width:auto;
+ }
+
+div.references-workshop {
+     background: #f9f9f9 url(../images/references-icon.png) 0 0 no-repeat;
+     color: #666;
+ /*  font-style: italic;*/
+     font-size: 120%;
+     line-height: 150%;
+     margin:15px 0;
+     padding:10px 10px 10px 80px;
+     width:auto;
+ }
+div.speaker-workshop {
+     background: #f9f9f9 url(../images/man-icon.png) 0 0 no-repeat;
+     color: #666;
+ /*  font-style: italic;*/
+     font-size: 120%;
+     line-height: 150%;
+     margin:15px 0;
+     padding:10px 10px 10px 80px;
+     width:auto;
+ }
+
+div.moduletable-hilite5 h3{
+    background:#585858;
+    color:#E6E6E6;
+    line-height:100%;
+    margin:0 -15px 15px;
+    padding:10px 15px;
+}
