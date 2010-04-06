@@ -13,4 +13,8 @@
   		<field type="text" name="metadesc"  length="50" maxlength="250" translate="1">Categoty Meta Description</field>
 	</table>
   </reference>
+  <translationfilters>
+          <keyword>cat_name</keyword>
+          <id>cat_id</id>
+  </translationfilters>
 </joomfish>
