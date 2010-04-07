@@ -45,7 +45,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 	<div class="catimg">
 	  	<?php
-			echo JHTML::_('link', JRoute::_($row->linktarget), $row->image);
+			//echo JHTML::_('link', JRoute::_($row->linktarget), $row->image);
 		?>
 		<p>
 			<?php
@@ -67,7 +67,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <?php endforeach; ?>
 
 <!--pagination-->
-<p class="pageslinks">
+<p class="rt-pagination">
 	<?php echo $this->pageNav->getPagesLinks(); ?>
 </p>
 

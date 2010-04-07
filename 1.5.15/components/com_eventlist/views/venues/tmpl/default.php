@@ -119,7 +119,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	<?php endforeach; ?>
 
 	<!--pagination-->
-	<p class="pageslinks">
+	<p class="rt-pagination">
 		<?php echo $this->pageNav->getPagesLinks(); ?>
 	</p>
 
