@@ -38,7 +38,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <!-- Details EVENT -->
 	<h2 class="eventlist">
 		<?php
-    	echo JText::_( 'EVENT' );
+    	//echo JText::_( 'EVENT' );
     	echo '&nbsp;'.ELOutput::editbutton($this->item->id, $this->row->did, $this->params, $this->allowedtoeditevent, 'editevent' );
     	?>
 	</h2>

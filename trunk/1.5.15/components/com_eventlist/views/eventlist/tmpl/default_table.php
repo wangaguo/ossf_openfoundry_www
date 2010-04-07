@@ -83,16 +83,16 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 	<thead>
 			<tr>
-				<th id="el_date" class="sectiontableheader" align="left"><?php echo JHTML::_('grid.sort', $this->escape($this->elsettings->datename), 'a.dates', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
+		<th id="el_date" class="sectiontableheader" align="left"><?php echo JHTML::_('grid.sort', JText::_( 'DATE' ), 'a.dates', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
 				<?php
 				if ($this->elsettings->showtitle == 1) :
 				?>
-				<th id="el_title" class="sectiontableheader" align="left"><?php echo JHTML::_('grid.sort', $this->escape($this->elsettings->titlename), 'a.title', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
+				<th id="el_title" class="sectiontableheader" align="left"><?php echo JHTML::_('grid.sort',JText::_( 'EVENT' ) , 'a.title', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
 				<?php
 				endif;
 				if ($this->elsettings->showlocate == 1) :
 				?>
-				<th id="el_location" class="sectiontableheader" align="left"><?php echo JHTML::_('grid.sort', $this->escape($this->elsettings->locationname), 'l.venue', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
+				<th id="el_location" class="sectiontableheader" align="left"><?php echo JHTML::_('grid.sort', JText::_( 'WHERE' ), 'l.venue', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
 				<?php
 				endif;
 				if ($this->elsettings->showcity == 1) :
@@ -107,7 +107,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				endif;
 				if ($this->elsettings->showcat == 1) :
 				?>
-				<th id="el_category" class="sectiontableheader" align="left"><?php echo JHTML::_('grid.sort', $this->escape($this->elsettings->catfroname), 'c.catname', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
+				<th id="el_category" class="sectiontableheader" align="left"><?php echo JHTML::_('grid.sort', JText::_( 'CATEGORY'), 'c.catname', $this->lists['order_Dir'], $this->lists['order'] ); ?></th>
 				<?php
 				endif;
 				?>
