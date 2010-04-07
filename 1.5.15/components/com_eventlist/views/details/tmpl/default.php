@@ -39,6 +39,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	<h2 class="eventlist">
 		<?php
     	//echo JText::_( 'EVENT' );
+	echo $this->escape($this->row->title); 
     	echo '&nbsp;'.ELOutput::editbutton($this->item->id, $this->row->did, $this->params, $this->allowedtoeditevent, 'editevent' );
     	?>
 	</h2>
@@ -49,12 +50,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 	<dl class="event_info floattext">
 
-		<?php if ($this->elsettings->showdetailstitle == 1) : ?>
-			<dt class="title"><?php echo JText::_( 'TITLE' ).':'; ?></dt>
-    		<dd class="title"><?php echo $this->escape($this->row->title); ?></dd>
-		<?php
-  		endif;
-  		?>
   		<dt class="when"><?php echo JText::_( 'WHEN' ).':'; ?></dt>
 		<dd class="when">
 			<?php
