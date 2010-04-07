@@ -133,7 +133,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
     					
     					<?php
     					if ($row->enddates) :
-    						echo ' - '.ELOutput::formatdate($row->enddates, $row->endtimes);
+    						echo '  '.ELOutput::formatdate($row->enddates, $row->endtimes);
     					endif;
     					?>
     				</strong>

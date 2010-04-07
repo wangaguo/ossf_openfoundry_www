@@ -93,7 +93,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 			endif;
 
-			echo $this->escape($this->row->city); ?>
+			//echo $this->escape($this->row->city); ?>
 
 			</dd>
 
@@ -124,101 +124,18 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	
   	<?php if ($this->elsettings->showevdescription == 1) : ?>
 
-  	    <h2 class="description"><?php echo JText::_( 'DESCRIPTION' ); ?></h2>
+	<!--  	    <h2 class="description"><?php //echo JText::_( 'DESCRIPTION' ); ?></h2>-->
   		<div class="description event_desc">
   			<?php echo $this->row->datdescription; ?>
   		</div>
 
   	<?php endif; ?>
 
-<!--  	Venue  -->
-
-	<?php if ($this->row->locid != 0) : ?>
-
-		<h2 class="location">
-			<?php echo JText::_( 'VENUE' ) ; ?>
-  			<?php echo ELOutput::editbutton($this->item->id, $this->row->locid, $this->params, $this->allowedtoeditvenue, 'editvenue' ); ?>
-		</h2>
-
-		<?php //flyer
-		echo ELOutput::flyer( $this->row, $this->limage );
-		echo ELOutput::mapicon( $this->row );
-		?>
-
-		<dl class="location floattext">
-			 <dt class="venue"><?php echo $this->elsettings->locationname.':'; ?></dt>
-				<dd class="venue">
-				<?php echo "<a href='".JRoute::_( 'index.php?view=venueevents&id='.$this->row->venueslug )."'>".$this->escape($this->row->venue)."</a>"; ?>
-
-				<?php if (!empty($this->row->url)) : ?>
-					&nbsp; - &nbsp;
-					<a href="<?php echo $this->row->url; ?>"> <?php echo JText::_( 'WEBSITE' ); ?></a>
-				<?php
-				endif;
-				?>
-				</dd>
-
-			<?php
-  			if ( $this->elsettings->showdetailsadress == 1 ) :
-  			?>
-
-  				<?php if ( $this->row->street ) : ?>
-  				<dt class="venue_street"><?php echo JText::_( 'STREET' ).':'; ?></dt>
-				<dd class="venue_street">
-    				<?php echo $this->escape($this->row->street); ?>
-				</dd>
-				<?php endif; ?>
-
-				<?php if ( $this->row->plz ) : ?>
-  				<dt class="venue_plz"><?php echo JText::_( 'ZIP' ).':'; ?></dt>
-				<dd class="venue_plz">
-    				<?php echo $this->escape($this->row->plz); ?>
-				</dd>
-				<?php endif; ?>
-
-				<?php if ( $this->row->city ) : ?>
-    			<dt class="venue_city"><?php echo JText::_( 'CITY' ).':'; ?></dt>
-    			<dd class="venue_city">
-    				<?php echo $this->escape($this->row->city); ?>
-    			</dd>
-    			<?php endif; ?>
-
-    			<?php if ( $this->row->state ) : ?>
-    			<dt class="venue_state"><?php echo JText::_( 'STATE' ).':'; ?></dt>
-    			<dd class="venue_state">
-    				<?php echo $this->escape($this->row->state); ?>
-    			</dd>
-				<?php endif; ?>
-
-				<?php if ( $this->row->country ) : ?>
-				<dt class="venue_country"><?php echo JText::_( 'COUNTRY' ).':'; ?></dt>
-    			<dd class="venue_country">
-    				<?php echo $this->row->countryimg ? $this->row->countryimg : $this->row->country; ?>
-    			</dd>
-    			<?php endif; ?>
-			<?php
-			endif;
-			?>
-		</dl>
-
-		<?php if ($this->elsettings->showlocdescription == 1) :	?>
-
-			<h2 class="location_desc"><?php echo JText::_( 'DESCRIPTION' ); ?></h2>
-  			<div class="description location_desc">
-  				<?php echo $this->row->locdescription;	?>
-  			</div>
-
-		<?php endif; ?>
-
-	<?php
-	//row->locid !=0 end
-	endif;
-	?>
 
 	<?php if ($this->row->registra == 1) : ?>
 
 		<!-- Registration -->
-		<?php echo $this->loadTemplate('attendees'); ?>
+		<?php //echo $this->loadTemplate('attendees'); ?>
 
 	<?php endif; ?>
 	
@@ -229,7 +146,5 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		
   	<?php endif; ?>
 
-<p class="copyright">
-	<?php echo ELOutput::footer( ); ?>
-</p>
+	<?php //echo ELOutput::footer( ); ?>
 </div>

@@ -51,7 +51,7 @@ foreach($this->categories as $category) :
 
 	<div class="catimg">
 	  	<?php
-	  		echo JHTML::_('link', JRoute::_($category->linktarget), $category->image);
+	  		//echo JHTML::_('link', JRoute::_($category->linktarget), $category->image);
 		?>
 		<p>
 			<?php
@@ -85,7 +85,7 @@ endforeach;
 
 <!--pagination-->
 
-<div class="pageslinks">
+<div class="rt-pagination">
 	<?php echo $this->pageNav->getPagesLinks(); ?>
 </div>
 

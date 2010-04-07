@@ -51,7 +51,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	</tbody>
 </table>
 
-<div class="pageslinks">
+<div class="rt-pagination">
   <?php echo $this->venues_pageNav->getPagesLinks(); ?>
 </div>
 

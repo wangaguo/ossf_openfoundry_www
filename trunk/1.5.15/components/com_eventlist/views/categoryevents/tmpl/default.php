@@ -44,7 +44,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 <div class="floattext">
 <div class="catimg">
-	<?php echo $this->category->image; ?>
+	<?php //echo $this->category->image; ?>
 </div>
 
 <div class="catdescription">
@@ -68,7 +68,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <!--pagination-->
 
 <?php if (!$this->params->get( 'popup' ) ) : ?>
-<div class="pageslinks">
+<div class="rt-pagination">
 	<?php echo $this->pageNav->getPagesLinks(); ?>
 </div>
 

@@ -242,7 +242,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 </p>
 </form>
 
-<div class="pageslinks">
+<div class="rt-pagination">
   <?php echo $this->events_pageNav->getPagesLinks(); ?>
 </div>
 

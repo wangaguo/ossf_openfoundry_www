@@ -45,7 +45,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 <!--footer-->
 
 <?php if (( $this->page > 0 ) && ( !$this->params->get( 'popup' ) )) : ?>
-<div class="pageslinks">
+<div class="rt-pagination">
 	<?php echo $this->pageNav->getPagesLinks(); ?>
 </div>
 

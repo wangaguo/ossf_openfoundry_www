@@ -60,7 +60,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 <!--footer-->
 
-<div class="pageslinks">
+<div class="rt-pagination">
 	<?php echo $this->pageNav->getPagesLinks(); ?>
 </div>
 
