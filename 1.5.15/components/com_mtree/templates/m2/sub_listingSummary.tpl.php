@@ -27,22 +27,8 @@
 		?></h3><?php
 		
 		// Rating
-		$this->plugin( 'rating', $link->link_rating, $link->link_votes, $link->attribs);
+		//$this->plugin( 'rating', $link->link_rating, $link->link_votes, $link->attribs);
 		
-		// Address
-		if( $this->config->getTemParam('displayAddressInOneRow','1') ) {
-			$fields->resetPointer();
-			$address_parts = array();
-			while( $fields->hasNext() ) {
-				$field = $fields->getField();
-				$output = $field->getOutput(2);
-				if(in_array($field->getId(),array(4,5,6,7,8)) && !empty($output)) {
-					$address_parts[] = $output;
-				}
-				$fields->next();
-			}
-			if( count($address_parts) > 0 ) { echo '<div class="address">' . implode(', ',$address_parts) . '</div>'; }
-		}
 		
 		// Website
 		$website = $fields->getFieldById(12);
@@ -67,6 +53,26 @@
 			$this->plugin( 'mtpath', $link->cat_id, '' );
 			echo '</div>';
 		}
+
+                // Address
+		$my = &JFactory::getUser();//Incloud user info query
+
+		if( $this->config->getTemParam('displayAddressInOneRow','1') && $my->gid>='24' or $my->gid=='18' ) {
+                        $fields->resetPointer();
+                        $address_parts = array();
+                        while( $fields->hasNext() ) {
+                              $field = $fields->getField();
+                              $output = $field->getOutput(2);
+                                if(in_array($field->getId(),array(4,5,6,7,8)) && !empty($output)) {
+                                        $address_parts[] = $output;
+                                }
+                                $fields->next();
+                        }
+                        if( count($address_parts) > 0 ) { 
+				echo '<div  class="fieldRow"><span class="caption">' . $field->getCaption() . '</span>' . implode(', ',$address_parts) . '</div>'; 
+			}
+                }
+
 		
 		// Other custom field		
 		$fields->resetPointer();

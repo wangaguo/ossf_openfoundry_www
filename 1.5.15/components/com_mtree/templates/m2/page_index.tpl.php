@@ -45,26 +45,17 @@ if (is_array($this->categories)): ?>
 		
 		if (isset($this->sub_cats) && isset($this->sub_cats[$cat->cat_id]) && count($this->sub_cats[$cat->cat_id]) > 0) {
 			$j = 0;
-			echo '<div class="subcat">';
+			echo '<div class="subcat"><ul class="listings">';
 			
 			foreach ($this->sub_cats[$cat->cat_id] AS $sub_cat): 
+				echo '<li>';
 				$this->plugin('ahref', "index.php?option=$this->option&task=listcats&cat_id=$sub_cat->cat_id&Itemid=$this->Itemid", htmlspecialchars($sub_cat->cat_name)); 
-				$j++;
-				if ($this->sub_cats_total[$cat->cat_id] > $j) {
-					$lastSubCat = end($this->sub_cats[$cat->cat_id]);
-					if ($j >= $numOfSubcatsToDisplay || $lastSubCat->cat_id == $sub_cat->cat_id) {
-						echo '...';
-					} else {
-						echo ', ';
-					}
-				} elseif($this->sub_cats_total[$cat->cat_id] == $j) {
-					// No more sub-categories
-				} 
+				echo '</li>';
 			endforeach; 
-			echo '</div>';
+			echo '</ul></div>';
 		}
 		if(isset($this->cat_links) && !empty($this->cat_links[$cat->cat_id])) {
-			echo '<ul class="listings">';
+			echo '<ul class="listings">abc';
 			foreach($this->cat_links[$cat->cat_id] AS $cat_link) {
 				echo '<li>';
 				$this->plugin('ahref', "index.php?option=$this->option&task=viewlink&link_id=$cat_link->link_id&Itemid=$this->Itemid", $cat_link->link_name, 'style="font-weight:normal;font-size:0.9em;text-decoration:none;"');

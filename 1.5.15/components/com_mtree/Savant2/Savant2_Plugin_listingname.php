@@ -72,7 +72,8 @@ function plugin(&$link, $attr=null, $show=null)
 
 		# Editable?
 		if ($show["edit"] <> false) {
-			if ( $my->id == $link->user_id && $mtconf->get('user_allowmodify') == 1 && $my->id > 0 ) {
+			//if ( $my->id == $link->user_id && $mtconf->get('user_allowmodify') == 1 && $my->id > 0 ) {
+			if ( $mtconf->get('user_allowmodify') == 1 && $my->gid>='24' or $my->gid=='18' ) {
 				$html .= ' <a href="';
 				$html .= 'index.php?option=com_mtree&task=editlisting&link_id='.$link->link_id.'&Itemid='.$Itemid;
 				$html .= '" class="actionlink"">';
