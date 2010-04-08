@@ -18,10 +18,7 @@ if( $this->task == "search" && empty($this->links) ) {
 	</div>
 
 	<?php
-	if (isset($this->cat_allow_submission) && $this->cat_allow_submission && $this->user_addlisting >= 0) {
-		echo $this->plugin("ahref","index.php?option=com_mtree&task=addlisting&cat_id=$this->cat_id&Itemid=$this->Itemid",JText::_( 'Add your listing here' ),'class="add-listing"');
-	}
-	
+//Delete Add list here code	
 	foreach ($this->links AS $link) {
 		$fields = $this->fields[$link->link_id];
 		include $this->loadTemplate('sub_listingSummary.tpl.php');

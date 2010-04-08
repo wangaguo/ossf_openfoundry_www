@@ -39,7 +39,9 @@ class Savant2_Plugin_ahreflisting extends Savant2_Plugin {
 		
 		# Editable?
 		if ($show["edit"] <> false) {
-			if ( $my->id == $link->user_id && $mtconf->get('user_allowmodify') == 1 && $my->id > 0 ) {
+			//Modify only Administrator and reigster can modify  
+			if ( $mtconf->get('user_allowmodify') == 1 && $my->gid>='24' or $my->gid=='18' ) {
+			//if ( $my->id == $link->user_id && $mtconf->get('user_allowmodify') == 1 && $my->id > 0 ) {
 				$html .= '<a href="';
 				$html .= JRoute::_('index.php?option=com_mtree&task=editlisting&link_id='.$link->link_id);
 				$html .= '" class="actionlink"">';

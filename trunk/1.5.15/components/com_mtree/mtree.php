@@ -3487,7 +3487,7 @@ function editlisting( $link_id, $option ) {
 	if ( $link_id > 0 && $my->id <= 0 ) {
 		$link->load( 0 );
 	} else {
-		$link->load( $link_id );
+		$link->load( $link_id );	
 	}
 
 	# Load all published CORE & custom fields
@@ -3561,9 +3561,8 @@ function editlisting( $link_id, $option ) {
 
 		$savant->assign('error_msg', JText::_( 'Please login before addlisting' ));
 		$savant->display( 'page_error.tpl.php' );
-	
-	} elseif( ($link_id > 0 && $my->id <> $link->user_id) || ($mtconf->get('user_allowmodify') == 0 && $link_id > 0) || ($mtconf->get('user_addlisting') == -1 && $link_id == 0) || ($mtconf->get('user_addlisting') == 1 && $my->id == 0) ) {
-		
+	//modify user access permission 
+	} elseif( ($link_id > 0 && $my->gid <= '18' ) || ($mtconf->get('user_allowmodify') == 0 && $link_id > 0) || ($mtconf->get('user_addlisting') == -1 && $link_id == 0) || ($mtconf->get('user_addlisting') == 1 && $my->id == 0) ) {
 		echo _NOT_EXIST;
 
 	} else {
