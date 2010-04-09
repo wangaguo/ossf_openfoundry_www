@@ -57,70 +57,70 @@
                 // Address
 		$my = &JFactory::getUser();//Incloud user info query
 
-		if( $this->config->getTemParam('displayAddressInOneRow','1') && $my->gid>='24' or $my->gid=='18' ) {
-                        $fields->resetPointer();
-                        $address_parts = array();
-                        while( $fields->hasNext() ) {
-                              $field = $fields->getField();
-                              $output = $field->getOutput(2);
-                                if(in_array($field->getId(),array(4,5,6,7,8)) && !empty($output)) {
-                                        $address_parts[] = $output;
-                                }
-                                $fields->next();
-                        }
-                        if( count($address_parts) > 0 ) { 
-				echo '<div  class="fieldRow"><span class="caption">' . $field->getCaption() . '</span>' . implode(', ',$address_parts) . '</div>'; 
-			}
-                }
+	//	if( $this->config->getTemParam('displayAddressInOneRow','1') && $my->gid>='24' or $my->gid=='18' ) {
+        //                $fields->resetPointer();
+        //                $address_parts = array();
+        //                while( $fields->hasNext() ) {
+        //                      $field = $fields->getField();
+        //                      $output = $field->getOutput(2);
+        //                        if(in_array($field->getId(),array(4,5,6,7,8)) && !empty($output)) {
+        //                                $address_parts[] = $output;
+        //                        }
+        //                        $fields->next();
+        //                }
+        //                if( count($address_parts) > 0 ) { 
+	//			echo '<div  class="fieldRow"><span class="caption">' . $field->getCaption() . '</span>' . implode(', ',$address_parts) . '</div>'; 
+	//		}
+        //        }
 
 		
 		// Other custom field		
 		$fields->resetPointer();
-		echo '<div class="fields">';
-		while( $fields->hasNext() ) {
-			$field = $fields->getField();
-			$value = $field->getOutput(2);
-			if(
-				( 
-					(
-						!$field->hasInputField() && !$field->isCore() && empty($value)) 
-						|| 
-						(!empty($value) || $value == '0')
-					) 
-					&&	
-					!in_array($field->getId(),array(1,2,12))
-					&&
-					(
-						($this->config->getTemParam('displayAddressInOneRow','1') && !in_array($field->getId(),array(4,5,6,7,8))
-						||
-						$this->config->getTemParam('displayAddressInOneRow','1') == 0						
-					)
-				)
-			) {
-				echo '<div class="fieldRow">';
-				if($field->hasCaption()) {
-					echo '<span class="caption">' . $field->getCaption() . '</span>';
-					echo '<span class="output">' . $field->getOutput(2) . '</span>';
-				} else {
-					echo '<span class="output">' . $field->getOutput(2) . '</span>';
-				}
-				echo '</div>';
-			}
-			$fields->next();
-		}
-		echo '</div>';
+	//	echo '<div class="fields">';
+	//	while( $fields->hasNext() ) {
+	//		$field = $fields->getField();
+	//		$value = $field->getOutput(2);
+	//		if(
+	//			( 
+	//				(
+	//					!$field->hasInputField() && !$field->isCore() && empty($value)) 
+	//					|| 
+	//					(!empty($value) || $value == '0')
+	//				) 
+	//				&&	
+	//				!in_array($field->getId(),array(1,2,12))
+	//				&&
+	//				(
+	//					($this->config->getTemParam('displayAddressInOneRow','1') && !in_array($field->getId(),array(4,5,6,7,8))
+	//					||
+	//					$this->config->getTemParam('displayAddressInOneRow','1') == 0						
+	//				)
+	//			)
+	//		) {
+	//			echo '<div class="fieldRow">';
+	//			if($field->hasCaption()) {
+	//				echo '<span class="caption">' . $field->getCaption() . '</span>';
+	//				echo '<span class="output">' . $field->getOutput(2) . '</span>';
+	//			} else {
+	//				echo '<span class="output">' . $field->getOutput(2) . '</span>';
+	//			}
+	//			echo '</div>';
+	//		}
+	//		$fields->next();
+	//	}
+	//	echo '</div>';
 		
 		if($this->config->getTemParam('showActionLinksInSummary','0')) {
 			echo '<div class="actions">';
-			$this->plugin( 'ahrefreview', $link, array("rel"=>"nofollow") ); 
-			$this->plugin( 'ahrefrecommend', $link, array("rel"=>"nofollow") );	
-			$this->plugin( 'ahrefprint', $link );
-			$this->plugin( 'ahrefcontact', $link, array("rel"=>"nofollow") );
-			$this->plugin( 'ahrefvisit', $link );
+			//$this->plugin( 'ahrefreview', $link, array("rel"=>"nofollow") ); 
+			//$this->plugin( 'ahrefrecommend', $link, array("rel"=>"nofollow") );	
+			//$this->plugin( 'ahrefprint', $link );
+			//$this->plugin( 'ahrefcontact', $link, array("rel"=>"nofollow") );
+			//$this->plugin( 'ahrefvisit', $link );
 			$this->plugin( 'ahrefreport', $link, array("rel"=>"nofollow") );
-			$this->plugin( 'ahrefclaim', $link, array("rel"=>"nofollow") );
-			$this->plugin( 'ahrefownerlisting', $link );
-			$this->plugin( 'ahrefmap', $link );
+			//$this->plugin( 'ahrefclaim', $link, array("rel"=>"nofollow") );
+			//$this->plugin( 'ahrefownerlisting', $link );
+			//$this->plugin( 'ahrefmap', $link );
 			echo '</div>';
 		}
 ?></div>
