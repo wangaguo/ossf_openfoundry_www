@@ -13,8 +13,8 @@ if( $this->task == "search" && empty($this->links) ) {
 	<div class="title"><?php echo JText::_( 'Listings' ); ?></div>
 
 	<div class="rt-pagination">
-		<span class="xlistings"><?php echo $this->pageNav->getResultsCounter(); ?></span>
 		<?php echo $this->pageNav->getPagesLinks(); ?>
+		<p class="pagescounter"><?php echo $this->pageNav->getResultsCounter(); ?></p>
 	</div>
 
 	<?php
@@ -26,8 +26,8 @@ if( $this->task == "search" && empty($this->links) ) {
 
 	if( $this->pageNav->total > $this->pageNav->limit ) { ?>
 	<div class="rt-pagination">
-		<span class="xlistings"><?php echo $this->pageNav->getResultsCounter(); ?></span>
 		<?php echo $this->pageNav->getPagesLinks(); ?>
+		<p class="pagescounter"><?php echo $this->pageNav->getResultsCounter(); ?></p>
 	</div>
 	<?php
 	}
