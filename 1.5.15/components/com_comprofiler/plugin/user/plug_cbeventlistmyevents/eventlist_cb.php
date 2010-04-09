@@ -138,7 +138,7 @@ class eventlistTab extends cbTabHandler {
 
 			// html content is allowed in descriptions
 
-			$return .= "\t\t<div class=\"tab_Description\">". $tabdescription. "</div>\n";
+			//$return .= "\t\t<div class=\"tab_Description\">". $tabdescription. "</div>\n";
 
 			
 
@@ -254,15 +254,15 @@ class eventlistTab extends cbTabHandler {
 
 			$return .= "\n\t<table  class='eventCBTabTable' width=100% >";
 
-			$return .= "\n\t\t<tr><td colspan='7'><hr size=1 width='100%' /></td></tr>";	
+			$return .= "\n\t\t<tr><td colspan='7'></td></tr>";	
 
 			$return .= "\n\t\t<tr style=\"border-bottom:solid 1px #ccc;\" class='sectiontableheader' >";
 
-			$return .= "\n\t\t\t<th class='eventCBTabTableTitle'>";
+			//$return .= "\n\t\t\t<th class='eventCBTabTableTitle'>";
 
-			$return .= "\n\t\t\t\t" . _EVENT_IMAGE;	
+			//$return .= "\n\t\t\t\t" . _EVENT_IMAGE;	
 
-			$return .= "\n\t\t\t</th>";
+			//$return .= "\n\t\t\t</th>";
 
 					
 
@@ -294,23 +294,23 @@ class eventlistTab extends cbTabHandler {
 
 			
 
-			if($end_date==1){
+			//if($end_date==1){
 
-			$return .= "\n\t\t\t<th class='eventCBTabTableExp'>";
+			//$return .= "\n\t\t\t<th class='eventCBTabTableExp'>";
 
-			$return .= "\n\t\t\t\t" . _EVENT_EXPIRE;
+			//$return .= "\n\t\t\t\t" . _EVENT_EXPIRE;
 
-			$return .= "\n\t\t\t</th>";
+			//$return .= "\n\t\t\t</th>";
 
-			}
+			//}
 
 			
 
-			$return .= "\n\t\t\t<th class='eventCBTabTableExp'>";
+			//$return .= "\n\t\t\t<th class='eventCBTabTableExp'>";
 
-			$return .= "\n\t\t\t\t" . _EVENT_REGISTER;
+			//$return .= "\n\t\t\t\t" . _EVENT_REGISTER;
 
-			$return .= "\n\t\t\t</th>";
+			//$return .= "\n\t\t\t</th>";
 
 			$count=count($results);	
 
@@ -358,7 +358,7 @@ class eventlistTab extends cbTabHandler {
 
 								
 
-					$return .= "\n\t\t\t<td class='eventCBTabTableCat'>";										
+					//$return .= "\n\t\t\t<td class='eventCBTabTableCat'>";										
 
 					$live_site = str_replace("/administrator/", "/", $live_site);
 	
@@ -378,9 +378,9 @@ class eventlistTab extends cbTabHandler {
 
 					/*$return .= "\n\t\t\t\t<a class=\"modal\" rel=\"{handler: 'iframe', size: {x: $img_height, y: $img_width}}\" href=$live_site2 ><img src=\"$live_site1\"></a>";*/
 
-					$return .= "\n\t\t\t\t<a class=\"eventCBAddLink\" href=\"$url1\" ><img src=\"$live_site1\"></a>";
+					//$return .= "\n\t\t\t\t<a class=\"eventCBAddLink\" href=\"$url1\" ><img src=\"$live_site1\" width=\"50%\"></a>";
 
-					$return .= "\n\t\t\t</td>";						
+					//$return .= "\n\t\t\t</td>";						
 
 								
 
@@ -389,7 +389,6 @@ class eventlistTab extends cbTabHandler {
 					$result_titles=explode(" " , $result->title);
 
 					$result_title=implode("-" , $result_titles);					
-
 					$url = "index.php?view=details&id={$result->id}%3A$result_title&option=com_eventlist&Itemid=$S_Itemid1" ;
 
 					$url1 = JRoute::_($url);
@@ -440,17 +439,17 @@ class eventlistTab extends cbTabHandler {
 
 					$reg = $_CB_database->loadObjectList();					
 
-					$return .= "\n\t\t\t<td class='eventCBTabTableReg'>";
+					//$return .= "\n\t\t\t<td class='eventCBTabTableReg'>";
 
-					$return .= "\n\t\t\t\t{$reg[0]->regs}";
+					//$return .= "\n\t\t\t\t{$reg[0]->regs}";
 
-					$return .= "\n\t\t\t</td>";						
+					//$return .= "\n\t\t\t</td>";						
 
 					
 
 					$return .= "\n\t\t</tr>";
 
-					$return .= "\n\t\t<tr><td colspan='7'><hr size=1 width='100%' /></td></tr>";	
+					$return .= "\n\t\t<tr><td colspan='7' style='border-bottom:1px dashed #cccccc;'></td></tr>";	
 
 				}
 
@@ -584,7 +583,7 @@ class eventlistTab extends cbTabHandler {
 
 					// html content is allowed in descriptions
 
-					$return .= "\t\t<div class=\"tab_Description\">". $tabdescription. "</div>\n";
+					//$return .= "\t\t<div class=\"tab_Description\">". $tabdescription. "</div>\n";
 
 					
 
@@ -704,11 +703,11 @@ class eventlistTab extends cbTabHandler {
 
 					$return .= "\n\t\t<tr style=\"border-bottom:solid 1px #ccc;\" class='sectiontableheader' >";
 
-					$return .= "\n\t\t\t<th class='eventCBTabTableTitle'>";
+					//$return .= "\n\t\t\t<th class='eventCBTabTableTitle'>";
 
-					$return .= "\n\t\t\t\t" . _EVENT_IMAGE;	
+					//$return .= "\n\t\t\t\t" . _EVENT_IMAGE;	
 
-					$return .= "\n\t\t\t</th>";
+					//$return .= "\n\t\t\t</th>";
 
 							
 
@@ -778,7 +777,7 @@ class eventlistTab extends cbTabHandler {
 
 					$return .= "\n\t\t</tr>";
 
-					$return .= "\n\t\t<tr><td colspan='7'><hr width='100%' /></td></tr>";	
+					$return .= "\n\t\t<tr><td colspan='7'></td></tr>";	
 
 					}	
 
@@ -832,9 +831,9 @@ class eventlistTab extends cbTabHandler {
 
 							$url1 = JRoute::_($url);
 
-							/*$return .= "\n\t\t\t\t<a class=\"modal\" rel=\"{handler: 'iframe', size: {x: $img_height, y: $img_width}}\" href=$live_site2 ><img src=\"$live_site1\"></a>";*/
+							//$return .= "\n\t\t\t\t<a class=\"modal\" rel=\"{handler: 'iframe', size: {x: $img_height, y: $img_width}}\" href=$live_site2 ><img src=\"$live_site1\"></a>";
 
-							$return .= "\n\t\t\t\t<a class=\"eventCBAddLink\" href=\"$url1\" ><img src=\"$live_site1\"></a>";
+						//	$return .= "\n\t\t\t\t<a class=\"eventCBAddLink\" href=\"$url1\" ><img src=\"$live_site1\" width=\"50%\"></a>";
 
 							$return .= "\n\t\t\t</td>";						
 
@@ -914,7 +913,7 @@ class eventlistTab extends cbTabHandler {
 
 							$return .= "\n\t\t</tr>";
 
-							$return .= "\n\t\t<tr><td colspan='7'><hr size=1 width='100%' /></td></tr>";	
+							$return .= "\n\t\t<tr><td colspan='7'></td></tr>";	
 
 						}
 
