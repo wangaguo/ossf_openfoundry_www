@@ -1,4 +1,4 @@
-//<?php
+<?php
 // --------------------------------------------------------------------------------
 // Letterman Newsletter Component
 //
@@ -221,8 +221,8 @@ function lm_replaceContentHtml(&$matches){
 			ob_start();
 			// displays Item Title
 			// Damn it! Open the content API and make it more flexible...
-			// 除了屬於分類ID外的文章才顯示( 分類ID 1009->1028) by ally 2007/0612
-			if ($id > 1028 || $id < 1009 ) {
+			// 除了屬於分類ID外的文章才顯示( 分類ID 00->1028) by ally 2007/0612
+			if ($id > 1028 || $id < 1000 ) {
 
 				if( @$_VERSION->DEV_LEVEL >= 9 ) {
 					$tmp = '';
@@ -240,7 +240,7 @@ function lm_replaceContentHtml(&$matches){
 			ob_start();
 
 		
-			if ($id > 1028 || $id < 1009 ) {
+			if ($id > 1028 || $id < 1000 ) {
 			HTML_content::Section_Category( $row, $params );
 
 			// displays Author Name
@@ -256,15 +256,16 @@ function lm_replaceContentHtml(&$matches){
 			$content .= ob_get_contents();
 			ob_end_clean();
 //Modify by liarchen
-		global $database;
-		$query = "SELECT `id` FROM `#__letterman` Order BY `id` DESC";
-		$database->setQuery( $query );
-		$id = $database->loadResult();
-		$id += 1; 
-		$url = "index.php?option=com_letterman&Itemid=144&id=".$id."&task=view"; 
+	//	global $database;
+	//	$query = "SELECT `id` FROM `#__letterman` Order BY `id` DESC";
+	//	$database->setQuery( $query );
+	//	$id = $database->loadResult();
+	//	$id = $database->insertid();	
+	//	$id += 1; 
+		//$url = "index.php?option=com_letterman&Itemid=144&id=".$id."&task=view"; 
 //End
 
-			if ($id > 1028 || $id < 1009 ) {	
+			if ($id > 1028 || $id < 1000 ) {	
 			$content .= '<tr>'
 			. '  <td style="font-size:12px;color:#444;line-height:200%;">' .( function_exists('ampReplace') ? ampReplace( $intro_text ) : $intro_text ). '</td>'
 			. '</tr>'
@@ -274,11 +275,17 @@ function lm_replaceContentHtml(&$matches){
 			. '&amp;Itemid=144;isletter=1 ' . '" style="font-size:12px;color:#FD6003;"">'.	
 			//. ($_Itemid ? '&amp;Itemid='.$_Itemid : "") . '" class="readon">'.
 			_READ_MORE
-			. '		</a>'
+			. '		</a>&nbsp;&nbsp;&nbsp;&nbsp;'
+            . '     <a href="'. $mosConfig_live_site . '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
+            . '&amp;Itemid=144;isletter=1#addcomments' . '" style="font-size:12px;color:#FD6003;"">'.
+            //. ($_Itemid ? '&amp;Itemid='.$_Itemid : "") . '" class="readon">'.
+            _ADD_COMMENT
+            . '     </a>'
+
 			. '		</td>'
 			. '	</tr>'
 			. ' <tr>'
-			. ' <td align="right"><a href="'.$url.'#TOP">'
+			. ' <td align="right"><a href="#TOP">'
 			. '<font size="2" color="#FD6003"><b>'
 			._BACK_TOP
 			.'</b></font>' 
@@ -331,7 +338,7 @@ function lm_replaceTitleHtml(&$matches){
 			}
 
 			
-			if ($id > 1028 || $id < 1009 ) {
+			if ($id > 1028 || $id < 1000 ) {
 			$content = '<tr>';
 			ob_start();
 			// displays Item Title
