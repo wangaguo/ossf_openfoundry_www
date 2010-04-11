@@ -73,6 +73,13 @@ define( "LM_CSV_DELIMITER_TIP", "CSV Delimiter: , ; or Tabulator" );
 /* Newsletter Management */
 define( "LM_NM", "Newsletter Manager" );
 define( "LM_MESSAGE", "Message" );
+define( "_SEARCH_TITLE", "Search Title" );
+define( "_E_CREATED", "Created" );
+define( "_E_SUBJECT", "Subject" );
+define( "_E_CMN_PUBLISHED", "Publish" );
+define( "_CMN_NEW", "Custom New" );
+define( "_E_EDIT", "Edit" );
+define( "_E_REMOVE", "Remove" );
 define( "LM_LAST_SENT", "Last send" );
 define( "LM_SEND_NOW", "Send now" );
 define( "LM_CHECKED_OUT", "Checked Out" );
@@ -149,5 +156,10 @@ define( 'LM_ADD_CONTENT_TOOLTIP', 'If you select a content item from the list, a
 define( 'LM_ATTACHMENTS', 'Attachments' );
 define( 'LM_ATTACHMENTS_TOOLTIP', 'You can select one or multiple files from the directory %s, which will be embedded into the mail when sending. Please do not care about the [ATTACHMENT ..] tag - it will be removed when sending the newsletter!' );
 define( 'LM_MULTISELECT', 'Multi-select files with Ctrl-MouseClick' );
+//modify by  aeil  @ 090204 
+define( 'LM_reflashOldPaper', '嵌入Tag');
+define( 'LM_reflashOldPaperSuccess', '成功刷新頁面');
+define( 'LM_unreflashOldPaper', '刪除Tag');
+define( 'LM_allunreflashOldPaper', '刪除所有Tag');
 
 ?>

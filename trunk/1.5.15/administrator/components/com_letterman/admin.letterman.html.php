@@ -45,7 +45,7 @@ class HTML_letterman {
 			<th class="title" width="100"><?php echo _E_CREATED ?></th>
 			<th class="title" width="100"><?php echo LM_LAST_SENT ?></th>
 			<th class="title" width="65"><?php echo LM_SEND_NOW ?></th>
-			<th class="title" width="65"><?php echo _CMN_PUBLISHED ?>?</th>
+			<th class="title" width="65"><?php echo _E_CMN_PUBLISHED ?>?</th>
 			<th class="title" width="154"><?php echo LM_CHECKED_OUT ?></th>
 		</tr>
 		<?php

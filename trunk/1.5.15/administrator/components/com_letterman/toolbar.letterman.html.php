@@ -69,6 +69,13 @@ class MENU_letterman {
 		mosMenuBar::spacer();
 		mosMenuBar::deleteList( '', 'remove', _E_REMOVE);
 		mosMenuBar::spacer();
+	        mosMenuBar::custom( 'reflash', 'upload.png', 'upload_f2.png', LM_reflashOldPaper, false );
+	         //modify by aeil @ 090204
+	        mosMenuBar::spacer();
+	        mosMenuBar::custom( 'unmount', 'reload.png', 'reload_f2.png', LM_unreflashOldPaper, true );
+	        mosMenuBar::spacer();
+	        mosMenuBar::custom( 'allunmount', 'reload.png', 'reload_f2.png', LM_allunreflashOldPaper, false );
+	        //end
 		mosMenuBar::endTable();
 	}
 	function SUBSCRIBE_MENU() {
