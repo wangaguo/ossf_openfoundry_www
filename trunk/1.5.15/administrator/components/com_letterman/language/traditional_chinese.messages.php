@@ -74,6 +74,15 @@ define( "LM_CSV_DELIMITER_TIP", "CSV 分隔符號： , ; 或Tabulator（跳格�
 
 /* Newsletter Management */
 define( "LM_NM", "電子報管理" );
+define( "_E_SUBJECT", "標題" );
+define( "_E_CREATED", "發佈時間" );
+define( "_CMN_PUBLISHED", "發佈" );
+define( "_SEARCH_TITLE", "搜尋" );
+define( "_E_EDIT", "編輯" );
+define( "_E_REMOVE", "刪除" );
+define( "LM_reflashOldPaper", "插入Tag" );
+define( "LM_unreflashOldPaper", "刪除Tag" );
+define( "LM_allunreflashOldPaper", "刪除所有Tag" );
 define( "LM_MESSAGE", "訊息" );
 define( "LM_LAST_SENT", "最後送出" );
 define( "LM_SEND_NOW", "立即送出" );

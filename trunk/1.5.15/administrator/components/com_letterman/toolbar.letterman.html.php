@@ -75,16 +75,13 @@ class MENU_letterman {
 		mosMenuBar::spacer();
 		mosMenuBar::deleteList( '', 'remove', _E_REMOVE);
 		mosMenuBar::spacer();
-		if(file_exists('reflash.png') && file_exists('reflash_f2.png'))
-			mosMenuBar::custom( 'reflash', 'reflash.png', 'reflash_f2.png', LM_reflashOldPaper, false );
-		else
-			mosMenuBar::custom( 'reflash', 'reload.png', 'reload_f2.png', LM_reflashOldPaper, false );
+		mosMenuBar::custom( 'reflash', 'upload.png', 'upload_f2.png', LM_reflashOldPaper, false );
 
 		//modify by aeil @ 090204
 		mosMenuBar::spacer();
-		mosMenuBar::custom( 'unmount', 'reload.png', 'reload_f2.png', LM_unreflashOldPaper, true );		
+		mosMenuBar::custom( 'unmount', 'upload.png', 'upload_f2.png', LM_unreflashOldPaper, true );		
 		mosMenuBar::spacer();
-		mosMenuBar::custom( 'allunmount', 'reload.png', 'reload_f2.png', LM_allunreflashOldPaper, false );	
+		mosMenuBar::custom( 'allunmount', 'upload.png', 'upload_f2.png', LM_allunreflashOldPaper, false );	
 		//end
 		mosMenuBar::endTable();
 	}
