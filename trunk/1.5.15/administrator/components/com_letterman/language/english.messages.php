@@ -72,6 +72,17 @@ define( "LM_CSV_DELIMITER_TIP", "CSV Delimiter: , ; or Tabulator" );
 
 /* Newsletter Management */
 define( "LM_NM", "Newsletter Manager" );
+define( "_E_SUBJECT", "Subject" );
+define( "_E_CREATED", "Created" );
+define( "_CMN_PUBLISHED", "Published" );
+define( "_SEARCH_TITLE", "Search" );
+define( "_E_EDIT", "Edit" );
+define( "_E_REMOVE", "Remove" );
+define( "LM_reflashOldPaper", "Inser Tag" );
+define( "LM_unreflashOldPaper", "Remove Tag" );
+define( "LM_allunreflashOldPaper", "Remove All Tag" );
+define( "_CMN_NEW", "Add New" );
+define( "_E_START_PUB", "Published" );
 define( "LM_MESSAGE", "Message" );
 define( "LM_LAST_SENT", "Last send" );
 define( "LM_SEND_NOW", "Send now" );
