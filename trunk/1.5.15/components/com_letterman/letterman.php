@@ -32,6 +32,8 @@ $id = intval( mosGetParam( $_REQUEST, 'id', 0 ) );
 $subscriber = mosGetParam( $_REQUEST, 'subscriber', '' );
 $limit 		= intval( mosGetParam( $_REQUEST, 'limit', $mosConfig_list_limit ) );
 $limitstart = intval( mosGetParam( $_REQUEST, 'limitstart', 0 ) );
+//$limit = $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', 10 );
+//$limitstart = $mainframe->getUserStateFromRequest( "view{$option}limitstart", 'limitstart', 0 );
 
 $letterman_rights = Array();
 // Editor usertype check
@@ -58,7 +60,7 @@ HTML_letterman::header();
 
 switch ($task) {
     case 'view':
-		showItem( $id, $gid, $is_editor, $pop, $option );
+		showLItem( $id, $gid, $is_editor, $pop, $option );
         // showItem ( $id );
         break;
         
@@ -201,41 +203,41 @@ function extended_email_check( $email ) {
 
 function listAll( $letterman_rights )
 {
-    global $database, $gid, $mosConfig_offset, $mosConfig_absolute_path,
-    		$Itemid, $menuname, $limit, $limitstart;
+    global $database, $gid, $mosConfig_offset, $mosConfig_absolute_path,$Itemid,$menuname,$mainframe;
+    
+    $limit = $mainframe->getUserStateFromRequest( "viewlistlimit", 'limit', 3000 );
+    $limitstart = $mainframe->getUserStateFromRequest( "view{$option}limitstart", 'limitstart', 0 );
+   
     $now = date( "Y-m-d H:i:s", time()+$mosConfig_offset*60*60 );
-
     $sql = "SELECT id, subject, send, hits FROM `#__letterman`"
     ."\nWHERE ";
-    if( !$letterman_rights['is_editor'] )
-        $sql.="\npublished=1 AND";
-    
-    $sql .= "\naccess <= $gid ";
-    if( !$letterman_rights['is_editor'] ) {
-        $sql .= "\nAND (publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now') ";
-        $sql .= "\nAND (publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now')";
+    if( !$letterman_rights['is_editor'] ){
+        $sql.="\npublished=1 ";
+        $sql.= "\nAND (publish_up = '0000-00-00 00:00:00' OR publish_up <= '$now') ";
+        $sql.= "\nAND (publish_down = '0000-00-00 00:00:00' OR publish_down >= '$now')";
+    }else {
+	$sql.= "1=1";
     }
     
-    $database->setQuery( $sql );
+    	$database->setQuery( $sql );
 	$database->query();
 	$num_rows = $database->getNumRows();
-	
-	require_once( $mosConfig_absolute_path.'/includes/pageNavigation.php');
-	$pageNav = new mosPageNav( $num_rows, $limitstart, $limit );
-	
+
+
+        require_once( "includes/pageNavigation.php" );
+        $pageNav = new mosPageNav( $total, $limitstart, $limit );
 	$sql .= "\nORDER BY created DESC";
-	$sql .= "\nLIMIT $limitstart, $limit";
+	$sql .= "\nLIMIT $pageNav->limitstart, $pageNav->limit";
 	$database->setQuery( $sql );
     
 	$newsletters = $database->loadObjectList();
-    
-    echo $database->getErrorMsg();
+        echo $database->getErrorMsg();
     
     HTML_letterman::listAll( $menuname , $newsletters, $letterman_rights, $pageNav );
 
 }
 
-function showItem( $uid, $gid, $is_editor, $pop, $option ) {
+function showLItem( $uid, $gid, $is_editor, $pop, $option ) {
 	global $database, $mainframe, $my;
 	global $mosConfig_offset, $mosConfig_live_site;
 
@@ -254,7 +256,7 @@ function showItem( $uid, $gid, $is_editor, $pop, $option ) {
 
     $sql = "SELECT id, subject AS title, send, created, hits, html_message AS text FROM #__letterman"
     ."\nWHERE id=$uid $xwhere"
-    ."\nAND access <= $gid "
+//    ."\nAND access <= $gid "
     ."\nORDER BY created DESC";
     $database->setQuery( $sql );
 	$row = null;
@@ -265,7 +267,7 @@ function showItem( $uid, $gid, $is_editor, $pop, $option ) {
         if( $my->id > 0) {
         	$row->text = str_replace( "[NAME]", $my->name, $row->text );
         }
-		HTML_letterman::showItem( $row, $gid );
+		HTML_letterman::showLItem( $row, $gid );
         
 	} 
     else {

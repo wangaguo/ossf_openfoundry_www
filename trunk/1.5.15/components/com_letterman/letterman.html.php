@@ -28,7 +28,6 @@ class HTML_letterman {
 				<?php
 				//echo '&nbsp;&nbsp;&nbsp;'. _PN_DISPLAY_NR .'&nbsp;';
 				//$link = 'index.php?option=com_letterman&amp;Itemid='. $Itemid;
-				//echo $pageNav->getLimitBox( $link );
 				?>
 			</td>
         </tr>
@@ -89,7 +88,7 @@ class HTML_letterman {
 			<td align="center" colspan="5" class="sectiontablefooter">
 			<?php
 			$link = 'index.php?option=com_letterman&amp;Itemid='. $Itemid;
-			echo $pageNav->writePagesLinks( $link );
+			echo $pageNav->writePagesLinks($link); 
 			?>
 			</td>
 		</tr>
@@ -229,7 +228,7 @@ function editNewsletter( &$row, &$publist, $option , $glist ) {
 	<?php 
   }
   
-    function showItem( $row, $gid ) {
+    function showLItem( $row, $gid ) {
       
       ?>
           <div class="componentheading"><?php echo $row->title; ?><a href="javascript: history.back()">&nbsp;[ back ]</a></div>
