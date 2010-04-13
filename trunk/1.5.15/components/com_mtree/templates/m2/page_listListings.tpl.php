@@ -2,10 +2,10 @@
 
 <div id="listings">
 
-<div class="pages-links">
-	<span class="xlistings"><?php echo $this->pageNav->getResultsCounter(); ?></span>
+<div class="rt-pagination">
 	<?php echo $this->pageNav->getPagesLinks(); ?>
 </div>
+	<p class="pagescounter"><?php echo $this->pageNav->getResultsCounter(); ?></p>
 <?php
 
 	foreach ($this->links AS $link) {
@@ -14,10 +14,10 @@
 	}
 	
 	if( $this->pageNav->total > 0 ) { ?>
-	<div class="pages-links">
-		<span class="xlistings"><?php echo $this->pageNav->getResultsCounter(); ?></span>
+	<div class="rt-pagination">
 		<?php echo $this->pageNav->getPagesLinks(); ?>
 	</div>
+		<p class="pagescounter"><?php echo $this->pageNav->getResultsCounter(); ?></p>
 	<?php }
 	
 ?></div>

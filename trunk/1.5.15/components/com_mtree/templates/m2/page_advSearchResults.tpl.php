@@ -3,10 +3,10 @@
 <div id="listings">
 	<?php if ( !empty($this->links) ) { ?>
 
-	<div class="pages-links">
-		<span class="xlistings"><?php echo $this->pageNav->getResultsCounter(); ?></span>
+	<div class="rt-pagination">
 		<?php echo $this->pageNav->getPagesLinks(); ?>
 	</div>
+		<p class="pagescounter"><?php echo $this->pageNav->getResultsCounter(); ?></p>
 	
 	<?php
 	foreach ($this->links AS $link): 
@@ -17,8 +17,8 @@
 
 	<?php
 	if( $this->pageNav->total > 0 ) { ?>
-	<div class="pages-links">
-		<span class="xlistings"><?php echo $this->pageNav->getResultsCounter(); ?></span>
+	<div class="rt-pagination">
+		<span class="pagescounter"><?php echo $this->pageNav->getResultsCounter(); ?></span>
 		<?php echo $this->pageNav->getPagesLinks(); ?>
 	</div>
 	<?php }
