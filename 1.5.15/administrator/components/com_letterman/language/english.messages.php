@@ -77,6 +77,8 @@ define( "_E_CREATED", "Created" );
 define( "_CMN_PUBLISHED", "Published" );
 define( "_SEARCH_TITLE", "Search" );
 define( "_E_EDIT", "Edit" );
+define( "_E_SAVE", "Save" );
+define( "_E_CANCEL", "Cancel" );
 define( "_E_REMOVE", "Remove" );
 define( "LM_reflashOldPaper", "Inser Tag" );
 define( "LM_unreflashOldPaper", "Remove Tag" );

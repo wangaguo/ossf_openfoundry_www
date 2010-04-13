@@ -79,6 +79,8 @@ define( "_E_CREATED", "發佈時間" );
 define( "_CMN_PUBLISHED", "發佈" );
 define( "_SEARCH_TITLE", "搜尋" );
 define( "_E_EDIT", "編輯" );
+define( "_E_SAVE", "儲存" );
+define( "_E_CANCEL", "取消" );
 define( "_E_REMOVE", "刪除" );
 define( "LM_reflashOldPaper", "插入Tag" );
 define( "LM_unreflashOldPaper", "刪除Tag" );
