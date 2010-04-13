@@ -69,4 +69,3 @@ if (is_array($this->categories)): ?>
 endif;
 ?>
 </div>
-<?php if( $this->display_listings_in_root ) include $this->loadTemplate( 'sub_listings.tpl.php' ) ?>

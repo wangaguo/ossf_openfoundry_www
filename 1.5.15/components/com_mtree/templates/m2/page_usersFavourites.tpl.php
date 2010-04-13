@@ -16,10 +16,10 @@
 if (is_array($this->links) && !empty($this->links)) {
 
 	?>
-	<div class="pages-links">
-		<span class="xlistings"><?php echo $this->pageNav->getResultsCounter(); ?></span>
+	<div class="rt-pagination">
 		<?php echo $this->pageNav->getPagesLinks(); ?>
 	</div>
+		<p class="pagescounter"><?php echo $this->pageNav->getResultsCounter(); ?></p>
 	<?php
 	foreach ($this->links AS $link) {
 		$fields = $this->fields[$link->link_id];
@@ -27,8 +27,8 @@ if (is_array($this->links) && !empty($this->links)) {
 	}
 	
 	if( $this->pageNav->total > $this->pageNav->limit ) {
-		?><div class="pages-counter"><?php echo $this->pageNav->getPagesCounter(); ?></div>
-		<div class="pages-links"><?php echo  $this->pageNav->getPagesLinks() ?></div><?php
+		?><div class="pagescounter"><?php echo $this->pageNav->getPagesCounter(); ?></div>
+		<div class="rt-pagination"><?php echo  $this->pageNav->getPagesLinks() ?></div><?php
 	}
 
 } else {

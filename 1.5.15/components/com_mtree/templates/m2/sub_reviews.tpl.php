@@ -69,9 +69,9 @@
 	<?php endforeach; ?>
 
 	<?php if( $this->pageNav->total > $this->pageNav->limit ) { ?>
-	<div class="pages-links"><?php echo  $this->pageNav->getPagesLinks() ?></div>
+	<div class="rt-pagination"><?php echo  $this->pageNav->getPagesLinks() ?></div>
 	<?php }?>
-	<div class="pages-counter"><?php echo $this->pageNav->getPagesCounter(); ?></div>
+	<div class="pagescounter"><?php echo $this->pageNav->getPagesCounter(); ?></div>
 
 	<?php else: ?>
 

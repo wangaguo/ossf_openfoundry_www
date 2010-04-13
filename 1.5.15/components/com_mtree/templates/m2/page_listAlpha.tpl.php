@@ -11,10 +11,10 @@ if ( count($this->categories) > 0 || count($this->links) > 0) {
 		?><div id="listings">
 		<div class="title"><?php echo JText::_( 'Listings' ); ?></div>
 		<!-- <div class="pages-counter-top"><?php echo $this->pageNav->getPagesCounter(); ?></div> -->
-		<div class="pages-links">
-			<span class="xlistings"><?php echo $this->pageNav->getResultsCounter(); ?></span>
+		<div class="rt-pagination">
 			<?php echo $this->pageNav->getPagesLinks(); ?>
 		</div>
+			<p class="pagescounter"><?php echo $this->pageNav->getResultsCounter(); ?></p>
 		<?php
 		foreach ($this->links AS $link) {
 			$fields = $this->fields[$link->link_id];
@@ -22,10 +22,10 @@ if ( count($this->categories) > 0 || count($this->links) > 0) {
 		}
 
 		if( $this->pageNav->total > 0 ) { ?>
-		<div class="pages-links">
-			<span class="xlistings"><?php echo $this->pageNav->getResultsCounter(); ?></span>
+		<div class="rt-pagination">
 			<?php echo $this->pageNav->getPagesLinks(); ?>
 		</div>
+			<p class="pagescounter"><?php echo $this->pageNav->getResultsCounter(); ?></p>
 		<?php }
 		
 		?></div><?php
