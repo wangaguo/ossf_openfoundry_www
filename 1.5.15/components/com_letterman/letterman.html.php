@@ -14,7 +14,6 @@
 *
 */
 defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.' );
-
 class HTML_letterman {
 
     function listAll ($menuname, &$rows, $letterman_rights, $pageNav )

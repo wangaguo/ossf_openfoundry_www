@@ -263,6 +263,7 @@ function lm_sendMail() {
 	echo $database->getErrorMsg();
 	
 	$mailfrom = $mailfrom ? $mailfrom : $admin_email;
+	echo $mailfrom;
 	$replyto = $replyto ? $replyto : $admin_email;
 
 	if ( $sendto===null) {
@@ -457,8 +458,9 @@ $LSN</a></font><font size=\"3\"> &nbsp;&nbsp;| &nbsp;&nbsp;</font><font color=\"
 		//Marlar's CB hack end
 	}
 	else {
-		$query_appendix = ", #__core_acl_aro, #__core_acl_groups_aro_map WHERE #__core_acl_aro.value=#__users.id AND #__core_acl_groups_aro_map.aro_id = #__core_acl_aro.aro_id AND #__core_acl_groups_aro_map.group_id='$sendto'";
-		$q = "SELECT #__users.name, email FROM #__users ";
+		$query_appendix = ", #__core_acl_aro, #__core_acl_groups_aro_map WHERE #__core_acl_aro.value=#__users.id AND #__core_acl_groups_aro_map.aro_id = #__core_acl_aro.id AND #__core_acl_groups_aro_map.group_id='$sendto'";
+		$q = "SELECT #__users.name, email FROM #__users ";//core_acl_aro.aro_id in 1.5 please use core_acl_aro.id
+		echo $query_appendix;
 		$q .= ($sendto !== '0') ? $query_appendix : "";
 		
 	}
@@ -554,63 +556,64 @@ function lm_sendNewsletter ( $uid, $option ) {
 
 	// get list of groups
 	$groups = array( mosHTML::makeOption( "subscribers", '- All Subscribers -' ) );
-	
-	if( file_exists($mosConfig_absolute_path.'/components/com_virtuemart/virtuemart_parser.php')) {
-		$shop = "virtuemart";
-	}
-	elseif( file_exists($mosConfig_absolute_path.'/components/com_phpshop/phpshop_parser.php')) {
-		$shop = 'phpshop';
-	}
-	else {
-		$shop = '';
-	}
-	if( $shop != '') {
-		// the configuration file for the Shop
-		require_once( $mosConfig_absolute_path. "/administrator/components/com_$shop/$shop.cfg.php" );
-		if( $shop == 'virtuemart') {
-			// The abstract language class
-			require_once( CLASSPATH."language.class.php" );
-		}
-		else {
-			// load mosAbstractLanguage
-    		require_once($mosConfig_absolute_path. '/administrator/components/com_phpshop/mos_4.6_code.php');
-		}
-		// load the Language File
-		if (file_exists( ADMINPATH. 'languages/'.$mosConfig_lang.'.php' )) {
-			require_once( ADMINPATH. 'languages/'.$mosConfig_lang.'.php' );
-		}
-		else {
-			require_once( ADMINPATH. 'languages/english.php' );
-		}
-		$shop_lang = new phpShopLanguage();
-		$groups[] = mosHTML::makeOption( '- - - - - - - -', '- - - - - - - -' );
-		$groups[] = mosHTML::makeOption( "customers", '- '.$shop_lang->_PHPSHOP_STATISTIC_CUSTOMERS.' ('.$shop.') -' );
-	}
+
+	//VirtuMart integration	
+//	if( file_exists($mosConfig_absolute_path.'/components/com_virtuemart/virtuemart_parser.php')) {
+//		$shop = "virtuemart";
+//	}
+//	elseif( file_exists($mosConfig_absolute_path.'/components/com_phpshop/phpshop_parser.php')) {
+//		$shop = 'phpshop';
+//	}
+//	else {
+//		$shop = '';
+//	}
+//	if( $shop != '') {
+//		// the configuration file for the Shop
+//		require_once( $mosConfig_absolute_path. "/administrator/components/com_$shop/$shop.cfg.php" );
+//		if( $shop == 'virtuemart') {
+//			// The abstract language class
+//			require_once( CLASSPATH."language.class.php" );
+//		}
+//		else {
+//			// load mosAbstractLanguage
+//    		require_once($mosConfig_absolute_path. '/administrator/components/com_phpshop/mos_4.6_code.php');
+//		}
+//		// load the Language File
+//		if (file_exists( ADMINPATH. 'languages/'.$mosConfig_lang.'.php' )) {
+//			require_once( ADMINPATH. 'languages/'.$mosConfig_lang.'.php' );
+//		}
+//		else {
+//			require_once( ADMINPATH. 'languages/english.php' );
+//		}
+//		$shop_lang = new phpShopLanguage();
+//		$groups[] = mosHTML::makeOption( '- - - - - - - -', '- - - - - - - -' );
+//		$groups[] = mosHTML::makeOption( "customers", '- '.$shop_lang->_PHPSHOP_STATISTIC_CUSTOMERS.' ('.$shop.') -' );
+//	}
 	// CB integration
-	if( file_exists($mosConfig_absolute_path.'/components/com_comprofiler/comprofiler.php')) {
-	    $database->setQuery("SELECT name FROM `#__comprofiler_fields` where type = 'checkbox' and published=1");
-	    $result = $database->loadResultArray();
-	    if(is_array($result)) {
-	    	$groups[] = mosHTML::makeOption( '- - - - - - - -', '- - - - - - - -' );
-		    foreach($result as $r) {
-		      	$groups = array_merge($groups, array(mosHTML::makeOption( "cb:$r", "- Community Builder, field $r -" )));
-			}
-	    }
-	}
+//	if( file_exists($mosConfig_absolute_path.'/components/com_comprofiler/comprofiler.php')) {
+//	    $database->setQuery("SELECT name FROM `#__comprofiler_fields` where type = 'checkbox' and published=1");
+//	    $result = $database->loadResultArray();
+//	    if(is_array($result)) {
+//	    	$groups[] = mosHTML::makeOption( '- - - - - - - -', '- - - - - - - -' );
+//		    foreach($result as $r) {
+//		      	$groups = array_merge($groups, array(mosHTML::makeOption( "cb:$r", "- Community Builder, field $r -" )));
+//			}
+//	    }
+//	}
     
 	$groups[] = mosHTML::makeOption( '- - - - - - - -', '- - - - - - - -' );
-	$groups[] = mosHTML::makeOption( 0, '- All User Groups -' );
-	$groups[] = mosHTML::makeOption( '- - - - - - - -', '- - - - - - - -' );
-	$database->setQuery( "SELECT group_id AS value, name AS text FROM #__core_acl_aro_groups WHERE group_id<>17 AND group_id NOT in(28,29,30) ORDER BY group_id" );
+//	$groups[] = mosHTML::makeOption( 0, '- All User Groups -' );
+//	$groups[] = mosHTML::makeOption( '- - - - - - - -', '- - - - - - - -' );
+	$database->setQuery( "SELECT id AS value, name AS text FROM #__core_acl_aro_groups WHERE id in(19,20,21,25) ORDER BY id DESC" );
 	$groups = array_merge( $groups, $database->loadObjectList() );
 	
 	
 	// build the html select list
 	$grouplist = mosHTML::selectList( $groups, 'sendto', 'class="inputbox" size="1"',
 	'value', 'text', '-1' );
-	// manually disable options. This is MISSING IN mosHTML::selectList (core team, read this!!)
-	$grouplist = str_replace( '"- - - - - - - -"', '"- - - - - - - -" disabled="disabled"', $grouplist);
-	
+//	// manually disable options. This is MISSING IN mosHTML::selectList (core team, read this!!)
+//	$grouplist = str_replace( '"- - - - - - - -"', '"- - - - - - - -" disabled="disabled"', $grouplist);
+//	
 	HTML_Letterman::sendNewsletter( $row, $option , $grouplist, $admin_email );
 }
 if( !function_exists('moshash')) {
