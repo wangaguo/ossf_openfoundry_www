@@ -207,7 +207,7 @@ class HTML_letterman {
 			    			<tr>	
 			    				<td><!-- Get composelist-->
 							<!-- 2007/06/08 by Ally --> 
-							<?php echo lm_getNLContentSelectList();?>
+							<?php //echo lm_getNLContentSelectList();?>
 							<!-- end -->
 			    				 <?php echo lm_getContentSelectList(); ?> 
 			    				</td>

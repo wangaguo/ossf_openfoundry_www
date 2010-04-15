@@ -1611,6 +1611,7 @@ function lm_getContentSelectList(){
   	$query = 'SELECT s.id, s.title AS section_name 
   				FROM #__sections AS s 
   				WHERE s.scope=\'content\'
+				AND s.id in (\'20\', \'13\')
   				ORDER BY ordering ASC, s.title ASC
   				LIMIT 0, 10';
   	
@@ -1623,8 +1624,9 @@ function lm_getContentSelectList(){
 	  	. "\n FROM #__content AS c, #__categories AS cc"
 	  	. ( count( $where ) ? "\nWHERE " . implode( ' AND ', $where ) : '' )
 	  	. "\n AND cc.section=".$section->id
+		. "\n And cc.section in ('20','13')"
 	  	. "\n ORDER BY c.created DESC, cc.title, c.title"
-	  	. "\n LIMIT 0, 10";
+	  	. "\n LIMIT 0, 15";
 	  	
 	  	//echo nl2br(str_replace("#__", "mos_", $query));
 	  	$database->setQuery( $query );
@@ -1636,55 +1638,55 @@ function lm_getContentSelectList(){
 	    	}
 	  	}
   	}
-  	$selectList = mosHTML::selectList( $items, 'contentid', 'class="inputbox" size="10" onchange="addContentTag()"', 'value', 'text', '0' );
+  	$selectList = mosHTML::selectList( $items, 'contentid', 'class="inputbox" size="23" onchange="addContentTag()"', 'value', 'text', '0' );
   	$selectList = str_replace( '>- - -', ' disabled="disabled">- - -', $selectList );
   	
   	return $selectList;
  }
  /** select Newsletter Kind content list **/
 /** 2007/06/08/ by ally **/
- function lm_getNLContentSelectList(){
-    global $database;
-    
-    $where = array(
-		"c.state > 0",
-		"c.catid=cc.id",
-		);
-		
-  	$items = array();
-  	$items[] = mosHTML::makeOption( '0', 'Select a content item' );
-  	$query = 'SELECT s.id, s.title AS section_name 
-  				FROM #__sections AS s 
-  				WHERE s.scope=\'content\'
-				AND id =\'20\'
-  				ORDER BY ordering ASC, s.title ASC
-  				LIMIT 0, 10';
-  	
-  	$database->setQuery( $query );
-  	$sections = $database->loadObjectList();
-  	foreach( $sections as $section ) {
-  		$items[] = mosHTML::makeOption( '', '- - - '.$section->section_name.' - - -' );
-	    $query = "SELECT c.id, c.title, cc.title AS categorie_name"
-	  	. "\n FROM #__content AS c, #__categories AS cc"
-	  	. ( count( $where ) ? "\nWHERE " . implode( ' AND ', $where ) : '' )
-	  	. "\n AND cc.section=".$section->id
-		. "\n And cc.id = 203"
-	  	. "\n ORDER BY c.created DESC, cc.title, c.title";
-	  	
-	  	//echo nl2br(str_replace("#__", "mos_", $query));
-	  	$database->setQuery( $query );
-	  	$rows = $database->loadObjectList();
-	  	
-	  	if(sizeof($rows) > 0){  	
-	    	foreach($rows AS $row){
-	    	  $items[] = mosHTML::makeOption( $row->id, $row->categorie_name . " - " . $row->title );
-	    	}
-	  	}
-  	}
-  	$selectList = mosHTML::selectList( $items, 'kindid', 'class="inputbox" size="10" onchange="addkindTag()"', 'value', 'text', '0' );
-  	$selectList = str_replace( '>- - -', ' disabled="disabled">- - -', $selectList );
-  	
-  	return $selectList;
- }
+// function lm_getNLContentSelectList(){
+//    global $database;
+//    
+//    $where = array(
+//		"c.state > 0",
+//		"c.catid=cc.id",
+//		);
+//		
+//  	$items = array();
+//  	$items[] = mosHTML::makeOption( '0', 'Select a content item' );
+//  	$query = 'SELECT s.id, s.title AS section_name 
+//  				FROM #__sections AS s 
+//  				WHERE s.scope=\'content\'
+//				AND id =\'20\'
+//  				ORDER BY ordering ASC, s.title ASC
+//  				LIMIT 0, 10';
+//  	
+//  	$database->setQuery( $query );
+//  	$sections = $database->loadObjectList();
+//  	foreach( $sections as $section ) {
+//  		$items[] = mosHTML::makeOption( '', '- - - '.$section->section_name.' - - -' );
+//	    $query = "SELECT c.id, c.title, cc.title AS categorie_name"
+//	  	. "\n FROM #__content AS c, #__categories AS cc"
+//	  	. ( count( $where ) ? "\nWHERE " . implode( ' AND ', $where ) : '' )
+//	  	. "\n AND cc.section=".$section->id
+//		. "\n And cc.id = 203"
+//	  	. "\n ORDER BY c.created DESC, cc.title, c.title";
+//	  	
+//	  	//echo nl2br(str_replace("#__", "mos_", $query));
+//	  	$database->setQuery( $query );
+//	  	$rows = $database->loadObjectList();
+//	  	
+//	  	if(sizeof($rows) > 0){  	
+//	    	foreach($rows AS $row){
+//	    	  $items[] = mosHTML::makeOption( $row->id, $row->categorie_name . " - " . $row->title );
+//	    	}
+//	  	}
+//  	}
+//  //	$selectList = mosHTML::selectList( $items, 'kindid', 'class="inputbox" size="10" onchange="addkindTag()"', 'value', 'text', '0' );
+//  	$selectList = str_replace( '>- - -', ' disabled="disabled">- - -', $selectList );
+//  	
+//  //	return $selectList;
+// }
 /** end **/
 ?>

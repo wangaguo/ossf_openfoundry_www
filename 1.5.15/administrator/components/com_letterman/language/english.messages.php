@@ -78,6 +78,7 @@ define( "_CMN_PUBLISHED", "Published" );
 define( "_SEARCH_TITLE", "Search" );
 define( "_E_EDIT", "Edit" );
 define( "_E_SAVE", "Save" );
+define( "_E_CONTENT", "Content" );
 define( "_E_CANCEL", "Cancel" );
 define( "_E_REMOVE", "Remove" );
 define( "LM_reflashOldPaper", "Inser Tag" );
@@ -162,5 +163,11 @@ define( 'LM_ADD_CONTENT_TOOLTIP', 'If you select a content item from the list, a
 define( 'LM_ATTACHMENTS', 'Attachments' );
 define( 'LM_ATTACHMENTS_TOOLTIP', 'You can select one or multiple files from the directory %s, which will be embedded into the mail when sending. Please do not care about the [ATTACHMENT ..] tag - it will be removed when sending the newsletter!' );
 define( 'LM_MULTISELECT', 'Multi-select files with Ctrl-MouseClick' );
-
+/**
+*@ for HTML Newsletter menu
+**/
+define( '_READ_MORE','Read more');
+define( '_ADD_COMMENT','Add comment');
+define( '_BACK_TOP','Top');
+define( '_WRITTEN_BY','Written by');
 ?>
