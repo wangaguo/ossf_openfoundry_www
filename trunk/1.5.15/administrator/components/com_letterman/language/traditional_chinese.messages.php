@@ -80,6 +80,7 @@ define( "_CMN_PUBLISHED", "發佈" );
 define( "_SEARCH_TITLE", "搜尋" );
 define( "_E_EDIT", "編輯" );
 define( "_E_SAVE", "儲存" );
+define( "_E_CONTENT", "內容" );
 define( "_E_CANCEL", "取消" );
 define( "_E_REMOVE", "刪除" );
 define( "LM_reflashOldPaper", "插入Tag" );
@@ -172,4 +173,12 @@ define( 'LM_SUBSCRIBEORNOT', '訂閱/退閱');
 define( 'LM_EDITORIAL_STAFF', '編輯群');
 define( 'LM_SUGGESTION', '意見交流');
 define( 'LM_CAL', '回目錄');
+/**
+*@ADD HTML Newsletter menu
+**/
+define( '_READ_MORE','閱讀全文');
+define( '_ADD_COMMENT','我要評論');
+define( '_BACK_TOP','回目錄');
+define( '_WRITTEN_BY','作者');
+
 ?>

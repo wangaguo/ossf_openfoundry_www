@@ -32,11 +32,33 @@ defined( '_VALID_MOS' ) or die( 'Direct Access to this location is not allowed.'
  * @param int Published state
  * @param string The params for the bot
  */
+
+//More Newsletter Menu
+
+function CalTitle( &$row, &$params, &$access ) {
+    global $mosConfig_live_site, $Itemid;
+
+    if ( $params->get( 'item_title' ) ) {
+            ?>
+            <td class="contentheading<?php echo $params->get( 'pageclass_sfx' ); ?>" width="100%" height="26" valign     ="middle" style="font-size: 12px;font-weight:bold;vertical-align:bottom;color: #0055C5;">
+            <img src="http://www.openfoundry.org/images/newsletter/icon-cat.gif" align="left" hspace="6" alt="Image"/><a href="#<?php echo $row->id ; ?>" class="contentpagetitle<?php echo $params->get( 'pageclass_sfx' ); ?>">
+[<?php echo $row->category; ?>]&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row->title;?></a>
+            </td>
+            <?php
+    } else {
+        ?>
+        <td class="contentheading<?php echo $params->get( 'pageclass_sfx' ); ?>" width="100%">
+        </td>
+        <?php
+    }
+}
+ 
 function lm_loadBot( $folder, $element, $published, $params='' ) {
 	global $mosConfig_absolute_path;
 	global $_MAMBOTS;
 
-	$path = $mosConfig_absolute_path . '/mambots/' . $folder . '/' . $element . '.php';
+	$path = $mosConfig_absolute_path . '/plugins/' . $folder . '/' . $element . '.php';
+	echo $path;
 	if (file_exists( $path )) {
 		$_MAMBOTS->_loading = count( $_MAMBOTS->_bots );
 		$bot = new stdClass;
@@ -69,23 +91,23 @@ $loadBots = array( 'mosimage',
 $gid = $my->gid;
 
 $query = "SELECT folder, element, published, params"
-. "\n FROM #__mambots"
+. "\n FROM #__plugins"
 . "\n WHERE access <= $gid"
 . "\n AND folder = '$botgroup'"
 . "\n ORDER BY ordering";
 $database->setQuery( $query );
-
 $contentbots = $database->loadObjectList();
-	
+//Test by Ally	
 // Now load the Mambots, filter by $loadBots
-foreach( $contentbots as $mambot ) {
-	if( in_array( $mambot->element, $loadBots )) {
-		lm_loadBot( $mambot->folder, $mambot->element, $mambot->published, $mambot->params );
-	}
-}
+//foreach( $contentbots as $mambot ) {
+//	if( in_array( $mambot->element, $loadBots )) {
+//		lm_loadBot( $mambot->folder, $mambot->element, $mambot->published, $mambot->params );
+//	}
+//}
 
 // we need functions from the class HTML_content!
-require_once( $mosConfig_absolute_path.'/components/com_content/content.html.php');
+//require_once( $mosConfig_absolute_path.'/components/com_content/content.html.php');
+
 
 /**
  * This class allows you to render content items 
@@ -215,42 +237,53 @@ function lm_replaceContentHtml(&$matches){
 				$create_date = mosFormatDate( $row->created );
 			}
 
-			$content .= '<table class="contentpaneopen'. $params->get( 'pageclass_sfx' ) .'">
-			<tr>
-			';
-			ob_start();
-			// displays Item Title
-			// Damn it! Open the content API and make it more flexible...
-			// 除了屬於分類ID外的文章才顯示( 分類ID 00->1028) by ally 2007/0612
-			if ($id > 1028 || $id < 1000 ) {
-
-				if( @$_VERSION->DEV_LEVEL >= 9 ) {
-					$tmp = '';
-					HTML_content::Title( $row, $params, $access );
-				}
-				else {
-					HTML_content::Title( $row, $params, '', $access );
-				}
-			}
-			$content .= ob_get_contents();
-			ob_end_clean();
-			$content .= '</tr>
-			';
-			  // displays Section & Category
+			$content .= '<table class="contentpaneopen'. $params->get( 'pageclass_sfx' ) .'">';
+//			ob_start();
+//			// displays Item Title
+//			// Damn it! Open the content API and make it more flexible...
+//			// 除了屬於分類ID外的文章才顯示( 分類ID 00->1028) by ally 2007/0612
+//			if ($id > 1028 || $id < 1000 ) {
+//
+//				if( @$_VERSION->DEV_LEVEL >= 9 ) {
+//					$tmp = '';
+//				//	Title( $row, $params, $access );
+//				}
+//				else {
+//				//	Title( $row, $params, '', $access );
+//				}
+//			}
+//			$content .= ob_get_contents();
+//			ob_end_clean();
+//			$content .= '</tr>
+//			';
+//			  // displays Section & Category
 			ob_start();
 
 		
 			if ($id > 1028 || $id < 1000 ) {
-			HTML_content::Section_Category( $row, $params );
+			//Add Article Category
+  				echo '<tr>';
+  				echo '<td  height="29" valign="middle" background="http://www.openfoundry.org/images/newsletter/kind.gif"><span style="color: #fd6003;">';
+  				echo '<span style="font-size: medium;"><strong>';
+  				echo $row->category;
+  				echo '</strong></span></span><br /></td></tr>';
+  				echo '<tr><td valign="middle" style="font-weight: bold; font-size: 16px; vertical-align: bottom; color: rgb(0, 85, 197);">';
+  				echo $row->title;
+  				echo '</td></tr>';
+  				echo '<tr><td style="font-weight: bold; font-size: 12px; color: rgb(153, 153, 153);">';
+  				echo _WRITTEN_BY.'&nbsp;&nbsp;'.( $row->created_by_alias ? $row->created_by_alias : $row->author );
+  				echo '</td></tr>';
+
+//			HTML_content::Section_Category( $row, $params );
 
 			// displays Author Name
-			HTML_content::IMAuthor( $row, $params );
+//			HTML_content::IMAuthor( $row, $params );
 
 			// displays Created Date
-			HTML_content::IMCreateDate( $row, $params );
+//			HTML_content::IMCreateDate( $row, $params );
 
 			// displays Urls
-			HTML_content::URL( $row, $params );
+//			HTML_content::URL( $row, $params );
 			}
 
 			$content .= ob_get_contents();
@@ -345,10 +378,7 @@ function lm_replaceTitleHtml(&$matches){
 			// Damn it! Open the content API and make it more flexible...
 			if( @$_VERSION->DEV_LEVEL >= 9 ) {
 				$tmp = '';
-				HTML_content::CalTitle( $row, $params,  $access );
-			}
-			else {
-				HTML_content::CalTitle( $row, $params, '', $access );
+				CalTitle( $row, $params,  $access );
 			}
 			$content .= ob_get_contents();
 			ob_end_clean();
