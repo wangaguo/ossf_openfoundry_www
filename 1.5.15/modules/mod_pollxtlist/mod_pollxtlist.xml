@@ -1,0 +1,20 @@
+
+<install type="module" version="1.5.0" method="upgrade">
+	<name>PollXT List Module</name>
+	<creationdate>17-05-2009</creationdate>
+	<author>Oli Merten</author>
+	<copyright>(c) 2004 - 2009 JoomlaXT</copyright>
+	<authoremail>webmaster@joomlaxt.com</authoremail>
+	<authorurl>http://www.joomlaxt.com</authorurl>
+	<version>2.00.00</version>
+	<description><![CDATA[Please note that at least pollXT version 2.00.04 is required for this module.<br />Installation created with <a href='http://www.joomlaxt.com'>InstallXT!</a>]]></description>
+	<params>
+		<param name="mod_target" type="list" default="mod" label="Display polls in" description="Defines where polls should be displayed.">
+			<option value="mod">Module</option>
+			<option value="com">Component</option>
+		</param>
+	</params>
+	<files>
+		<filename module="mod_pollxtlist">mod_pollxtlist.php</filename>
+	</files>
+</install>
