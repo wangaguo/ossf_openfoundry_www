@@ -1,0 +1,137 @@
+/* polls Bar Colors/Formats - Follow the format to add your own.
+	Then update the maxcolors setting for polls in
+	PollXT settings - Results
+*/
+
+.polls_color_1{ background-color: #8D1B1B; border: 2px ridge #B22222; }
+
+.polls_color_2{ background-color: #6740E1; border: 2px ridge #4169E1; }
+
+.polls_color_3{ background-color: #8D8D8D; border: 2px ridge #D2D2D2; }
+
+.polls_color_4{ background-color: #CC8500; border: 2px ridge #FFA500; }
+
+.polls_color_5{ background-color: #5B781E; border: 2px ridge #6B8E23; }
+
+
+/* Uncomment the following line, delete the lines above and set maxcolor to 1 */
+/* .polls_color_1{ background-image: url(images/red_yellow_green.png); } */
+
+/* polls Outside Table Border */
+.pollstableborder {
+	border: 1px solid;
+	padding: 2px;
+}
+/* The separator */
+.pollseparator {
+    text-align:center;
+    border-bottom: solid 1px;
+    border-top: solid 1px;
+	 }
+/* the message window */
+.xtmessage {
+	background: #FFCCCC;
+	border: 1px solid Red;
+	display: none;
+	color: Red;
+	padding: 2px 2px 2px 2px;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+/* button with individual styling */
+#pollxtButton {
+	background: url(images/button.png) no-repeat;
+	height:40px;
+	width: 100px;
+	padding-top: 8px;
+	text-align: center;
+	float:left;
+	font-weight:bold;
+	cursor:pointer;
+}
+
+#pollxtButton.pollxtVote {
+	color: blue;
+}
+
+#pollxtButton.pollxtResult {
+	color: green;
+}
+#pollxtButton.pollxtDetail {
+	color: red;
+}
+#pollxtButton.pollxtBack {
+	color: yellow;
+}
+
+.module #pollxtButton.pollxtVote {
+	background: url(images/button.png) no-repeat;
+	height:40px;
+	width: 100px;
+	padding-top: 8px;
+	text-align: center;
+	float:left;
+	font-weight:bold;
+	cursor:pointer;
+}
+.module #pollxtButton.pollxtResult {
+	background: url(images/button.png) no-repeat;
+	height:40px;
+	width: 100px;
+	padding-top: 8px;
+	text-align: center;
+	float:left;
+	font-weight:bold;
+	cursor:pointer;
+}
+.module #pollxtButton.pollxtDetail {
+	background: url(images/button.png) no-repeat;
+	height:40px;
+	width: 100px;
+	padding-top: 8px;
+	text-align: center;
+	float:left;
+	font-weight:bold;
+	cursor:pointer;
+}
+.module #pollxtButton.pollxtBack {
+	background: url(images/button.png) no-repeat;
+	height:40px;
+	width: 100px;
+	padding-top: 8px;
+	text-align: center;
+	float:left;
+	font-weight:bold;
+	cursor:pointer;
+}
+
+
+#pollxtTitle {
+	
+}
+#pollxtIntro {
+	
+}
+#pollxtImg {
+	
+}
+#pollxtImgCol {
+	float: left;
+	padding-right:10px;
+}
+#pollxtOptCol {
+	float: left;
+	padding-right:10px;	
+}
+#pollxtFreeCol {
+	float: left;
+}
+#pollxtLine {
+}
+
+/* fix for several templates (e.g. made your web)*/
+
+div.sectiontableheader {
+height: 100%;	
+}
