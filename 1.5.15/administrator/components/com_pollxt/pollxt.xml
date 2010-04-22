@@ -1,0 +1,140 @@
+
+<install type="component" version="1.5.0" method="upgrade">
+	<name>PollXT</name>
+	<creationdate>02-06-2009</creationdate>
+	<author>Oli Merten</author>
+	<copyright>(c) 2004 - 2009 JoomlaXT</copyright>
+	<authoremail>webmaster@joomlaxt.com</authoremail>
+	<authorurl>http://www.joomlaxt.com</authorurl>
+	<version>2.00.05</version>
+	<description><![CDATA[<br />Installation created with <a href='http://www.joomlaxt.com'>InstallXT!</a>]]></description>
+	<installfile>admin/install.pollxt.php</installfile>
+	<uninstallfile>admin/uninstall.pollxt.php</uninstallfile>
+	<params>
+		<param name="xt_task" type="radio" default="1" label="Task" description="Go either for Voting (with PollID) or Show a list of Polls">
+			<option value="0">Direct Voting</option>
+			<option value="1">Show List</option>
+		</param>
+		<param name="xt_pollid" type="text" default="" label="Poll ID" description="A Poll ID, if blank settings from global configuration apply" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="back_button" type="list" default="" label="Back Button" description="Show/Hide a Back Button, that returns you to the previously viewed page">
+			<option value="">Use Global</option>
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="@spacer" type="spacer" default="Settings below for P" label="" description="" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="headings" type="radio" default="1" label="Table Headings" description="Show/Hide the Table Headings">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="item_description" type="radio" default="1" label="Poll Descriptions" description="Show/Hide the Introtext of the Polls">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="description" type="radio" default="1" label="Description" description="Show/Hide the Description below">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="description_text" type="textarea" default="" label="Description Text" rows="5" cols="30" description="Description for page" />
+		<param name="image" type="imagelist" default="" label="Image" directory="/images/stories" hide_default="1" description="Image for page, must be located in the /images/stories folder. No image will mean an image is not loaded" />
+		<param name="image_align" type="radio" default="right" label="Image Align" description="Alignment of the image">
+			<option value="left">Left</option>
+			<option value="right">Right</option>
+		</param>
+		<param name="voted" type="radio" default="1" label="Voting possible" description="Displays an image, to indicate if voting is possible or not for that particular poll">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="itemimage" type="imagelist" default="" label="Voting not possible Image" directory="/images/stories" hide_default="1" description="Image for items, displayed, when voting is not possible for that poll, default image if left blank" />
+		<param name="itemimagenot" type="imagelist" default="" label="Voting possible image" directory="/images/stories" hide_default="1" description="Image for items, displayed, when voting is possible for that poll, default image if left blank" />
+		<param name="votes" type="radio" default="1" label="No. of Votes" description="Displays the number of voters">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="pollNav" type="radio" default="1" label="Poll Navigation" description="Navigation Buttons for Polls">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="pollExp" type="radio" default="1" label="Poll Expiration date" description="Show Poll Expiration Date">
+			<option value="0">Hide</option>
+			<option value="1">Show</option>
+		</param>
+		<param name="category" type="mos_category" default="0" label="Category" description="Show polls of Category" />
+	</params>
+	<files folder="site">
+		<filename>class/pollxt.frame.php</filename>
+		<filename>class/pollxt.frontend.php</filename>
+		<filename>class/pollxt.nopolls.php</filename>
+		<filename>class/pollxt.polllist.php</filename>
+		<filename>class/pollxt.question.php</filename>
+		<filename>class/pollxt.question.rating.php</filename>
+		<filename>class/pollxt.result.php</filename>
+		<filename>class/pollxt.utilities.php</filename>
+		<filename>class/pollxt.validate.php</filename>
+		<filename>class/pollxt.vote.php</filename>
+		<filename>class/pollxt.voteform.php</filename>
+		<filename>class/pollxtresult.class.php</filename>
+		<filename>images/blank.png</filename>
+		<filename>images/busy.gif</filename>
+		<filename>images/button.png</filename>
+		<filename>images/checked.jpg</filename>
+		<filename>images/poll.png</filename>
+		<filename>images/red_yellow_green.png</filename>
+		<filename>images/status_g.png</filename>
+		<filename>images/status_r.png</filename>
+		<filename>images/unchecked.jpg</filename>
+		<filename>poll_bars.css</filename>
+		<filename>pollxt.php</filename>
+		<filename>resultplugins/classic.php</filename>
+		<filename>resultplugins/details.php</filename>
+		<filename>script/json2.js</filename>
+		<filename>script/pollxt.js</filename>
+	</files>
+	<languages folder="site/language/">
+		<language tag="en-GB">en-GB/en-GB.com_pollxt.ini</language>
+	</languages>
+	<administration>
+		<menu>PollXT</menu>
+		<files folder="admin">
+			<filename>admin.pollxt.html.php</filename>
+			<filename>admin.pollxt.php</filename>
+			<filename>admin/index.html</filename>
+			<filename>ajax-loader.gif</filename>
+			<filename>cancel.gif</filename>
+			<filename>class.compat.15.php</filename>
+			<filename>class/pollxt.adminFrame.php</filename>
+			<filename>class/pollxt.config.php</filename>
+			<filename>class/pollxt.json.php</filename>
+			<filename>class/pollxt.options.php</filename>
+			<filename>class/pollxt.pageEditor.php</filename>
+			<filename>class/pollxt.plugin.php</filename>
+			<filename>class/pollxt.questions.php</filename>
+			<filename>com_pollxtlog.txt</filename>
+			<filename>conf.pollxt.php</filename>
+			<filename>copy.gif</filename>
+			<filename>datepicker.gif</filename>
+			<filename>delete.gif</filename>
+			<filename>downarrow.png</filename>
+			<filename>minus.gif</filename>
+			<filename>plugins/index.php</filename>
+			<filename>plus.gif</filename>
+			<filename>pollxt.class.php</filename>
+			<filename>pollxt.common.php</filename>
+			<filename>pollxt.jpg</filename>
+			<filename>pollxt.png</filename>
+			<filename>preview.gif</filename>
+			<filename>sajax/Sajax.php</filename>
+			<filename>script/pollxt.admin.js</filename>
+			<filename>uparrow.png</filename>
+			<filename>xthtml.class.php</filename>
+			<filename>xtmenu.png</filename>
+			<filename>xtupgrader.class.php</filename>
+			<filename>com_pollxtupd.inc</filename>
+		</files>
+		<languages folder="admin/language/">
+			<language tag="en-GB">en-GB/en-GB.com_pollxt.ini</language>
+		</languages>
+	</administration>
+</install>
