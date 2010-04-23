@@ -27,9 +27,9 @@ defined('_JEXEC') or die('Restricted access'); ?>
 	            <?php endif;?>
 	            <?php if($show_title && $item->title):?><a href="<?php echo $item->link; ?>" class="roknewspager-title"><?php echo $item->title; ?></a><?php endif;?>
 				<?php if($show_preview_text && $item->introtext):?><div class="introtext"><?php echo $item->introtext; ?></div><?php endif;?>
-				<?php if($show_comment_count):?><div class="commentcount"><span><?php echo $item->comment_count; ?></span></div><?php endif;?>
-				<?php if($show_author && $item->author):?><div class="author"><?php echo $item->author; ?></div><?php endif;?>
-				<?php if($show_published_date && $item->published_date):?><div class="published-date"><?php echo JHTML::_('date', $item->published_date, JText::_('DATE_FORMAT_LC3')); ?></div><?php endif;?>
+				<?php if($show_comment_count):?><span class="commentcount"><?php echo $item->comment_count; ?></span><?php endif;?>
+<?php if($show_author && $item->author):?><span class="author"> <?php JText::printf( 'Written by', ($item->author) ); ?></span><?php endif;?>
+				<?php if($show_published_date && $item->published_date):?><br><span class="published-date"><?php echo JHTML::_('date', $item->published_date, JText::_('DATE_FORMAT_LC3')); ?></span><?php endif;?>
 	            <?php if($show_ratings && $item->rating):?>
 					<div class="article-rating">
 						<div class="rating-bar">
