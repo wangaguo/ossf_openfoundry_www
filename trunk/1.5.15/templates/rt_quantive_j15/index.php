@@ -100,7 +100,7 @@ $gantry->init();
 						</div></div>
 						<?php /** End Main Top **/ endif; ?>
 						<?php /** Begin Main Body **/ ?>
-					    <?php echo $gantry->displayMainbody('mainbody','sidebar','standard','standard','standard','standard','standard'); ?>
+					    <?php echo $gantry->displayMainbody('sidebar','standard','standard','standard','standard','standard'); ?>
 						<?php /** End Main Body **/ ?>
 						<?php /** Begin Main Bottom **/ if ($gantry->countModules('mainbottom')) : ?>
 						<div id="rt-mainbottom">
