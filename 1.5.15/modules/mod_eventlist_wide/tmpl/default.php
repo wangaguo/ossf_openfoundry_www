@@ -27,10 +27,10 @@ defined('_JEXEC') or die('Restricted access');
 
 	<colgroup>
 			<col width="30%" class="elmodw_col_title" />
-			<col width="20%" class="elmodw_col_category" />
+<!--			<col width="20%" class="elmodw_col_category" />-->
 			<col width="20%" class="elmodw_col_venue" />
-			<col width="15%" class="elmodw_col_eventimage" />
-			<col width="15%" class="elmodw_col_venueimage" />
+			<!--<col width="15%" class="elmodw_col_eventimage" />
+			<col width="15%" class="elmodw_col_venueimage" />-->
 	</colgroup>
 
 <?php foreach ($list as $item) :  ?>
@@ -60,19 +60,21 @@ defined('_JEXEC') or die('Restricted access');
 			<?php endif; ?>
 						
 		</td>
+<!--
 		<td>
 			<span class="category">
-				<?php if ($item->categorylink) : ?>
-				<a href="<?php echo $item->categorylink; ?>" title="<?php echo $item->catname; ?>">
-				<?php endif; ?>
+				<?php //if ($item->categorylink) : ?>
+				<a href="<?php// echo $item->categorylink; ?>" title="<?php //echo $item->catname; ?>">
+				<?php //endif; ?>
 						
-					<?php echo $item->catname; ?>
+					<?php// echo $item->catname; ?>
 							
-				<?php if ($item->categorylink) : ?>
+				<?php //if ($item->categorylink) : ?>
 				</a>
-				<?php endif; ?>
+				<?php //endif; ?>
 			</span>
 		</td>
+-->
 		<td>
 			<span class="venue-title">
 				<?php if ($item->venuelink) : ?>
@@ -86,28 +88,30 @@ defined('_JEXEC') or die('Restricted access');
 				<?php endif; ?>
 			</span>
 		</td>
+<!--
 		<td align="center" class="event-image-cell">
-			<?php if ($this->use_modal) : ?>
-			<a href="<?php echo $item->eventimageorig; ?>" class="modal" title="<?php echo $item->title; ?>">
-			<?php endif; ?>
+			<?php //if ($this->use_modal) : ?>
+			<a href="<?php //echo $item->eventimageorig; ?>" class="modal" title="<?php //echo $item->title; ?>">
+			<?php// endif; ?>
 						
-				<img src="<?php echo $item->eventimage; ?>" alt="<?php echo $item->title; ?>" class="image-preview" />
+				<img src="<?php //echo $item->eventimage; ?>" alt="<?php //echo $item->title; ?>" class="image-preview" />
 								
-			<?php if ($item->eventlink) : ?>
+			<?php //if ($item->eventlink) : ?>
 			</a>
-			<?php endif; ?>
+			<?php //endif; ?>
 		</td>
 		<td align="center" class="event-image-cell">
-			<?php if ($this->use_modal) : ?>
-			<a href="<?php echo $item->venueimageorig; ?>" class="modal" title="<?php echo $item->venue; ?>">
-			<?php endif; ?>
+			<?php //if ($this->use_modal) : ?>
+			<a href="<?php //echo $item->venueimageorig; ?>" class="modal" title="<?php echo $item->venue; ?>">
+			<?php //endif; ?>
 						
-				<img src="<?php echo $item->venueimage; ?>" alt="<?php echo $item->venue; ?>" class="image-preview" />
+				<img src="<?php //echo $item->venueimage; ?>" alt="<?php //echo $item->venue; ?>" class="image-preview" />
 							
-			<?php if ($item->venuelink) : ?>
+			<?php// if ($item->venuelink) : ?>
 			</a>
-			<?php endif; ?>
+			<?php //endif; ?>
 		</td>
+-->
 	</tr>
 <?php endforeach; ?>
 </table>
