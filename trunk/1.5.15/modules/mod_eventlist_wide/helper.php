@@ -50,13 +50,13 @@ class modEventListwideHelper
 		if ($params->get( 'type' ) == 1) {
 			$where = ' WHERE a.dates >= CURDATE()';
 			$where = ' AND a.published = 1';
-			$order = ' ORDER BY a.dates, a.times';
+			$order = ' ORDER BY a.dates DESC, a.times DESC';
 		}
 		
 		//archived events only
 		if ($params->get( 'type' ) == 2) {
 			$where = ' WHERE a.published = -1';
-			$order = ' ORDER BY a.dates ASC, a.times ASC';
+			$order = ' ORDER BY a.dates DESC, a.times DESC';
 		}
 		
 		//currently running events only
@@ -64,7 +64,7 @@ class modEventListwideHelper
 			$where = ' WHERE a.published = 1';			
 			$where .= ' AND ( a.dates = CURDATE()';
 			$where .= ' OR ( a.enddates >= CURDATE() AND a.dates <= CURDATE() ))';
-			$order = ' ORDER BY a.dates, a.times';
+			$order = ' ORDER BY a.dates DESC, a.times DESC';
 		}
 
 		//clean parameter data
