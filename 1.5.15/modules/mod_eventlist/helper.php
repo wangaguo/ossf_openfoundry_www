@@ -49,7 +49,7 @@ class modEventListHelper
 		if ($params->get( 'type', '0' ) == -1) {
 			// upcoming events
 			$where = ' WHERE a.published = 1 and a.dates >= CURDATE()';
-			$order = ' ORDER BY a.dates ASC, a.times ASC';
+			$order = ' ORDER BY a.dates DESC, a.times DESC';
 		} else if ($params->get( 'type', '0' ) == 1) {
 			// archived events
 			$where = ' WHERE a.published = -1';
@@ -57,7 +57,7 @@ class modEventListHelper
 		} else {
 			// published events (default)
 			$where = ' WHERE a.published = 1';
-			$order = ' ORDER BY a.dates ASC, a.times ASC';
+			$order = ' ORDER BY a.dates DESC, a.times DESC';
 		}
 
 		$catid 	= trim( $params->get('catid') );
