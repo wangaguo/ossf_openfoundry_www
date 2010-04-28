@@ -59,7 +59,9 @@ class imgToolbox{
 	var $_maxwidth = null;
 	var $_maxheight = null;
 	var $_thumbwidth = null;
+	var $_tthumbwidth = null;
 	var $_thumbheight = null;
+	var $_tthumbheight = null;
 	var $_errMSG = null;
 	var $_debug = null;
 	
@@ -74,6 +76,8 @@ class imgToolbox{
 			$this->_maxheight = 500;
 			$this->_thumbwidth = 86;
 			$this->_thumbheight = 60;
+                        $this->_tthumbwidth = 24;
+                        $this->_tthumbheight = 16;			
 			$this->_JPEGquality = 85;
 		// load watermark settings...
 			$this->_wmtext = "[date]";
@@ -170,6 +174,7 @@ class imgToolbox{
             // File is an image/ movie/ document...
             $file		=	$this->_filepath . $filename;
             $thumbfile	=	$this->_filepath . "tn" . $filename;
+            $tthumbfile	=	$this->_filepath . "ttn" . $filename;
             if ( $copyMethod == 1 ) {
                 if ( ! @move_uploaded_file( $img, $file ) ) { // move file
                     // some error occured while moving file, register this...
@@ -228,6 +233,15 @@ class imgToolbox{
 	                   return false;
 	               }
 	               @chmod( $thumbfile, 0644 );
+
+			//resize to another ttnumbnail...
+                        if( ! $this->resizeImage( $file, $tthumbfile, $this->_tthumbwidth, $this->_tthumbheight, $filename ) ) {
+                                   @unlink( $file );
+                           $this->raiseError(CBTxt::T('Error: resizing thumbnail image failed.'));
+                           return false;
+                       }
+                       @chmod( $tthumbfile, 0644 );
+
            	   } else {
            	   	   @unlink( $file );
            	   	   $this->raiseError( CBTxt::T('Error: image format is not supported.') );
