@@ -998,7 +998,7 @@ class CBuser {
 				}
 			}
 			if ( ( ! $oValue ) && ( $show_avatar == 2 ) ) {
-				return selectTemplate() . 'images/avatar/tnnophoto_n.png';
+				return selectTemplate() . 'images/avatar/tnnophoto_16.png';
 			}
 		}
 		if ( $oValue ) {
