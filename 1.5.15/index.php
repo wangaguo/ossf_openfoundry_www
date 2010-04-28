@@ -53,7 +53,11 @@ $mainframe->route();
 
 // authorization
 $Itemid = JRequest::getInt( 'Itemid');
-$mainframe->authorize($Itemid);
+require_once( JPATH_LIBRARIES       .DS.'ofsso'.DS.'ofsso.php');
+$ofsso = new OfssoLibrary;
+$ofsso->authorize($Itemid);
+
+//$mainframe->authorize($Itemid);
 
 // trigger the onAfterRoute events
 JDEBUG ? $_PROFILER->mark('afterRoute') : null;
@@ -62,7 +66,7 @@ $mainframe->triggerEvent('onAfterRoute');
 /**
  * DISPATCH THE APPLICATION
  *
- * NOTE :
+  NOTE :
  */
 $option = JRequest::getCmd('option');
 $mainframe->dispatch($option);
