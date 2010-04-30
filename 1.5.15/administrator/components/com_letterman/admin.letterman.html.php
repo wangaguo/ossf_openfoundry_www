@@ -130,8 +130,7 @@ class HTML_letterman {
 		global $database, $mosConfig_absolute_path, $mosConfig_live_site, $option, $my, $lm_params;
 		echo '<script src="components/com_letterman/letterman.js" type="text/javascript"></script>';
   		
-		mosCommonHTML::loadOverlib();
-		
+		//mosCommonHTML::loadOverlib();
 		$tabs = new mosTabs(0);
 		$task = mosGetParam( $_REQUEST, 'task');
 		$pathA = $mosConfig_absolute_path .'/images/stories';
@@ -161,12 +160,12 @@ class HTML_letterman {
 		    			<?php
 		    			if( $task == 'composeNow' ) {
 		    				echo '<tr><td style="vertical-align:top;font-weight:bold;">Rendered HTML content:</td><td>';
-		    					editorArea( 'editor1',  $contents['html_message'] , 'html_message', 750, 450, '100', '30' ) ; 
+						editorArea( 'editor1',  $contents['html_message'] , 'html_message', 750, 450, '100', '30' ) ; 
 		    				echo "</td></tr>\n";
 		    				echo '<tr><td style="vertical-align:top;font-weight:bold;">Rendered Text content:</td><td>
 		    					<textarea name="message" cols="90" rows="30">'. $contents['message'] .'</textarea>
 		    					<input type="hidden" name="nl_content" value="'.urlencode($_POST['nl_content']).'" />
-		    				</td></tr>';
+							</td></tr>';
 		    				
 		    			}
 		    			else {

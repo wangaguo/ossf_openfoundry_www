@@ -148,7 +148,6 @@ class lm_contentRenderer {
 	        .'<tr>' 
           	.'  <td height="8">&nbsp;</td>'
        		.'</tr>';
-		
 		$content['html_message'] .= preg_replace_callback( $regex, 'lm_replaceTitleHtml', nl2br($nl_content) );
 		$content['html_message'] .= '<tr><td height="8">&nbsp;</td></tr></table>';
 
@@ -156,9 +155,8 @@ class lm_contentRenderer {
 	
 		$content['html_message'] .= preg_replace_callback( $regex, 'lm_replaceContentHtml', nl2br($nl_content) );
 		
-		$content['message'] = preg_replace_callback( $regex, 'lm_replaceContentText', $nl_content );
+		$content['message'] =  $nl_content ;
 
-		
 		/**
 		 * usage: [ATTACHMENT filename="{the letterman attachment_dir}/path/to/file"]
 		*/
