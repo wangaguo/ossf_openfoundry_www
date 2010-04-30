@@ -180,5 +180,6 @@ define( '_READ_MORE','閱讀全文');
 define( '_ADD_COMMENT','我要評論');
 define( '_BACK_TOP','回目錄');
 define( '_WRITTEN_BY','作者');
+define( '_CMN_CANCEL','取消');
 
 ?>

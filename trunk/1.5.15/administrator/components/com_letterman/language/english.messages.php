@@ -170,4 +170,5 @@ define( '_READ_MORE','Read more');
 define( '_ADD_COMMENT','Add comment');
 define( '_BACK_TOP','Top');
 define( '_WRITTEN_BY','Written by');
+define( '_CMN_CANCEL','Cancel');
 ?>

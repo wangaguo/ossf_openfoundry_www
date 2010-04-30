@@ -549,6 +549,7 @@ function viewNewsletter( $option) {
 function composeNow() {
 	global $mosConfig_absolute_path, $_MAMBOTS, $database;
 	
+	
 	if( !function_exists( "sefRelToAbs" )) {
 		include_once( $mosConfig_absolute_path."/administrator/components/com_letterman/includes/sef.php" );
 	}
@@ -591,7 +592,6 @@ function composeNow() {
 	$renderer = new lm_contentRenderer();
 	
 	$content = $renderer->getContent( $nl_content );
-	
 	HTML_letterman::composeNewsletter( $content );
 }
 
@@ -716,7 +716,7 @@ function saveEditletter( $option , $cid)
 /*新增新的compose*/
 function saveNewsletter( $option ) {
 	global $database, $my, $editId;
-
+	//echo $database;
 	$row = new mosLetterman( $database );
 	
 	if (!$row->bind( $_POST )) {
@@ -744,7 +744,6 @@ function saveNewsletter( $option ) {
     $result = $database->loadObjectList();
     $title = $result[0]->subject;
     $title_id = $result[0]->id;
-    
 	//$database->setQuery( "SELECT tags FROM #__letterman WHERE subject = $title " );
     $database->setQuery( "SELECT tags FROM #__letterman WHERE id = $title_id " );
         
@@ -764,7 +763,7 @@ function saveNewsletter( $option ) {
 			$newmetakey = explode("$",$e->metakey);
 			$user->id = $e->id;
 			//$user->metakey = $newmetakey[0]." ,".$title;
-            $user->metakey = $newmetakey[0].",".$title_id;
+        	        $user->metakey = $newmetakey[0].",".$title_id;
 			if(!$database->updateObject('#__content',$user,'id'))
 			{
 				echo $database->stderr();
