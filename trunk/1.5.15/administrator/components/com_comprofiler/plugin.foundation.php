@@ -989,7 +989,7 @@ class CBuser {
 				} elseif ( ( $avatar == '' ) && $avatarapproved == 1 ) {
 					$oValue		=	null;
 				} elseif ( strpos( $avatar, 'gallery/' ) === false ) {
-					$oValue		=	'images/comprofiler/tn' . $avatar;
+					$oValue		=	'images/comprofiler/ttn' . $avatar;
 				} else {
 					$oValue		=	'images/comprofiler/' . $avatar;
 				}
