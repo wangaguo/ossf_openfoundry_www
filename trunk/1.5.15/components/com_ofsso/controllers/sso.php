@@ -143,7 +143,7 @@ class OfssoControllerSso extends JController
       $udata["params"]["timezone"] = $data["user"]["timezone"];
 
       $user->bind($udata);
-      $block = $data["user"]["istatus"] == '1' ? 0 : 1;
+      $block = $data["user"]["status"] == '1' ? 0 : 1;
       $user->block = $block; 
       $user->save();
       if($user->getError() == "") echo('1');
