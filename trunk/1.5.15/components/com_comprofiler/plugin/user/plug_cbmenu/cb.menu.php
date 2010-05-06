@@ -1002,7 +1002,7 @@ class getMenuTab  extends cbTabHandler {
 				unset($mi);
 				if ($firstSubMenuHref == "") $firstSubMenuHref = "javascript:void(0)";
 				$mi = array(); $mi[$firstMenuName]["_UE_TEAMCREDITS_CB"]='';
-				$this->_addMenuItem( $mi,getLangDefinition($firstSubMenuName),cbSef($firstSubMenuHref) );		// About...
+//				$this->_addMenuItem( $mi,getLangDefinition($firstSubMenuName),cbSef($firstSubMenuHref) );		// About...
 				if ($secondSubMenuName != "") {
 					if ($secondSubMenuHref == "") $secondSubMenuHref = "javascript:void(0)";
 					$mi = array(); $mi[$firstMenuName]["_UE_SECOND"]='';
@@ -1056,14 +1056,14 @@ class getMenuTab  extends cbTabHandler {
 			}
 		}
 		// ----- VIEW MENU - AFTER EDIT IF VIEWING A PROFILE -----
-		if ( $_CB_framework->myId() > 0 ) {
-			// View My Profile:
-			if ( ( $_CB_framework->myId() != $user->id ) && ( $_CB_framework->displayedUser() !== null ) ) {
-				$mi = array(); $mi["_UE_MENU_VIEW"]["_UE_MENU_VIEWMYPROFILE"]=null;
-				$this->_addMenuItem( $mi, _UE_MENU_VIEWMYPROFILE,cbSef($ue_userprofile_url), "",
-				"","", _UE_MENU_VIEWMYPROFILE_DESC,"" );
-			}
-		}
+//		if ( $_CB_framework->myId() > 0 ) {
+//			// View My Profile:
+//			if ( ( $_CB_framework->myId() != $user->id ) && ( $_CB_framework->displayedUser() !== null ) ) {
+//				$mi = array(); $mi["_UE_MENU_VIEW"]["_UE_MENU_VIEWMYPROFILE"]=null;
+//				$this->_addMenuItem( $mi, _UE_MENU_VIEWMYPROFILE,cbSef($ue_userprofile_url), "",
+//				"","", _UE_MENU_VIEWMYPROFILE_DESC,"" );
+//			}
+//		}
 		// ----- MESSAGES MENU -----
 		// Send PMS
 		if ( $_CB_framework->myId() != $user->id && $_CB_framework->myId() > 0 ) {
@@ -1082,27 +1082,27 @@ class getMenuTab  extends cbTabHandler {
 
 		// Send Email
 		$emailHtml=getFieldValue('primaryemailaddress',$user->email,$user);
-		if ($ueConfig['allow_email_display']!=4 && $_CB_framework->myId() != $user->id && $_CB_framework->myId() > 0) {
-			switch ($ueConfig['allow_email_display']) {
-				case 1:	// Display Email only
-					$caption = $emailHtml;
-					$url = "javascript:void(0);";
-					$desc = _UE_MENU_USEREMAIL_DESC;
-					break;
-				case 2:	// Display Email with link:
-					$caption = null;
-					$url = $emailHtml;
-					$desc = _UE_MENU_SENDUSEREMAIL_DESC;
-					break;
-				case 3:	// Display Email-to text with link to web-form:
-					$caption = _UE_MENU_SENDUSEREMAIL;
-					$url = $emailHtml;
-					$desc = _UE_MENU_SENDUSEREMAIL_DESC;
-					break;
-			}
-			$mi = array(); $mi["_UE_MENU_MESSAGES"]["_UE_MENU_SENDUSEREMAIL"]=null;
-			$this->_addMenuItem( $mi, $caption, $url, "", "", "", $desc, "" );
-		}
+//		if ($ueConfig['allow_email_display']!=4 && $_CB_framework->myId() != $user->id && $_CB_framework->myId() > 0) {
+//			switch ($ueConfig['allow_email_display']) {
+//				case 1:	// Display Email only
+//					$caption = $emailHtml;
+//					$url = "javascript:void(0);";
+//					$desc = _UE_MENU_USEREMAIL_DESC;
+//					break;
+//				case 2:	// Display Email with link:
+//					$caption = null;
+//					$url = $emailHtml;
+//					$desc = _UE_MENU_SENDUSEREMAIL_DESC;
+//					break;
+//				case 3:	// Display Email-to text with link to web-form:
+//					$caption = _UE_MENU_SENDUSEREMAIL;
+//					$url = $emailHtml;
+//					$desc = _UE_MENU_SENDUSEREMAIL_DESC;
+//					break;
+//			}
+//			$mi = array(); $mi["_UE_MENU_MESSAGES"]["_UE_MENU_SENDUSEREMAIL"]=null;
+//			$this->_addMenuItem( $mi, $caption, $url, "", "", "", $desc, "" );
+//		}
 		// ----- CONNECTIONS MENU -----
 		IF ($ueConfig['allowConnections'] && $_CB_framework->myId() > 0) {
 			$ue_addConnection_url = $ue_base_url."&amp;act=connections&amp;task=addConnection&amp;connectionid=".$user->id;
