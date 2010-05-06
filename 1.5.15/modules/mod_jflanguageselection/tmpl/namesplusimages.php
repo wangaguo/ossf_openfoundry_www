@@ -32,8 +32,9 @@
 */
 // no direct access
 defined('_JEXEC') or die('Restricted access');
-$outString = '<div id="jflanguageselection">';
-$outString .= '<ul class="jflanguageselection">';
+$outString = '<span>';
+//$outString = '<div class="mod_ssologin">';
+//$outString .= '<ul class="jflanguageselection">';
 foreach( $langActive as $language )
 {
 	$langActive = '';
@@ -48,10 +49,12 @@ foreach( $langActive as $language )
 	$href = JFModuleHTML::_createHRef ($language, $params);
 
 	if (isset($language->disabled) && $language->disabled){
-		$outString .= '<li' .$langActive. ' style="opacity:0.5" class="opaque">';
+		$outString .= $langActive;
+		//$outString .= '<li' .$langActive. ' style="opacity:0.5" class="opaque">';
 	}
 	else {
-		$outString .= '<li' .$langActive. '>';
+		$outString .= $langActive;
+		//$outString .= '<li' .$langActive. '>';
 	}
 	if($type == 'namesplusimages') {
 		if( isset($language->image) && $language->image!="" ) {
@@ -71,7 +74,7 @@ foreach( $langActive as $language )
 
 	$outString .= '</li>';
 }
-$outString .= '</ul></div>';
+$outString .= '</ul></span>';
 
 echo $outString;
 
