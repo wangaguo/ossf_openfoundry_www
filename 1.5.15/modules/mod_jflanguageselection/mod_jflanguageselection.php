@@ -44,12 +44,12 @@ $db->_profile("langmod",true);
 // Include the helper functions only once
 JLoader::import('helper', dirname( __FILE__ ), 'jfmodule');
 JLoader::register('JoomFishVersion', JOOMFISH_ADMINPATH .DS. 'version.php' );
-$type 		= trim( $params->get( 'type', 'rawimages' ));
+$type 		= trim( $params->get( 'type', 'names' ));
 $layout = JModuleHelper::getLayoutPath('mod_jflanguageselection',$type);
 
-$inc_jf_css	= intval( $params->get( 'inc_jf_css', 1 ));
-$type 		= trim( $params->get( 'type', 'dropdown' ));
-$show_active= intval( $params->get( 'show_active', 1 ) );
+$inc_jf_css	= intval( $params->get( 'inc_jf_css', 0 ));
+$type 		= trim( $params->get( 'type', 'names' ));
+$show_active= intval( $params->get( 'show_active', 0 ) );
 $spacer		= trim( $params->get( 'spacer', '&nbsp;' ) );
 
 jimport('joomla.filesystem.file');
