@@ -939,7 +939,7 @@ List Functions
 
 				// top page links:
 ?>
-	<div style="width:100%;text-align:center;"><?php echo writePagesLinks($limitstart, $limit, $total, $ue_base_url.$pagingSearch.$spoofAmp, $search); ?></div>
+	<div class="rt-pagination"><?php echo writePagesLinks($limitstart, $limit, $total, $ue_base_url.$pagingSearch.$spoofAmp, $search); ?></div>
 <?php
 			}
 
@@ -952,7 +952,7 @@ List Functions
 			// bottom page links:
 ?>
 
-	<div style="width:100%;text-align:center;"><?php echo writePagesLinks($limitstart, $limit, $total, $ue_base_url.$pagingSearch.$spoofAmp, $search); ?></div>
+	<div class="rt-pagination"><?php echo writePagesLinks($limitstart, $limit, $total, $ue_base_url.$pagingSearch.$spoofAmp, $search); ?></div>
 <?php		}
 
 			if ( count( $pluginAdditions['footer'] ) ) {
