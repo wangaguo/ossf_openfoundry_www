@@ -51,8 +51,8 @@ ul.pagination li a {padding:2px;}
 
 /* RokAjaxSearch */
 #rokajaxsearch {overflow: hidden;}
-#rokajaxsearch .inputbox {float: left;width: 245px;height: 17px;line-height: 12px;padding: 4px 5px 3px 5px;border: 0;font-size: 13px;outline: none;background: none;}
-#rokajaxsearch .roksearch-wrapper {height: 24px;display: inline-block;float: left;margin-top: 10px;margin-bottom: 10px;}
+#rokajaxsearch .inputbox {float: left;width: 310px;height: 17px;line-height: 12px;padding: 4px 5px 3px 5px;border: 0;font-size: 13px;outline: none;background: none;}
+#rokajaxsearch .roksearch-wrapper {height: 22px;display: inline-block;float: left;margin-top: 2px;margin-bottom: 0px;}
 .search_options {float: left;margin:12px 10px;}
 .search_options label {margin-right:8px;}
 #roksearch_results {border-bottom: 0;}
@@ -93,7 +93,7 @@ ul.pagination li a {padding:2px;}
 
 /* RokNewsPager */
 body ul.roknewspager {border: 0;padding: 0;}
-body ul.roknewspager li .roknewspager-title {line-height: 125%;}
+body ul.roknewspager li .roknewspager-title {line-height: 185%;}
 body .roknewspager-pages {background: none;padding: 5px 0;}
 body .roknewspager-pages2 {height: 24px;margin-left: 20px;padding-bottom: 5px;}
 body .roknewspager-spinner {height: 24px;}
@@ -110,13 +110,13 @@ body .square3 .roknewspager-prev-disabled, body .square4 .roknewspager-prev-disa
 body .square3 .roknewspager-prev, body .square4 .roknewspager-prev, body .square6 .roknewspager-prev {background-position: 6px -464px !important;}
 body .article-rating .rating-bar {background: url(../images/ratingbar.png) repeat 0 0;height: 14px;width: 82px;}
 body .article-rating .rating-bar div {background: url(../images/ratingbar.png) repeat 0 -15px;}
-body ul.roknewspager li a {line-height: 120%;font-size: 100%;}
+body ul.roknewspager li a {line-height: 120%;font-size: 1.2em;}
 body ul.roknewspager .roknewspager-div {padding-left: 0;}
 body ul.roknewspager li {background: none;}
 
 /* RokStories */
 .feature-block .feature-title {font-size: 150%;letter-spacing: -2px;}
-.feature-block .feature-title span {display: block;letter-spacing: normal;font-size: 150%;font-weight: bold;margin-top: 5px;}
+.feature-block .feature-title span {display: block;letter-spacing: normal;font-size: 120%;font-weight: bold;margin-top: 5px;}
 #rt-showcase .rokstories-layout2 {margin: 0;padding: 15px 0 0 0;overflow: hidden;position:relative;}
 #rt-showcase .rokstories-layout2 .feature-block {overflow: visible;position:static;}
 .rokstories-layout2 .feature-block .readon1-l {display: none;}

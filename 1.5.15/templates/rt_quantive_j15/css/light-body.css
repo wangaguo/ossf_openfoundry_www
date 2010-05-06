@@ -54,8 +54,8 @@ body, .title, .rt-article-title, .rt-article-title a, #rt-bottom, #rt-footer, #r
 /*** IMAGES AND BACKGROUNDS *************************/
 
 /* Logo */
-.logostyle-dark #rt-logo {background: url(../images/logo/dark/logo.png) 0 0 no-repeat;}
-.logostyle-light #rt-logo {background: url(../images/logo/light/logo.png) 0 0 no-repeat;}
+.logostyle-dark #rt-logo {background: url(../../../images/logo-of.png) 0 0 no-repeat;}
+.logostyle-light #rt-logo {background: url(../../../images/logo-of.png) 0 0 no-repeat;}
 
 /* Backgrounds */
 body.backgroundlevel-high.backgroundstyle-style1 {background: #101D2E url(../images/backgrounds/style1/high/bg-top.jpg) 50% 117% no-repeat;}
@@ -93,9 +93,10 @@ body.backgroundlevel-high.backgroundstyle-style7 #rt-main-background {background
 body.backgroundlevel-med.backgroundstyle-style7 {background: #fff url(../images/backgrounds/style7/med/bg-tile.jpg) 50% 0 repeat-x;}
 body.backgroundlevel-low.backgroundstyle-style7 {background: #fff;}
 
-body.backgroundlevel-high.backgroundstyle-style8 {background: #fff url(../images/backgrounds/style8/high/bg-top.jpg) 50% 117% no-repeat;}
+/**body.backgroundlevel-high.backgroundstyle-style8 {background: #fff url(../images/backgrounds/style8/high/bg-top.jpg) 50% 117% no-repeat;}
 body.backgroundlevel-high.backgroundstyle-style8 #rt-main-background {background: url(../images/backgrounds/style8/high/bg-top.jpg) 50% -20px no-repeat;}
 body.backgroundlevel-med.backgroundstyle-style8 {background: #fff url(../images/backgrounds/style8/med/bg-tile.jpg) 50% 0 repeat-x;}
+**/
 body.backgroundlevel-low.backgroundstyle-style8 {background: #fff;}
 
 /* Body Surround */
@@ -174,7 +175,7 @@ body.backgroundlevel-low.backgroundstyle-style8 {background: #fff;}
 /* Module Variations */
 .square1 .rt-module-top {background: url(../images/body/light/modules/module1-tm.png) 0 0 repeat-x;}
 .square1 .rt-module-top2 {background: url(../images/body/light/modules/module1-tl.png) 0 0 no-repeat;}
-.square1 .rt-module-top3 {background: url(../images/body/light/modules/module1-tr.png) 100% 0 no-repeat;}
+.square1 .rt-module-top3 {background:  url(../images/body/light/modules/module1-tr.png) 100% 0 no-repeat;}
 .square1 .rt-module-inner {background: #fff;border-left: 1px solid #d1d1d1;border-right: 1px solid #d1d1d1;}
 .bodylevel-low .square1 .rt-module-inner {background: #fff;border: 1px solid #d1d1d1;}
 .square1 .rt-module-bottom {background: url(../images/body/light/modules/module1-bm.png) 0 0 repeat-x;}
@@ -209,9 +210,19 @@ body.backgroundlevel-low.backgroundstyle-style8 {background: #fff;}
 .square5 .rt-module-top3 {background: url(../images/body/light/modules/module5-tr.png) 100% 0 no-repeat;}
 .square5 .rt-module-inner {background: #C7C6C8 url(../images/body/light/modules/module5-m.png) 0 0 repeat-x;border-left: 1px solid #B8B7B9;border-right: 1px solid #B8B7B9;}
 .bodylevel-low .square5 .rt-module-inner {background: #C7C6C8;border: 1px solid #B8B7B9;}
-.square5 .rt-module-bottom {background: url(../images/body/light/modules/module5-bm.png) 0 0 repeat-x;}
-.square5 .rt-module-bottom2 {background: url(../images/body/light/modules/module5-bl.png) 0 0 no-repeat;}
-.square5 .rt-module-bottom3 {background: url(../images/body/light/modules/module5-br.png) 100% 0 no-repeat;}
+.square5 .rt-module-bottom {background: #fff;}
+.square5 .rt-module-bottom2 {background: #fff}
+.square5 .rt-module-bottom3 {background: #fff;}
+
+/*for header login module*/
+.square9 {float:right;}
+.square9 .rt-module-top {background: #fff;}
+.square9 .rt-module-top2 {background: #fff;}
+.square9 .rt-module-top3 {background: #fff;}
+.square9 .rt-module-inner {background: #fff;border:0px; padding:0px;}
+.square9 .rt-module-bottom {background:#fff;}
+.square9 .rt-module-bottom2 {background:#fff;}
+.square9 .rt-module-bottom3 {background: #fff;}
 
 /* Module Titles */
 .module-title, .rt-article-title, body ul.roknewspager li, body .roknewspager-pages2 {background: url(../images/body/light/modules/module-title-bg.png) 50% 100% repeat-x;}
@@ -298,8 +309,8 @@ body .button2-left .linkmacro {background: url(../images/system/j_button2_rokcan
 /*** RT EXTENSIONS *************************/
 
 /* RokAjaxSearch */
-#rokajaxsearch .inputbox {color: #666;}
-#rokajaxsearch .roksearch-wrapper {background: #fff;border: 1px solid #d5d5d5;}
+#rokajaxsearch .inputbox {background:url (../images/icons/icon-search.png) 0 0 no-repeat;color: #666;}
+#rokajaxsearch .roksearch-wrapper {background:#fff;border: 2px solid #d5d5d5;}
 #roksearch_results .rokajaxsearch-overlay {background: #fff;}
 #roksearch_results {background: #fff;border: 1px solid #ddd;border-bottom: 0;}
 #roksearch_results a:hover {color: #000;}
