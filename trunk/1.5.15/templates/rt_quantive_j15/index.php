@@ -14,6 +14,7 @@ defined( '_JEXEC' ) or die( 'Restricted index access' );
 
 // load and inititialize gantry class
 require_once('lib/gantry/gantry.php');
+//require_once('../../administrator/components/com_menus/admin.menus.php');
 $gantry->init();
 
 ?>
@@ -24,6 +25,7 @@ $gantry->init();
 		$gantry->displayHead();
 		$gantry->addStyles(array('template.css','joomla.css','style.css','typography.css'));
 	?>
+    <script type="text/javascript" src="/sso/javascripts/langsync.js"></script>
 </head>
 	<body <?php echo $gantry->displayBodyTag(array('backgroundLevel','bodyLevel')); ?>>
 		<div id="rt-main-background">
@@ -55,14 +57,6 @@ $gantry->init();
 				    <div class="clear"></div>
 				</div></div></div>
 				<?php /** End Menu **/ endif; ?>
-				<?php /** Begin Sub Menu **/ if ($gantry->countModules('subnavigation')) : ?>
-				<div class="rt-submenu-surround"><div class="rt-submenu-surround2">
-					<div id="rt-submenu">
-						<?php echo $gantry->displayModules('subnavigation','basic','basic'); ?>
-					    <div class="clear"></div>
-					</div>
-				</div></div>
-				<?php /** End Sub Menu **/ endif; ?>
 				<div class="rt-surround"><div class="rt-surround2"><div class="rt-surround3">
 					<?php if ($gantry->countModules('showcase') or $gantry->countModules('feature')) : ?>
 					<div id="rt-showcase-section">
@@ -100,7 +94,7 @@ $gantry->init();
 						</div></div>
 						<?php /** End Main Top **/ endif; ?>
 						<?php /** Begin Main Body **/ ?>
-					    <?php echo $gantry->displayMainbody('sidebar','standard','standard','standard','standard','standard'); ?>
+					    <?php echo $gantry->displayMainbody('mainbody','sidebar','standard','standard','standard','standard','standard'); ?>
 						<?php /** End Main Body **/ ?>
 						<?php /** Begin Main Bottom **/ if ($gantry->countModules('mainbottom')) : ?>
 						<div id="rt-mainbottom">
