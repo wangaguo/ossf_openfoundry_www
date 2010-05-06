@@ -46,7 +46,6 @@ class ContentController extends JController
 		$user = &JFactory::getUser();
 		$view = JRequest::getVar('view');
 		$viewcache = JRequest::getVar('viewcache',1,'POST','INT');
-
 		if ($user->get('id') ||
 			($view == 'category' && JRequest::getVar('layout') != 'blog' && $viewcache == 0) ||
 			 $view == 'archive' && $viewcache == 0) {
