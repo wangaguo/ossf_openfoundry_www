@@ -20,6 +20,4 @@ $result = curl_exec($ch);
 
 // Close cURL resource
 curl_close($ch);
-
-echo $result;
 ?>
