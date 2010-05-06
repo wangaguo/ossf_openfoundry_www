@@ -21,7 +21,7 @@
 	</languages>
 	<media />
 	<params>
-		<param name="type" type="list" default="rawimages"
+		<param name="type" type="list" default="dropdown"
 			label="Appearance of language selector"
 			description="Define how the selector should be generated.">
 			<option value="dropdown">Drop down of names</option>
@@ -31,7 +31,7 @@
 			<option value="images">ul-list of images</option>
 			<option value="rawimages">Raw display of images</option>
 		</param>
-		<param name="show_active" type="radio" default="1"
+		<param name="show_active" type="radio" default="0"
 			label="Show active language"
 			description="Select wether the active language should be shown or not">
 			<option value="0">No</option>
@@ -39,7 +39,7 @@
 		</param>
 	</params>
 	<params group="advanced">
-		<param name="inc_jf_css" type="radio" default="1"
+		<param name="inc_jf_css" type="radio" default="0"
 			label="Include Joom!Fish CSS"
 			description="Tells the module if the module Joom!Fish CSS should be included or not.">
 			<option value="0">No</option>
