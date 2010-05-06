@@ -32,7 +32,8 @@
 */
 // no direct access
 defined('_JEXEC') or die('Restricted access');
-$outString = '<div id="jflanguageselection"><div class="rawimages">';
+//$outString = '<div id="jflanguageselection"><div class="rawimages">';
+$outString = '';
 foreach( $langActive as $language )
 {
 	$langActive = '';
@@ -67,7 +68,7 @@ foreach( $langActive as $language )
 		}
 	}
 }
-$outString .= '</div></div>';
+//$outString .= '</div></div>';
 
 echo $outString;
 
