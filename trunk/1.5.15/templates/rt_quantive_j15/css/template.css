@@ -28,16 +28,16 @@ ul.menu {padding-left: 0;}
 .rt-surround {margin: 0 9px;}
 .rt-surround2 {margin-left: -12px;padding-left: 3px;}
 .rt-surround3 {margin-right: -12px;padding-right: 3px;position: relative;}
-.rt-block {padding: 10px;margin-bottom: 5px;}
+.rt-block {padding: 8px;margin-bottom: 0px;}
 #rt-debug {padding-top: 20px;position: relative;}
 #rt-footer .module-title .title, #rt-bottom .module-title .title {color: inherit;}
 .bodylevel-low .rt-surround-bottom {display: none;}
 
 /* Header */
-#rt-header {padding: 15px 0 5px 0;}
+#rt-header {padding: 0px  ;}
 
 /* Logo */
-#rt-logo {width: 186px;height: 57px;display: block;}
+#rt-logo {width: 250px;height: 55px;display: block;}
 
 /* Top Menu */
 #rt-navigation {margin: 0 6px;position: relative;}
@@ -191,4 +191,5 @@ span.breadcrumbs a, span.no-link {padding: 0 12px 0 8px;float: left;display: blo
 #rt-accessibility a.large:hover .button {background-position: -21px -18px;background-repeat: no-repeat;}
 
 
-
+/*SSO Login */
+.mod_ssologin a { margin:0px 8px 0px 8px;}
