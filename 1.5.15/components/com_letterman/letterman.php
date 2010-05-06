@@ -56,6 +56,7 @@ if($GLOBALS['Itemid']== "" ) {
 $database->setQuery ( "SELECT name FROM #__menu WHERE id='$Itemid'" );
 $menuname = $database->loadResult();
 
+
 HTML_letterman::header();
 
 switch ($task) {
