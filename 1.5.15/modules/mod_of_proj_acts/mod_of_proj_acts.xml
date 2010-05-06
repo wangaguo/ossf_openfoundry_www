@@ -10,7 +10,7 @@
     <version>0.1</version>
     <description>Project activities module for OpenFoundry project activities output</description> 
     <files>
-        <filename module="mod_ofssologin">mod_of_proj_acts.php</filename>
+        <filename module="mod_of_proj_acts">mod_of_proj_acts.php</filename>
     </files>
     <params>
         <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module (mod_login), this allows individual module styling" />
