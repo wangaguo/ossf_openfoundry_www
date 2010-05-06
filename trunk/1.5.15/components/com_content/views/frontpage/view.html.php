@@ -30,7 +30,6 @@ class ContentViewFrontpage extends ContentView
 	function display($tpl = null)
 	{
 		global $mainframe, $option;
-
 		// Initialize variables
 		$user		=& JFactory::getUser();
 		$document	=& JFactory::getDocument();
