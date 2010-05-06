@@ -79,8 +79,8 @@ h1, h2, h3, h4, h5, h6, legend {color: #000;}
 #rt-header h2, #rt-bottom h2 {color: #aaa}
 #rt-header, #rt-bottom {color: #aaa;}
 .rt-container {background: #fff;} 
-a {color: #cc0000;}
-a:hover {color: #000;}
+a {color: #0088B5;}
+a:hover {color: #65960B;}
 #rt-header .rt-container {background: #000 url(../images/header-assets.png) 50% -363px repeat-x;}
 #rt-logo {background: url(../images/header-assets.png) 0 0 no-repeat;}
 #rt-menu ul.menu li a {color: #fff;}
