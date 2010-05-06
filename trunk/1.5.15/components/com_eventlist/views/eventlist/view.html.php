@@ -105,8 +105,8 @@ class EventListViewEventList extends JView
 		$link    = 'index.php?option=com_eventlist&view=eventlist&format=feed';
 		$attribs = array('type' => 'application/rss+xml', 'title' => 'RSS 2.0');
 		$document->addHeadLink(JRoute::_($link.'&type=rss'), 'alternate', 'rel', $attribs);
-		$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
-		$document->addHeadLink(JRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
+		//$attribs = array('type' => 'application/atom+xml', 'title' => 'Atom 1.0');
+		//$document->addHeadLink(JRoute::_($link.'&type=atom'), 'alternate', 'rel', $attribs);
 		
 		//create select lists
 		$lists	= $this->_buildSortLists();

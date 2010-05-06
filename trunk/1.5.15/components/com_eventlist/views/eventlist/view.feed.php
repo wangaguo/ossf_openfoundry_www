@@ -99,7 +99,7 @@ class EventListViewEventList extends JView
 			$item = new JFeedItem();
 			$item->title 		= $title;
 			$item->link 		= $link;
-			$item->description 	= $description;
+		//	$item->description 	= $description;
 			$item->date			= $created;
 			$item->category   	= $category;
 
