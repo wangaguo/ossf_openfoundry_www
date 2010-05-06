@@ -11,6 +11,7 @@
     <description>Login module for OpenFoundry SSO</description> 
     <files>
         <filename module="mod_ofssologin">mod_ofssologin.php</filename>
+        <folder>js/</folder>
     </files>
     <params>
         <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module (mod_login), this allows individual module styling" />
