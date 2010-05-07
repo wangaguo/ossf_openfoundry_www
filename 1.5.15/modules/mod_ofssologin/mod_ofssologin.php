@@ -5,7 +5,7 @@ $pipe = '&nbsp;&nbsp|&nbsp;&nbsp;';
 
 
 global $mainframe;
-//include_once( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php');
+include_once( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php');
 echo '<div class="ofssologin_'.$class_sfx.'">';
 if($user->get('aid') == 0)
 { //login
@@ -48,7 +48,7 @@ echo <<<EOD
     <select id="of_search_type">
       <option value="Projects"> {$JText->_('PROJECTS')} </option>
       <option value="Content"> {$JText->_('CONTENT')} </option>
-      <option value="Community"> {$JText->_('COMMUNITY')} </option>
+      <option value="People"> {$JText->_('PEOPLE')} </option>
     </select>
     <input type="hidden" name="commit" value="search" />
   </form>

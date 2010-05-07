@@ -6,7 +6,7 @@ function of_search(){
     case "Content":
       location.href = "/index.php?option=com_search&Itemid=58&searchword="+of_search_word;
       break;
-    case "Community":
+    case "People":
       location.href = "/index.php?option=com_comprofiler&task=usersList&Itemid=6&limitstart=0&search=&username="+of_search_word;
       break;
     default:
