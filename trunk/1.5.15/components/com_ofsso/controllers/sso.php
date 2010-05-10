@@ -131,7 +131,7 @@ class OfssoControllerSso extends JController
       {
         $user = new JUser();
         $udata["username"] = $data["user"]["name"];
-        $udata["gid"] = 18;
+        $udata["gid"] = 19;
         $udata["usertype"] = 'Registered';
       }
       $udata["name"] = $data["user"]["last_name"].' '.$data["user"]["first_name"];
