@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<mosinstall type="module" version="1.0.0">
+    <name>OpenFoundry User Show-My-Projects</name>
+    <creationDate>2010/05/06</creationDate>
+    <author>Tim Wu</author>
+    <copyright>Copyright (C) 2010 OSSF. All rights reserved.</copyright>
+    <license>GNU General Public License</license>
+    <authorEmail>mouse.kaworu@gmail.com</authorEmail>
+    <authorUrl></authorUrl>
+    <version>0.1</version>
+    <description>User show-my-projects module for OpenFoundry</description> 
+    <files>
+        <filename module="mod_of_user_partners">mod_of_user_myprojects.php</filename>
+    </files>
+    <params>
+        <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module (mod_login), this allows individual module styling" />
+    </params>
+</mosinstall>
