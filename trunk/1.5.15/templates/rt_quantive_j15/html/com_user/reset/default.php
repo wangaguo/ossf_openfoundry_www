@@ -17,16 +17,15 @@ defined('_JEXEC') or die('Restricted access');
 	<div class="user">
 	
 		<?php if ( $this->params->get( 'show_page_title' ) ) : ?>
-		<h1 class="rt-pagetitle">
+		<h2 class="title">
 			<?php echo $this->escape($this->params->get('page_title')); ?>
-		</h1>
+		</h2>
 		<?php endif; ?>
 
 		<p><?php echo JText::_('RESET_PASSWORD_REQUEST_DESCRIPTION'); ?></p>
 
 		<form action="<?php echo JRoute::_( 'index.php?option=com_user&task=requestreset' ); ?>" method="post" class="josForm form-validate">
 		<fieldset>
-			<legend><?php echo JText::_( 'RESET YOUR PASSWORD' ) ?></legend><br />
 
 			<div>
 				<label for="email" class="hasTip" title="<?php echo JText::_('RESET_PASSWORD_EMAIL_TIP_TITLE'); ?>::<?php echo JText::_('RESET_PASSWORD_EMAIL_TIP_TEXT'); ?>"><?php echo JText::_('Email Address'); ?>:</label>
