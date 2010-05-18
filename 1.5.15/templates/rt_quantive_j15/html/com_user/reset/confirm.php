@@ -16,9 +16,9 @@ defined('_JEXEC') or die('Restricted access');
 <div class="rt-joomla <?php echo $this->params->get('pageclass_sfx')?>">
 	<div class="user">
 
-		<h1 class="rt-pagetitle">
+		<h2 class="title">
 			<?php echo JText::_('Confirm your Account'); ?>
-		</h1>
+		</h2>
 
 		<p>
 			<?php echo JText::_('RESET_PASSWORD_CONFIRM_DESCRIPTION'); ?>
@@ -26,11 +26,10 @@ defined('_JEXEC') or die('Restricted access');
 
 		<form action="<?php echo JRoute::_( 'index.php?option=com_user&task=confirmreset' ); ?>" method="post" class="josForm form-validate">
 		<fieldset>
-			<legend><?php echo JText::_('Confirm your Account'); ?></legend>
 			
 			<div>
 				<label for="token" class="hasTip" title="<?php echo JText::_('RESET_PASSWORD_TOKEN_TIP_TITLE'); ?>::<?php echo JText::_('RESET_PASSWORD_TOKEN_TIP_TEXT'); ?>"><?php echo JText::_('Token'); ?>:</label>
-				<input id="token" name="token" type="text" class="required" size="36" />
+				<input id="token" name="token" type="text" class="required" size="36" /><br><br>
 			</div>
 			<div class="readon">
 				<button type="submit" class="button"><?php echo JText::_('Submit'); ?></button>
