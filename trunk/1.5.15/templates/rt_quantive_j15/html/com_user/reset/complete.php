@@ -16,9 +16,9 @@ defined('_JEXEC') or die('Restricted access');
 <div class="rt-joomla <?php echo $this->params->get('pageclass_sfx')?>">
 	<div class="user">
 
-		<h1 class="rt-pagetitle">
+		<h2 class="title">
 			<?php echo JText::_('Reset your Password'); ?>
-		</h1>
+		</h2>
 		
 		<p>
 			<?php echo JText::_('RESET_PASSWORD_COMPLETE_DESCRIPTION'); ?>
@@ -26,7 +26,6 @@ defined('_JEXEC') or die('Restricted access');
 	
 		<form action="<?php echo JRoute::_( 'index.php?option=com_user&task=completereset' ); ?>" method="post" class="josForm form-validate">
 		<fieldset>
-			<legend><?php echo JText::_('Reset your Password'); ?></legend>
 			
 			<div>
 				<label for="password1" class="hasTip" title="<?php echo JText::_('RESET_PASSWORD_PASSWORD1_TIP_TITLE'); ?>::<?php echo JText::_('RESET_PASSWORD_PASSWORD1_TIP_TEXT'); ?>"><?php echo JText::_('Password'); ?>:</label>
