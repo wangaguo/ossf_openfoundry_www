@@ -226,12 +226,22 @@ class UserModelReset extends JModel
 		$uri		= &JFactory::getURI();
 		$url		= JURI::base().'index.php?option=com_user&view=reset&layout=confirm';
 		$sitename	= $config->getValue('sitename');
+		
+		// Get the username by user id
+		$db = &JFactory::getDBO();
+		$query	= 'SELECT id FROM #__users'
+				. ' WHERE email = '.$db->Quote($email)
+				. ' AND block = 0';
+		$db->setQuery($query);
+		$id = $db->loadResult();
+		$user		= &JFactory::getUser($id);
+		$username	= str_replace("!", "", $user->username);
 
 		// Set the e-mail parameters
 		$from		= $config->getValue('mailfrom');
 		$fromname	= $config->getValue('fromname');
 		$subject	= JText::sprintf('PASSWORD_RESET_CONFIRMATION_EMAIL_TITLE', $sitename);
-		$body		= JText::sprintf('PASSWORD_RESET_CONFIRMATION_EMAIL_TEXT', $sitename, $token, $url);
+		$body		= JText::sprintf('PASSWORD_RESET_CONFIRMATION_EMAIL_TEXT', $username, $sitename, $token, $url);
 
 		// Send the e-mail
 		if (!JUtility::sendMail($from, $fromname, $email, $subject, $body))
