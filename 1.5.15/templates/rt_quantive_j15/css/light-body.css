@@ -210,9 +210,6 @@ body.backgroundlevel-low.backgroundstyle-style8 {background: #fff;}
 .square5 .rt-module-top3 {background: url(../images/body/light/modules/module5-tr.png) 100% 0 no-repeat;}
 .square5 .rt-module-inner {background: #C7C6C8 url(../images/body/light/modules/module5-m.png) 0 0 repeat-x;border-left: 1px solid #B8B7B9;border-right: 1px solid #B8B7B9;}
 .bodylevel-low .square5 .rt-module-inner {background: #C7C6C8;border: 1px solid #B8B7B9;}
-.square5 .rt-module-bottom {background: #fff;}
-.square5 .rt-module-bottom2 {background: #fff}
-.square5 .rt-module-bottom3 {background: #fff;}
 
 /*for header login module*/
 .square9 {float:right;}
@@ -223,6 +220,23 @@ body.backgroundlevel-low.backgroundstyle-style8 {background: #fff;}
 .square9 .rt-module-bottom {background:#fff;}
 .square9 .rt-module-bottom2 {background:#fff;}
 .square9 .rt-module-bottom3 {background: #fff;}
+
+.square10 .module-content {color: #24585C;}
+#rt-main-surround .square10 ul.menu li a, #rt-main-surround .square10 ul.menu li .item, #rt-main-surround .square10 ul.menu li .separator {color: #24585C;text-shadow: -1px -1px 1px #fff;}
+.square10 .module-content a, #rt-main-surround .square10 ul.menu li.active > a, #rt-main-surround .square10 ul.menu li.active > .item, #rt-main-surround .square10 ul.menu li.active > .separator, #rt-main-surround .square10 ul.menu li:hover > a, #rt-main-surround .square10 ul.menu li:hover > .item, #rt-main-surround .square10 ul.menu li:hover > .separator {color: #333;}
+.square10 .title, .square10 .rt-article-title, .square10 .rt-article-title a {color: #24585C !important;text-shadow: -1px -1px 1px #fff;}
+.square10 .title span, .square10 .rt-article-title span {color: #333;}
+.square10 .rt-module-top {background: url(../images/body/style6/module6-tm.png) 0 0 repeat-x;}
+.square10 .rt-module-top2 {background: url(../images/body/style6/module6-tl.png) 0 0 no-repeat;}
+.square10 .rt-module-top3 {background: url(../images/body/style6/module6-tr.png) 100% 0 no-repeat;}
+.square10 .rt-module-inner {background: #C3E9EC url(../images/body/style6/module6-m.png) 0 0 repeat-x;border-left:1px solid #92C1C5;border-right:1px solid #92C1C5; }
+.bodylevel-low .square10 .rt-module-inner {background: #C3E9EC;border: 1px solid #92C1C5;}
+.square10 .rt-module-bottom {background:url(../images/body/style6/module6-bm.png)0 0 repeat-x;}
+.square10 .rt-module-bottom2 {background:url(../images/body/style6/module6-bl.png) 0 0 no-repeat;}
+.square10 .rt-module-bottom3 {background: url(../images/body/style6/module6-br.png) 100% 0 no-repeat;}
+
+.square10 .module-title, .square10 .rt-article-title, body .square10 ul.roknewspager li, body .square10 .roknewspager-pages2 {background: url(../images/body/style6/module6-title-bg.png) 50% 100% repeat-x;}
+
 
 /* Module Titles */
 .module-title, .rt-article-title, body ul.roknewspager li, body .roknewspager-pages2 {background: url(../images/body/light/modules/module-title-bg.png) 50% 100% repeat-x;}
