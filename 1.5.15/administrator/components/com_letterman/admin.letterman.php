@@ -256,18 +256,18 @@ function reflashOldPaper($option)
 		}
 		
 		//附加tags在電子報的tags中
-		$mlTags = new stdClass;
-		$mlTags-> id = $reflashItem[$i]->id;
-		$mlTags-> tags = $oldTags.$tags;
-				
-		if(!$database->updateObject('#__letterman',$mlTags,'id'))
-		{
-			echo $database->stderr();
-		}
+		//$mlTags = new stdClass;
+		//$mlTags-> id = $reflashItem[$i]->id;
+		//$mlTags-> tags = $oldTags.$tags;
+		//		
+		//if(!$database->updateObject('#__letterman',$mlTags,'id'))
+		//{
+		//	echo $database->stderr();
+		//}
 	}
 	//echo "<SCRIPT LANGUAGE='javascript'> alert('OK');window.location='$mosConfig_live_site.'/index2.php?option=$option''</script>\n";
 	
-	mosRedirect( "index2.php?option=$option" );
+	//mosRedirect( "index2.php?option=$option" );
 }
 /*避免重複寫入*/
 /*--------------------------------------START--------------------------------------------------*/
@@ -291,7 +291,7 @@ function addRss( $rows ,$title )
 {
 	global $mosConfig_absolute_path;
 	global $database, $mainframe;
-	global $mosConfig_live_site, $mosConfig_cachepath;
+    global $mosConfig_live_site, $mosConfig_cachepath;
 	if( !function_exists( "sefRelToAbs" )) {
 		include_once( $mosConfig_absolute_path."/administrator/components/com_letterman/includes/sef.php" );
 	}
@@ -429,8 +429,7 @@ function addRss( $rows ,$title )
 		echo _NOT_AUTH;
 		return;
 	}
-	$info[ 'file' ] = $mosConfig_cachepath .'/'. $filename;
-
+	$info[ 'file' ] = $mosConfig_absolute_path .'/cache/'. $filename;
 	// load feed creator class
 	$rss 	= new UniversalFeedCreator();
 	// load image creator class
@@ -447,7 +446,6 @@ function addRss( $rows ,$title )
 	$rss->syndicationURL 	= $info[ 'link' ];		
 	$rss->cssStyleSheet 	= NULL;
 	$rss->encoding 			= $info[ 'encoding' ];
-
 	if ( $info[ 'image' ] ) {
 		$image->url 		= $info[ 'image' ];
 		$image->link 		= $info[ 'link' ];
@@ -696,18 +694,18 @@ function saveEditletter( $option , $cid)
 	}
 	
 	//加入RSS
-	$rssId = "";
-	foreach($tagsNumber as $temp)
-	{
-		$rssId.= "id = ".$temp." or ";
-	}
-	$id = substr($rssId,0,strlen($rssId) - 12);
-	$database->setQuery( "SELECT * FROM #__content WHERE id=$cid" );
-	$result = $database->loadObjectList();
-	
-//	addRss($result,$newSubject[0]->subject);
-     	// addRss($result,$cid);
-//    addRss($result,$title);
+	//$rssId = "";
+	//foreach($tagsNumber as $temp)
+	//{
+	//	$rssId.= "id = ".$temp." or ";
+	//}
+	//$id = substr($rssId,0,strlen($rssId) - 12);
+	//$database->setQuery( "SELECT * FROM #__content WHERE id=$cid" );
+	//$result = $database->loadObjectList();
+	//
+	//addRss($result,$newSubject[0]->subject);
+   	// addRss($result,$cid);
+     // addRss($result,$title);
 /*--------------------------------------END--------------------------------------------------*/
 	
 	mosRedirect( "index2.php?option=$option" );
@@ -715,7 +713,7 @@ function saveEditletter( $option , $cid)
 }
 /*新增新的compose*/
 function saveNewsletter( $option ) {
-	global $database, $my, $editId;
+	global $database, $my, $editId, $mosConfig_cachepath;
 	//echo $database;
 	$row = new mosLetterman( $database );
 	
@@ -752,7 +750,6 @@ function saveNewsletter( $option ) {
 	$user = new stdClass;
 	$database->setQuery("SELECT id , metakey FROM #__content" );
 	$result = $database->loadObjectList();
-	
 	//for rss
 	$rssId = "";
 	
@@ -789,6 +786,7 @@ function saveNewsletter( $option ) {
 	$database->setQuery( "SELECT id,title,introtext,UNIX_TIMESTAMP( created ) AS created_ts FROM #__content WHERE $id" );
 	$result = $database->loadObjectList();
 	addRss($result,$title);
+   
 
 /*--------------------------------------END--------------------------------------------------*/
 	
