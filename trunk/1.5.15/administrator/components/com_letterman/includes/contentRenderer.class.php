@@ -42,7 +42,7 @@ function CalTitle( &$row, &$params, &$access ) {
             ?>
             <td class="contentheading<?php echo $params->get( 'pageclass_sfx' ); ?>" width="100%" height="26" valign     ="middle" style="font-size: 12px;font-weight:bold;vertical-align:bottom;color: #0055C5;">
             <img src="http://www.openfoundry.org/images/newsletter/icon-cat.gif" align="left" hspace="6" alt="Image"/><a href="#<?php echo $row->id ; ?>" class="contentpagetitle<?php echo $params->get( 'pageclass_sfx' ); ?>">
-[<?php echo $row->category; ?>]&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row->title;?></a>
+[<?php echo $row->category; ?>]&nbsp;&nbsp;<?php echo $row->title;?></a>
             </td>
             <?php
     } else {
@@ -261,10 +261,10 @@ function lm_replaceContentHtml(&$matches){
 			if ($id > 1028 || $id < 1000 ) {
 			//Add Article Category
   				echo '<tr>';
-  				echo '<td  height="29" valign="middle" background="http://www.openfoundry.org/images/newsletter/kind.gif"><span style="color: #fd6003;">';
+  				echo '<td>';
   				echo '<span style="font-size: medium;"><strong>';
   				echo $row->category;
-  				echo '</strong></span></span><br /></td></tr>';
+  				echo '</strong></span></span><hr></td></tr>';
   				echo '<tr><td valign="middle" style="font-weight: bold; font-size: 16px; vertical-align: bottom; color: rgb(0, 85, 197);">';
   				echo $row->title;
   				echo '</td></tr>';
@@ -303,12 +303,12 @@ function lm_replaceContentHtml(&$matches){
 			. '<tr>'
 			. '		<td align="left" colspan="2">'
 			. '		<a href="'. $mosConfig_live_site . '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
-			. '&amp;Itemid=144;isletter=1 ' . '" style="font-size:12px;color:#FD6003;"">'.	
+			. '&amp;Itemid=4;isletter=1 ' . '" style="font-size:12px;color:#FD6003;"">'.	
 			//. ($_Itemid ? '&amp;Itemid='.$_Itemid : "") . '" class="readon">'.
 			_READ_MORE
 			. '		</a>&nbsp;&nbsp;&nbsp;&nbsp;'
             . '     <a href="'. $mosConfig_live_site . '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
-            . '&amp;Itemid=144;isletter=1#addcomments' . '" style="font-size:12px;color:#FD6003;"">'.
+            . '&amp;Itemid=4;isletter=1#addcomments' . '" style="font-size:12px;color:#FD6003;"">'.
             //. ($_Itemid ? '&amp;Itemid='.$_Itemid : "") . '" class="readon">'.
             _ADD_COMMENT
             . '     </a>'
