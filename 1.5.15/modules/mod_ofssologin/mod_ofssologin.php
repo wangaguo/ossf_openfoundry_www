@@ -44,12 +44,12 @@ $JText = &JFactory::getLanguage();
 echo <<<EOD
 <div class="ofssologin_search_{$class_sfx}">
   <form id="of_search" action="/of/openfoundry/search" method="get" onsubmit="of_search(); return false;">
-    <input id="query" name="query" id="mod_search_searchword" maxlength="20" alt="search" class="inputbox" type="text" size="28" value="search..."  onblur="if(this.value=='') this.value='search...';" onfocus="if(this.value=='search...') this.value='';" />
     <select id="of_search_type">
       <option value="Projects"> {$JText->_('PROJECTS')} </option>
       <option value="Content"> {$JText->_('CONTENT')} </option>
       <option value="People"> {$JText->_('PEOPLE')} </option>
     </select>
+    <input id="query" name="query" id="mod_search_searchword" maxlength="20" alt="search" class="inputbox" type="text" size="28" value="search..."  onblur="if(this.value=='') this.value='search...';" onfocus="if(this.value=='search...') this.value='';" />
     <input type="hidden" name="commit" value="search" />
   </form>
 </div>
