@@ -93,30 +93,30 @@ class OfssoLibrary
         $user =& JFactory::getUser($matches[1]);
         JPluginHelper::importPlugin('user');
         $results = $mainframe->triggerEvent('onLoginUser', array((array)$user, $options));
-        if(!in_array(false, $results, true))
+        if(in_array(true, $results, true))
         { //successed. save backup session_id.
           setcookie($ofsso_service_cookie_name, $_COOKIE[$ofsso_cookie_name]);
         }
         else
         {
-          echo('failed');
+          $mainframe->enqueueMessage(JText::_('Login failed').'.', 'error');
+          return;
         }
       }
       else
       { //fetch faild. remove auth_session.
-        setcookie("ossfauth", "", time()-3600);
+        setcookie($ofsso_cookie_name, "", time()-3600);
       }
     }
 
     if(!$menus->authorize($itemid, $aid))
     {
-      echo('menus authorize');
       if ( ! $aid )
       {
         // Redirect to login
         $uri        = JFactory::getURI();
         $return     = $uri->toString();
-        $url = $ofsso_site.'/users/login?return_url='.$return;
+        $url = $ofsso_site.'/user/login?return_url='.$return;
 
         $mainframe->redirect($url);
       }
