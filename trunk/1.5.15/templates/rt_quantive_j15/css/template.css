@@ -197,7 +197,7 @@ span.breadcrumbs a, span.no-link {padding: 0 12px 0 8px;float: left;display: blo
 
 /*Project Activites */
 #pa ul {list-style-type: none;}
-#pa span {list-style-type: none;padding:0px 8px;font-weight:bold;}
+#pa span {list-style-type: none;padding:0px 8px; margin:0px 10px;font-weight:bold;}
 span.pa_new {color:#0e3d4e;background:#2ab0e1;}
 span.pa_publish {color:#4e320e;background:#e39228;}
 span.pa_release {color:#334d0e;background:#93de28;}
@@ -225,4 +225,6 @@ span.pa  {
 	color:#606060;
 	padding:0px 8px;
 	 }
-
+p.flasherror{
+    color:#ff0000;
+}
