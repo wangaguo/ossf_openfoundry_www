@@ -146,7 +146,16 @@ class OfssoControllerSso extends JController
       $block = $data["user"]["status"] == '1' ? 0 : 1;
       $user->block = $block; 
       $user->save();
-      if($user->getError() == "") echo('1');
+      if($user->getError() == ""){
+        global $mainframe, $_CB_database;
+        include_once( $mainframe->getCfg( 'absolute_path' ). '/administrator/components/com_comprofiler/plugin.foundation.php' );
+        cbimport( 'cb.tabs' );
+        $row = new moscomprofilerUser( $_CB_database );
+        $row->id = $user->id;
+        $row->user_id = $user->id;
+        $row->storeNew();
+        echo('1');
+      }
       else echo($user->getError());
     }
     else
