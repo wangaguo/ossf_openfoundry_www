@@ -5,7 +5,6 @@ $pipe = '&nbsp;&nbsp|&nbsp;&nbsp;';
 
 
 global $mainframe;
-include_once( $mainframe->getCfg( 'absolute_path' ) . '/administrator/components/com_comprofiler/plugin.foundation.php');
 echo '<div class="ofssologin_'.$class_sfx.'">';
 if($user->get('aid') == 0)
 { //login
@@ -26,7 +25,7 @@ else
   $txtusername  = $user->get('username');
 
   echo JText::_('HI');
-  echo '<a href="'.cbSef("/index.php?option=com_comprofiler&amp;task=userProfile&amp;Itemid=54").'">';
+  echo '<a href="user/userprofile/">';
   echo $txtusername.'</a>';
   echo $pipe;
   echo '<a href="'.$dashboard.'" >'.JText::_('DASHBOARD').'</a>';
