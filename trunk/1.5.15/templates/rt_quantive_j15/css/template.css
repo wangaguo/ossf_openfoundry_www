@@ -239,3 +239,11 @@ span.pa  {
 p.flasherror{
     color:#ff0000;
 }
+
+span.Code {
+    background-color: #000;
+    color:#fff;
+    padding:5px;
+
+}
+
