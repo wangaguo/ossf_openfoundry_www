@@ -46,7 +46,7 @@
 
 /* Date and Time*/	
 #comments .comment-date {font-size: 10px;color: #999;margin: 0;padding: 0 0 0 12px;background: url(images/jc_date.gif) no-repeat center left}
-#comments .comment-body {color: #777;margin: 6px 0 0;padding:0 0 2px; }
+#comments .comment-body {color: #777;margin: 6px 0 0;padding:0 0 2px; line-height:200%}
 
 /* Quote, Code and Hidden block styles */
 #comments .quote, #comments blockquote, #comments .code, #comments code, #comments pre {margin: 5px 0 5px 10px; display: block; clear: both; background-image: none}
