@@ -11,6 +11,7 @@
 /* Core Text */
 body, .title, .rt-article-title, .rt-article-title a, #rt-bottom, #rt-footer, #rt-footer .title, #rt-header, #rt-copyright {color: #666;}
 .title span, .rt-article-title span, .roktabs-title span, h1 {color: #333;}
+
  
 /* Showcase Text */
 #rt-showcase h2.title span, #rt-showcase .feature-title, #rt-showcase .feature-desc {color: #222;text-shadow: 1px 1px 1px #fff;}
