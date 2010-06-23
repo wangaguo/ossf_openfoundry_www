@@ -14,7 +14,7 @@
 defined('_JEXEC') or die('Restricted access');
 include_once(dirname(__FILE__).DS.'..'.DS.'icon.php');
 
-$canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $this->user->authorize('com_content', 'edit', 'content', 'own'));
+$canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $this->user->authorize('com_content', 'publish', 'content', 'own'));
 ?>
 
 <div class="rt-joomla <?php echo $this->escape($this->params->get('pageclass_sfx')); ?>">
