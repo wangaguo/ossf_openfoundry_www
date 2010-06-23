@@ -236,9 +236,10 @@ span.pa  {
 	color:#606060;
 	padding:0px 8px;
 	 }
-p.flasherror{
+p.flasherror, p.flashmessage{
     color:#ff0000;
 }
+
 
 span.Code {
     background-color: #000;
@@ -247,3 +248,18 @@ span.Code {
 
 }
 
+
+/* Community */
+
+tr.sectiontableentry1 , tr.sectiontableentry2{
+   border-bottom:dashed 1px #cccccc;
+
+}
+
+td.cbUserListCol2 ,td.cbUserListCol3{
+   border-right:dashed 1px #cccccc;
+}
+
+tr.sectiontableentry1 {
+   background-color:#ededed;
+}
