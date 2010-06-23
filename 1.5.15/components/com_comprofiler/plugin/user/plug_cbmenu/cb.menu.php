@@ -974,7 +974,8 @@ class getMenuTab  extends cbTabHandler {
 		}
 		$ue_credits_url		 = $ue_base_url."&amp;task=teamCredits";
 		$ue_userdetails_url	 = $ue_base_url."&amp;task=userDetails" . $this->_addUid( $user );
-		$ue_useravatar_url	 = $ue_base_url."&amp;task=userAvatar" . $this->_addUid( $user );
+		$ue_useravatar_url	 = "sso/user/edit";
+		//$ue_useravatar_url	 = $ue_base_url."&amp;task=userAvatar" . $this->_addUid( $user );
 		$ue_deleteavatar_url = $ue_base_url."&amp;task=userAvatar&amp;do=deleteavatar" . $this->_addUid( $user );
 		$ue_unbanrequest_url = $ue_base_url."&amp;task=banProfile&amp;act=2&amp;reportform=1&amp;uid=".$user->id;
 		$ue_banhistory_url   = $ue_base_url."&amp;task=moderateBans&amp;act=2&amp;uid=".$user->id;
@@ -1048,11 +1049,11 @@ class getMenuTab  extends cbTabHandler {
 				$this->_addMenuItem( $mi, $menuTexts['_UE_UPDATEAVATAR'],cbSef($ue_useravatar_url), "",
 				"<img src=\"".$adminimagesdir."newavatar.gif\" alt='' />","", $menuTexts['_UE_MENU_UPDATEAVATAR_DESC'],"" );
 				// Delete Avatar:
-				if($user->avatar!='' && $user->avatar!=null) {
-					$mi = array(); $mi["_UE_MENU_EDIT"]["_UE_DELETE_AVATAR"]=null;
-					$this->_addMenuItem( $mi, $menuTexts['_UE_DELETE_AVATAR'],cbSef($ue_deleteavatar_url), "",
-					"<img src=\"".$adminimagesdir."delavatar.gif\" alt='' />","", $menuTexts['_UE_MENU_DELETE_AVATAR_DESC'],"" );
-				}
+				//if($user->avatar!='' && $user->avatar!=null) {
+				//	$mi = array(); $mi["_UE_MENU_EDIT"]["_UE_DELETE_AVATAR"]=null;
+				//	$this->_addMenuItem( $mi, $menuTexts['_UE_DELETE_AVATAR'],cbSef($ue_deleteavatar_url), "",
+				//	"<img src=\"".$adminimagesdir."delavatar.gif\" alt='' />","", $menuTexts['_UE_MENU_DELETE_AVATAR_DESC'],"" );
+				//}
 			}
 		}
 		// ----- VIEW MENU - AFTER EDIT IF VIEWING A PROFILE -----
