@@ -33,11 +33,11 @@ body {min-width: 960px;}
 
 /* Typography */
 body {font-size: 12px;line-height: 1.7em;font-family: Helvetica,Arial, Sans-Serif;}
-body.font-size-is-xlarge {font-size: 15px;line-height: 1.7em;}
-body.font-size-is-large {font-size: 14px;line-height: 1.7em;}
-body.font-size-is-default {font-size: 12px;line-height: 1.7em;}
-body.font-size-is-small {font-size: 11px;line-height: 1.7em;}
-body.font-size-is-xsmall {font-size: 10px;line-height: 1.7em;}
+body.font-size-is-xlarge {font-size: 15px;line-height: 200%;}
+body.font-size-is-large {font-size: 14px;line-height: 200%;}
+body.font-size-is-default {font-size: 12px;line-height: 200%;}
+body.font-size-is-small {font-size: 11px;line-height: 200%;}
+body.font-size-is-xsmall {font-size: 10px;line-height: 200%;}
 form {margin: 0;padding: 0;}
 p {margin: 0 0 15px 0;}
 h1, h2, h3, h4, h5 {margin: 15px 0;line-height: 1.1em;}
@@ -46,7 +46,7 @@ h2 {font-size: 200%;}
 h3 {font-size: 175%;}
 h4 {font-size: 120%;}
 h5 {font-size: 120%;}
-h2.title {font-size: 170%;letter-spacing: -1px;line-height: 1em;}
+h2.title {font-size: 170%;letter-spacing: 1px;line-height: 1em;}
 a {text-decoration: none;outline: none;}
 code {color: #000;margin: -1px 0 0 0;font: 10px Courier;}
 blockquote {font: italic 16px/22px Georgia, Serif;}
