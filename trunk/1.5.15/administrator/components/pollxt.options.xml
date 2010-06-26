@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>PollXT:Options</name>
+  <author>Oli Merten, Rainer Eschen (Fishermamb's)</author>
+  <version>1.0, for Release 0.85 or higher</version>
+  <description>Definition for PollXT Options</description>
+  <reference>
+    <table name="pollsxt_options">
+      <field type="referenceid" name="id" translate="0">ID</field>
+      <field type="titletext" name="qoption" translate="1">Option</field>
+    </table>
+  </reference>
+</joomfish>
