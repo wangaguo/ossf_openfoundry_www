@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>PollXT:Questions</name>
+  <author>Oli Merten, Rainer Eschen (Fishermamb's)</author>
+  <version>1.0, for Release 0.85 or higher</version>
+  <description>Definition for PollXT Questions</description>
+  <reference>
+    <table name="pollsxt_questions">
+      <field type="referenceid" name="id" translate="0">ID</field>  	
+      <field type="titletext" name="title" translate="1">Question</field>
+    </table>
+  </reference>
+</joomfish>

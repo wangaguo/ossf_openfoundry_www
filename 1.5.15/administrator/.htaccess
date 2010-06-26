@@ -1,4 +1,4 @@
-AuthUserFile /usr/local/etc/apache22/.access
-AuthName "Please input password"
-AuthType Basic
-Require valid-user
+#AuthUserFile /usr/local/etc/apache22/.access
+#AuthName "Please input password"
+#AuthType Basic
+#Require valid-user
