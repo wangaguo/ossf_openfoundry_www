@@ -3749,9 +3749,8 @@ class getPageTitleTab  extends cbTabHandler {
 		$title	=	cbReplaceVars( $params->get( 'title', '_UE_PROFILE_TITLE_TEXT' ), $user );
 		$name	=	getNameFormat( $user->name, $user->username, $ueConfig['name_format'] );
 		$return	=	'<div class="contentheading" id="cbProfileTitle">' . sprintf( $title, $name ) . "</div>\n";
-		
 		$return	.=	$this->_writeTabDescription( $tab, $user );
-		
+
 		return $return;
 	}
 }	// end class getPageTitleTab
