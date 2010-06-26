@@ -1,15 +1,7 @@
 <?php
-/**
-* @version $Id: fireboard_config.php 494 2007-12-16 21:13:57Z fxstein $
-* Fireboard Component
-* @package Fireboard
-* @Copyright (C) 2006 - 2007 Best Of Joomla All rights reserved
-* @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-* @link http://www.bestofjoomla.com
-**/
 global $fbConfig;
-$fbConfig['board_title']='FireBoard';
-$fbConfig['email']='change@me.com';
+$fbConfig['board_title']='Forum';
+$fbConfig['email']='contact@openfoundry.org';
 $fbConfig['board_offline']='0';
 $fbConfig['board_ofset']='0';
 $fbConfig['offline_message']='<h2>The Forum is currently offline for maintenance.</h2>
@@ -17,8 +9,8 @@ Check back soon!                        ';
 $fbConfig['default_view']='flat';
 $fbConfig['enableRSS']='1';
 $fbConfig['enablePDF']='1';
-$fbConfig['threads_per_page']='20';
-$fbConfig['messages_per_page']='6';
+$fbConfig['threads_per_page']='50';
+$fbConfig['messages_per_page']='30';
 $fbConfig['messages_per_page_search']='15';
 $fbConfig['showHistory']='1';
 $fbConfig['historyLimit']='6';
@@ -26,10 +18,10 @@ $fbConfig['showNew']='1';
 $fbConfig['newChar']='NEW!';
 $fbConfig['jmambot']='1';
 $fbConfig['disemoticons']='0';
-$fbConfig['template']='default';
+$fbConfig['template']='default_green';
 $fbConfig['templateimagepath']='default';
 $fbConfig['joomlaStyle']='0';
-$fbConfig['showAnnouncement']='1';
+$fbConfig['showAnnouncement']='0';
 $fbConfig['avatarOnCat']='0';
 $fbConfig['CatImagePath']='category_images/';
 $fbConfig['numchildcolumn']='2';
@@ -38,6 +30,13 @@ $fbConfig['AnnModId']='62';
 $fbConfig['rtewidth']='450';
 $fbConfig['rteheight']='300';
 $fbConfig['enableRulesPage']='1';
+$fbConfig['rules_infb']='1';
+$fbConfig['rules_cid']='1';
+$fbConfig['rules_link']='http://www.bestofjoomla.com/';
+$fbConfig['enableHelpPage']='0';
+$fbConfig['help_infb']='0';
+$fbConfig['help_cid']='1';
+$fbConfig['help_link']='http://www.bestofjoomla.com/';
 $fbConfig['enableForumJump']='1';
 $fbConfig['reportmsg']='1';
 $fbConfig['username']='1';
@@ -61,8 +60,8 @@ $fbConfig['regonly']='0';
 $fbConfig['changename']='0';
 $fbConfig['pubwrite']='0';
 $fbConfig['floodprotection']='';
-$fbConfig['mailmod']='0';
-$fbConfig['mailadmin']='0';
+$fbConfig['mailmod']='1';
+$fbConfig['mailadmin']='1';
 $fbConfig['captcha']='0';
 $fbConfig['mailfull']='1';
 $fbConfig['allowAvatar']='1';
@@ -75,8 +74,8 @@ $fbConfig['avatarHeight']='100';
 $fbConfig['avatarWidth']='100';
 $fbConfig['avatarLargeHeight']='250';
 $fbConfig['avatarLargeWidth']='250';
-$fbConfig['avatarQuality'] = '75';
 $fbConfig['avatarSize']='2048';
+$fbConfig['avatarQuality']='75';
 $fbConfig['allowImageUpload']='0';
 $fbConfig['allowImageRegUpload']='1';
 $fbConfig['imageHeight']='499';
@@ -88,10 +87,10 @@ $fbConfig['fileTypes']='zip,txt,doc,gz';
 $fbConfig['fileSize']='120';
 $fbConfig['showranking']='1';
 $fbConfig['rankimages']='1';
-$fbConfig['avatar_src']='fb';
-$fbConfig['fb_profile']='fb';
+$fbConfig['avatar_src']='cb';
+$fbConfig['fb_profile']='cb';
 $fbConfig['pm_component']='no';
-$fbConfig['cb_profile']='0';
+$fbConfig['cb_profile']='1';
 $fbConfig['badwords']='0';
 $fbConfig['discussBot']='0';
 $fbConfig['userlist_rows']='30';
@@ -110,27 +109,20 @@ $fbConfig['userlist_userhits']='1';
 $fbConfig['showLatest']='1';
 $fbConfig['latestCount']='10';
 $fbConfig['latestCountPerPage']='5';
-$fbConfig['latestCategory']='';
+$fbConfig['latestCategory']='0';
 $fbConfig['latestSingleSubject']='1';
 $fbConfig['latestReplySubject']='1';
 $fbConfig['latestSubjectLength']='100';
 $fbConfig['latestShowDate']='1';
 $fbConfig['latestShowHits']='1';
 $fbConfig['latestShowAuthor']='1';
-$fbConfig['showStats']='1';
-$fbConfig['showWhoisOnline']='1';
-$fbConfig['showGenStats']='1';
-$fbConfig['showPopUserStats']='1';
+$fbConfig['showStats']='0';
+$fbConfig['showWhoisOnline']='0';
+$fbConfig['showGenStats']='0';
+$fbConfig['showPopUserStats']='0';
 $fbConfig['PopUserCount']='5';
 $fbConfig['showPopSubjectStats']='1';
 $fbConfig['PopSubjectCount']='5';
 $fbConfig['usernamechange']='0';
-$fbConfig['rules_infb']='1';
-$fbConfig['rules_cid']='1';
-$fbConfig['rules_link']='http://www.bestofjoomla.com/';
-$fbConfig['enableHelpPage']='1';
-$fbConfig['help_infb']='1';
-$fbConfig['help_cid']='1';
-$fbConfig['help_link']='http://www.bestofjoomla.com/';
 $fbConfig['version']='1.0.4';
 ?>
