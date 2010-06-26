@@ -29,7 +29,7 @@ tr.sectiontableentry0 td, td.sectiontableentry0, tr.sectiontableentry1 td, td.se
 
 /* Blog Layout */
 .rt-joomla .rt-blog .rt-description {  margin: 10px 0px 15px 0px;padding-bottom: 20px;border-bottom: 1px #c8c8c8 dotted;}
-.rt-joomla .rt-article {margin-bottom: 35px;}
+.rt-joomla .rt-article {margin-bottom: 0px;}
 .rt-joomla .rt-article-bg {padding-bottom: 5px;border-bottom: 1px #c8c8c8 dotted;}
 .rt-joomla .multicolumns .rt-article {margin: 0px 15px 15px 15px;}
 .rt-joomla .multicolumns .first .rt-article {margin-left: 0px;}
