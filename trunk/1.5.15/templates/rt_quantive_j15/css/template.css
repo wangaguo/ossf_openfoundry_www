@@ -224,9 +224,35 @@ span.mp_button {
 	margin:0 1em 0 5px;
 }
 
+.pj_fuction {
+	float:right;
 
-.pj_title {
+}
 
+.pj_title h3 {
+	float:left;
+	color:#454545;
+}
+
+.pj_download {
+	background: url(../../../images/download.png) 0 0 no-repeat;
+	color:#ffffff;
+	font-weight:900;
+	font-size:16px;
+	padding: 5px 50px 10px 50px;
+
+}
+.pj_download a , .pj_bugreport a{
+	color:#ffffff;
+}
+
+.pj_bugreport {
+	background: url(../../../images/bugreport.png) 0 0 no-repeat;
+	color:#ffffff;
+	font-weight:900;
+	font-size:16px;
+	margin:0 0 0 10px;
+	padding: 5px 55px 10px 55px;
 
 }
 /*My Issue */
