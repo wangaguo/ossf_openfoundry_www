@@ -1,0 +1,2 @@
+Date	Time	Cause	IP	Name	User agent	Request method	Request URI	Comment
+2010-06-09	18:03:01	Page not found (404)	140.109.22.15	ssodev	Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/532.9 (KHTML, like Gecko) Chrome/5.0.307.11 Safari/532.9	GET	/tw/law-and-licenses	http://ssodev.openfoundry.org/law-and-licenses
