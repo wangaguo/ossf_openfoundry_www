@@ -1,7 +1,7 @@
 <?php
 // config.sef.php : configuration file for sh404SEF for Joomla 1.5.x
 // 1.0.16_Beta - build_222 - Joomla 1.5.x - <a href="http://extensions.siliana.com/">extensions.Siliana.com</a>
-// saved at: 2010-06-26 15:17:26
+// saved at: 2010-07-01 17:37:16
 // by: webmaster (id: 62 )
 // domain: http://ssodev.openfoundry.org
 
@@ -22,7 +22,7 @@ $ShowCat = "1";
 $UseAlias = "1";
 $page404 = "0";
 $predefined = array("frontpage","sh404sef");
-$skip = array("joomfish","mtree");
+$skip = array();
 $nocache = array();
 $shDoNotOverrideOwnSef = array();
 $shLog404Errors = "1";
@@ -48,7 +48,7 @@ $shVmAdditionalText = "1";
 $shVmInsertFlypage = "1";
 $shInsertCategoryId = "0";
 $shInsertNumericalId = "0";
-$shInsertNumericalIdCatList = array("353","355","354","38","275","195","262","25","218","228","132","27","26","23","31","131","263","269","268","270","267","182","148","144","145","138","203","105","142","149","107","146","283","152","204","106","213","108","311","111","109","187","150","137","151","147","143","110");
+$shInsertNumericalIdCatList = array("353","354","38","275","195","262","25","218","228","132","27","26","23","31","131","263","269","268","270","267","182","148","144","145","138","203","105","142","149","107","146","283","152","204","106","213","108","311","111","109","187","150","137","151","147","143","110");
 $shRedirectNonSefToSef = "1";
 $shRedirectJoomlaSefToSef = "1";
 $shConfig_live_secure_site = "";
@@ -58,11 +58,11 @@ $shInsertIJoomlaMagName = "0";
 $shInsertIJoomlaMagMagazineId = "0";
 $shInsertIJoomlaMagArticleId = "0";
 $shInsertCBName = "0";
-$shCBInsertUserName = "0";
-$shCBInsertUserId = "1";
+$shCBInsertUserName = "1";
+$shCBInsertUserId = "0";
 $shCBUseUserPseudo = "1";
 $shLMDefaultItemid = "0";
-$shInsertFireboardName = "0";
+$shInsertFireboardName = "1";
 $shFbInsertCategoryName = "1";
 $shFbInsertCategoryId = "0";
 $shFbInsertMessageSubject = "1";
@@ -71,7 +71,7 @@ $shInsertMyBlogName = "0";
 $shMyBlogInsertPostId = "1";
 $shMyBlogInsertTagId = "0";
 $shMyBlogInsertBloggerId = "1";
-$shInsertDocmanName = "0";
+$shInsertDocmanName = "1";
 $shDocmanInsertDocId = "1";
 $shDocmanInsertDocName = "1";
 $shDMInsertCategories = "1";
