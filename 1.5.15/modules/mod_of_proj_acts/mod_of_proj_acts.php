@@ -6,7 +6,7 @@ $class_sfx = $params->get('moduleclass_sfx', "");
 /*
  * Get project activities from OpenFoundry module.
  */
-$query_size = 8;
+$query_size = 10;
 $pa_url = "http://ssodev.openfoundry.org/of/proj_acts?qs=".$query_size;
 
 // cURL initialize
