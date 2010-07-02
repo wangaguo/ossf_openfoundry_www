@@ -6,8 +6,8 @@ define('_dmConfig',1);
 
 class dmConfig
 {
-// Last Edit: Tue, 2010-Mar-30 11:35
-// Edited by: admin
+// Last Edit: Thu, 2010-Jul-01 21:20
+// Edited by: webmaster
 var $author_can = '2';
 var $days_for_new = '5';
 var $default_editor = '-6';
@@ -50,7 +50,7 @@ var $trimwhitespace = '1';
 var $user_all = '0';
 var $user_approve = '-3';
 var $user_publish = '-3';
-var $user_upload = '0';
+var $user_upload = '-3';
 var $viewtypes = 'html|htm|pdf|doc|txt|jpg|jpeg|gif|png';
 }
 }
