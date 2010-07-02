@@ -2204,9 +2204,12 @@ class CBfield_image extends cbFieldHandler {
 		global $ueConfig;
 
 		$oReturn						=	'';
-		if ( ( $ueConfig['allowAvatar'] == '1' ) || ( $field->name != 'avatar' ) ) {
+		if ( ( $ueConfig['allowAvatar'] == '0' ) || ( $field->name != 'avatar' ) ) {
 			switch ( $output ) {
 				case 'html':
+					$imgUrl				=	$this->_avatarOFLivePath( $field, $user );
+					return $imgUrl;
+
 				case 'rss':
 					$thumbnail			=	( $reason != 'profile' );
 					$oReturn			=	$this->_avatarHtml( $field, $user, $reason, $thumbnail, 2 );
@@ -2234,7 +2237,7 @@ class CBfield_image extends cbFieldHandler {
 				case 'csv':
 				default:
 					$imgUrl				=	$this->_avatarLivePath( $field, $user );
-					$oReturn			=	$this->_formatFieldOutput( $field->name, $imgUrl, $output );;
+					$oReturn			=	$this->_formatFieldOutput( $field->name, $imgUrl, $output );
 					break;
 			}
 		}
@@ -2507,7 +2510,6 @@ class CBfield_image extends cbFieldHandler {
 	 */
 	function _avatarHtml( &$field, &$user, $reason, $thumbnail = true, $show_avatar = 2 ) {
 		global $_CB_framework, $ueConfig;
-
 		// $cbMyIsModerator				=	isModerator( $_CB_framework->myId() );
 
 		if ( $field->name == 'avatar' ) {
@@ -2545,11 +2547,23 @@ class CBfield_image extends cbFieldHandler {
 	 * @param  int                 $show_avatar
 	 * @return string              URL
 	 */
+	function _avatarOFLivePath( &$field, &$user, $thumbnail = true, $show_avatar = 2 ) {
+		global $_CB_framework;
+		$live_site	=	$_CB_framework->getCfg( 'live_site' );
+		$name		=	getNameFormat( $user->name,$user->username,$ueConfig['name_format'] );
+		$username	=	str_replace("!","",$name);
+		$oValue		= 	"<img src=\"".$live_site."/sso/user/image?name=$username&size=medium"."\">";
+
+		return $oValue;
+
+
+	}
+
+
 	function _avatarLivePath( &$field, &$user, $thumbnail = true, $show_avatar = 2 ) {
 		global $_CB_framework;
-
-		$oValue							=	null;
-		$col							=	$field->name;
+		$oValue						=	null;
+		$col						=	$field->name;
 		$colapproved					=	$col . 'approved';
 		if ( $user && $user->id ) {
 			$avatar						=	$user->$col;
