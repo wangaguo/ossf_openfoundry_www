@@ -2,12 +2,12 @@
 <install version="1.5" type="plugin" group="system">
 	<name>sh404SEF - system - plugin</name>
 	<author>Yannick Gaultier</author>
-	<creationDate>Febbruary 2008</creationDate>
-	<copyright>(C) 2008 Yannick Gaultier. All rights reserved.</copyright>
+	<creationDate>2010-05-05</creationDate>
+	<copyright>2010 - Yannick Gaultier</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-	<authorEmail>shumisha@gmail.com</authorEmail>
-	<authorUrl>http://extensions.siliana.net/en/</authorUrl>
-	<version>Version_1.0.Beta</version>
+	<authorEmail>admin@anything-digital.com</authorEmail>
+	<authorUrl>dev.anything-digital.com</authorUrl>
+	<version>1.5.10.446</version>
 	<description>Hook up with sh404SEF routing</description>
 	<files>
 		<filename plugin="shsef">shsef.php</filename>
