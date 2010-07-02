@@ -14,7 +14,7 @@ body, .title, .rt-article-title, .rt-article-title a, #rt-bottom, #rt-footer, #r
 
  
 /* Showcase Text */
-#rt-showcase h2.title span, #rt-showcase .feature-title, #rt-showcase .feature-desc {color: #222;text-shadow: 1px 1px 1px #fff;}
+#rt-showcase h2.title span, #rt-showcase .feature-title, #rt-showcase .feature-desc {color: #05274D;text-shadow: 1px 1px 1px #fff;}
 
 /* Module Text */
 .title, .roktabs-title, .rt-article-title {text-shadow: 1px 1px 1px #fff;}
