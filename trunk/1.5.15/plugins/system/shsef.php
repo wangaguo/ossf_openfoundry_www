@@ -1,8 +1,8 @@
 <?php
 /**
- * @version		$Id: shsef.php 836 2008-12-30 10:43:20Z silianacom-svn $
+ * @version		$Id: shsef.php 1172 2010-04-01 10:09:41Z silianacom-svn $
  * @package		sh404SEF
- * @copyright	Copyright (C) 2007 Yannick Gaultier. All rights reserved.
+ * @copyright	Copyright (C) 2010 Yannick Gaultier. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -48,30 +48,73 @@ class  plgSystemShsef extends JPlugin
 
     require_once(JPATH_ADMINISTRATOR.DS.'components'.DS.'com_sh404sef'.DS.'sh404sef.class.php');
 
-    $sefConfig = shRouter::shGetConfig();
+    // for now we declare sefConfig as global, as this would break
+    //too many 3rd party plugins if otherwise
+    // TODO : update doc so that new plugins use new method to get config
+    global $sefConfig;
+    $sefConfig = & shRouter::shGetConfig();
+
     if (!$sefConfig->Enabled)  // go away if not enabled
     return;
      
     DEFINE ('SH404SEF_IS_RUNNING', 1);
-     
+
+
+    // setup our JPagination replacement, so as to bring
+    // back # of items per page in the url, in order
+    // to properly calculate pagination
+    // will only work if php > 5, so test for that
+    if((version_compare( phpversion(), '5.0' ) >= 0)) {
+      // this register the old file, but do not load it if PHP5
+      // will prevent further calls to the same jimport()
+      // to actually do anything, because the 'joomla.html.pagination' key
+      // is now registered statically in Jloader::import()
+      jimport( 'joomla.html.pagination');
+      // now we can register our own path
+      JLoader::register( 'JPagination', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_sh404sef'.DS.'pagination.php');
+    }
+
     // include more sh404SEF stuff
     require_once(JPATH_ROOT.DS.'components'.DS.'com_sh404sef'.DS.'shCache.php');
     require_once(JPATH_ROOT.DS.'components'.DS.'com_sh404sef'.DS.'shSec.php');
 
-    // override router class with our
-    $shRouter = & $mainframe->getRouter();
+    // override router class with our :
+    $previousRouter = & $mainframe->getRouter();
+
+    // create an instance of our class
     $shRouter = new shRouter();
+
+    // store the previous router
+    $shRouter->jRouter = clone( $previousRouter);
+
+    // make sure the cloned Joomla router is activated
+    $shRouter->jRouter->setMode(JROUTER_MODE_SEF);
+
+    // then override
+    $previousRouter = $shRouter;
+
+    // load plugins, as per configuration
+    $this->_loadPlugins( $type = 'sh404sefcore');
 
     // start decoding URL + decide possible redirects
     include(JPATH_ROOT.DS.'components'.DS.'com_sh404sef'.DS.'shInit.php');
   }
 
-  /* tentative xhtml output for main component */
+  /**
+   * Various operations :
+   *  - performs table less output
+   *  - load our plugins
+   * @return unknown_type
+   */
   function onAfterRoute() {
+
     global $mainframe;
+
+    // hack to switch to table less output regardless of the template used
     if (!$mainframe->isAdmin()) {
       $this->setTemplate( 'beez');
     }
+
   }
 
   function onAfterDispatch() {
@@ -124,6 +167,24 @@ class  plgSystemShsef extends JPlugin
     require_once(JPATH_ROOT.DS.'components'.DS.'com_sh404sef'.DS.'shPageRewrite.php');
 
   }
+
+  /**
+   * Load and register the plugins currently activated by webmaster
+   *
+   * @return none
+   */
+  function _loadPlugins( $type)  {
+
+    // required joomla library
+    jimport( 'joomla.plugin.helper.php');
+
+    // import the plugin files
+    $status = JPluginHelper::importPlugin( $type);
+
+    return $status;
+
+  }
+
 }
 
 /**
@@ -136,6 +197,7 @@ class  plgSystemShsef extends JPlugin
 class shRouter extends JRouter
 {
   var $shId = 'sh404SEF for Joomla 1.5';
+  var $jRouter = null;
 
   /**
    * Class constructor
@@ -155,7 +217,6 @@ class shRouter extends JRouter
       if (!class_exists('JMenuSite'))
       require_once(JPATH_ROOT.DS.'includes'.DS.'menu.php');
       $shMenu = new JMenuSite();
-      //$shMenu = &JSite::getMenu();
     }
     return $shMenu;
   }
@@ -164,11 +225,6 @@ class shRouter extends JRouter
     static $shConfig = null;
 
     if (empty($shConfig)) {  // config not read yet
-      $sef_config_file = JPATH_ADMINISTRATOR.DS.'components'.DS.'com_sh404sef'.DS.'config'.DS.'config.sef.php';
-      if (!is_readable($sef_config_file)) {
-        JError::RaiseError( 500, _COM_SEF_NOREAD."( $sef_config_file )<br />"._COM_SEF_CHK_PERMS);
-      }
-      require_once($sef_config_file);
       $shConfig = new SEFConfig();
     }
     return $shConfig;
@@ -240,24 +296,31 @@ class shRouter extends JRouter
   function _parseSefRoute(&$uri)
   {
     $vars   = array();
-
-    include(JPATH_ROOT.DS.'components'.DS.'com_sh404sef'.DS.'sh404sef.php');
+    _log( '_parseSefRoute, parsing _uri ' . $uri->_uri);
+    _log( '_parseSefRoute, parsing _host ' . $uri->_host);
+    _log( '_parseSefRoute, parsing _path ' . $uri->_path);
+    include(JPATH_ROOT.DS.'components'.DS.'com_sh404sef'.DS.'sh404sef.inc.php');
 
     if ( shIsMultilingual() == 'joomfish') {
       $currentLangShortCode = $GLOBALS['shMosConfig_shortcode'];
-      $tmp = explode( '-', str_replace( '_', '-', $GLOBALS['mosConfig_defaultLang']));
+      $conf =& JFactory::getConfig();
+      $configDefaultLanguage = $conf->getValue('config.language');
+      $tmp = explode( '-', str_replace( '_', '-', $configDefaultLanguage));
       $defaultLangShortCode = $tmp[0];
     } else {
       $currentLang = '';
     }
 
+    $jMenu = null;
     $shMenu = null;
 
     // set active menu if changed
     if (!empty($vars['Itemid'])) {
       $newItemid = intval($vars['Itemid']);
       if (!empty($newItemid)) {
-        $shMenu = & JSite::getMenu();
+        $jMenu = & JSite::getMenu();
+        $jMenu->setActive($newItemid);
+        $shMenu = & shRouter::shGetMenu();
         $shMenu->setActive($newItemid);
       }
     }
@@ -270,12 +333,13 @@ class shRouter extends JRouter
       JRequest::setVar('lang', $vars['lang'] );
        
       // we also need to fix the main menu, as joomfish has set it to the wrong language
-      if (empty( $shMenu)) {
-        $shMenu = & JSite::getMenu();
+      if (empty( $shMenu) || empty( $shMenu)) {
+        $jMenu = & JSite::getMenu();
+        $shMenu = & shRouter::shGetMenu();
       }
       $sefLang = TableJFLanguage::createByShortcode($vars['lang'], false);
-      JLoader::import('helper', JPATH_ROOT.DS.'modules'.DS.'mod_jflanguageselection', 'jfmodule');
-      $shMenu->_items = JFModuleHTML::getJFMenu($sefLang->code,$shMenu->_items);
+      $jMenu->_items = shGetJFMenu($sefLang->code,false, $jMenu->_items);
+      $shMenu->_items = shGetJFMenu($sefLang->code,false, $shMenu->_items);
 
       // and finally we can set new joomfish language
       shSetJfLanguage( $vars['lang']);
@@ -283,11 +347,14 @@ class shRouter extends JRouter
 
     // last fix is to remove the home flag if other than default language
     if (shIsMultilingual() == 'joomfish' && !empty($vars['lang']) && $vars['lang'] != $defaultLangShortCode) {
-      if (empty( $shMenu)) {
-        $shMenu = & JSite::getMenu();
+      if (empty( $shMenu) || empty( $shMenu)) {
+        $jMenu = & JSite::getMenu();
+        $shMenu = & shRouter::shGetMenu();
       }
-      $defaultItem = &$shMenu->getDefault();
-      $defaultItem->home = 0;
+      $jDefaultItem = &$jMenu->getDefault();
+      $jDefaultItem->home = 0;
+      $shDefaultItem = &$shMenu->getDefault();
+      $shDefaultItem->home = 0;
     }
 
     // and finally we can set new joomfish language
@@ -318,10 +385,13 @@ class shRouter extends JRouter
     $sefConfig = &shRouter::shGetConfig();
     $shPageInfo = &shRouter::shPageInfo();
     $menu = &shRouter::shGetMenu();
+    // keep a copy of  Joomla original URI, which has article names in it (ie: 43:article-title)
+    $originalUri = clone( $uri);
     shNormalizeNonSefUri( $uri, $menu);
+    shNormalizeNonSefUri( $originalUri, $menu, $removeSlugs = false);
     // do our job!
     $query = $uri->getQuery(false);
-    $route = shSefRelToAbs( 'index.php?'.$query, null, $uri);
+    $route = shSefRelToAbs( 'index.php?'.$query, null, $uri, $originalUri);
     $route = ltrim(str_replace( $GLOBALS['shConfigLiveSite'], '',$route), '/');
     $route = $shPageInfo->base.($route == '/' ? '' : $route);
     //Set query again in the URI
