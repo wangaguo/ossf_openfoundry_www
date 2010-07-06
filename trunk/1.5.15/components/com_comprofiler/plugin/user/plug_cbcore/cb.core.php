@@ -141,7 +141,7 @@ class CBfield_predefined extends CBfield_text {
 	function getField( &$field, &$user, $output, $reason, $list_compare_types ) {
 		global $_CB_framework, $ueConfig;
 
-		$value								=	$user->get( $field->name );
+		$value=	str_replace ("!","",$user->get( $field->name));
 
 		switch ( $output ) {
 			case 'html':
