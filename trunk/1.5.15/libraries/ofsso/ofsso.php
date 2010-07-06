@@ -70,11 +70,15 @@ class OfssoLibrary
     $user   =& JFactory::getUser();
     $aid    = $user->get('aid');
 
-    if($user->get('aid') > 0 && $_COOKIE[$ofsso_cookie_name] != $_COOKIE[$ofsso_service_cookie_name])
+    if($aid > 0 && $_COOKIE[$ofsso_cookie_name] == null)
     {
       $mainframe->logout();
     }
-    if($user->get('aid') == 0 && $_COOKIE[$ofsso_cookie_name])
+    elseif($aid > 0 && $_COOKIE[$ofsso_cookie_name] != $_COOKIE[$ofsso_service_cookie_name])
+    {
+      $aid = 0;
+    }
+    if($aid == 0 && $_COOKIE[$ofsso_cookie_name])
     { //do check & login
       $data = array(
         'regist_key' => $ofsso_regist_key,
@@ -106,12 +110,14 @@ class OfssoLibrary
       else
       { //fetch faild. remove auth_session.
         setcookie($ofsso_cookie_name, "", time()-3600);
+        $mainframe->logout();
       }
     }
 
-    if(!$menus->authorize($itemid, $aid))
+    $user   =& JFactory::getUser();
+    if(!$menus->authorize($itemid, $user->get('aid')))
     {
-      if ( ! $aid )
+      if ( ! $user->get('aid') )
       {
         // Redirect to login
         $uri        = JFactory::getURI();
