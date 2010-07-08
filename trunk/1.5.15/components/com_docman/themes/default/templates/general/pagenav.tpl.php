@@ -36,7 +36,7 @@ defined('_VALID_MOS') or die('Restricted access');
 */
 ?>
 
-<div id="dm_nav">
+<div class="rt-pagination">
 <?php echo $this->pagenav->writePagesLinks( $this->link );?>
 	<div>
 	<?php echo $this->pagenav->writePagesCounter();?>
