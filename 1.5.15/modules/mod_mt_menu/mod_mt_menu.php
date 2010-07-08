@@ -21,7 +21,7 @@ $user_id	= JRequest::getInt('user_id', 0);
 $user_gid = $my->get('gid');
 
 // Get params
-if ($user_gid >'19' && $user_gid < '28'){
+if ($user_gid >'23' && $user_gid < '28'){
 	
 $class_sfx				= $params->get( 'class_sfx' );
 $moduleclass_sfx			= $params->get( 'moduleclass_sfx' );
@@ -42,7 +42,7 @@ $show['mostratedlisting']		= $params->get( 'show_mostratedlisting', 1 );
 $show['topratedlisting'] 		= $params->get( 'show_topratedlisting', 1 );
 $show['mostreviewedlisting']		= $params->get( 'show_mostreviewedlisting', 1 );
 }
-if ( $user_gid < 19 ){
+if ( $user_gid <= 23 ){
 echo JText::_('SUGGEST_ITEMS');
 }
 
