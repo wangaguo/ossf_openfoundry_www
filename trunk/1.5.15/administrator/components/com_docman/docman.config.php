@@ -6,8 +6,8 @@ define('_dmConfig',1);
 
 class dmConfig
 {
-// Last Edit: Thu, 2010-Jul-01 21:20
-// Edited by: webmaster
+// Last Edit: Wed, 2010-Jul-07 09:52
+// Edited by: OSSFHelper
 var $author_can = '2';
 var $days_for_new = '5';
 var $default_editor = '-6';

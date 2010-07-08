@@ -210,7 +210,7 @@ class HTML_DMCategories
 					<?php echo _DML_CATTITLE;?>:
 					</td>
 					<td colspan="2">
-					<input class="text_area" type="text" name="title" value="<?php echo $row->title;?>" size="50" maxlength="50" title="A short name to appear in menus" />
+					<input class="text_area" type="text" name="title" value="<?php echo $row->title;?>" size="50" maxlength="255" title="A short name to appear in menus" />
 					</td>
 				</tr>
 				<tr>
