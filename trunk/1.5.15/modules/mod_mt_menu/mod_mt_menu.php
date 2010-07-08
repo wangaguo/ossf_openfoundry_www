@@ -42,7 +42,7 @@ $show['mostratedlisting']		= $params->get( 'show_mostratedlisting', 1 );
 $show['topratedlisting'] 		= $params->get( 'show_topratedlisting', 1 );
 $show['mostreviewedlisting']		= $params->get( 'show_mostreviewedlisting', 1 );
 }
-if ( $user_gid = 0 or $user_gid =19 ){
+if ( $user_gid < 19 ){
 echo JText::_('SUGGEST_ITEMS');
 }
 
