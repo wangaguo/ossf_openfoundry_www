@@ -2553,7 +2553,6 @@ class CBfield_image extends cbFieldHandler {
 		$name		=	getNameFormat( $user->name,$user->username,$ueConfig['name_format'] );
 		$username	=	str_replace("!","",$name);
 		$oValue		= 	"<img src=\"".$live_site."/sso/user/image?name=$username&size=medium"."\">";
-
 		return $oValue;
 
 
