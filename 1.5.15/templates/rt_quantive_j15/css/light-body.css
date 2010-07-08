@@ -14,38 +14,38 @@ body, .title, .rt-article-title, .rt-article-title a, #rt-bottom, #rt-footer, #r
 
  
 /* Showcase Text */
-#rt-showcase h2.title span, #rt-showcase .feature-title, #rt-showcase .feature-desc {color: #05274D;text-shadow: 1px 1px 1px #fff;}
+#rt-showcase h2.title span, #rt-showcase .feature-title, #rt-showcase .feature-desc {color: #05274D;}
 
 /* Module Text */
-.title, .roktabs-title, .rt-article-title {text-shadow: 1px 1px 1px #fff;}
+.title, .roktabs-title, .rt-article-title {}
 .square3 .module-content {color: #ddd;}
 .square3 .module-content a, #rt-main-surround .square3 ul.menu li.active > a, #rt-main-surround .square3 ul.menu li.active > .item, #rt-main-surround .square3 ul.menu li.active > .separator, #rt-main-surround .square3 ul.menu li:hover > a, #rt-main-surround .square3 ul.menu li:hover > .item, #rt-main-surround .square3 ul.menu li:hover > .separator {color: #fff;}
-#rt-main-surround .square3 ul.menu li a, #rt-main-surround .square3 ul.menu li .item, #rt-main-surround .square3 ul.menu li .separator {text-shadow: -1px -1px 1px #666;}
-#rt-footer .square3 h2.title, #rt-header .square3 h2.title, #rt-bottom .square3 h2.title, .square3 .title, .square3 .rt-article-title, square3 .rt-article-title a, #rt-main-surround .square3 ul.menu li a, #rt-main-surround .square3 ul.menu li .item, #rt-main-surround .square3 ul.menu li .separator {color: #ddd;text-shadow: -1px -1px 1px #666;}
+#rt-main-surround .square3 ul.menu li a, #rt-main-surround .square3 ul.menu li .item, #rt-main-surround .square3 ul.menu li .separator {}
+#rt-footer .square3 h2.title, #rt-header .square3 h2.title, #rt-bottom .square3 h2.title, .square3 .title, .square3 .rt-article-title, square3 .rt-article-title a, #rt-main-surround .square3 ul.menu li a, #rt-main-surround .square3 ul.menu li .item, #rt-main-surround .square3 ul.menu li .separator {color: #ddd;}
 .square3 .title span, .square3 .rt-article-title span {color: #fff;}
 .square4 .module-content {color: #ccc;}
 .square4 .module-content a, #rt-main-surround .square4 ul.menu li a, #rt-main-surround .square4 ul.menu li .item, #rt-main-surround .square4 ul.menu li .separator {color: #fff;}
-#rt-main-surround .square4 ul.menu li a, #rt-main-surround .square4 ul.menu li .item, #rt-main-surround .square4 ul.menu li .separator {text-shadow: -1px -1px 1px #444;}
-#rt-footer .square4 h2.title, #rt-header .square4 h2.title, #rt-bottom .square4 h2.title, .square4 .title, .square4 .rt-article-title, .square4 .rt-article-title a {color: #ccc;text-shadow: -1px -1px 1px #444;}
+#rt-main-surround .square4 ul.menu li a, #rt-main-surround .square4 ul.menu li .item, #rt-main-surround .square4 ul.menu li .separator {}
+#rt-footer .square4 h2.title, #rt-header .square4 h2.title, #rt-bottom .square4 h2.title, .square4 .title, .square4 .rt-article-title, .square4 .rt-article-title a {color: #ccc;}
 .square4 .title span, .square4 .rt-article-title span {color: #fff;}
 .square5 .module-content {color: #666;}
 .square5 .module-content a {color: #444;}
-.square5 .title, .square5 .rt-article-title, .square5 .rt-article-title a {color: #666;text-shadow: 1px 1px 1px #eee;}
+.square5 .title, .square5 .rt-article-title, .square5 .rt-article-title a {color: #666;}
 .square5 .title span, .square5 .rt-article-title span {color: #444;}
  
 /* Menu Text */
-.menutop li.root.active > .item, .menutop li.root.active > .item:hover, .menu-type-splitmenu .menutop li.active .item, .menu-type-splitmenu .menutop li.active:hover .item, .menutop li.root.active.f-mainparent-itemfocus > .item {color: #444;text-shadow: 1px 1px 1px #fff;}
-.menutop li.root:hover > .item, .menutop li.root.f-mainparent-itemfocus > .item, .menu-type-splitmenu .menutop li:hover .item {color: #444;text-shadow: 1px 1px 1px #fff;}
+.menutop li.root.active > .item, .menutop li.root.active > .item:hover, .menu-type-splitmenu .menutop li.active .item, .menu-type-splitmenu .menutop li.active:hover .item, .menutop li.root.active.f-mainparent-itemfocus > .item {color: #444;}
+.menutop li.root:hover > .item, .menutop li.root.f-mainparent-itemfocus > .item, .menu-type-splitmenu .menutop li:hover .item {color: #444;}
 .menutop li > .item {color: #777;}
-#rt-main-surround ul.menu li a, #rt-main-surround ul.menu li .separator, #rt-main-surround ul.menu li .item {color: #666;text-shadow: 1px 1px 1px #fff;}
+#rt-main-surround ul.menu li a, #rt-main-surround ul.menu li .separator, #rt-main-surround ul.menu li .item {color: #666;}
 .menutop li:hover > .bullet, .menutop li.f-menuparent-itemfocus .bullet, .menutop li.active > .bullet {color: #333;}
-#rt-submenu ul.menu li > .item {color: #666;text-shadow: 1px 1px 1px #fff;}
+#rt-submenu ul.menu li > .item {color: #666;}
 #rt-submenu ul.menu li:hover > .item, #rt-submenu ul.menu li.active > .item {color: #444;}
 
 /* Typography Text */
 .readon span, .readon .button, #rt-showcase .readon-wrap1 a, #rt-main-surround .inputbox, .rt-polltitle, .rt-article-links h3, .buttontext {color: #666;}
 .readon:hover span, .readon:hover .button, #rt-showcase .readon-wrap1 a:hover {color: #333;}
-.square4 .readon span, .square4 .readon .button {color: #ccc;text-shadow: -1px -1px 1px #555;}
+.square4 .readon span, .square4 .readon .button {color: #ccc;}
 .square4 .readon:hover span, .square4 .readon:hover .button {color: #fff;}
 
 /* Footer Text */
@@ -223,9 +223,9 @@ body.backgroundlevel-low.backgroundstyle-style8 {background: #fff;}
 .square9 .rt-module-bottom3 {background: #fff;}
 
 .square10 .module-content {color: #24585C;}
-#rt-main-surround .square10 ul.menu li a, #rt-main-surround .square10 ul.menu li .item, #rt-main-surround .square10 ul.menu li .separator {color: #24585C;text-shadow: -1px -1px 1px #fff;}
+#rt-main-surround .square10 ul.menu li a, #rt-main-surround .square10 ul.menu li .item, #rt-main-surround .square10 ul.menu li .separator {color: #24585C;}
 .square10 .module-content a, #rt-main-surround .square10 ul.menu li.active > a, #rt-main-surround .square10 ul.menu li.active > .item, #rt-main-surround .square10 ul.menu li.active > .separator, #rt-main-surround .square10 ul.menu li:hover > a, #rt-main-surround .square10 ul.menu li:hover > .item, #rt-main-surround .square10 ul.menu li:hover > .separator {color: #333;}
-.square10 .title, .square10 .rt-article-title, .square10 .rt-article-title a {color: #24585C !important;text-shadow: -1px -1px 1px #fff;}
+.square10 .title, .square10 .rt-article-title, .square10 .rt-article-title a {color: #24585C !important;}
 .square10 .title span, .square10 .rt-article-title span {color: #333;}
 .square10 .rt-module-top {background: url(../images/body/style6/module6-tm.png) 0 0 repeat-x;}
 .square10 .rt-module-top2 {background: url(../images/body/style6/module6-tl.png) 0 0 no-repeat;}
@@ -314,7 +314,7 @@ body .button2-left .linkmacro {background: url(../images/system/j_button2_rokcan
 .bodylevel-low .readon:hover, .bodylevel-low .readon-main:hover {background: #eaeaea;}
 .bodylevel-low .square4 .readon {background: #666;border: 1px solid #888;}
 .bodylevel-low .square4 .readon:hover {background: #7a7a7a;}
-.readon span, .readon .button {text-shadow: 1px 1px 1px #fff;}
+.readon span, .readon .button {}
 #rt-main-surround .inputbox {background: #e9e9e9;border-top: 1px solid #d4d4d4;border-right: 1px solid #fff;border-bottom: 1px solid #fff;border-left: 1px solid #d4d4d4;}
 #breadcrumbs-home {background: url(../images/body/light/utility.png) 0 0 no-repeat;}
 #rt-accessibility a.small .button, #rt-accessibility a.large .button, #rt-accessibility a.small:hover .button, #rt-accessibility a.large:hover .button {background-image: url(../images/body/light/utility.png);}
