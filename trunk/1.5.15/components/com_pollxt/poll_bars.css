@@ -24,10 +24,18 @@
 }
 /* The separator */
 .pollseparator {
-    text-align:center;
-    border-bottom: solid 1px;
-    border-top: solid 1px;
-	 }
+border-bottom:2px solid;
+font-size:155%;
+font-weight:bold;
+margin-bottom:20px;
+margin-top:40px;
+text-align:left;
+
+}
+
+#pollxtTitle {
+font-size:200%;
+}
 /* the message window */
 .xtmessage {
 	background: #FFCCCC;
