@@ -31,25 +31,25 @@ $listing_tasks = array(
 	// task			=>	SEF String
 	'viewgallery'	=>	$mtconf->get('sef_gallery'),
 	'writereview'	=>	$mtconf->get('sef_review'),
-	'recommend'		=>	$mtconf->get('sef_recommend'),
-	'print'			=>	$mtconf->get('sef_print'),
-	'contact'		=>	$mtconf->get('sef_contact'),
-	'report'		=>	$mtconf->get('sef_report'),
-	'claim'			=>	$mtconf->get('sef_claim'),
-	'visit'			=>	$mtconf->get('sef_visit'),
+	'recommend'	=>	$mtconf->get('sef_recommend'),
+	'print'		=>	$mtconf->get('sef_print'),
+	'contact'	=>	$mtconf->get('sef_contact'),
+	'report'	=>	$mtconf->get('sef_report'),
+	'claim'		=>	$mtconf->get('sef_claim'),
+	'visit'		=>	$mtconf->get('sef_visit'),
 	'deletelisting'	=>	$mtconf->get('sef_delete'),
 	'editlisting'	=>	$mtconf->get('sef_editlisting')
 	);
 	
 $listlisting_names = array(
 	$mtconf->get('sef_featured')	=> 'featured',
-	$mtconf->get('sef_updated')		=> 'updated',
+	$mtconf->get('sef_updated')	=> 'updated',
 	$mtconf->get('sef_favourite')	=> 'favourite',
-	$mtconf->get('sef_popular')		=> 'popular',
+	$mtconf->get('sef_popular')	=> 'popular',
 	$mtconf->get('sef_mostrated')	=> 'mostrated',
 	$mtconf->get('sef_toprated')	=> 'toprated',
 	$mtconf->get('sef_mostreview')	=> 'mostreview',
-	$mtconf->get('sef_new')			=> 'new'
+	$mtconf->get('sef_new')		=> 'new'
 	);
 	
 function MtreeBuildRoute(&$query) {
