@@ -3,9 +3,9 @@
 if ( ! ( defined( '_VALID_CB' ) || defined( '_JEXEC' ) || defined( '_VALID_MOS' ) ) ) { die( 'Direct Access to this location is not allowed.' ); }
 
 
-class getPartnerTab extends cbTabHandler {
+class getMyProjectTab extends cbTabHandler {
 	
-	function getPartnerTab() {
+	function getMyProjectTab() {
 		$this->cbTabHandler();
 	}
 	
@@ -14,7 +14,7 @@ class getPartnerTab extends cbTabHandler {
 		$username =str_replace ("!","",$user->username);
 		$live_site	=	$_CB_framework->getCfg( 'live_site' );
 	    	$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $live_site."/of/api/user?do=partners&name=$username");
+		curl_setopt($ch, CURLOPT_URL, $live_site."/of/api/user?do=projects&name=$username");
         	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 ); 
 	    	$output = curl_exec($ch);
 		curl_close($ch); 
