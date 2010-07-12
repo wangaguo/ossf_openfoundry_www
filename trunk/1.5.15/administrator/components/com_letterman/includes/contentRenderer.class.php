@@ -97,13 +97,6 @@ $query = "SELECT folder, element, published, params"
 . "\n ORDER BY ordering";
 $database->setQuery( $query );
 $contentbots = $database->loadObjectList();
-//Test by Ally	
-// Now load the Mambots, filter by $loadBots
-//foreach( $contentbots as $mambot ) {
-//	if( in_array( $mambot->element, $loadBots )) {
-//		lm_loadBot( $mambot->folder, $mambot->element, $mambot->published, $mambot->params );
-//	}
-//}
 
 // we need functions from the class HTML_content!
 //require_once( $mosConfig_absolute_path.'/components/com_content/content.html.php');
@@ -149,7 +142,7 @@ class lm_contentRenderer {
           	.'  <td height="8">&nbsp;</td>'
        		.'</tr>';
 		$content['html_message'] .= preg_replace_callback( $regex, 'lm_replaceTitleHtml', nl2br($nl_content) );
-		$content['html_message'] .= '<tr><td height="8">&nbsp;</td></tr></table>';
+		$content['html_message'] .= '<tr><td height="8">&nbsp;</td></tr></table><br>';
 
 		/** end **/ 
 	
@@ -213,8 +206,10 @@ class lm_contentRenderer {
 function lm_replaceContentHtml(&$matches){
 	global $mosConfig_live_site, $database, $_MAMBOTS, $my, $mainframe, $acl, $_VERSION;
 
-	$id = intval($matches[1]);
+	$getlive_site	=	$mainframe->getCfg('live_site');
 	
+	$id = intval($matches[1]);
+
 	if($id != 0){
 		
 		// Editor usertype check
@@ -236,87 +231,49 @@ function lm_replaceContentHtml(&$matches){
 			}
 
 			$content .= '<table class="contentpaneopen'. $params->get( 'pageclass_sfx' ) .'">';
-//			ob_start();
-//			// displays Item Title
-//			// Damn it! Open the content API and make it more flexible...
-//			// 除了屬於分類ID外的文章才顯示( 分類ID 00->1028) by ally 2007/0612
-//			if ($id > 1028 || $id < 1000 ) {
-//
-//				if( @$_VERSION->DEV_LEVEL >= 9 ) {
-//					$tmp = '';
-//				//	Title( $row, $params, $access );
-//				}
-//				else {
-//				//	Title( $row, $params, '', $access );
-//				}
-//			}
-//			$content .= ob_get_contents();
-//			ob_end_clean();
-//			$content .= '</tr>
-//			';
-//			  // displays Section & Category
 			ob_start();
 
 		
 			if ($id > 1028 || $id < 1000 ) {
 			//Add Article Category
   				echo '<tr>';
-  				echo '<td>';
-  				echo '<span style="font-size: medium;"><strong>';
+  				echo '<td width="116" height="29" valign="middle" background="http://www.openfoundry.org/images/newsletter/kind.gif">';
+  				echo '<span style="color: #fd6003; font-size: medium;"><strong>';
   				echo $row->category;
-  				echo '</strong></span></span><hr></td></tr>';
-  				echo '<tr><td valign="middle" style="font-weight: bold; font-size: 16px; vertical-align: bottom; color: rgb(0, 85, 197);">';
+				echo '</strong></span></td><td width="482" background="http://www.openfoundry.org/images/newsletter/kind-bg.gif"></td></tr>';
+  				echo '<tr><td colspan="2" align="left" valign="middle" style="font-weight: bold; font-size: 16px; vertical-align: bottom; color: rgb(0, 85, 197);">';
   				echo $row->title;
   				echo '</td></tr>';
-  				echo '<tr><td style="font-weight: bold; font-size: 12px; color: rgb(153, 153, 153);">';
+  				echo '<tr><td colspan="2" align="left" style="font-weight: bold; font-size: 12px; color: rgb(153, 153, 153);">';
   				echo _WRITTEN_BY.'&nbsp;&nbsp;'.( $row->created_by_alias ? $row->created_by_alias : $row->author );
   				echo '</td></tr>';
 
-//			HTML_content::Section_Category( $row, $params );
-
-			// displays Author Name
-//			HTML_content::IMAuthor( $row, $params );
-
-			// displays Created Date
-//			HTML_content::IMCreateDate( $row, $params );
-
-			// displays Urls
-//			HTML_content::URL( $row, $params );
 			}
 
 			$content .= ob_get_contents();
 			ob_end_clean();
-//Modify by liarchen
-	//	global $database;
-	//	$query = "SELECT `id` FROM `#__letterman` Order BY `id` DESC";
-	//	$database->setQuery( $query );
-	//	$id = $database->loadResult();
-	//	$id = $database->insertid();	
-	//	$id += 1; 
-		//$url = "index.php?option=com_letterman&Itemid=144&id=".$id."&task=view"; 
-//End
 
 			if ($id > 1028 || $id < 1000 ) {	
 			$content .= '<tr>'
-			. '  <td style="font-size:12px;color:#444;line-height:200%;">' .( function_exists('ampReplace') ? ampReplace( $intro_text ) : $intro_text ). '</td>'
+			. '  <td colspan="2" align="left" style="font-size:12px;color:#444;line-height:200%;">' .( function_exists('ampReplace') ? ampReplace( $intro_text ) : $intro_text ). '</td>'
 			. '</tr>'
 			. '<tr>'
-			. '		<td align="left" colspan="2">'
-			. '		<a href="'. $mosConfig_live_site . '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
+			. '<td align="left" colspan="2">'
+			. '<img src="'.$getlive_site.'/images/M_images/arrow.png"><a href="'. $getlive_site
+			. '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
 			. '&amp;Itemid=4;isletter=1 ' . '" style="font-size:12px;color:#FD6003;"">'.	
-			//. ($_Itemid ? '&amp;Itemid='.$_Itemid : "") . '" class="readon">'.
 			_READ_MORE
-			. '		</a>&nbsp;&nbsp;&nbsp;&nbsp;'
-            . '     <a href="'. $mosConfig_live_site . '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
-            . '&amp;Itemid=4;isletter=1#addcomments' . '" style="font-size:12px;color:#FD6003;"">'.
-            //. ($_Itemid ? '&amp;Itemid='.$_Itemid : "") . '" class="readon">'.
-            _ADD_COMMENT
-            . '     </a>'
-
-			. '		</td>'
-			. '	</tr>'
-			. ' <tr>'
-			. ' <td align="right"><a href="#TOP">'
+			. '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+            		. '<img src="'.$getlive_site.'/images/M_images/arrow.png"><a href="'. $getlive_site
+			. '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
+			. '&amp;Itemid=4;isletter=1#addcomments' 
+			. '" style="font-size:12px;color:#FD6003;"">'.
+            		_ADD_COMMENT
+            		. '</a>'
+			. '</td>'
+			. '</tr>'
+			. '<tr>'
+			. ' <td align="right" colspan="2" ><a href="#TOP">'
 			. '<font size="2" color="#FD6003"><b>'
 			._BACK_TOP
 			.'</b></font>' 
@@ -380,8 +337,7 @@ function lm_replaceTitleHtml(&$matches){
 			}
 			$content .= ob_get_contents();
 			ob_end_clean();
-			$content .= '</tr>
-			';
+			$content .= '</tr>';
 			}
 			
 			return $content;
