@@ -365,12 +365,12 @@ function lm_sendMail() {
 	<table width=i\"100%\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
         <!--DWLayoutTable-->
         <tr> 
-          <td width=\"593\" height=\"22\" align=\"center\" valign=\"middle\"> <font color=\"006AE1\" size=\"2\"><strong><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=143#nl01\">$LAN</a></strong></font><font size=\"2\"><strong><font size=\"3\"> 
-            &nbsp;&nbsp;|&nbsp;&nbsp;</font></strong> <strong><font color=\"006AE1\"><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=143#nl02\">$LPM</a></font><font siz\"3\"> 
-            &nbsp;&nbsp;|&nbsp;&nbsp;</font></strong> <strong><font color=\"006AE1\"><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=143#nl03\">$LEW</a></font><font col=\"#000000\" size=\"3\"> 
-            &nbsp;&nbsp;|&nbsp;&nbsp;</font><font color=\"006AE1\"> <a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=1052&Itemid=143\">
-$LSN</a></font><font size=\"3\"> &nbsp;&nbsp;| &nbsp;&nbsp;</font><font color=\"006AE1\"><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=143#nl04\">$LES</a></font><font s=\"3\"> 
-            &nbsp;&nbsp;|&nbsp;&nbsp;</font></strong> <strong><font color=\"006AE1\"><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=143#nl05\">$LS</a></font></strong></font></td>
+          <td width=\"593\" height=\"22\" align=\"center\" valign=\"middle\"> <font color=\"006AE1\" size=\"2\"><strong><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=4#nl01\">$LAN</a></strong></font><font size=\"2\"><strong><font size=\"3\"> 
+            &nbsp;&nbsp;|&nbsp;&nbsp;</font></strong> <strong><font color=\"006AE1\"><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=4#nl02\">$LPM</a></font><font siz\"3\"> 
+            &nbsp;&nbsp;|&nbsp;&nbsp;</font></strong> <strong><font color=\"006AE1\"><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=4#nl03\">$LEW</a></font><font col=\"#000000\" size=\"3\"> 
+            &nbsp;&nbsp;|&nbsp;&nbsp;</font><font color=\"006AE1\"> <a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=1052&Itemid=4\">
+$LSN</a></font><font size=\"3\"> &nbsp;&nbsp;| &nbsp;&nbsp;</font><font color=\"006AE1\"><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=4#nl04\">$LES</a></font><font s=\"3\"> 
+            &nbsp;&nbsp;|&nbsp;&nbsp;</font></strong> <strong><font color=\"006AE1\"><a href=\"http://www.openfoundry.org/index.php?option=com_content&task=view&id=101&Itemid=4#nl05\">$LS</a></font></strong></font></td>
         </tr>
       </table>
     </td>
@@ -497,13 +497,13 @@ $LSN</a></font><font size=\"3\"> &nbsp;&nbsp;| &nbsp;&nbsp;</font><font color=\"
 		$mymail->AltBody = str_replace( "[NAME]", $name, $message . $footer_text );
          
         //add by Eddy 20060720
-        if($mosConfig_lang=="traditional_chinese"){
-            $mymail->Body=mb_convert_encoding($mymail->Body, "BIG5","UTF-8");
-            $mymail->AltBody=mb_convert_encoding($mymail->AltBody,"BIG5","UTF-8");
-        }else if($mosConfig_lang=="simplified_chinese"){
-        	 $mymail->Body=mb_convert_encoding($mymail->Body, "GB2312","UTF-8");
-            $mymail->AltBody=mb_convert_encoding($mymail->AltBody,"GB2312","UTF-8");
-        }
+//        if($mosConfig_lang=="traditional_chinese"){
+//            $mymail->Body=mb_convert_encoding($mymail->Body, "BIG5","UTF-8");
+//            $mymail->AltBody=mb_convert_encoding($mymail->AltBody,"BIG5","UTF-8");
+//        }else if($mosConfig_lang=="simplified_chinese"){
+//        	 $mymail->Body=mb_convert_encoding($mymail->Body, "GB2312","UTF-8");
+//            $mymail->AltBody=mb_convert_encoding($mymail->AltBody,"GB2312","UTF-8");
+//        }
 		//end add
 		
 		$mymail->ClearAddresses();
