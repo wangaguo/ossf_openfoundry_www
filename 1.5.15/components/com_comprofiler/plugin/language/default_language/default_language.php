@@ -483,7 +483,7 @@ login after registration. This page may contain your welcome message to new memb
 and/or special instructions, or redirect the user to complete his profile. Leave
 blank for normal login also the first time. url for showing user\' profile is 
 index.php?option=com_comprofiler&Itemid=1 (replace Itemid=1 by the same Itemid as your profile menu).');
-DEFINE('_UE_NOSUCHPROFILE','This profile does not exist or is no longer available');
+DEFINE('_UE_NOSUCHPROFILE','This profile does not exist or is no longer available.');
 
 //RC 2
 DEFINE('_UE_REG_INTRO_MSG','Introduction text for registration');

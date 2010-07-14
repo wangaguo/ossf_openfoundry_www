@@ -59,7 +59,7 @@ class vote {
 			$val = "";
 			foreach ($this->frontend->data->texts as $t) {
 				if ($t[0] == $v && $t[1]!="-1")
-	            	$val = htmlentities($t[1]);
+					$val = htmlspecialchars($t[1]);
 		    }
 			$database->setQuery("INSERT INTO #__pollxt_data"."\n(optid, ip, user, datu, value, 
 								mailkey, block)"."\nVALUES ($v, '$ip', '$user', '$now', '$val', '$mailkey', '$block')");
@@ -134,7 +134,7 @@ class vote {
 	                        $val = "";
 							foreach ($this->frontend->data->texts as $t) {
 								if ($t[0] == $v )
-					            	$val = htmlentities($t[1]);
+					            	$val = htmlspecialchars($t[1]);
 						    }
 	                        
 							$query = "SELECT * FROM #__pollsxt_options WHERE quid = '$id' and qoption = '$val'";
@@ -181,7 +181,7 @@ class vote {
 		
 		$subject = $this->frontend->poll->subject;
 
-		$message = htmlentities(stripslashes($this->frontend->conf->emailtext))."\n".JURI::base()."index.php?option=com_pollxt&task=activate&activation=".$key;
+		$message = htmlspecialchars(stripslashes($this->frontend->conf->emailtext))."\n".JURI::base()."index.php?option=com_pollxt&task=activate&activation=".$key;
 
 		$message = html_entity_decode($message, ENT_QUOTES);
 		// Send email to user

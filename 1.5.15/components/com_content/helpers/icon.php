@@ -27,19 +27,19 @@ class JHTMLIcon
 {
 	function create($article, $params, $access, $attribs = array())
 	{
-		$uri =& JFactory::getURI();
-		$ret = $uri->toString();	
-	
-		$url = 'index.php?task=new&ret='.base64_encode($ret).'&id=0&sectionid='.$article->sectionid;
-
-		if ($params->get('show_icons')) {
-			$text = JHTML::_('image.site', 'new.png', '/images/M_images/', NULL, NULL, JText::_('New') );
-		} else {
-			$text = JText::_('New').'&nbsp;';
-		}
-
-		$attribs	= array( 'title' => JText::_( 'New' ));
-		return JHTML::_('link', JRoute::_($url), $text, $attribs);
+//		$uri =& JFactory::getURI();
+//		$ret = $uri->toString();	
+//	
+//		$url = 'index.php?task=new&ret='.base64_encode($ret).'&id=0&sectionid='.$article->sectionid;
+//
+//		if ($params->get('show_icons')) {
+//			$text = JHTML::_('image.site', 'new.png', '/images/M_images/', NULL, NULL, JText::_('New') );
+//		} else {
+//			$text = JText::_('New').'&nbsp;';
+//		}
+//
+//		$attribs	= array( 'title' => JText::_( 'New' ));
+//		return JHTML::_('link', JRoute::_($url), $text, $attribs);
 	}
 
 	function pdf($article, $params, $access, $attribs = array())

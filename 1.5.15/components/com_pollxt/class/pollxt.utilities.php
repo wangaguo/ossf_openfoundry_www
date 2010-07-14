@@ -17,7 +17,7 @@ require_once (JPATH_SITE.'/administrator/components/com_pollxt/class/pollxt.plug
 
 function charEnc($string) {
 	if (!defined('_JEXEC'))
-		$string = htmlentities($string);
+		$string = htmlspecialchars($string);
 	return $string;
 }
 

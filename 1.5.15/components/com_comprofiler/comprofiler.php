@@ -477,7 +477,7 @@ function userAvatar( $option, $uid, $submitvalue) {
 	}
 	$row = new moscomprofilerUser( $_CB_database );
 	if ( ! $row->load( (int) $uid ) ) {
-		echo _UE_NOSUCHPROFILE; 
+		echo JText::_('NOSUCHPROFILE');; 
 		return; 
 	}
 
@@ -653,7 +653,7 @@ function userProfile( $option, $uid, $submitvalue) {
 	$user					=&	loadComprofilerUser( $uid );
 
 	if ( $user === null ) { 
-		echo _UE_NOSUCHPROFILE; 
+		echo JText::_('NOSUCHPROFILE');; 
 		return; 
 	}
 

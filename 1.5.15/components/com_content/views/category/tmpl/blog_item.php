@@ -147,3 +147,4 @@ endif; ?>
 <?php endif; ?>
 <span class="article_separator">&nbsp;</span>
 <?php echo $this->item->event->afterDisplayContent; ?>
+
