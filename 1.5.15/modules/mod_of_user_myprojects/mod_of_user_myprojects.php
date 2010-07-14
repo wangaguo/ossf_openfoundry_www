@@ -8,7 +8,7 @@ $class_sfx = $params->get('moduleclass_sfx', "");
  */
 $query_size = 8;
 //$pa_url = "http://ssodev.openfoundry.org/of/proj_acts?qs=".$query_size;
-$pa_url = "http://ssodev.openfoundry.org/of/api/user?do=projects&name=kaworu";
+$pa_url = "http://www.openfoundry.org/of/api/user?do=projects&name=kaworu";
 
 // cURL initialize
 $ch = curl_init();
