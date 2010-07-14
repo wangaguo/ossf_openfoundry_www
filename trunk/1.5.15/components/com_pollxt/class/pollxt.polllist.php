@@ -65,7 +65,7 @@ class polllist {
 		$conf = $this->frontend->conf;
 		if ($conf->show_page_title) {
 			$html = "<div class=\"componentheading".$conf->sfx."\">";
-			$html .= htmlentities($polllist->header);
+			$html .= htmlspecialchars($polllist->header);
 			$html .= "</div>";
 		}
 		

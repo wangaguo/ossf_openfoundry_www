@@ -21,5 +21,5 @@ $config =& JFactory::getConfig();
 $ofsso_ip_limit = $config->getValue( 'ofsso_ip_limit' );
 if (!preg_match("/".$REMOTE_ADDR."/", $ofsso_ip_limit)) 
 {
-  die( 'Restricted access' );
+   die( "Restricted access, $REMOTE_ADDR is not allowed" );
 }

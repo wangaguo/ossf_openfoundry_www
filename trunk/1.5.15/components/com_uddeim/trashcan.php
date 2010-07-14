@@ -2,7 +2,7 @@
 // ********************************************************************************************
 // Title          udde Instant Messages (uddeIM)
 // Description    Instant Messages System for Mambo 4.5 / Joomla 1.0 / Joomla 1.5
-// Author         © 2007-2009 Stephan Slabihoud, © 2006 Benjamin Zweifel
+// Author         ? 2007-2009 Stephan Slabihoud, ? 2006 Benjamin Zweifel
 // License        This is free software and you may redistribute it under the GPL.
 //                uddeIM comes with absolutely no warranty.
 //                Use at your own risk. For details, see the license at
@@ -192,7 +192,7 @@ function uddeIMshowTrashCan($myself, $item_id, $limit, $limitstart, $cryptpass, 
 	if($total>$limit) {
 		$shownav = $pageNav->writePagesLinks($referlink);
 		$shownav = uddeIMarrowReplace($shownav, $config->templatedir, $pathtouser);
-		echo "<div id='uddeim-pagenav'>".$shownav."<br />";
+		echo "<div class='rt-pagination'>".$shownav."<br />";
 		echo "[<a href='".uddeIMsefRelToAbs("index.php?option=com_uddeim&task=trashcan&Itemid=".$item_id."&limitstart=0&limit=".$total)."'>"._UDDEIM_SHOWALL."</a>]";
 		echo "</div>\n";
 	}
