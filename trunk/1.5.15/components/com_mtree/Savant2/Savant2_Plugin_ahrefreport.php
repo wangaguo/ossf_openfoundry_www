@@ -25,7 +25,7 @@ class Savant2_Plugin_ahrefreport extends Savant2_Plugin {
 		if ( $params->get( 'show_report' ) == 1 && $mtconf->get('user_report') != -1 ) {
 
 			$html = '';
-			// $html = '<img src="images/M_images/indent1.png" width="9" height="9" />';
+			 $html = '<img src="images/M_images/indent1.png" width="9" height="9" />';
 
 			$html .= '<a href="';
 

@@ -22,7 +22,7 @@ if (is_array($this->categories)): ?>
 			echo '</a>';
 		}
 
-		?><h2><?php 
+		?><h3 ><?php 
 		
 		$this->plugin('ahref', "index.php?option=$this->option&task=listcats&cat_id=$cat->cat_id&Itemid=$this->Itemid", htmlspecialchars($cat->cat_name) ); 
 
@@ -34,11 +34,11 @@ if (is_array($this->categories)): ?>
 		}
 
 		if( !empty($count) ) {
-			echo '<span> ('.implode('/',$count).')</span>';
+		//	echo '<span> ('.implode('/',$count).')</span>';
 			unset($count);
 		}
 		
-		?></h2><?php
+		?></h3><?php
 		if(!empty($cat->cat_desc) && $this->config->getTemParam('displayCatDesc','0')){
 			echo '<div class="desc">' . $cat->cat_desc . '</div>';
 		}
