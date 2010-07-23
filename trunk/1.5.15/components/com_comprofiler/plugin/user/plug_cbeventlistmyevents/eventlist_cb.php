@@ -659,7 +659,7 @@ class eventlistTab extends cbTabHandler {
 
 						$url1 = JRoute::_($url);
 
-						$return .= "<a href='$url1' class='eventCBAddLink'>". _EVENTLIST_ADDNEW. "</a>";
+						//$return .= "<a href='$url1' class='eventCBAddLink'>". _EVENTLIST_ADDNEW. "</a>";
 
 						$query4 = "SELECT `published` FROM `#__eventlist_events` WHERE `created_by` = $userid and `published` = 0 " ;
 
@@ -683,7 +683,7 @@ class eventlistTab extends cbTabHandler {
 
 						if ($sum > 0) {
 
-							$return .="<br><br>".$sum._EVENTLIST_PUB."<br>";
+							//$return .="<br>".$sum._EVENTLIST_PUB."<br>";
 
 						}
 
