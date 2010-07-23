@@ -227,7 +227,7 @@ function listAll( $letterman_rights )
 
         require_once( "includes/pageNavigation.php" );
         $pageNav = new mosPageNav( $total, $limitstart, $limit );
-	$sql .= "\nORDER BY created DESC";
+	$sql .= "\nORDER BY id DESC";
 	$sql .= "\nLIMIT $pageNav->limitstart, $pageNav->limit";
 	$database->setQuery( $sql );
     
@@ -258,7 +258,7 @@ function showLItem( $uid, $gid, $is_editor, $pop, $option ) {
     $sql = "SELECT id, subject AS title, send, created, hits, html_message AS text FROM #__letterman"
     ."\nWHERE id=$uid $xwhere"
 //    ."\nAND access <= $gid "
-    ."\nORDER BY created DESC";
+    ."\nORDER BY id DESC";
     $database->setQuery( $sql );
 	$row = null;
 	if ($database->loadObject( $row )) {
