@@ -32,7 +32,7 @@
 		
 		// Website
 		$website = $fields->getFieldById(12);
-		if(!is_null($website) && $website->hasValue()) { echo '<span class="website">' . $website->getOutput(2) . '</span>'; }
+		//if(!is_null($website) && $website->hasValue()) { echo '<span class="website">' . $website->getOutput(2) . '</span>'; }
 
 		// Listing's first image
 		if(!is_null($fields->getFieldById(2)) || $link->link_image) {
@@ -111,7 +111,7 @@
 	//	echo '</div>';
 		
 		if($this->config->getTemParam('showActionLinksInSummary','0')) {
-			echo '<div class="actions">';
+			echo '<div >';
 			//$this->plugin( 'ahrefreview', $link, array("rel"=>"nofollow") ); 
 			//$this->plugin( 'ahrefrecommend', $link, array("rel"=>"nofollow") );	
 			//$this->plugin( 'ahrefprint', $link );
