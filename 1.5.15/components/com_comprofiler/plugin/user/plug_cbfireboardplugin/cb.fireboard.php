@@ -241,7 +241,7 @@ class getForumfbTab extends cbTabHandler {
 	      $database->setQuery("SELECT thread FROM #__fb_subscriptions WHERE userid=" . (int) $my->id);
 	      $subslist=$database->loadObjectList();
 	      $csubslist=count($subslist);
-		  $return .= "<div class=\"sectiontableheader\" style=\"text-align:left;padding-left:0px;padding-right:0px;margin:0px 0px 10px 0px;height:auto;width:100%;\">"._UE_USER_SUBSCRIPTIONS."";
+		  $return .= "<div class=\"sectiontableheader\" style=\"text-align:left;padding-left:0px;padding-right:0px;margin:0px 0px 10px 0px;height:auto;width:100%;\">"."";
 		  $return .= "\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin:0px;padding:0px;width:100%;\">";
 		  $enum=1;//reset value
 		  $tabclass = array("sectiontableentry1", "sectiontableentry2");//alternating row CSS classes
@@ -263,12 +263,13 @@ class getForumfbTab extends cbTabHandler {
 			  		$enum++;
 			  	}
 		  	}
-		  	$return .= "\n\t<tr>\n\t\t<td colspan=\"2\"><form action=\""
-	      		.sefRelToAbs('index.php?option='.$this->com_name.($Itemid ? '&amp;Itemid='.$Itemid : '').'&amp;func=userprofile&amp;do=update')
-	      		.'" method="post" name="postform" id="postform">'
-	      		.'<input type="hidden" name="do" value="update" />'
-	      		.'<input type="checkbox" onclick="if (document.forms[\'postform\'].elements[\'unsubscribeAll\'].checked=true && confirm(\''._UE_fb_CONFIRMUNSUBSCRIBEALL.'\')) { document.forms[\'postform\'].submit(\'Submit\')} else {document.forms[\'postform\'].elements[\'unsubscribeAll\'].checked=false};" name="unsubscribeAll" value="1" />'
-	      		.'<i>'._UE_USER_UNSUBSCRIBE_ALL."</i></form></td>\n\t</tr>";
+		  	$return .= "\n\t<tr>\n\t\t<td colspan=\"2\">"
+	      		//.sefRelToAbs('index.php?option='.$this->com_name.($Itemid ? '&amp;Itemid='.$Itemid : '').'&amp;func=userprofile&amp;do=update')
+	      		//.'" method="post" name="postform" id="postform">'
+	      		//.'<input type="hidden" name="do" value="update" />'
+	      		//.'<input type="checkbox" onclick="if (document.forms[\'postform\'].elements[\'unsubscribeAll\'].checked=true && confirm(\''._UE_fb_CONFIRMUNSUBSCRIBEALL.'\')) { document.forms[\'postform\'].submit(\'Submit\')} else {document.forms[\'postform\'].elements[\'unsubscribeAll\'].checked=false};" name="unsubscribeAll" value="1" />'
+	      		//.'<i>'._UE_USER_UNSUBSCRIBE_ALL."</i></form></td>\n\t</tr>";
+	      		."</td>\n\t</tr>";
 		  }
 		  else{
 		  	$return .= "\n\t<tr><td>"._UE_USER_NOSUBSCRIPTIONS."</td>\n\t</tr>";
@@ -281,7 +282,7 @@ class getForumfbTab extends cbTabHandler {
 	      $database->setQuery("SELECT thread FROM #__fb_favorites WHERE userid=" . (int) $my->id);
 	      $subslistf=$database->loadObjectList();
 	      $csubslistf=count($subslistf);
-		  $return .= "<div class=\"sectiontableheader\" style=\"text-align:left;padding-left:0px;padding-right:0px;margin:0px 0px 10px 0px;height:auto;width:100%;\">"._UE_USER_FAVS."";
+		  $return .= "<div class=\"sectiontableheader\" style=\"text-align:left;padding-left:0px;padding-right:0px;margin:0px 0px 10px 0px;height:auto;width:100%;\">"."";
 		  $return .= "\n<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin:0px;padding:0px;width:100%;\">";
 		  $enumf=1;//reset value
 		  $tabclass = array("sectiontableentry1", "sectiontableentry2");//alternating row CSS classes
@@ -311,7 +312,7 @@ class getForumfbTab extends cbTabHandler {
 	      		.'<i>'._UE_USER_UNFAV_ALL."</i></form></td>\n\t</tr>";
 		  }
 		  else{
-		  	$return .= "\n\t<tr><td>"._UE_USER_NOFAV."</td>\n\t</tr>";
+		  	$return .= "\n\t<tr><td>"."</td>\n\t</tr>";
 		  }
 
 		  $return .= "\n</table></div>";

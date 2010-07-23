@@ -1044,7 +1044,7 @@ class getMenuTab  extends cbTabHandler {
 			$this->_addMenuItem( $mi, $menuTexts['_UE_UPDATEPROFILE'],cbSef($ue_userdetails_url), "",
 			"<img src=\"".$adminimagesdir."updateprofile.gif\" alt='' />","", $menuTexts['_UE_MENU_UPDATEPROFILE_DESC'],"" );
 			// Update Avatar:
-			if($ueConfig['allowAvatar']==1 && ($ueConfig['allowAvatarUpload']==1 || $ueConfig['allowAvatarGallery']==1)) {
+			//if($ueConfig['allowAvatar']==1 && ($ueConfig['allowAvatarUpload']==1 || $ueConfig['allowAvatarGallery']==1)) {
 				$mi = array(); $mi["_UE_MENU_EDIT"]["_UE_UPDATEAVATAR"]=null;
 				$this->_addMenuItem( $mi, $menuTexts['_UE_UPDATEAVATAR'],cbSef($ue_useravatar_url), "",
 				"<img src=\"".$adminimagesdir."newavatar.gif\" alt='' />","", $menuTexts['_UE_MENU_UPDATEAVATAR_DESC'],"" );
@@ -1054,7 +1054,7 @@ class getMenuTab  extends cbTabHandler {
 				//	$this->_addMenuItem( $mi, $menuTexts['_UE_DELETE_AVATAR'],cbSef($ue_deleteavatar_url), "",
 				//	"<img src=\"".$adminimagesdir."delavatar.gif\" alt='' />","", $menuTexts['_UE_MENU_DELETE_AVATAR_DESC'],"" );
 				//}
-			}
+		//	}
 		}
 		// ----- VIEW MENU - AFTER EDIT IF VIEWING A PROFILE -----
 //		if ( $_CB_framework->myId() > 0 ) {
