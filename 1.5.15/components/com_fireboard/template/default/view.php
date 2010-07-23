@@ -528,8 +528,8 @@ if ($letPass || $is_Moderator)
                                     }
                                     elseif ($fbConfig->avatar_src == "cb")
                                     {
-                                        $database->setQuery("SELECT avatar FROM #__comprofiler WHERE user_id='$fmessage->userid' AND avatarapproved='1'");
-                                        $avatar = $database->loadResult();
+                                     $database->setQuery("SELECT a.avatar FROM #__comprofiler as a, #__users as b WHERE user_id='$fmessage->userid' AND avatarapproved='1'");
+				     $avatar = $database->loadResult();
 
                                         if ($avatar != '')
                                         {
@@ -542,12 +542,12 @@ if ($letPass || $is_Moderator)
                                             else
                                             $imgpath .= $avatar;
 
-                                            $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '" alt="" /></span>';
+                                            $msg_avatar = '<span class="fb_avatar"><img src="/sso/user/image?name='.$fmessage->name.'&size=medium" alt="" /></span>';
                                             //added or modified by mambojoe
                                         }
                                         else {
                                             $imgpath = JB_JLIVEURL."/components/com_comprofiler/plugin/language/default_language/images/tnnophoto.jpg";
-                                            $msg_avatar = '<span class="fb_avatar"><img src="' . $imgpath . '" alt="" /></span>';
+                                            $msg_avatar = '<span class="fb_avatar"><img src="/sso/user/image?name='.$fmessage->name.'&size=medium" alt="" /></span>';
                                         }
                                     }
                                     else
