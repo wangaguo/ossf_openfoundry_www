@@ -78,6 +78,7 @@ div#eventlist h2 {
 font-size: 1.2em; font-weight: bold;
 border-bottom: 2px solid #ddd;
 padding:0.5em 0.3em; margin: 0.8em 0;
+line-height:180%;
 }
 
 div#eventlist h2 img {

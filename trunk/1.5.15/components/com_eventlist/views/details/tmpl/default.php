@@ -53,7 +53,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
   		<dt class="when"><?php echo JText::_( 'WHEN' ).':'; ?></dt>
 		<dd class="when">
 			<?php
-			echo ELOutput::formatdate($this->row->dates, $this->row->times);
+			echo ELOutput::formatdate($this->row->dates, $this->row->times).'&nbsp;&nbsp;&nbsp;&nbsp;';
     					
     		if ($this->row->enddates) :
     			echo ' - '.ELOutput::formatdate($this->row->enddates, $this->row->endtimes);
@@ -76,15 +76,15 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 		    <dd class="where">
     		<?php if (($this->elsettings->showdetlinkvenue == 1) && (!empty($this->row->url))) : ?>
 
-			    <a href="<?php echo $this->row->url; ?>"><?php echo $this->escape($this->row->venue); ?></a> -
+			    <a href="<?php echo $this->row->url; ?>"><?php echo $this->escape($this->row->venue); ?></a> 
 
 			<?php elseif ($this->elsettings->showdetlinkvenue == 2) : ?>
 
-			    <a href="<?php echo JRoute::_( 'index.php?view=venueevents&id='.$this->row->venueslug ); ?>"><?php echo $this->row->venue; ?></a> -
+			    <a href="<?php echo JRoute::_( 'index.php?view=venueevents&id='.$this->row->venueslug ); ?>"><?php echo $this->row->venue; ?></a> 
 
 			<?php elseif ($this->elsettings->showdetlinkvenue == 0) :
 
-				echo $this->escape($this->row->venue).' - ';
+				echo $this->escape($this->row->venue).'-';
 
 			endif;
 
@@ -100,65 +100,47 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			</dd>
                 <dt class="category"><?php echo JText::_( 'WHO' ).':'; ?></dt>
                   <?php if ($this->row->did == 58 or $this->row->did==59) { ?>
-                <dd class="category">葛冬梅 &nbsp;&nbsp;<img src="./images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:tmk2005@citi.sinica.edu.tw">tmk2005@citi.sinica.edu.tw</a></dd>
+                <dd class="category">葛冬梅 &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:tmk2005@citi.sinica.edu.tw">tmk2005@citi.sinica.edu.tw</a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
                 <dd class="category">2788-3799#1474 or 0953-366-676</dd>
-
                  <?php }else  if($this->row->did==35) { ?>
-                <dd class="category">BobChao &nbsp;&nbsp;<img src="./images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:bobchao@mail.moztw.org">bobchao@mail.moztw.org</a></dd>
+                <dd class="category">BobChao &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:bobchao@mail.moztw.org">bobchao@mail.moztw.org</a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
                 <dd class="category">2788-3799#1477</dd>
 
-                 <?php }else  if($this->row->did==64 or $this->row->did==63) { ?>
-                <dd class="category">呂健宇 &nbsp;&nbsp;<img src="./images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:arthur_lu@citi.sinica.edu.tw">arthur_lu@citi.sinica.edu.tw</a></dd>
-                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
-                <dd class="category">2788-3799#1478 0968-990-777</dd>
-
-                 <?php }else  if($this->row->did==65 or $this->row->did==67 or $this->row->did==69 ) { ?>
-                <dd class="category">洪華超(Rock) &nbsp;&nbsp;<img src="./images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:rockhung@citi.sinica.edu.tw">rockhung@citi.sinica.edu.tw</a></dd>
-                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
-                <dd class="category">2788-3799#1477 或 0912-516-695</dd>
-
-                 <?php }else  if($this->row->did==70 or $this->row->did==71 or $this->row->did==77 ) { ?>
-                <dd class="category">洪華超(Rock) &nbsp;&nbsp;<img src="./images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:rockhung@citi.sinica.edu.tw">rockhung@citi.sinica.edu.tw</a></dd>
-                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
-                <dd class="category">2788-3799#1477 或 0912-516-695</dd>
-                 <?php }else  if($this->row->did==72 or $this->row->did==73 or $this->row->did==74 or $this->row->did==79 ) { ?>
-                <dd class="category">洪華超(Rock) &nbsp;&nbsp;<img src="./images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:rockhung@citi.sinica.edu.tw">rockhung@citi.sinica.edu.tw</a></dd>
-                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
-                <dd class="category">2788-3799#1477 或 0912-516-695</dd>
-
-                 <?php }else  if($this->row->did==66 or $this->row->did==75 or $this->row->did==76 or $this->row->did==78) { ?>
-                <dd class="category">林偉峰(Scott) &nbsp;&nbsp;<img src="./images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:dearscott@citi.sinica.edu.tw">dearscott@citi.sinica.edu.tw</a></dd>
-                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
-                <dd class="category">2788-3799#1469 或 0988-306-503</dd>
-
-                 <?php }else  if($this->row->did==80 or $this->row->did==81) { ?>
-                <dd class="category">林偉峰(Scott) &nbsp;&nbsp;<img src="./images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:dearscott@citi.sinica.edu.tw">dearscott@citi.sinica.edu.tw</a></dd>
-                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
-                <dd class="category">2788-3799#1469 或 0988-306-503</dd>
                  <?php }else  if($this->row->did==84 or $this->row->did==85) { ?>
-                <dd class="category">葛冬梅 (Florence T.M. Ko) &nbsp;&nbsp;<img src="./images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:tmk2005@citi.sinica.edu.tw">tmk2005@citi.sinica.edu.tw</a></dd>
+                <dd class="category">葛冬梅 (Florence T.M. Ko) &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:tmk2005@citi.sinica.edu.tw">tmk2005@citi.sinica.edu.tw</a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
                 <dd class="category">02-27883799 ext.1474 or 0953-366-676</dd>
 
-                 <?php }else  if($this->row->did==82 or $this->row->did==83 or $this->row->did==86) { ?>
-                <dd class="category">洪華超(Rock) &nbsp;&nbsp;<img src="./images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:rockhung@citi.sinica.edu.tw">rockhung@citi.sinica.edu.tw</a></dd>
-                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
-                <dd class="category">2788-3799#1477 或 0912-516-695</dd>
-
-                 <?php }else { ?>
-                <dd class="category">陳飛亨(Freddi) &nbsp;&nbsp;<img src="./images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:freddi.chen@citi.sinica.edu.tw">freddi.chen@citi.sinica.edu.tw</a></dd>
+                 <?php }else if ($this->row->did<=62){ ?>
+                <dd class="category">陳飛亨(Freddi) &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:freddi.chen@citi.sinica.edu.tw">freddi.chen@citi.sinica.edu.tw</a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
                 <dd class="category">2788-3799#1478&nbsp;&nbsp;or&nbsp;&nbsp;0926-700-316</dd>
+                <?php }else if ($this->row->did==95){ ?>
+                <dd class="category">陳飛亨(Freddi) &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:freddi.chen@citi.sinica.edu.tw">freddi.chen@citi.sinica.edu.tw</a></dd>
+                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
+                <dd class="category">2788-3799#1478&nbsp;&nbsp;or&nbsp;&nbsp;0926-700-316</dd>
+
+		<?php }else if ($this->row->did==96 or $this->row->did==97){ ?>
+                <dd class="category">胡崇偉(Marr) &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:marr.tw@gmail.com">marr.tw@gmail.com</a></dd>
+                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
+                <dd class="category">2788-3799#1477&nbsp;&nbsp;</dd>
+
+
+                <?php }else { ?>
+                <dd class="category">洪華超(Rock) &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:rockhung@citi.sinica.edu.tw">rockhung@citi.sinica.edu.tw</a></dd>
+                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
+                <dd class="category">2788-3799#1477 或 0912-516-695</dd>
                 <?php } ?>
 
+	</dl>
 
 
 			
 			
 	<?php
-	// is a plugin catching the display of creator ?
+	// is a plugin caching the display of creator ?
   $obj = new stdClass();
   // is a plugin catching this ?
   if ($res = $this->dispatcher->trigger( 'onEventCreatorDisplay', array( $this->row->created_by, $obj )))

@@ -550,12 +550,13 @@ class EventListModelEditevent extends JModel
 		/*
 		* Autopublish
 		* check if the user has the required rank for autopublish
-		*/
+		 */
+		$this->_loadEvent();
 		$autopubev = ELUser::validate_user( $elsettings->evpubrec, $elsettings->autopubl );
 		if ($autopubev || $owneredit) {
-				$row->published = 1 ;
+			$row->published = $this->_event->published;
 			} else {
-				$row->published = 0 ;
+			$row->published = $this->_event->published;
 		}
 
 		//Image upload
@@ -673,7 +674,8 @@ class EventListModelEditevent extends JModel
 		// manage mailing
 		jimport('joomla.utilities.mail');
     // link for event
-		$link 	= JRoute::_(JURI::base().'index.php?view=details&id='.$row->id, false);
+		//$link 	= JRoute::_(JURI::base().'index.php?view=details&id='.$row->id, false);
+		$link   = JURI::base().JRoute::_('workshop/details/'.$row->id);
     // strip description from tags / scripts, etc...
 		$text_description = JFilterOutput::cleanText($row->datdescription);
 		
@@ -725,7 +727,8 @@ class EventListModelEditevent extends JModel
 			} else {
 
 				$created 	= JHTML::Date( $row->created, JText::_( 'DATE_FORMAT_LC2' ) );
-				$mailbody 	= JText::sprintf('USER MAIL NEW EVENT', $user->name, $user->username, $created, $row->title, $row->dates, $row->times, $rowloc->venue, $rowloc->city, $text_description, $state);
+				//$mailbody 	= JText::sprintf('USER MAIL NEW EVENT', $user->name, $user->username, $created, $row->title, $row->dates, $row->times, $rowloc->venue, $rowloc->city, $text_description, $state);
+				$mailbody       = JText::sprintf('USER MAIL NEW EVENT', $user->name, $user->username, $created, $row->title, $row->dates, $row->times, $rowloc->venue, $rowloc->city, $link, $row->datdescription, $state);//Modify by ally add link
 				$usermail->setSubject( $SiteName.JText::_( 'NEW USER EVENT MAIL' ) );
 
 			}
