@@ -241,7 +241,7 @@ function lm_replaceContentHtml(&$matches){
   				echo '<span style="color: #fd6003; font-size: medium;"><strong>';
   				echo $row->category;
 				echo '</strong></span></td><td width="482" background="http://www.openfoundry.org/images/newsletter/kind-bg.gif"></td></tr>';
-  				echo '<tr><td colspan="2" align="left" valign="middle" style="font-weight: bold; font-size: 16px; vertical-align: bottom; color: rgb(0, 85, 197);">';
+  				echo '<tr><td colspan="2" align="left" valign="middle" style="font-weight: bold; font-size: 16px; vertical-align: bottom; color: rgb(0, 85, 197);"><a name="'.$row->id.'"></a>';
   				echo $row->title;
   				echo '</td></tr>';
   				echo '<tr><td colspan="2" align="left" style="font-weight: bold; font-size: 12px; color: rgb(153, 153, 153);">';
