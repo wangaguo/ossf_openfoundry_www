@@ -49,7 +49,7 @@ class JHTMLList
 	function images( $name, $active = NULL, $javascript = NULL, $directory = NULL, $extensions =  "bmp|gif|jpg|png" )
 	{
 		if ( !$directory ) {
-			$directory = '/images/stories/';
+			$directory = '/images/stories/';//Modify by 0720
 		}
 
 		if ( !$javascript ) {
