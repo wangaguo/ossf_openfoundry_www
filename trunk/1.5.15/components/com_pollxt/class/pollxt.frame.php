@@ -145,7 +145,7 @@ var $activation = null;
 				$this->conf->pollid = $poll->id;
 				$this->conf->load();
 				$plugin = new configPlugin($poll->id);
-				if ($this->pos == "com") $mainframe->setPageTitle("PollXT - ".$poll->title);
+				if ($this->pos == "com") $mainframe->setPageTitle($poll->title);
 				$this->createFrame($poll->id, $plugin, $this->conf);
 				if ($this->conf->disp == "2") break;						 
 			}
@@ -154,7 +154,7 @@ var $activation = null;
 	
 	function singleFrame() {
 		global $mainframe;
-		if ($this->pos == "com") $mainframe->setPageTitle("PollXT - List");
+		if ($this->pos == "com") $mainframe->setPageTitle("OpenFoundry");
 
 		$this->createFrame();
 	}
