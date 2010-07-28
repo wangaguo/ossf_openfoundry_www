@@ -537,7 +537,7 @@ function viewNewsletter( $option) {
 	. "\nFROM #__letterman AS a"
 	. "\nLEFT JOIN #__users AS u ON u.id=a.checked_out"
 	. "\nLEFT JOIN #__groups AS g ON g.id = a.access"
-	. "\n$where ORDER BY created DESC LIMIT $pageNav->limitstart,$pageNav->limit";
+	. "\n$where ORDER BY id DESC LIMIT $pageNav->limitstart,$pageNav->limit";
 	$database->setQuery( $sql );
 	$rows = $database->loadObjectList();
 

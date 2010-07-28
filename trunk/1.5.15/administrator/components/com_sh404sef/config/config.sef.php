@@ -1,9 +1,9 @@
 <?php
 // config.sef.php : configuration file for sh404SEF for Joomla 1.5.x
 // 1.5.10.446 - <a href="http://dev.anything-digital.com/sh404SEF/">dev.anything-digital.com/sh404SEF/</a>
-// saved at: 2010-07-01 18:03:18
+// saved at: 2010-07-08 16:50:58
 // by: webmaster (id: 62 )
-// domain: http://ssodev.openfoundry.org
+// domain: http://ofsso.openfoundry.org
 
 if (!defined('_JEXEC')) die('Direct Access to this location is not allowed.');
 
@@ -22,7 +22,7 @@ $ShowCat = "1";
 $UseAlias = "1";
 $page404 = "0";
 $predefined = array("frontpage","sh404sef");
-$skip = array("comprofiler","content","contentsubmit","jcomments","joomfish","mtree","newsfeeds","poll","pollxt","search","uddeim","user","weblinks","wrapper");
+$skip = array();
 $nocache = array();
 $shDoNotOverrideOwnSef = array();
 $shLog404Errors = "1";
@@ -48,7 +48,7 @@ $shVmAdditionalText = "1";
 $shVmInsertFlypage = "1";
 $shInsertCategoryId = "0";
 $shInsertNumericalId = "0";
-$shInsertNumericalIdCatList = array("353","354","38","275","195","262","25","218","228","132","27","26","23","31","131","263","269","268","270","267","182","148","144","145","138","203","105","142","149","107","146","283","152","204","106","213","108","311","111","109","187","150","137","151","147","143","110");
+$shInsertNumericalIdCatList = array("38","275","195","262","25","218","228","132","27","26","23","31","131","263","269","268","270","267","182","148","144","138","203","105","142","149","107","146","283","152","204","106","213","108","311","111","109","187","150","137","151","147","143","110");
 $shRedirectNonSefToSef = "1";
 $shRedirectJoomlaSefToSef = "1";
 $shConfig_live_secure_site = "";
@@ -193,7 +193,7 @@ $ContentTitleUseCatAlias = "0";
 $ContentTitleUseSecAlias = "0";
 $pageTitleSeparator = " | ";
 $ContentTitleInsertArticleId = "0";
-$shInsertContentArticleIdCatList = array("353","356","357","358","359","354","38","275","195","262","25","218","228","132","27","26","23","31","131","263","269","268","270","267","182","148","144","145","138","203","105","142","149","107","146","283","152","204","106","213","108","311","111","109","187","150","137","151","147","143","110");
+$shInsertContentArticleIdCatList = array("507");
 $shJSInsertJSName = "1";
 $shJSShortURLToUserProfile = "1";
 $shJSInsertUsername = "1";

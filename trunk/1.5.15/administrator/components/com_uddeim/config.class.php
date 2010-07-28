@@ -9,41 +9,22 @@ if (defined('_uddeConfig')) {
   var $cryptkey = 'uddeIMcryptkey';
   var $datumsformat = 'j M, H:i';
   var $ldatumsformat = 'j F Y, H:i';
-  var $emn_sendermail = 'webmaster';
-  var $emn_sendername = 'Messaging';
+  var $emn_sendermail = 'contact@openfoundry.org';
+  var $emn_sendername = 'OpenFoundry Messaging';
   var $sysm_username = 'System';
   var $charset = 'UTF-8';
   var $mailcharset = 'UTF-8';
-  var $emn_body_nomessage = 'Hi %you%,
-
-%user% has sent you a private message at %site%. Please log in to read it!
-
-%livesite%';
-  var $emn_body_withmessage = 'Hi %you%,
-
-%user% has sent you the following private message at %site%. Please log in to reply!
-
-%livesite%
-__________________
-%pmessage%';
-  var $emn_forgetmenot = 'Hi %you%,
-
-you have unread private messages on %site%. Please log in to read them!
-
-%livesite%';
-  var $export_format = '
-================================================================================
-%user% (%msgdate%)
-----------------------------------------
-%msgbody%
-================================================================================';
-  var $showtitle = '';
+  var $emn_body_nomessage = '';
+  var $emn_body_withmessage = '';
+  var $emn_forgetmenot = '';
+  var $export_format = '';
+  var $showtitle = '私人訊息';
   var $templatedir = 'default';
   var $quotedivider = '__________';
   var $blockgroups = '';
   var $pubblockgroups = '';
   var $hideusers = '62';
-  var $pubhideusers = '62';
+  var $pubhideusers = '';
   var $attachmentgroups = '';
   var $recaptchaprv = '';
   var $recaptchapub = '';
@@ -59,7 +40,7 @@ you have unread private messages on %site%. Please log in to read them!
   var $pmsimportdone = 2;
   var $blockalert = 0;
   var $blocksystem = 0;
-  var $allowemailnotify = 0;
+  var $allowemailnotify = 1;
   var $notifydefault = 0;
   var $popupdefault = 0;
   var $allowsysgm = 0;
@@ -80,7 +61,7 @@ you have unread private messages on %site%. Please log in to read them!
   var $inboxlimit = 0;
   var $showinboxlimit = 0;
   var $allowpopup = 0;
-  var $allowbb = 1;
+  var $allowbb = 2;
   var $allowsmile = 1;
   var $animated = 0;
   var $animatedex = 0;
@@ -90,30 +71,30 @@ you have unread private messages on %site%. Please log in to read them!
   var $showconnex = 1;
   var $showsettingslink = 2;
   var $showabout = 0;
-  var $emailtrafficenabled = 0;
+  var $emailtrafficenabled = 1;
   var $getpiclink = 0;
   var $connex_listbox = 1;
   var $forgetmenotstart = 0;
   var $realnames = 0;
   var $cryptmode = 0;
-  var $modeshowallusers = 1;
+  var $modeshowallusers = 0;
   var $useautocomplete = 0;
   var $allowmultipleuser = 1;
   var $connexallowmultipleuser = 1;
-  var $allowmultiplerecipients = 1;
+  var $allowmultiplerecipients = 0;
   var $showtextcounter = 1;
   var $allowforwards = 1;
   var $showgroups = 0;
   var $mailsystem = 0;
   var $searchinstring = 1;
-  var $maxrecipients = 0;
+  var $maxrecipients = 5;
   var $languagecharset = 1;
-  var $usecaptcha = 0;
+  var $usecaptcha = 4;
   var $captchalen = 4;
   var $pubfrontend = 0;
   var $pubfrontenddefault = 0;
-  var $pubmodeshowallusers = 1;
-  var $hideallusers = 0;
+  var $pubmodeshowallusers = 0;
+  var $hideallusers = 1;
   var $pubhideallusers = 0;
   var $unblockCBconnections = 1;
   var $CBgallery = 0;
@@ -128,7 +109,7 @@ you have unread private messages on %site%. Please log in to read them!
   var $allowflagged = 0;
   var $overwriteitemid = 0;
   var $useitemid = 0;
-  var $timezone = 0;
+  var $timezone = -8;
   var $pubuseautocomplete = 0;
   var $pubsearchinstring = 1;
   var $mootools = 1;
@@ -144,7 +125,7 @@ you have unread private messages on %site%. Please log in to read them!
   var $showhelp = 0;
   var $separator = 0;
   var $rsslimit = 20;
-  var $restrictallusers = 0;
+  var $restrictallusers = 2;
   var $trashoriginalsent = 0;
   var $reportspam = 0;
   var $checkbanned = 1;
@@ -154,7 +135,7 @@ you have unread private messages on %site%. Please log in to read them!
   var $fileadminignitiononly = 1;
   var $showlistattachment = 1;
   var $showmenucount = 0;
-  var $encodeheader = 0;
+  var $encodeheader = 1;
   var $enablesort = 0;
   var $captchatype = 0;
   // temporary variables
