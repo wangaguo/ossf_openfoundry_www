@@ -108,10 +108,10 @@ class voteform {
 		if (($this->data->pos == "com" ) && (($nav->navBack != "") || ($nav->navNext != "") )) {
 		    $html .= "<br />";
 
-    		$html .= "<center>";
-    		$html .= $nav->navBack;
-    		$html .= $nav->navNext;
-		    $html .= "</center>";
+    		//$html .= "<center>";
+    		//$html .= $nav->navBack;
+    		//$html .= $nav->navNext;
+		//$html .= "</center>";
 		}
 		
 		return $html;
