@@ -42,7 +42,7 @@
  * clearing the float containers
  */
 div#eventlist {
-overflow: hidden; /* beez */
+/*overflow: hidden; *//* beez */
 }
 
 div#eventlist .clear
