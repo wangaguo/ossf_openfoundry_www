@@ -8,7 +8,7 @@
   	<table name="mt_links">
   		<field type="referenceid" name="link_id" translate="0">ID</field>
   		<field type="titletext" name="link_name"  length="50" maxlength="250" translate="1">Link Title</field>
-  		<field type="text" name="alias"  translate="1">Alias</field>
+  		<field type="text" name="alias"  translate="0">Alias</field>
   		<field type="htmltext" name="link_desc"  translate="1">Link Description</field>
   		<field type="textarea" name="attribs"  translate="1">Attributes</field>
   		<field type="textarea" name="metakey"  translate="1">Meta Keywords</field>

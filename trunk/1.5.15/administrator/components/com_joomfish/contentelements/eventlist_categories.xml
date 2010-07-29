@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>EventList Categories</name>
+  <author>Christoph Lukes</author>
+  <version>1.0</version>
+  <description>Definition for EventList Categories</description>
+  <reference>
+	<table name="eventlist_categories">
+		<field type="referenceid" name="id" translate="0">ID</field>
+		<field type="titletext" name="catname" translate="1">Name</field>
+		<field type="text" name="alias" translate="1">Alias</field>		
+		<field type="htmltext" name="catdescription" translate="1">Description</field>  		
+		<field type="text" name="meta_keywords" translate="1">Meta Keywords</field>
+		<field type="textarea" name="meta_description" translate="1">Meta Description</field>
+		<field type="text" name="image" translate="1">Image</field>		
+		<field type="checked_out_by" name="checked_out" translate="0">Checked out by</field>
+		<field type="checked_out_date" name="checked_out_time" translate="0">Checked out date</field>
+	</table>
+  </reference>
+</joomfish>

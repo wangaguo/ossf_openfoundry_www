@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<joomfish type="contentelement">
+  <name>EventList Venues</name>
+  <author>Christoph Lukes</author>
+  <version>1.0</version>
+  <description>Definition for EventList Venues</description>
+  <reference>
+	<table name="eventlist_venues">
+		<field type="referenceid" name="id" translate="0">ID</field>
+		<field type="titletext" name="venue" translate="1">Venue</field>
+		<field type="text" name="alias" translate="1">Alias</field>
+		<field type="text" name="url" translate="1">URL</field>
+		<field type="text" name="street" translate="1">Street</field>
+		<field type="text" name="city" translate="1">City</field>
+		<field type="htmltext" name="locdescription" translate="1">Description</field>
+		<field type="text" name="url" translate="1">URL</field>
+		<field type="text" name="meta_keywords" translate="1">Meta Keywords</field>
+		<field type="textarea" name="meta_description" translate="1">Meta Description</field>
+		<field type="text" name="locimage" translate="0">Image</field>
+		<field type="checked_out_by" name="checked_out" translate="0">Checked out by</field>
+		<field type="checked_out_date" name="checked_out_time" translate="0">Checked out date</field>
+	</table>
+  </reference>
+  <translationfilters>
+  	  <id>ID</id>
+  	  <keyword>Venue</keyword>
+  	  <published>published</published>
+  </translationfilters>
+</joomfish>
