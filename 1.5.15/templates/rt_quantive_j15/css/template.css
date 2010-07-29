@@ -37,7 +37,7 @@ ul.menu {padding-left: 0;}
 #rt-header {padding: 0px  ;}
 
 /* Logo */
-#rt-logo {width: 350px;height: 68px;display: block;}
+#rt-logo {width: 350px;height: 60px;display: block;}
 
 /* Top Menu */
 #rt-navigation {margin: 0 6px;position: relative;}
@@ -239,7 +239,7 @@ span.mp_button {
 	color:#ffffff;
 	font-weight:900;
 	font-size:16px;
-	padding: 5px 50px 10px 50px;
+	padding: 5px 48px 10px 50px;
 
 }
 .pj_download a , .pj_bugreport a{
@@ -252,7 +252,7 @@ span.mp_button {
 	font-weight:900;
 	font-size:16px;
 	margin:0 0 0 10px;
-	padding: 5px 55px 10px 55px;
+	padding: 5px 40px 10px 55px;
 
 }
 /*My Issue */
@@ -321,4 +321,10 @@ tr.sectiontableentry1 {
     border-collapse:collapse;
     line-height:150%;
     font-size:120%;
+}
+
+.newsletterheader{
+    background:#cccccc;
+    font-size:120%;
+    font-weight: bold;
 }
