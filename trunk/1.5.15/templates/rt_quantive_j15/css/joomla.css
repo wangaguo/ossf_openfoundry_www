@@ -12,7 +12,7 @@
 .rt-author, .rt-date-posted, .rt-date-modified {display: block;font-weight: bold;letter-spacing: 0;font-size: 12px;}
 .rt-joomla .rt-article-cat {margin-top: 10px;margin-bottom: 15px;}
 .rt-joomla .rt-headline {}
-.rt-joomla .rt-article-title {margin-top: 30px;margin-bottom: 10px;padding-bottom: 15px;font-weight: normal;font-size: 170%;letter-spacing: -1px;line-height: 1em;}
+.rt-joomla .rt-article-title {margin-top: 30px;margin-bottom: 10px;padding-bottom: 15px;font-weight: normal;font-size: 170%;letter-spacing: -1px;line-height: 150%;}
 .rt-joomla .rt-article-bg {border-bottom: none;padding: 0;}
 .rt-joomla .rt-pagetitle {margin-top: 0;margin-bottom: 30px;}
 body .rt-joomla .rt-blog .rt-description {border-bottom: none;}
@@ -116,7 +116,7 @@ body ul.roknewspager li {background: none;}
 
 /* RokStories */
 .feature-block .feature-title {font-size: 150%;letter-spacing: -2px;}
-.feature-block .feature-title span {display: block;letter-spacing: normal;font-size: 120%;font-weight: bold;margin-top: 5px;}
+.feature-block .feature-title span {display: block;letter-spacing: normal;font-size: 100%;font-weight: bold;margin-top: 5px;}
 #rt-showcase .rokstories-layout2 {margin: 0;padding: 15px 0 0 0;overflow: hidden;position:relative;}
 #rt-showcase .rokstories-layout2 .feature-block {overflow: visible;position:static;}
 .rokstories-layout2 .feature-block .readon1-l {display: none;}
