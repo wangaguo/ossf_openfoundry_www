@@ -772,8 +772,8 @@ function search( $option ) {
 		$restriction 	= true;
 	}
 
-	// searchword must contain a minimum of 3 characters
-	if ( $searchword && JString::strlen( $searchword ) < 3 ) {
+	// searchword must contain a minimum of 2 characters
+	if ( $searchword && JString::strlen( $searchword ) < 2 ) {
 		$searchword 	= '';
 		$restriction 	= true;
 	}
