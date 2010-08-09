@@ -37,7 +37,7 @@ defined('_VALID_MOS') or die('Restricted access');
 
 <?php if(count($this->items)) { ?>
     <div id="dm_docs">
-    <h3><?php echo _DML_TPL_DOCS;?><span><?php echo _DML_TPL_DATEADDED;?></span></h3>
+    <h3><?php //echo _DML_TPL_DOCS;?><span><?php //echo _DML_TPL_DATEADDED;?></span></h3>
     <?php
     /*
      * Include the documents list ordering template
