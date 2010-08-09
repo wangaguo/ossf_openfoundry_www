@@ -41,7 +41,7 @@ $document->addScriptDeclaration($script);
 
 <form action="<?php echo JRoute::_( 'index.php' );?>" method="post" name="emailForm" id="emailForm" class="form-validate">
 <fieldset>
-		<legend><?php echo JText::_('E-Mail'); ?></legend><br />
+		<legend><?php //echo JText::_('E-Mail'); ?></legend><br />
 
 
 	<div>
