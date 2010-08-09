@@ -117,7 +117,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
                 <dd class="category">陳飛亨(Freddi) &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:freddi.chen@citi.sinica.edu.tw">freddi.chen@citi.sinica.edu.tw</a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
                 <dd class="category">2788-3799#1478&nbsp;&nbsp;or&nbsp;&nbsp;0926-700-316</dd>
-                <?php }else if ($this->row->did==95){ ?>
+                <?php }else if ($this->row->did==95 or $this->row->did==98){ ?>
                 <dd class="category">陳飛亨(Freddi) &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:freddi.chen@citi.sinica.edu.tw">freddi.chen@citi.sinica.edu.tw</a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
                 <dd class="category">2788-3799#1478&nbsp;&nbsp;or&nbsp;&nbsp;0926-700-316</dd>

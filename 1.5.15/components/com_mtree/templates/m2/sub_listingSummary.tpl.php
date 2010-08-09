@@ -24,7 +24,10 @@
 					$this->plugin( 'ahreflisting', $link, $link_name->getOutput(2), '', array('delete'=>false, 'link'=>false) );
 					break;
 			}
-		?></h3><?php
+			?>
+				
+				
+				</h3><?php
 		
 		// Rating
 		//$this->plugin( 'rating', $link->link_rating, $link->link_votes, $link->attribs);
@@ -111,7 +114,7 @@
 	//	echo '</div>';
 		
 		if($this->config->getTemParam('showActionLinksInSummary','0')) {
-			echo '<div >';
+			echo '<div class="listing-function">';
 			//$this->plugin( 'ahrefreview', $link, array("rel"=>"nofollow") ); 
 			//$this->plugin( 'ahrefrecommend', $link, array("rel"=>"nofollow") );	
 			//$this->plugin( 'ahrefprint', $link );
