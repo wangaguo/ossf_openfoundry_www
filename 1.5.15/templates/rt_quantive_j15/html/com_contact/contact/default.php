@@ -38,7 +38,7 @@ $cparams =& JComponentHelper::getParams('com_media');
 		<?php if ( $this->contact->name && $this->contact->params->get( 'show_name' ) ) : ?>
 		<h1 class="name">
 			<?php echo $this->escape($this->contact->name); ?>
-		</h1>
+		</h1><br>
 		<?php endif; ?>
 		
 		<?php if ( $this->contact->con_position && $this->contact->params->get( 'show_position' ) ) : ?>
