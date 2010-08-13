@@ -136,9 +136,10 @@ h2.contentheading {
 	float: left;
 	}
 #subcats li {
-	width: 42%;
+	width: 45%;
 	padding: 0;
 	margin-top: 10px;
+	margin-left: 10px;
 	float: left;
 	background-image: none;
 	}
