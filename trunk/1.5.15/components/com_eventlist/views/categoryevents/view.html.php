@@ -124,7 +124,7 @@ class EventListViewCategoryevents extends JView
 
 		//Generate Categorydescription
 		if (empty ($category->catdescription)) {
-			$catdescription = JText::_( 'NO DESCRIPTION' );
+			//$catdescription = JText::_( 'NO DESCRIPTION' );
 		} else {
 			//execute plugins
 			$category->text	= $category->catdescription;
