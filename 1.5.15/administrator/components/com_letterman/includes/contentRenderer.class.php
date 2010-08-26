@@ -165,7 +165,7 @@ class lm_contentRenderer {
 	function retrieveContent( $id ) {
 		global $database, $mainframe;
 		
-		$query = "SELECT a.*, ROUND(v.rating_sum/v.rating_count) AS rating, v.rating_count, u.name AS author, u.usertype, cc.name AS category, s.name AS section, g.name AS groups, s.published AS sec_pub, cc.published AS cat_pub"
+		$query = "SELECT a.*, ROUND(v.rating_sum/v.rating_count) AS rating, v.rating_count, u.name AS author, u.usertype, cc.title AS category, s.name AS section, g.name AS groups, s.published AS sec_pub, cc.published AS cat_pub"
 		. "\n FROM #__content AS a"
 		. "\n LEFT JOIN #__categories AS cc ON cc.id = a.catid"
 		. "\n LEFT JOIN #__sections AS s ON s.id = cc.section AND s.scope = 'content'"
