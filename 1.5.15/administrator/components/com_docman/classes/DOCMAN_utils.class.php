@@ -1055,7 +1055,7 @@ class DOCMAN_Docs
         $search_mode = $searchterms['search_mode'];
         $text = trim($searchterms['search_phrase']);
         // fix for http://joomlacode.org/gf/project/docman/tracker/?action=TrackerItemEdit&tracker_item_id=7999
-        $text = htmlentities($text, ENT_QUOTES);
+	$text = addslashes($text);
         if (! $text) {
             return array();
         }
@@ -1189,7 +1189,7 @@ class DOCMAN_Docs
          . "\nORDER BY $order";
 
         // TODO: add proper pagination instead of hardcoded limit?
-        $database->setQuery($query, 0, 20);
+	$database->setQuery($query, 0, 20);
         $rows = $database->loadObjectList();
 
 
