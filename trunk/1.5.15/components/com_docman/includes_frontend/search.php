@@ -29,7 +29,7 @@ function fetchSearchForm($gid, $itemid)
     global $search_mode, $ordering, $invert_search, $reverse_order, $search_where, $search_phrase, $search_catid;
     // category select list
     $options = array(mosHTML::makeOption('0', _DML_ALLCATS));
-    $lists['catid'] = dmHTML::categoryList($search_catid , "", $options);
+    $lists['catid'] = dmHTML::categoryListOnlyFirstOrder($search_catid , "", $options);
 
     $mode = array();
     $mode[] = mosHTML::makeOption('any' , _DML_SEARCH_ANYWORDS);
