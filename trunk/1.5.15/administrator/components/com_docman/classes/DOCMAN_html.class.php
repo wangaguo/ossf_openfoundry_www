@@ -137,10 +137,24 @@ class dmHTML extends mosHTML
         // assemble menu items to the array
         foreach ($list as $item) {
             $options[] = mosHTML::makeOption($item->id, $item->treename);
-        }
+	}
         $parent = mosHTML::selectList($options, 'catid', 'id="catid" class="inputbox" size="1" onchange="' . $action . '"', 'value', 'text', $id);
         return $parent;
     }
+
+    function categoryListOnlyFirstOrder($id, $action, $options = array())
+    {
+	    global $_DOCMAN;
+	    require_once($_DOCMAN->getPath('classes', 'utils'));
+	    $list = DOCMAN_utils::categoryArray();
+	    // assemble menu items to the array
+	    foreach ($list as $item) {
+	      if(substr($item->treename,0,1)!='.')
+	        $options[] = mosHTML::makeOption($item->id, $item->treename);
+	    }
+	    $parent = mosHTML::selectList($options, 'catid', 'id="catid" class="inputbox" size="1" onchange="' . $action . '"', 'value', 'text', $id);
+	    return $parent;
+    }    
 
     function categoryParentList($id, $action, $options = array())
     {
