@@ -6,7 +6,6 @@ $numOfSubcatsToDisplay = $this->config->getTemParam('numOfSubcatsToDisplay',3);
 ?>
  
 <div id="index">
-<div class="title"><?php echo JText::_( 'Categories' ); ?></div>
 <?php
 if( $this->config->getTemParam('displayAlphaIndex','1') ) { $this->display( 'sub_alphaIndex.tpl.php' ); } 
 
