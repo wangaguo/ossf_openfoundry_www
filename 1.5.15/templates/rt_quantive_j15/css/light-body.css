@@ -9,8 +9,8 @@
 /*** TEXT COLORS *************************/
 
 /* Core Text */
-body, .title, .rt-article-title, .rt-article-title a, #rt-bottom, #rt-footer, #rt-footer .title, #rt-header, #rt-copyright {color: #666;}
-.title span, .rt-article-title span, .roktabs-title span, h1 {color: #333;}
+body, .title, .rt-article-title, .rt-article-title a, #rt-bottom, #rt-footer, #rt-footer .title, #rt-header, #rt-copyright {color: #333;}
+.title span, .rt-article-title span, .roktabs-title span, h1 {color: #1e1e1e;}
 
  
 /* Showcase Text */
