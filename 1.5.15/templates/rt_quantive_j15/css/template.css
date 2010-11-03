@@ -252,7 +252,7 @@ span.mp_button {
 	font-weight:900;
 	font-size:16px;
 	margin:0 0 0 10px;
-	padding: 5px 40px 10px 55px;
+	padding: 5px 40px 10px 45px;
 
 }
 /*My Issue */
@@ -313,6 +313,11 @@ tr.sectiontableentry1 {
 #customers tr.alt td {
     background-color:#b2daea;
 }
+
+#customers tr.alt2 td {
+    background-color:#DFF6FF;
+}
+
 
 #customers
 {
