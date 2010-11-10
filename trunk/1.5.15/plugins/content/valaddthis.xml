@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5" type="plugin" group="content">
+	<name>Content - ValAddThis</name>
+	<author>Chrysovalantis Mochlas / www.valandis.de</author>
+	<creationDate>October 2010</creationDate>
+	<copyright>Copyright (C) 2010 Val Web Design</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>valandis@valandis.de</authorEmail>
+	<authorUrl>http://www.valandis.de</authorUrl>
+	<version>1.3.0</version>
+	<description>VALADDTHIS_DESCRIPTION</description>
+
+	<!-- supported languages -->
+	<languages folder="language">
+		<language tag="en-GB">en-GB.plg_content_valaddthis.ini</language>
+		<language tag="el-GR">el-GR.plg_content_valaddthis.ini</language>
+		<language tag="de-DE">de-DE.plg_content_valaddthis.ini</language>
+	</languages>
+
+	<!-- plugin's files -->
+	<files>
+		<filename plugin="valaddthis">valaddthis.php</filename>
+		<filename>valaddthis/index.html</filename>
+		<filename>valaddthis/css/default.css</filename>
+		<filename>valaddthis/css/default32.css</filename>
+		<filename>valaddthis/css/vertical.css</filename>
+		<filename>valaddthis/css/vertical32.css</filename>
+		<filename>valaddthis/css/horizontal.css</filename>
+		<filename>valaddthis/css/vertical1.css</filename>
+		<filename>valaddthis/css/vertical2.css</filename>
+		<filename>valaddthis/css/user.css</filename>
+		<filename>valaddthis/css/index.html</filename>
+		<filename>valaddthis/images/index.html</filename>
+		<filename>valaddthis/images/addthis-long.gif</filename>
+		<filename>valaddthis/images/addthis-short.gif</filename>
+		<filename>valaddthis/images/bm-long.gif</filename>
+		<filename>valaddthis/images/bm-short.gif</filename>
+		<filename>valaddthis/images/plus-small.gif</filename>
+		<filename>valaddthis/images/email-short.gif</filename>
+		<filename>valaddthis/images/rss-feed-big.gif</filename>
+		<filename>valaddthis/images/rss-feed-long.gif</filename>
+		<filename>valaddthis/images/rss-feed-short.gif</filename>
+		<filename>valaddthis/images/share-long.gif</filename>
+		<filename>valaddthis/images/share-short.gif</filename>
+		<filename>valaddthis/images/subscribe-big.gif</filename>
+		<filename>valaddthis/images/subscribe-long.gif</filename>
+		<filename>valaddthis/images/subscribe-short.gif</filename>
+		<filename>valaddthis/images/share-counter.gif</filename>
+	</files>
+
+	<!-- plugin's parameters -->
+	<params>
+
+		<!-- general parameters -->
+		<param name="plugin_class" type="text" default="" label="PLUGIN_CSS_CLASS_L" description="PLUGIN_CSS_CLASS_D" />
+		<param name="addthis_pub" type="text" default="" label="VAR_ADDTHIS_ID_L" description="VAR_ADDTHIS_ID_D" />
+		<param name="secure_server" type="radio" default="1" label="VAR_SSERVER_L" description="VAR_SSERVER_D">
+			<option value="0">VAR_YES</option>
+			<option value="1">VAR_NO</option>
+		</param>
+		<param name="addthis_type" type="radio" default="0" label="VAR_ADDTHIS_TYPE_L" description="VAR_ADDTHIS_TYPE_D">
+			<option value="0">VAR_BUTTON</option>
+			<option value="1">VAR_TOOLBOX</option>
+		</param>
+		<param name="addthis_type_cat" type="radio" default="0" label="VAR_ADDTHIS_TYPECAT_L" description="VAR_ADDTHIS_TYPECAT_D">
+			<option value="0">VAR_BUTTON</option>
+			<option value="1">VAR_TOOLBOX</option>
+		</param>
+		<param name="addthis_type_sec" type="radio" default="0" label="VAR_ADDTHIS_TYPESEC_L" description="VAR_ADDTHIS_TYPESEC_D">
+			<option value="0">VAR_BUTTON</option>
+			<option value="1">VAR_TOOLBOX</option>
+		</param>
+		<param name="addthis_type_front" type="radio" default="0" label="VAR_ADDTHIS_TYPEFRONT_L" description="VAR_ADDTHIS_TYPEFRONT_D">
+			<option value="0">VAR_BUTTON</option>
+			<option value="1">VAR_TOOLBOX</option>
+		</param>
+		<param name="addthis_position" type="radio" default="0" label="VAR_ADDTHIS_POSITION_L" description="VAR_ADDTHIS_POSITION_D">
+			<option value="0">VAR_TOP</option>
+			<option value="1">VAR_BOTTOM</option>
+			<option value="2">VAR_BOTH</option>
+		</param>
+		<param name="show_cat" type="radio" default="0" label="VAR_SHOWCAT_L" description="VAR_SHOWCAT_D">
+			<option value="0">VAR_YES</option>
+			<option value="1">VAR_NO</option>
+		</param>
+		<param name="show_sec" type="radio" default="0" label="VAR_SHOWSEC_L" description="VAR_SHOWSEC_D">
+			<option value="0">VAR_YES</option>
+			<option value="1">VAR_NO</option>
+		</param>
+		<param name="show_front" type="radio" default="0" label="VAR_SHOWFRONT_L" description="VAR_SHOWFRONT_D">
+			<option value="0">VAR_YES</option>
+			<option value="1">VAR_NO</option>
+		</param>
+		<param name="filter_art" type="text" default="" label="VAR_FILTERART_L" description="VAR_FILTERART_D" size="50" />
+		<param name="filter_cat" type="text" default="" label="VAR_FILTERCAT_L" description="VAR_FILTERCAT_D" size="50" />
+		<param name="filter_sec" type="text" default="" label="VAR_FILTERSEC_L" description="VAR_FILTERSEC_D" size="50" />
+		<param name="html_before" type="textarea" default="" label="VAR_HTMLBEFORE_L" description="VAR_HTMLBEFORE_D" rows="3" cols="35" />
+		<param name="html_after" type="textarea" default="" label="VAR_HTMLAFTER_L" description="VAR_HTMLAFTER_D" rows="3" cols="35" />
+		<!-- global parameters -->
+		<param type="spacer" default="HEADER_GLOBAL" />
+		<param name="services_compact" type="text" default="" label="VAR_COMPACTSERV_L" description="VAR_COMPACTSERV_D" size="50" />
+		<param name="services_expanded" type="text" default="" label="VAR_EXPANDSERV_L" description="VAR_EXPANDSERV_D" size="50" />
+		<param name="services_exclude" type="text" default="" label="VAR_EXCLUDESERV_L" description="VAR_EXCLUDESERV_D" size="50" />
+		<param name="ui_use_css" type="radio" default="1" label="VAR_USECSS_L" description="VAR_USECSS_D">
+			<option value="1">VAR_YES</option>
+			<option value="0">VAR_NO</option>
+		</param>
+		<param name="ui_use_addressbook" type="radio" default="0" label="VAR_USEBOOK_L" description="VAR_USEBOOK_D">
+			<option value="1">VAR_YES</option>
+			<option value="0">VAR_NO</option>
+		</param>
+		<param name="data_track_linkback" type="radio" default="0" label="VAR_DATATRACK_L" description="VAR_DATATRACK_D">
+			<option value="1">VAR_YES</option>
+			<option value="0">VAR_NO</option>
+		</param>
+		<param name="data_use_flash" type="radio" default="1" label="VAR_USEFLASH_L" description="VAR_USEFLASH_D">
+			<option value="1">VAR_YES</option>
+			<option value="0">VAR_NO</option>
+		</param>
+		<param name="data_use_cookies" type="radio" default="1" label="VAR_USECOOKIES_L" description="VAR_USECOOKIES_D">
+			<option value="1">VAR_YES</option>
+			<option value="0">VAR_NO</option>
+		</param>
+		<param name="ui_use_embeddable_services_beta" type="radio" default="0" label="VAR_USE_EMBED_L" description="VAR_USE_EMBED_D">
+			<option value="1">VAR_YES</option>
+			<option value="0">VAR_NO</option>
+		</param>
+		<param name="data_ga_tracker" type="radio" default="0" label="VAR_USE_GATRACK_L" description="VAR_USE_GATRACK_D">
+			<option value="1">VAR_YES</option>
+			<option value="0">VAR_NO</option>
+		</param>
+		<param name="ga_tracker_object" type="text" default="" label="VAR_GATRACK_L" description="VAR_GATRACK_D" />
+		<param type="spacer" default="" />
+		<param name="ui_header_color" type="text" default="" label="VAR_ADDTHIS_HEADERCOLOR_L" description="VAR_ADDTHIS_HEADERCOLOR_D" />
+		<param name="ui_header_background" type="text" default="" label="VAR_ADDTHIS_HEADERBACKG_L" description="VAR_ADDTHIS_HEADERBACKG_D" />
+		<param name="ui_cobrand" type="text" default="" label="VAR_ADDTHIS_BRAND_L" description="VAR_ADDTHIS_BRAND_D" size="50" />
+		<param name="ui_offset_top" type="text" default="" label="VAR_OFFSET_TOP_L" description="VAR_OFFSET_TOP_D" />
+		<param name="ui_offset_left" type="text" default="" label="VAR_OFFSET_LEFT_L" description="VAR_OFFSET_LEFT_D" />
+		<param name="ui_hover_direction" type="radio" default="0" label="VAR_HOVERDIR_L" description="VAR_HOVERDIR_D">
+			<option value="0">VAR_DIR1</option>
+			<option value="1">VAR_DIR2</option>
+			<option value="-1">VAR_DIR3</option>
+		</param>
+		<param name="ui_delay" type="text" default="" label="VAR_HOVER_DELAY_L" description="VAR_HOVER_DELAY_D" />
+
+		<!-- language parameters -->
+		<param type="spacer" default="HEADER_LANGUAGE" />
+		<param name="ui_language" type="text" default="" label="VAR_UILANG_L" description="VAR_UILANG_D" />
+		<param name="text_share_caption" type="text" default="" label="VAR_TEXTSHARE_L" description="VAR_TEXTSHARE_D" size="50" />
+		<param name="text_email_caption" type="text" default="" label="VAR_TEXTEMCAPT_L" description="VAR_TEXTEMCAPT_D" size="50" />
+		<param name="text_email" type="text" default="" label="VAR_EMAIL_L" description="VAR_EMAIL_D" size="50" />
+		<param name="text_favorites" type="text" default="" label="VAR_FAVORITES_L" description="VAR_FAVORITES_D" size="50" />
+		<param name="text_more" type="text" default="" label="VAR_MORE_L" description="VAR_MORE_D" size="50" />
+
+		<!-- button parameters -->
+		<param type="spacer" default="HEADER_BUTTON" />
+		<param name="button_type" type="radio" default="0" label="VAR_BUTTON_TYPE_L" description="VAR_BUTTON_TYPE_D">
+			<option value="0">VAR_BUTTON_TYPE1</option>
+			<option value="1">VAR_BUTTON_TYPE2</option>
+			<option value="2">VAR_BUTTON_TYPE3</option>
+		</param>
+		<param name="ui_click" type="list" default="0" label="VAR_CLICK_L" description="VAR_CLICK_D">
+			<option value="1">VAR_M_CLICK</option>
+			<option value="0">VAR_M_OVER</option>
+		</param>
+		<param name="custom_choice" type="list" default="0" label="VAR_CUSTOM_CHOICE_L" description="VAR_CUSTOM_CHOICE_D">
+			<option value="0">VAR_CUSTOM_OPTION1</option>
+			<option value="1">VAR_CUSTOM_OPTION2</option>
+			<option value="2">VAR_CUSTOM_OPTION3</option>
+			<option value="3">VAR_CUSTOM_OPTION4</option>
+		</param>
+		<param name="addthis_button" type="radio" default="0" label="VAR_ADDTHIS_BUTTON_L" description="VAR_ADDTHIS_BUTTON_D">
+			<option value="0"><![CDATA[ <img src="../plugins/content/valaddthis/images/addthis-long.gif"><br/>]]></option>
+			<option value="1"><![CDATA[ <img src="../plugins/content/valaddthis/images/addthis-short.gif"><br/>]]></option>
+			<option value="2"><![CDATA[ <img src="../plugins/content/valaddthis/images/bm-long.gif"><br/>]]></option>
+			<option value="3"><![CDATA[ <img src="../plugins/content/valaddthis/images/bm-short.gif"><br/>]]></option>
+			<option value="4"><![CDATA[ <img src="../plugins/content/valaddthis/images/share-long.gif"><br/>]]></option>
+			<option value="5"><![CDATA[ <img src="../plugins/content/valaddthis/images/share-short.gif"><br/>]]></option>
+			<option value="6"><![CDATA[ <img src="../plugins/content/valaddthis/images/plus-small.gif"><br/>]]></option>
+			<option value="7"><![CDATA[ <img style="vertical-align:middle; margin-bottom:3px;" src="../plugins/content/valaddthis/images/rss-feed-big.gif"><br/>]]></option>
+			<option value="8"><![CDATA[ <img src="../plugins/content/valaddthis/images/rss-feed-long.gif"><br/>]]></option>
+			<option value="9"><![CDATA[ <img src="../plugins/content/valaddthis/images/rss-feed-short.gif"><br/>]]></option>
+			<option value="10"><![CDATA[ <img style="vertical-align:middle; margin-bottom:3px;" src="../modules/mod_valaddthis_15/images/subscribe-big.gif"><br/>]]></option>
+			<option value="11"><![CDATA[ <img src="../plugins/content/valaddthis/images/subscribe-long.gif"><br/>]]></option>
+			<option value="12"><![CDATA[ <img src="../plugins/content/valaddthis/images/subscribe-short.gif"><br/>]]></option>
+			<option value="13"><![CDATA[ <img src="../plugins/content/valaddthis/images/email-short.gif"><br/>]]></option>
+			<option value="14"><![CDATA[ <img style="vertical-align:middle; margin-bottom:3px;" src="../plugins/content/valaddthis/images/share-counter.gif"><br/>]]></option>
+		</param>
+		<param name="custom_button" type="text" default="" label="VAR_CUSTOM_BUTTON_L" description="VAR_CUSTOM_BUTTON_D" size="50" />
+		<param name="custom_text" type="text" default="" label="VAR_CUSTOM_TEXT_L" description="VAR_CUSTOM_TEXT_D" size="50" />
+		<param name="text_style" type="text" default="" label="VAR_TEXT_STYLE_L" description="VAR_TEXT_STYLE_D" size="50" />
+		<param name="alt_text" type="text" default="" label="VAR_ALT_TEXT_L" description="VAR_ALT_TEXT_D" size="50" />
+		<param name="rssfeed_url" type="text" default="" label="VAR_FEED_URL_L" description="VAR_FEED_URL_D" size="50" />
+
+		<!-- toolbox parameters -->
+		<param type="spacer" default="HEADER_TOOLBOX" />
+		<param name="toolbox_services" type="text" default="" label="VAR_TOOLSERV_L" description="VAR_TOOLSERV_D" size="50" />
+		<param name="use_text_flag" type="radio" default="0" label="VAR_USETEXT_L" description="VAR_USETEXT_D">
+			<option value="1">VAR_YES</option>
+			<option value="0">VAR_NO</option>
+		</param>
+		<param name="use_nofollow" type="radio" default="0" label="VAR_NOFOLLOW_L" description="VAR_NOFOLLOW_D">
+			<option value="1">VAR_YES</option>
+			<option value="0">VAR_NO</option>
+		</param>
+		<param name="toolbox_style" type="list" default="default" label="VAR_TOOLBOX_STYLE_L" description="VAR_TOOLBOX_STYLE_D">
+			<option value="default">VAR_STYLE_OPTION1</option>
+			<option value="default32">VAR_STYLE_OPTION7</option>
+			<option value="vertical">VAR_STYLE_OPTION2</option>
+			<option value="vertical32">VAR_STYLE_OPTION8</option>
+			<option value="cssHorizontal">VAR_STYLE_OPTION3</option>
+			<option value="cssVertical1">VAR_STYLE_OPTION4</option>
+			<option value="cssVertical2">VAR_STYLE_OPTION5</option>
+			<option value="cssUser">VAR_STYLE_OPTION6</option>
+		</param>
+		<param name="toolbox_width" type="text" default="" label="VAR_TOOLBOX_WIDTH_L" description="VAR_TOOLBOX_WIDTH_D" />
+		<param name="toolbox_sharetext" type="text" default="" label="VAR_TOOLBOX_SHARE_L" description="VAR_TOOLBOX_SHARE_D" size="50" />
+		<param name="tooltip_text" type="text" default="" label="VAR_TOOLTIP_L" description="VAR_TOOLTIP_D" size="50" />
+		<param name="use_more_flag" type="radio" default="1" label="VAR_USEMORE_L" description="VAR_USEMORE_D">
+			<option value="1">VAR_YES</option>
+			<option value="0">VAR_NO</option>
+		</param>
+		<param name="toolbox_more" type="text" default="" label="VAR_TOOLBOX_MORE_L" description="VAR_TOOLBOX_MORE_D" size="50" />
+		<param name="toolbox_separator" type="text" default="" label="VAR_TOOLBOX_SEPARATOR_L" description="VAR_TOOLBOX_SEPARATOR_D" />
+	</params>
+</install>
