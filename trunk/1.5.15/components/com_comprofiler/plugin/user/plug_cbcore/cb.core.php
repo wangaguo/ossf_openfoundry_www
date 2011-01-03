@@ -2552,11 +2552,13 @@ class CBfield_image extends cbFieldHandler {
 		$live_site	=	$_CB_framework->getCfg( 'live_site' );
 		$name		=	getNameFormat( $user->name,$user->username,$ueConfig['name_format'] );
 		$username	=	str_replace("!","",$name);
-		$oValue		= 	"<img src=\"".$live_site."/sso/user/image?name=$username&size=medium"."\">";
+		$image_size	=	preg_match('/\/userprofile\//',$_SERVER['SCRIPT_URL']) == false ? 'medium' : 'large';
+		$oValue		= 	"<img src=\"".$live_site."/sso/user/image?name=$username&size=".$image_size."\">";
 		return $oValue;
 
 
 	}
+
 
 
 	function _avatarLivePath( &$field, &$user, $thumbnail = true, $show_avatar = 2 ) {
