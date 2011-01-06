@@ -488,6 +488,8 @@ $LSN</a></font><font size=\"3\"> &nbsp;&nbsp;| &nbsp;&nbsp;</font><font color=\"
 		}
 		// Now let's update the HTML Mail Body
 		// embed the subscriber / user name
+		$html_message = str_replace(",",",\r\n",$html_message);
+		$html_message = str_replace( "，", "，\r\n", $html_message);
 		$mymail->Body = str_replace( "[NAME]", $name, $html_message);
 		
 		// embed the email address this newsletter is sent to
