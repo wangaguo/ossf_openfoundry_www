@@ -40,7 +40,7 @@ body.font-size-is-small {font-size: 11px;line-height: 200%;}
 body.font-size-is-xsmall {font-size: 10px;line-height: 200%;}
 form {margin: 0;padding: 0;}
 p {margin: 0 0 15px 0;}
-h1, h2, h3, h4, h5 {margin: 15px 0;line-height: 1.1em;}
+h1, h2, h3, h4, h5 {margin: 5px 0;line-height: 1em;}
 h1 {font-size: 260%;}
 h2 {font-size: 200%;}
 h3 {font-size: 175%;}
@@ -75,7 +75,8 @@ body.rtl {min-width: inherit;}
 /* Style */
 html,body {margin-bottom:1px;}
 body {background: #ddd;color: #444;}
-h1, h2, h3, h4, h5, h6, legend {color: #000;}
+h1, h2, h3, h4, h5, legend {color: #000;}
+h6 {color:#474646;}
 #rt-header h2, #rt-bottom h2 {color: #aaa}
 #rt-header, #rt-bottom {color: #aaa;}
 .rt-container {background: #fff;} 
