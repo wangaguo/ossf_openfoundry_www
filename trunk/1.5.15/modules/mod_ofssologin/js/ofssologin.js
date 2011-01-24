@@ -7,7 +7,7 @@ function of_search(){
       location.href = "/index.php?option=com_search&Itemid=58&searchword="+of_search_word;
       break;
     case "People":
-      location.href = "/index.php?option=com_comprofiler&task=usersList&Itemid=6&limitstart=0&search=&username="+of_search_word;
+      location.href = "/index.php?option=com_comprofiler&task=usersList&Itemid=6&limitstart=0&search=&cb_keyword="+of_search_word;
       break;
     default:
       location.href = "/of/openfoundry/search?commit=search&query="+of_search_word;
