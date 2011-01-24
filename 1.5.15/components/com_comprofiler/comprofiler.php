@@ -984,7 +984,8 @@ function usersList( $uid ) {
 	$searchesFromFields		=	$tabs->applySearchableContents( $searchableFields, $searchVals, $_GET, $list_compare_types );
 	$whereFields			=	$searchesFromFields->reduceSqlFormula( $tableReferences, $joinsSQL, TRUE );
 	if ( $whereFields ) {
-		$tablesWhereSQL[]	=	'(' . $whereFields . ')';
+		$searchSQL = strtolower($_CB_database->getEscaped( $_GET['cb_keyword'] ));
+		$tablesWhereSQL[]	=	'((lower(ue.cb_nickname) LIKE \'%'.$searchSQL.'%\') OR (lower(u.username) LIKE \'%'.$searchSQL.'%\') OR (ue.cb_itskills LIKE \'%'.$searchSQL.'%\'))';
 /*
 		if ( $search === null ) {
 			$search			=	'';
@@ -997,7 +998,6 @@ function usersList( $uid ) {
 	$queryFrom				=	"FROM " . implode( ', ', $tablesSQL )
 							.	( count( $joinsSQL ) ? "\n " . implode( "\n ", $joinsSQL ) : '' )
 							.	"\n WHERE " . implode( "\n AND ", $tablesWhereSQL );
-
 	// handles old formatted names search:
 /*
 	if ( $search != '' ) {
