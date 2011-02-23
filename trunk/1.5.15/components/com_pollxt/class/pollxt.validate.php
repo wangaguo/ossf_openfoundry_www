@@ -179,13 +179,13 @@ class validate {
 					$count++;
 			}
 			if ($count > $q->maxvotes and $q->maxvotes > 0) {
-				$html .= $q->title.": ";
-				$html .= JText::_('POLLXT_MAXVOTES').$q->maxvotes.JText::_('POLLXT_MAXVOTES_END')."<br/>";
+				$html .= JText::_('POLLXT_MAXVOTES')."&nbsp;".$q->maxvotes.JText::_('POLLXT_MAXVOTES_END').":<br/>";
+				$html .= $q->title;
 	        	$frontend->error = true;
 			}
 			if ($count < $q->minvotes and $q->minvotes > 0) {
-				$html .= $q->title.": ";
-				$html .= JText::_('POLLXT_MINVOTES').$q->minvotes.JText::_('POLLXT_MINVOTES_END')."<br/>";
+				$html .= JText::_('POLLXT_MINVOTES')."&nbsp;".$q->minvotes.JText::_('POLLXT_MINVOTES_END').":<br/>";
+				$html .= $q->title;
 	        	$frontend->error = true;
 			}
 		}
