@@ -185,10 +185,6 @@ var $editArea = null;
 						if ($o->upd != "D") $i++;
 					}
 			 	}
-			 	if ($i == 0) {
-					$this->message = JText::_('POLLXT_EACH_QUESTION_OPTION');
-					return false;
-				}
 			}
 		}
 	if ($this->myPoll->title == "") {

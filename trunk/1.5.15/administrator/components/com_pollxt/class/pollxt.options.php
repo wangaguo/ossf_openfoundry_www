@@ -305,17 +305,17 @@ class pageEditorOptions {
 		$conf = new pollxtConfig();
 		$conf->pollid = $this->page->poll->id;
 		$conf->load();
-		$html .= xtHTML::mediaManager("edit_img_url", $q->img_url, $conf->imgpath);           
+		//$html .= xtHTML::mediaManager("edit_img_url", $q->img_url, $conf->imgpath);           
 		
 		$html .= "</td>";
 
 		$html .= "<td valign=\"top\">";
 
-        $types = array(JText::_('ADMIN_POLL_MANAGER_QUESTIONS_IMAGE_WIDTH')=>"width", JText::_('ADMIN_POLL_MANAGER_QUESTIONS_IMAGE_HEIGHT')=>"height");
+     //   $types = array(JText::_('ADMIN_POLL_MANAGER_QUESTIONS_IMAGE_WIDTH')=>"width", JText::_('ADMIN_POLL_MANAGER_QUESTIONS_IMAGE_HEIGHT')=>"height");
         
-		$html .= xtMakeSelect($types, $q->imgor, 'edit_imgor', $this->page->selOption);
+		//$html .= xtMakeSelect($types, $q->imgor, 'edit_imgor', $this->page->selOption);
 
-		$html .= xtMakeInput($q, $sel, $this->page->options->$sQ, "imgsize", 5);
+		//$html .= xtMakeInput($q, $sel, $this->page->options->$sQ, "imgsize", 5);
 		$html .= "</td>";
 
 		
@@ -344,23 +344,23 @@ class pageEditorOptions {
 		$html .= "<td style=\"font-weight:bold\">".xtTooltip(JText::_('ADMIN_POLL_MANAGER_QUESTIONS_DESC'),JText::_('ADMIN_POLL_MANAGER_QUESTIONS_DESC_LONG'))."</td>";
 
 		$html .= "</td>";
-		$html .= "<td style=\"font-weight:bold\">".xtTooltip(JText::_('ADMIN_POLL_MANAGER_QUESTIONS_LINKURL'),JText::_('ADMIN_POLL_MANAGER_QUESTIONS_LINKURL_LONG'))."</td>";
+		//$html .= "<td style=\"font-weight:bold\">".xtTooltip(JText::_('ADMIN_POLL_MANAGER_QUESTIONS_LINKURL'),JText::_('ADMIN_POLL_MANAGER_QUESTIONS_LINKURL_LONG'))."</td>";
 
-		$html .= "</td>";
-		$html .= "<td style=\"font-weight:bold\">".xtTooltip(JText::_('ADMIN_POLL_MANAGER_QUESTIONS_LINKTEXT'),JText::_('ADMIN_POLL_MANAGER_QUESTIONS_LINKTEXT_LONG'))."</td>";
+		//$html .= "</td>";
+		//$html .= "<td style=\"font-weight:bold\">".xtTooltip(JText::_('ADMIN_POLL_MANAGER_QUESTIONS_LINKTEXT'),JText::_('ADMIN_POLL_MANAGER_QUESTIONS_LINKTEXT_LONG'))."</td>";
 
-		$html .= "</td>";
+		//$html .= "</td>";
 		$html .= "<td colspan=\"7\"></td>";
 		$html .= "</tr>";
 		$html .= "<tr><td></td>";
-		$html .= "<td><textarea id=\"edit_desc\" cols=\"34\">".$q->desc;
+		$html .= "<td><textarea id=\"edit_desc\" cols=\"50\" rows=\"12\">".$q->desc;
 		$html .= "</textarea></td>";
-		$html .= "<td valign=\"top\">";
-		$html .= xtMakeInput($q, $sel, $this->page->options->$sQ, "linkurl", 40);
-		$html .= "</td>";
-		$html .= "<td valign=\"top\">";
-		$html .= xtMakeInput($q, $sel, $this->page->options->$sQ, "linktext", 40);
-		$html .= "</td>";
+		//$html .= "<td valign=\"top\">";
+	//	$html .= xtMakeInput($q, $sel, $this->page->options->$sQ, "linkurl", 40);
+		//$html .= "</td>";
+		//$html .= "<td valign=\"top\">";
+		//$html .= xtMakeInput($q, $sel, $this->page->options->$sQ, "linktext", 40);
+		//$html .= "</td>";
 		$html .= "</tr>";		
 		
 		$html .= " </table>";

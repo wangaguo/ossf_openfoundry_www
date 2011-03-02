@@ -298,19 +298,19 @@ class pageEditorQuestions {
 		$conf->pollid = $this->page->poll->id;
 		$conf->load();
 
-		$html .= xtHTML::mediaManager("edit_img_url", $q->img_url, $conf->imgpath);           
+		//$html .= xtHTML::mediaManager("edit_img_url", $q->img_url, $conf->imgpath);           
 
-		$html .= xtMakeSelect($img, $q->img_url, 'edit_img_url', $this->page->selQuestion, " width:100px ");
+		//$html .= xtMakeSelect($img, $q->img_url, 'edit_img_url', $this->page->selQuestion, " width:100px ");
 
 		$html .= "</td>";
 
 		$html .= "<td valign=\"top\">";
 
-        $types = array(JText::_('ADMIN_POLL_MANAGER_QUESTIONS_IMAGE_WIDTH')=>"width", JText::_('ADMIN_POLL_MANAGER_QUESTIONS_IMAGE_HEIGHT')=>"height");
+      //  $types = array(JText::_('ADMIN_POLL_MANAGER_QUESTIONS_IMAGE_WIDTH')=>"width", JText::_('ADMIN_POLL_MANAGER_QUESTIONS_IMAGE_HEIGHT')=>"height");
         
-		$html .= xtMakeSelect($types, $q->imgor, 'edit_imgor', $this->page->selQuestion);
+		//$html .= xtMakeSelect($types, $q->imgor, 'edit_imgor', $this->page->selQuestion);
 
-		$html .= xtMakeInput($q, $sel, $this->page->questions, "imgsize", 5);
+	//	$html .= xtMakeInput($q, $sel, $this->page->questions, "imgsize", 5);
 		$html .= "</td>";
 
 		

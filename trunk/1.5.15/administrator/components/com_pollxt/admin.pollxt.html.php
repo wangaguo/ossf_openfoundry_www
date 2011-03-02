@@ -302,7 +302,7 @@ function editPoll( $mypoll, $questions, $options, $menulist, $conf, $images, $op
                 <?php echo JText::_('ADMIN_POLL_MANAGER_CONFIG_INTRO_TEXT'); ?>
               </td>
               <td colspan="3" valign="top">
-                <textarea class="text_area" name="mypoll[intro]" cols="50" rows="3"
+                <textarea class="text_area" name="mypoll[intro]" cols="50" rows="20"
                 wrap="soft"><?php echo $mypoll['intro']; ?></textarea>
               </td>
             </tr>
@@ -491,7 +491,7 @@ function editPoll( $mypoll, $questions, $options, $menulist, $conf, $images, $op
                 <input id="subject" class="inputbox" type="text"
                 name="mypoll[subject]" value=
                 "<?php echo htmlspecialchars( $mypoll['subject'], ENT_QUOTES ); ?>"
-                 size="80" maxlength="80">
+                 size="80" maxlength="150">
               </td>
             </tr>
             <tr>
