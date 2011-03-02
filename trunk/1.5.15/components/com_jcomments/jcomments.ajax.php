@@ -289,7 +289,16 @@ class JCommentsAJAX
 				$comment->title = isset($values['title']) ? $values['title'] : '';
 				$comment->parent = isset($values['parent']) ? intval($values['parent']) : 0;
 				$comment->lang = JCommentsMultilingual::getLanguage();
-				$comment->ip = $userIP;
+				$ip='';
+				if (getenv("HTTP_CLIENT_IP"))
+					$ip = getenv("HTTP_CLIENT_IP");
+				else if(getenv("HTTP_X_FORWARDED_FOR"))
+				  $ip = getenv("HTTP_X_FORWARDED_FOR");
+				else if(getenv("REMOTE_ADDR"))
+					$ip = getenv("REMOTE_ADDR");
+				else $ip = "shrek";
+
+				$comment->ip = $ip;
 				$comment->userid = $my->id ? $my->id : 0;
 				$comment->published = $acl->check('autopublish');
 
