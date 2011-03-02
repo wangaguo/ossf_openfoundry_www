@@ -133,6 +133,7 @@ function output(ret) {
      	window.setTimeout("fadeOutRed('00')", 50);
      	return;	
 	}
+
 //    if (text[0])
 //     document.getElementById("pageArea").innerHTML = text[0];
     if (data.questionArea)
