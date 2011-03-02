@@ -157,7 +157,13 @@ class xtUtil {
 				$inp[$i] .= "<label class=\"".$lab."\" for=\"voteid[".$vid."][]\">";
 		 		$inp[$i] .= "<input type=\"".$this->type."\" name=\"voteid[".$vid."][]\"".
                   	     "id=\"p".$o[0]."\" value=\"".$o[0]."\" >";
-                $inp[$i] .= $o_intro."</input></label>";
+			 $inp[$i] .= $o_intro."</input>";
+			 if($o['desc']!=''){
+							$inp[$i] .= "&nbsp;&nbsp;<b><a href=\"javascript:switchonoff('".$vid.$i.$name."')\"> [+]</a></b>";
+							$inp[$i] .= "<div style=\"display:none\" class=\"op_desc\"  id=\"poll".$vid.$i.$name."\">"; 
+						  $inp[$i].=$o['desc']."<br></div>";	 
+			 }
+				$inp[$i] .="</label>";
 	       	 	if ($o['desc'] && $this->conf->tooltips)  
 					$inp[$i] .= "</span>";
                 if ($o_rest != "") {
