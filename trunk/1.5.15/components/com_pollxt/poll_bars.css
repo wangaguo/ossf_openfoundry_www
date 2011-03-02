@@ -34,6 +34,12 @@
 
 
 }
+
+.op_desc {
+	margin:5px 5px 10px 30px;
+	padding:10px;
+	border:2px dashed #b7b7b7;
+}
 /* the message window */
 .xtmessage {
 	background: #FFCCCC;
@@ -128,8 +134,9 @@
 }
 #pollxtOptCol {
 	float: left;
-	padding-right:10px;	
+	padding-right:20px;	
 }
+
 #pollxtFreeCol {
 	float: left;
 }
