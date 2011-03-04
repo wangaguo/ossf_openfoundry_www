@@ -154,6 +154,7 @@ if ($func == "getpreview") {
 
     $msgbody = smile::htmlwrap($msgbody, $fbConfig->wrap);
     header("Content-Type: text/html; charset=utf-8");
+		$msgbody = htmlspecialchars_decode($msgbody);
     echo $msgbody;
     die();
 }
