@@ -954,6 +954,7 @@ if ($letPass || $is_Moderator)
 
                                 $fb_message_txt = smile::smileReplace($fb_message_txt, 0, $fbConfig->disemoticons, $smileyList);
                                 $fb_message_txt = nl2br($fb_message_txt);
+																$fb_message_txt = htmlspecialchars_decode($fb_message_txt);
                                 //$fb_message_txt = str_replace("<P>&nbsp;</P><br />","",$fb_message_txt);
                                 //$fb_message_txt = str_replace("</P><br />","</P>",$fb_message_txt);
                                 //$fb_message_txt = str_replace("<P><br />","<P>",$fb_message_txt);
