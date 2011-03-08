@@ -43,10 +43,10 @@ function createImg($link = "1", $url, $or = "width", $size = "100%", $sfx ="", $
 	$html .= "<span class=\"tipxt\" title=\"::".$imgsrc."\">";
 
 	if ($link == 1) {
-		$clicklink = "window.open('".$imgurl."','Pic', '".$imgpar."')"; 
-		$html .= "<a style=\"cursor:pointer\" onkeypress=\"".$clicklink."\" onclick = \"".$clicklink."\">";
+		//$clicklink = "window.open('".$imgurl."','Pic', '".$imgpar."')"; 
+		//$html .= "<a style=\"cursor:pointer\" onkeypress=\"".$clicklink."\" onclick = \"".$clicklink."\">";
 	}
-	$html .= "<img border=\"0\" ".$or."="."\"".$size."\" src=".$imgurl." />";
+	//$html .= "<img border=\"0\" ".$or."="."\"".$size."\" src=".$imgurl." />";
 	$html .= "</span>";
 
 	
