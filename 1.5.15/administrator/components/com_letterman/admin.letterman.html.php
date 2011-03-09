@@ -306,11 +306,11 @@ class HTML_letterman {
             </tr>
 			<tr>
 				<td style="text-align:right;"><strong><?php echo LM_MAIL_FROM ?>:</strong></td>
-				<td><input class="inputbox" type="text" name="mailfrom" size="25" value="<?php echo $admin_email; ?>" style="width:200px" /></td>
+				<td><input class="inputbox" type="text" name="mailfrom" size="25" value="ossfepaper@openfoundry.org" style="width:200px" /></td>
 			</tr>
 			<tr>
 				<td style="text-align:right;"><strong><?php echo LM_REPLY_TO ?>:</strong></td>
-				<td><input class="inputbox" type="text" name="replyto" size="25" value="<?php echo $admin_email; ?>" style="width:200px" /></td>
+				<td><input class="inputbox" type="text" name="replyto" size="25" value="ossfepaper@openfoundry.org" style="width:200px" /></td>
 			</tr>
             <tr>
                 <td style="text-align:right;" width="250"><label for="disable_timeout"><strong><?php echo LM_DISABLE_TIMEOUT ?>:</strong></label></td>
