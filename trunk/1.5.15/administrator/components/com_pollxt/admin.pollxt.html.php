@@ -433,7 +433,7 @@ function editPoll( $mypoll, $questions, $options, $menulist, $conf, $images, $op
                 URL: <input class="inputbox" type="text" name=
                 "mypoll[goto_url]" value=
                 "<?php echo htmlspecialchars( $mypoll['goto_url'], ENT_QUOTES ); ?>"
-                 size="40" maxlength="80">
+                 size="40" maxlength="130">
               </td>
             </tr>
             <tr>
