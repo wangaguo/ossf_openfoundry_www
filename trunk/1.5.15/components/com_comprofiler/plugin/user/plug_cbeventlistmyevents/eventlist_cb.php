@@ -389,7 +389,7 @@ class eventlistTab extends cbTabHandler {
 					$result_titles=explode(" " , $result->title);
 
 					$result_title=implode("-" , $result_titles);					
-					$url = "index.php?view=details&id={$result->id}%3A$result_title&option=com_eventlist&Itemid=$S_Itemid1" ;
+					$url = "index.php?view=details&id={$result->id}&option=com_eventlist&Itemid=$S_Itemid1" ;
 
 					$url1 = JRoute::_($url);
 
