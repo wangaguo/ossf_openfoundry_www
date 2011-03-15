@@ -433,7 +433,7 @@ class eventlistTab extends cbTabHandler {
 
 					
 
-					$qry = "SELECT count(uid) AS regs FROM #__eventlist_register where `event`=$result->id";		
+					$qry = "SELECT count(uid) AS regs FROM #__eventlist_reg_user where `reg_id`=$result->id";		
 
 					$_CB_database->setQuery($qry);
 
