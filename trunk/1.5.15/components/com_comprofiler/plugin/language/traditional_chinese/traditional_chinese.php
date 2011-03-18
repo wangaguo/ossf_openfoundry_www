@@ -14,7 +14,7 @@
 if ( ! ( defined( '_VALID_CB' ) || defined( '_JEXEC' ) || defined( '_VALID_MOS' ) ) ) { die( 'Direct Access to this location is not allowed.' ); }
 
 //Field Labels
-DEFINE('_UE_HITS','拜訪人次');
+DEFINE('_UE_HITS','關注人次');
 DEFINE('_UE_USERNAME','帳號');
 DEFINE('_UE_Address','地址');
 DEFINE('_UE_City','縣/市');
