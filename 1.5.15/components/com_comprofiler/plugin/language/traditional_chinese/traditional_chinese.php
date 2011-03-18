@@ -15,7 +15,7 @@ if ( ! ( defined( '_VALID_CB' ) || defined( '_JEXEC' ) || defined( '_VALID_MOS' 
 
 //Field Labels
 DEFINE('_UE_HITS','拜訪人次');
-DEFINE('_UE_USERNAME','使用者名稱');
+DEFINE('_UE_USERNAME','帳號');
 DEFINE('_UE_Address','地址');
 DEFINE('_UE_City','縣/市');
 DEFINE('_UE_State','鄉');
@@ -33,7 +33,7 @@ DEFINE('_UE_Location','地區');
 DEFINE('_UE_EDIT_TITLE','編輯您的詳細資料');
 DEFINE('_UE_YOUR_NAME','姓名');
 DEFINE('_UE_EMAIL','E-Mail');
-DEFINE('_UE_UNAME','使用者名稱');
+DEFINE('_UE_UNAME','帳號');
 DEFINE('_UE_PASS','密碼');
 DEFINE('_UE_VPASS','驗證密碼');
 DEFINE('_UE_SUBMIT_SUCCESS','提交成功!');
@@ -54,8 +54,8 @@ DEFINE('_UE_USERAPPROVAL_SUCCESSFUL','使用者已成功地被核准!');
 DEFINE('_UE_MEMBERSINCE','註冊日期');
 DEFINE('_UE_LASTONLINE','最後上線日期');
 DEFINE('_UE_ONLINESTATUS','上線狀態');
-DEFINE('_UE_ISONLINE','線上');
-DEFINE('_UE_ISOFFLINE','離線');
+DEFINE('_UE_ISONLINE','ONLINE');
+DEFINE('_UE_ISOFFLINE','OFFLINE');
 DEFINE('_UE_PROFILE_TITLE',' 個人資訊頁');
 DEFINE('_UE_UPDATEPROFILE','更新您的個人資訊');
 DEFINE('_UE_UPDATEAVATAR','更新您的圖片');
@@ -64,11 +64,12 @@ DEFINE('_UE_ADDITIONAL_INFO_HEADER','額外資訊');
 DEFINE('_UE_REQUIRED_ERROR','必填欄位!');
 DEFINE('_UE_FIELD_REQUIRED',' 必填!');
 DEFINE('_UE_DELETE_AVATAR','移除影像');
+DEFINE('_UE_ACCOUNT_JOBTITLE','帳號及職稱');
 
 //Administrator Tab Names
 DEFINE('_UE_USERPROFILE','使用者個人資料');
 DEFINE('_UE_USERLIST','使用者清單');
-DEFINE('_UE_AVATARS','影像');
+DEFINE('_UE_AVATARS','頭像');
 DEFINE('_UE_REGISTRATION','註冊');
 DEFINE('_UE_SUBSCRIPTION','訂閱 ');
 DEFINE('_UE_INTEGRATION','整合');
@@ -431,7 +432,22 @@ DEFINE('_UE_YOUR_LNAME','姓');
 DEFINE('_UE_NOSELFEMAIL','不允許您發送 E-Mail 給自己!');
 DEFINE('_UE_PROFILETAB','個人資料');
 DEFINE('_UE_AUTHORTAB','文章');
-DEFINE('_UE_FORUMTAB','論壇');
+DEFINE('_UE_ABOUTMETAB','基本資料');
+DEFINE('_UE_FORUMTAB','討論區');
+DEFINE('_UE_PARTNERTAB','夥伴');
+DEFINE('_UE_PROJECTTAB','專案');
+DEFINE('_UE_WORKSHOPTAB','工作坊');
+DEFINE('_UE_JOBTITLE','職稱');
+DEFINE('_UE_NICKNAME','網路代稱');
+DEFINE('_UE_ABOUTME','關於我');
+DEFINE('_UE_PROFESSIONALSKILLS','專業技能');
+DEFINE('_UE_EDUCATION','學歷');
+DEFINE('_UE_LANGUAGE','語文');
+DEFINE('_UE_INTERESTS','興趣');
+DEFINE('_UE_PUBLISHEDBOOK','出版的書');
+DEFINE('_UE_AWARDS','獎項記錄');
+DEFINE('_UE_SPEECH','演講記錄');
+DEFINE('_UE_WORKEXPERIENCE','工作經歷');
 DEFINE('_UE_BLOGTAB','部落格');
 DEFINE('_UE_ARTICLEDATE','日期');
 DEFINE('_UE_ARTICLETITLE','標題');
@@ -603,7 +619,7 @@ DEFINE('_UE_ZOOMGALLERY','觀看圖庫');
 DEFINE('_UE_ZOOMTABTITLE','影像圖庫');
 DEFINE('_UE_FORUM_FORUMRANKING','論壇評分');
 DEFINE('_UE_FORUM_TOTALPOSTS','總發表數');
-DEFINE('_UE_FORUM_KARMA','因果');
+DEFINE('_UE_FORUM_KARMA','Karma');
 DEFINE('_UE_NEWSLETTER_NOT_CONFIRMED','未確認');
 DEFINE('_UE_NOTIFICATIONSAT','通知在');
 DEFINE('_UE_YOUR_VERSION','您的版本');
@@ -708,7 +724,7 @@ DEFINE('_UE_PORTRAIT','肖像');
 DEFINE('_UE_CONNECTIONPATHS','連線路徑');
 
 DEFINE('_UE_PROFILE_PAGE_TITLE','使用者個人資料頁標題');
-DEFINE('_UE_PROFILE_TITLE_TEXT','%s 的個人資料頁');
+DEFINE('_UE_PROFILE_TITLE_TEXT','%s 的個人頁面');
 
 DEFINE('_UE_SEARCH_INPUT','搜尋&hellip;');	// &hellip; = "..."
 DEFINE('_UE_POS_CB_MAIN','主要區域 (下方 置左/置中/置右)');
@@ -792,12 +808,12 @@ if (!defined('_VALID_AZ09'))		DEFINE('_VALID_AZ09',"請輸入一個有效的 %s.
 if (!defined('_PROMPT_PASSWORD'))	DEFINE('_PROMPT_PASSWORD','遺失密碼?');
 if (!defined('_NEW_PASS_DESC'))		DEFINE('_NEW_PASS_DESC','請輸入您的使用者名稱以及e-mail地址然後點擊寄出密碼按鈕.<br />'
 .'稍後您將收到一個新密碼.  使用此新密碼來存取網站.');
-if (!defined('_PROMPT_UNAME'))		DEFINE('_PROMPT_UNAME','使用者名稱:');
+if (!defined('_PROMPT_UNAME'))		DEFINE('_PROMPT_UNAME','帳號');
 if (!defined('_PROMPT_EMAIL'))		DEFINE('_PROMPT_EMAIL','E-mail 地址:');
 if (!defined('_BUTTON_SEND_PASS'))	DEFINE('_BUTTON_SEND_PASS','寄出密碼');
 if (!defined('_REGISTER_TITLE'))	DEFINE('_REGISTER_TITLE','註冊');
 if (!defined('_REGISTER_NAME'))		DEFINE('_REGISTER_NAME','姓名:');
-if (!defined('_REGISTER_UNAME'))	DEFINE('_REGISTER_UNAME','使用者名稱:');
+if (!defined('_REGISTER_UNAME'))	DEFINE('_REGISTER_UNAME','帳號:');
 if (!defined('_REGISTER_EMAIL'))	DEFINE('_REGISTER_EMAIL','E-mail:');
 if (!defined('_REGISTER_PASS'))		DEFINE('_REGISTER_PASS','密碼:');
 if (!defined('_REGISTER_VPASS'))	DEFINE('_REGISTER_VPASS','驗證密碼:');
