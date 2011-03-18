@@ -1661,7 +1661,7 @@ class CBfield_editorta extends cbFieldHandler {
 					$value				=	$cbFields->clean( $badHtmlFilter, $value );
 					unset( $cbFields );
 
-					$html				=	$_CB_framework->displayCmsEditor( $field->name, $value, 600, 350, $field->cols, $field->rows );
+					$html				=	$_CB_framework->displayCmsEditor( $field->name, $value, 550, 350, $field->cols, $field->rows );
 					$jsSaveCode			=	$_CB_framework->saveCmsEditorJS( $field->name );
 					if ( $jsSaveCode ) {
 						$_CB_framework->outputCbJQuery( "$('#adminForm').submit( function() { " . $jsSaveCode . " return true; } );" );
