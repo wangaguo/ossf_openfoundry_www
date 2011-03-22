@@ -86,8 +86,8 @@ class EventListViewEventList extends JView
 			$link = JRoute::_( $link );
 
 			// feed item description text
-			$description = JText::_( 'TITLE' ).': '.$title.'<br />';
-			$description .= JText::_( 'VENUE' ).': '.$row->venue.' / '.$row->city.'<br />';
+		//	$description = JText::_( 'TITLE' ).': '.$title.'<br />';
+			$description = JText::_( 'VENUE' ).': '.$row->venue.' / '.$row->city.'<br />';
 			$description .= JText::_( 'CATEGORY' ).': '.$category.'<br />';
 			$description .= JText::_( 'DATE' ).': '.$displaydate.'<br />';
 			$description .= JText::_( 'TIME' ).': '.$displaytime.'<br />';
@@ -99,7 +99,7 @@ class EventListViewEventList extends JView
 			$item = new JFeedItem();
 			$item->title 		= $title;
 			$item->link 		= $link;
-		//	$item->description 	= $description;
+			$item->description 	= $description;
 			$item->date			= $created;
 			$item->category   	= $category;
 
