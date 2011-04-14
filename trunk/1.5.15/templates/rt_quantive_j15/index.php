@@ -152,6 +152,11 @@ $gantry->init();
 		<?php /** Begin Popup **/ 
 		echo $gantry->displayModules('popup','popup','popup'); 
 		/** End Popup **/ ?>
+
+		<script id="aptureScript">
+						(function (){var a=document.createElement("script");a.defer="true";a.src="http://www.apture.com/js/apture.js?siteToken=vsJttrn";document.getElementsByTagName("head")[0].appendChild(a);})();
+     </script>
+
 	</body>
 </html>
 <?php
