@@ -18,7 +18,7 @@ require_once JPATH_ROOT.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS.'Plugin.p
 
 class Savant2_Plugin_ahreflisting extends Savant2_Plugin {
 	
-	function plugin(&$link, $link_name, $attr=null, $show=null, $visit=0)
+	function plugin($link, $link_name, $attr=null, $show=null, $visit=0)
 	{
 		global $Itemid, $mtconf;
 		// $mt_link_new, $mt_link_popular, $mt_user_allowdelete, $mt_user_allowmodify, 
