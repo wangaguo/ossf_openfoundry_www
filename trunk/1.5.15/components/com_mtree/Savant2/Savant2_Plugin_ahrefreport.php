@@ -14,7 +14,7 @@ require_once JPATH_ROOT.DS.'components'.DS.'com_mtree'.DS.'Savant2'.DS.'Plugin.p
 
 class Savant2_Plugin_ahrefreport extends Savant2_Plugin {
 	
-	function plugin( &$link, $attr=null )
+	function plugin( $link, $attr=null )
 	{
 		global $Itemid, $mtconf;
 
