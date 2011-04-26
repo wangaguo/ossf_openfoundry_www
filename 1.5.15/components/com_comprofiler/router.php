@@ -28,7 +28,7 @@ function comprofilerBuildRoute( &$query ) {
 						$database				=&	JFactory::getDBO();
 						$database->setQuery( $sql, 0, 1 );
 						$username				=	$database->loadResult();
-						if ( $username && ! ( preg_match( '+[@:/\n\r\t\a\e\f\v\x00_]+', $username ) || is_numeric( $username ) ) ) {
+						if ( $username && ! ( preg_match( '+[:/\n\r\t\a\e\f\v\x00]+', $username ) || is_numeric( $username ) ) ) {
 							$query['user']		=	str_replace( '.', '_', $username );		// a dot (.) in a username is mishandled by the dot htaccess of joomla 1.5
 						}
 					}
@@ -89,7 +89,8 @@ function comprofilerParseRoute( $segments ) {
 				if ( $count > 1 ) {
 					// Joomla's 1.5 router.php unfortunately encodes '-' as ':' in the decoding,
 					// so we do what we can as usernames with '-' are more common than usernames with ':':
-					$user						=	str_replace( array( ':', '_' ), array( '-', '.' ), $segments[1] );
+					//$user						=	str_replace( array( ':', '_' ), array( '-', '.' ), $segments[1] );
+					$user						=	$segments[1];
 					if ( ! is_numeric( $user ) ) {
 						$database				=&	JFactory::getDBO();
 						$sql					=	'SELECT id FROM #__users WHERE username = '. $database->Quote( $user );
