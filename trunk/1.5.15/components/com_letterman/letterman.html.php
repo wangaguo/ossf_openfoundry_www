@@ -230,8 +230,8 @@ function editNewsletter( &$row, &$publist, $option , $glist ) {
     function showLItem( $row, $gid ) {
       
       ?>
-          <div class="componentheading"><?php echo $row->title; ?><a href="javascript: history.back()">&nbsp;[ back ]</a></div>
-      <div align="right" class="createdate">Date: <?php echo $row->created ?></div>
+			<div class="componentheading"><?php echo $row->title; ?><a href="javascript: history.back()">&nbsp;[ back ]</a></div>
+			<div align="right" class="senddate"><?php echo _E_START_PUB;?>: <?php echo substr("$row->send",0,10) ?></div>
       <!--<div><strong><?php// echo $row->title; ?></strong></div><br/>-->
       <div><?php echo $row->text; ?></div>
     <?php
