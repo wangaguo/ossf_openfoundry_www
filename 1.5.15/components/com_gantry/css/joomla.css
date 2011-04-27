@@ -9,7 +9,7 @@
 /* Headings */
 .rt-joomla h1 {letter-spacing: -2px;}
 .rt-joomla h2, .rt-joomla h3, .rt-joomla h4, .rt-joomla h5 {letter-spacing: -1px;}
-.componentheading {font-weight: bold;display: block;margin-bottom: 15px;}
+.componentheading {font-size:130%;font-weight: bold;display: block;margin-bottom: 15px;}
 .contentheading {font-size: 140%;font-weight: bold;display: block;}
 
 /* Section Tables */
