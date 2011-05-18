@@ -35,12 +35,12 @@ body {min-width: 960px;}
 body {font-size: 12px;line-height: 1.7em;font-family: Helvetica,Arial, Sans-Serif;}
 body.font-size-is-xlarge {font-size: 15px;line-height: 200%;}
 body.font-size-is-large {font-size: 14px;line-height: 200%;}
-body.font-size-is-default {font-size: 12px;line-height: 200%;}
+body.font-size-is-default {font-size: 13px;line-height: 200%;}
 body.font-size-is-small {font-size: 11px;line-height: 200%;}
 body.font-size-is-xsmall {font-size: 10px;line-height: 200%;}
 form {margin: 0;padding: 0;}
 p {margin: 0 0 15px 0;}
-h1, h2, h3, h4, h5 {margin: 5px 0;line-height: 1em;}
+h1, h2, h3, h4, h5 {margin: 5px 0;line-height: 1.3em;}
 h1 {font-size: 260%;}
 h2 {font-size: 200%;}
 h3 {font-size: 175%;}
@@ -48,7 +48,7 @@ h4 {font-size: 120%;}
 h5 {font-size: 120%;}
 h2.title {font-size: 170%;letter-spacing: 1px;line-height: 1em;}
 a {text-decoration: none;outline: none;}
-code {color: #000;margin: -1px 0 0 0;font: 10px Courier;}
+div .code {background-color:#000;color: #fff;margin: 5px;font: 10px Courier; padding:5px; margin:5px;padding:10px;}
 blockquote {font: italic 16px/22px Georgia, Serif;}
 .left-1, .left-2, .left-3, .left-4, .left-5, .left-6, .left-7, .left-8, .left-9, .left-10, .right-11 {float: left;margin-right: 50px;margin-bottom: 15px;display: inline;position: relative;}
 .right-1, .right-2, .right-3, .right-4, .right-5, .right-6, .right-7, .right-8, .right-9, .right-10, .right-11 {float: right;margin-left: 50px;margin-bottom: 15px;display: inline;position: relative;}
