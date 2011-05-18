@@ -165,8 +165,8 @@ ul.menu {padding-left: 0;}
 .rt-breadcrumb-surround {position:relative;overflow: hidden;padding: 0;margin: 10px 0;display: inline-block;height: auto;}
 span.breadcrumbs {display: inline-block;font-size: 110%;font-weight: bold;overflow: hidden;}
 span.breadcrumbs img {width: 6px;height: 16px;float: left;}
-span.breadcrumbs a, span.no-link {padding: 0 12px 0 8px;float: left;display: block;line-height: 16px;font-size: 90%;}
-
+span.breadcrumbs a, span.no-link {padding: 0 0 0 8px;float: left;display: block;line-height: 16px;font-size: 90%;}
+a.sublevel{background:url(http://beta.openfoundry.org/templates/rt_quantive_j15/images/arrow_right.png) no-repeat;padding:0 0 0 16px !important;}
 /* Login Feature */
 #rt-header #rt-login-button {margin-top: 10px;float: right;}
 #rt-login-button .buttontext {display: inline-block;margin-left: 15px;height: 34px;}
