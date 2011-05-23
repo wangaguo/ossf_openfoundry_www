@@ -26,7 +26,7 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 		<?php /** End Page Title **/ endif; ?>
 
 		<?php /** Begin Article Title **/ if ($this->params->get('show_title')) : ?>
-		<div class="rt-headline"><?php if ($this->params->get('show_title')) : ?><h1 class="rt-article-title"><?php if ($this->params->get('link_titles') && $this->article->readmore_link != '') : ?><a href="<?php echo $this->article->readmore_link; ?>"><?php echo $this->escape($this->article->title); ?></a><?php else : ?><?php echo $this->escape($this->article->title); ?><?php endif; ?></h1><?php endif; ?>
+		<div class="rt-headline"><?php if ($this->params->get('show_title')) : ?><h1 class="rt-article-title"><?php if ($this->params->get('link_titles') && $this->article->readmore_link != '') : ?><?php echo $this->escape($this->article->title); ?><?php else : ?><?php echo $this->escape($this->article->title); ?><?php endif; ?></h1><?php endif; ?>
 		</div>
 		<div class="clear"></div>
 		<?php /** End Article Title **/ endif; ?>
