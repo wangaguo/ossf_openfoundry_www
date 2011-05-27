@@ -162,7 +162,7 @@ ul.menu {padding-left: 0;}
 #rt-breadcrumbs {padding: 0 20px;}
 #breadcrumbs-home {width: 17px;height: 16px;display: block;float: left;margin-right: 5px;}
 #breadcrumbs h3, .leading_separator {display: none;}
-.rt-breadcrumb-surround {position:relative;overflow: hidden;padding: 0;margin: 10px 0;display: inline-block;height: auto;}
+.rt-breadcrumb-surround {position:relative;overflow: hidden;padding: 0;margin: 5px 0;display: inline-block;height: auto;}
 span.breadcrumbs {display: inline-block;font-size: 95%;overflow: hidden;}
 span.breadcrumbs img {width: 6px;height: 16px;float: left;}
 span.breadcrumbs a, span.no-link {
