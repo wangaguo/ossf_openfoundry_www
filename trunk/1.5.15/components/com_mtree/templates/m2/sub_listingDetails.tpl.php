@@ -107,15 +107,15 @@ if( $this->show_actions_rating_fav ) {
 	<div class="actions-rating-fav">
 	<?php if( $this->show_actions ) { ?>
 	<div class="actions" style="text-align:center<?php echo ($this->show_actions_rating_fav==1)?';border:0':''; ?>"><?php 
-		$this->plugin( 'ahrefreview', $this->link, array("rel"=>"nofollow") ); 
-		$this->plugin( 'ahrefrecommend', $this->link, array("rel"=>"nofollow") );	
-		$this->plugin( 'ahrefprint', $this->link );
-		$this->plugin( 'ahrefcontact', $this->link, array("rel"=>"nofollow") );
-		$this->plugin( 'ahrefvisit', $this->link );
-		$this->plugin( 'ahrefreport', $this->link, array("rel"=>"nofollow") );
-		$this->plugin( 'ahrefclaim', $this->link, array("rel"=>"nofollow") );
-		$this->plugin( 'ahrefownerlisting', $this->link );
-		$this->plugin( 'ahrefmap', $this->link );
+//		$this->plugin( 'ahrefreview', $this->link, array("rel"=>"nofollow") ); 
+//		$this->plugin( 'ahrefrecommend', $this->link, array("rel"=>"nofollow") );	
+//		$this->plugin( 'ahrefprint', $this->link );
+//		$this->plugin( 'ahrefcontact', $this->link, array("rel"=>"nofollow") );
+//		$this->plugin( 'ahrefvisit', $this->link );
+//		$this->plugin( 'ahrefreport', $this->link, array("rel"=>"nofollow") );
+//		$this->plugin( 'ahrefclaim', $this->link, array("rel"=>"nofollow") );
+//		$this->plugin( 'ahrefownerlisting', $this->link );
+//		$this->plugin( 'ahrefmap', $this->link );
 	?></div><?php
 	}
 	if($this->config->get('show_rating')) {
@@ -170,7 +170,7 @@ if (!empty($images) && $this->config->getTemParam('listingDetailsImagesOutputMod
 }
 if(!is_null($this->fields->getFieldById(2))) { 
 	$link_desc = $this->fields->getFieldById(2);
-	echo $link_desc->getOutput(1);
+	echo $link_desc->getOutput(2);
 }
 echo '</div>';
 if ( !empty($this->mambotAfterDisplayContent) ) { echo trim( implode( "\n", $this->mambotAfterDisplayContent ) ); }
