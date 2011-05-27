@@ -163,9 +163,22 @@ ul.menu {padding-left: 0;}
 #breadcrumbs-home {width: 17px;height: 16px;display: block;float: left;margin-right: 5px;}
 #breadcrumbs h3, .leading_separator {display: none;}
 .rt-breadcrumb-surround {position:relative;overflow: hidden;padding: 0;margin: 10px 0;display: inline-block;height: auto;}
-span.breadcrumbs {display: inline-block;font-size: 110%;font-weight: bold;overflow: hidden;}
+span.breadcrumbs {display: inline-block;font-size: 95%;overflow: hidden;}
 span.breadcrumbs img {width: 6px;height: 16px;float: left;}
-span.breadcrumbs a, span.no-link {padding: 0 0 0 8px;float: left;display: block;line-height: 16px;font-size: 90%;}
+span.breadcrumbs a, span.no-link {
+				padding: 0 0 0 8px;
+				margin:3px;
+				float: left;
+				display: block;
+				line-height: 13px;
+				color:#333;
+}
+span.no-link, a.pathway {
+				background:url(../../../images/M_images/indent1.png) no-repeat;
+				padding:0 0 0 16px !important;
+
+
+}
 a.sublevel{background:url(../../../images/M_images/indent1.png) no-repeat;padding:0 0 0 16px !important;}
 /* Login Feature */
 #rt-header #rt-login-button {margin-top: 10px;float: right;}
