@@ -35,7 +35,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 <?php if ($this->params->def( 'show_page_title', 1 )) : ?>
 
-    <h1 class="componentheading">
+    <h1 >
 		<?php echo $this->escape($this->pagetitle); ?>
 	</h1>
 
