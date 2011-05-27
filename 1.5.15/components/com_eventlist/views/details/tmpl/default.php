@@ -29,11 +29,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 			<?php echo ELOutput::printbutton( $this->print_link, $this->params ); ?>
 	</p>
 
-<?php if ($this->params->def( 'show_page_title', 1 )) : ?>
-	<h1 class="componentheading">
-		<?php echo $this->params->get('page_title'); ?>
-	</h1>
-<?php endif; ?>
 
 <!-- Details EVENT -->
 	<h2 class="eventlist">
@@ -99,8 +94,8 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				<?php echo "<a href='".JRoute::_( 'index.php?view=categoryevents&id='.$this->row->categoryslug )."'>".$this->escape($this->row->catname)."</a>";?>
 			</dd>
                 <dt class="category"><?php echo JText::_( 'WHO' ).':'; ?></dt>
-                  <?php if ($this->row->did == 58 or $this->row->did==59) { ?>
-                <dd class="category">葛冬梅 &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:tmk2005@citi.sinica.edu.tw">tmk2005@citi.sinica.edu.tw</a></dd>
+                  <?php if ($this->row->did == 58 or $this->row->did==59 or $this->row->did==115) { ?>
+                <dd class="category">葛冬梅　Florence T.M. Ko&nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:tmk2005@citi.sinica.edu.tw">tmk2005@citi.sinica.edu.tw</a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
                 <dd class="category">2788-3799#1474 or 0953-366-676</dd>
                  <?php }else  if($this->row->did==35) { ?>
@@ -114,24 +109,52 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
                 <dd class="category">02-27883799 ext.1474 or 0953-366-676</dd>
 
                  <?php }else if ($this->row->did<=62){ ?>
-                <dd class="category">陳飛亨(Freddi) &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:freddi.chen@citi.sinica.edu.tw">freddi.chen@citi.sinica.edu.tw</a></dd>
+                <dd class="category">OSSF &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:ossfworkshop@openfoundry.org">ossfworkshop@openfoundry.org </a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
-                <dd class="category">2788-3799#1478&nbsp;&nbsp;or&nbsp;&nbsp;0926-700-316</dd>
+                <dd class="category">2788-3799#1478&nbsp;&nbsp;</dd>
                 <?php }else if ($this->row->did==95 or $this->row->did==98){ ?>
-                <dd class="category">陳飛亨(Freddi) &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:freddi.chen@citi.sinica.edu.tw">freddi.chen@citi.sinica.edu.tw</a></dd>
+                <dd class="category">OSSF &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:ossfworkshop@openfoundry.org">ossfworkshop@openfoundry.org </a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
-                <dd class="category">2788-3799#1478&nbsp;&nbsp;or&nbsp;&nbsp;0926-700-316</dd>
+                <dd class="category">2788-3799#1478&nbsp;&nbsp;</dd>
 
 		<?php }else if ($this->row->did==96 or $this->row->did==97){ ?>
                 <dd class="category">胡崇偉(Marr) &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:marr.tw@gmail.com">marr.tw@gmail.com</a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
-                <dd class="category">2788-3799#1477&nbsp;&nbsp;</dd>
+		<dd class="category">2788-3799#1477&nbsp;&nbsp;</dd>
 
+		<?php }else if ($this->row->did==105 or $this->row->did==112 or $this->row->did==113  or $this->row->did==146){ ?>
+                <dd class="category">彭冠雯 &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:anna0420@citi.sinica.edu.tw">anna0420@citi.sinica.edu.tw</a></dd>
+                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
+		<dd class="category">2788-3799#1469&nbsp;&nbsp;</dd>
+
+                <?php }else if ($this->row->did==120 or $this->row->did==121 or $this->row->did==125 or $this->row->did==148){ ?>
+                <dd class="category">彭冠雯 &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:anna0420@citi.sinica.edu.tw">anna0420@citi.sinica.edu.tw</a></dd>
+                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
+		<dd class="category">2788-3799#1469&nbsp;&nbsp;</dd>
+
+                <?php }else if ($this->row->did==130 or $this->row->did==140 or $this->row->did==138  or $this->row->did==147 ){ ?>
+                <dd class="category">彭冠雯 &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:anna0420@citi.sinica.edu.tw">anna0420@citi.sinica.edu.tw</a></dd>
+                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
+		<dd class="category">2788-3799#1469&nbsp;&nbsp;</dd>
+
+                <?php }else if ($this->row->did==137 or $this->row->did ==141 or $this->row->did==142 or $this->row->did==149 or $this->row->did>=150){ ?>
+                <dd class="category">林玉涵 &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:tobey@citi.sinica.edu.tw">tobey@citi.sinica.edu.tw</a></dd>
+                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
+		<dd class="category">2788-3799#1478&nbsp;&nbsp;or 0972-392-993</dd>
+
+		<?php }else if ($this->row->did==143){ ?>
+                <dd class="category">謝沐璇 &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:meg@citi.sinica.edu.tw">meg@citi.sinica.edu.tw</a></dd>
+                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
+                <dd class="category">2788-3799#1469&nbsp;&nbsp;or 0921-144-783</dd>
+
+
+                <?php }else if ($this->row->did==128 or $this->row->did==119 or $this->row->did==118 or $this->row->did==122 or $this->row->did==123 or $this->row->did==131 or $this->row->did==132 or $this->row->did==144){ ?>
+                <dd class="category">請直接與主辦人連絡</dd>
 
                 <?php }else { ?>
                 <dd class="category">洪華超(Rock) &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:rockhung@citi.sinica.edu.tw">rockhung@citi.sinica.edu.tw</a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
-                <dd class="category">2788-3799#1477 或 0912-516-695</dd>
+                <dd class="category">2788-3799#1477 或 0912-516-695.</dd>
                 <?php } ?>
 
 	</dl>
