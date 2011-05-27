@@ -439,6 +439,16 @@ div.bulletin-workshop {
     width:auto;
 }
 
+div.organization-workshop {
+    background: #f9f9f9 url(../images/org.png) 0 0 no-repeat;
+    color: #666;
+/*  font-style: italic;*/
+    font-size: 120%;
+    line-height: 150%;
+    margin:15px 0;
+    padding:10px 10px 10px 80px;
+    width:auto;
+}
 
 
 div.info-workshop {
