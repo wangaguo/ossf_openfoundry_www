@@ -116,6 +116,7 @@ background: transparent;
 
 div#eventlist div.description {
 margin: 5px 0; padding: 0 5px;
+font-size:14px;
 }
 
 div#eventlist div.no_space,
