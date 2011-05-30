@@ -76,7 +76,7 @@ ul.menu {padding-left: 0;}
 .rt-module-top, .rt-module-bottom {margin: 0 9px;}
 .rt-module-top2, .rt-module-bottom2 {margin-left: -9px;}
 .rt-module-top3, .rt-module-bottom3 {margin-right: -9px; height: 9px}
-.rt-module-inner {padding: 5px 10px;font-size:13px;}
+.rt-module-inner {padding: 5px 10px;}
 .flush .rt-block {padding: 0;}
 .flushtop .rt-block {padding-top: 0;}
 .flushbottom .rt-block {padding-bottom: 0;}
