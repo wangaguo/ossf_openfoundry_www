@@ -98,7 +98,7 @@ ul.menu {padding-left: 0;}
 #rt-main-surround ul.menu {margin-left: 0;}
 #rt-main-surround ul.menu li {list-style: none;margin: 0;}
 #rt-main-surround ul.menu a:hover, #rt-main-surround ul.menu .separator:hover, #rt-main-surround ul.menu .item:hover {text-decoration: none;}
-#rt-main-surround ul.menu a, #rt-main-surround ul.menu .separator, #rt-main-surround ul.menu .item {display: block;text-indent: 0;overflow: hidden;font-size: 120%;font-weight: normal;padding: 5px 0 7px 16px;line-height: 130%;}
+#rt-main-surround ul.menu a, #rt-main-surround ul.menu .separator, #rt-main-surround ul.menu .item {display: block;text-indent: 0;overflow: hidden;font-size: 115%;font-weight: normal;padding: 5px 0 7px 16px;line-height: 130%;}
 #rt-main-surround ul.menu li.active > a, #rt-main-surround ul.menu li.active > .separator, #rt-main-surround ul.menu li.active > .item {font-weight: bold;}
 #rt-main-surround ul.menu li li {padding: 0;margin: 0;font-size: 95%;background: none !important;border: none;}
 #rt-main-surround .menu .subtext em {line-height: 14px;}
