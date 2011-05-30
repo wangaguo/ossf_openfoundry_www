@@ -75,7 +75,7 @@ body.rtl {min-width: inherit;}
 /* Style */
 html,body {margin-bottom:1px;}
 body {background: #ddd;color: #444;}
-h1, h2, h3, h4, h5, legend {color: #000;}
+/*h1, h2, h3, h4, h5, legend {color: #000;}*/
 h6 {color:#474646;}
 #rt-header h2, #rt-bottom h2 {color: #aaa}
 #rt-header, #rt-bottom {color: #aaa;}
