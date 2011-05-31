@@ -195,7 +195,7 @@ class EventListViewDetails extends JView
 		}
 
 		//set page title and meta stuff
-		$document->setTitle( $item->name.' - '.$row->title );
+				$document->setTitle( $row->title );
         $document->setMetadata('keywords', $meta_keywords_content );
         $document->setDescription( strip_tags($description_content) );
 
