@@ -2196,8 +2196,8 @@ function uddeIMshowHelp($myself, $item_id, $versionstring, $config) {
 	echo "<p></p>\n";
 
 	echo "<p><b>";
-	if ($config->showmenuicons) echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_inbox.gif' alt='"._UDDEIM_INBOX."' />";
-	echo " "._UDDEIM_INBOX."</b></p>";
+	if ($config->showmenuicons) echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_inbox.gif' alt='".JText::_('UDDEIM_INBOX')."' />";
+	echo " ".JText::_('UDDEIM_INBOX')."</b></p>";
 	echo "<p>"._UDDEIM_HELP_INBOX."</p>";
 
 	echo "<ul>";
@@ -2234,8 +2234,8 @@ function uddeIMshowHelp($myself, $item_id, $versionstring, $config) {
 	echo "</ul>";
 
 	echo "<p><b>";
-	if ($config->showmenuicons)	echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_outbox.gif' alt='"._UDDEIM_OUTBOX."' />";
-	echo " "._UDDEIM_OUTBOX."</b></p>";
+	if ($config->showmenuicons)	echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_outbox.gif' alt='".JText::_('UDDEIM_OUTBOX')."' />";
+	echo " ".JText::_('UDDEIM_OUTBOX')."</b></p>";
 	echo "<p>"._UDDEIM_HELP_OUTBOX."</p>";
 
 	echo "<ul>";
@@ -2269,8 +2269,8 @@ function uddeIMshowHelp($myself, $item_id, $versionstring, $config) {
 	    ($config->trashrestriction==1 && uddeIMisSpecial($my_gid)) || 
 	    ($config->trashrestriction==2 && uddeIMisAdmin($my_gid)) ) {
 		echo "<p><b>";
-		if ($config->showmenuicons)	echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_trashcan.gif' alt='"._UDDEIM_TRASHCAN."' />";
-		echo " "._UDDEIM_TRASHCAN."</b></p>";
+		if ($config->showmenuicons)	echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_trashcan.gif' alt='".JText::_('UDDEIM_TRASHCAN')."' />";
+		echo " ".JText::_('UDDEIM_TRASHCAN')."</b></p>";
 		echo "<p>"._UDDEIM_HELP_TRASHCAN."</p>";
 
 		echo "<ul>";
@@ -2366,8 +2366,8 @@ function uddeIMshowHelp($myself, $item_id, $versionstring, $config) {
 	echo "</ul>";
 	
 	echo "<p><b>";
-	if ($config->showmenuicons)	echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_new.gif' alt='"._UDDEIM_COMPOSE."' />";
-	echo " "._UDDEIM_COMPOSE."</b></p>";
+	if ($config->showmenuicons)	echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_new.gif' alt='".JText::_('UDDEIM_COMPOSE')."' />";
+	echo " ".JText::_('UDDEIM_COMPOSE')."</b></p>";
 	echo "<p>"._UDDEIM_HELP_COMPOSE."</p>";
 
 	echo "</div>\n";

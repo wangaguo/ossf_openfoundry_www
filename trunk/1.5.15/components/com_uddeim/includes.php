@@ -419,7 +419,7 @@ function uddeIMprintMenu($myself, $uddeaction, $item_id, $config) {
 	if ($uddeaction=="inbox") {
 		echo "<li class='uddeim-activemenu'><span>";
 		if ($config->showmenuicons==1 || $config->showmenuicons==2)
-			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_inbox.gif' alt='"._UDDEIM_INBOX."' />";
+			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_inbox.gif' alt='".JText::_('UDDEIM_INBOX')."' />";
 		if ($config->showmenuicons==0 || $config->showmenuicons==1)
 			echo JText::_('UDDEIM_INBOX');
 		echo $cnt;
@@ -428,7 +428,7 @@ function uddeIMprintMenu($myself, $uddeaction, $item_id, $config) {
 		echo "<li>";
 		echo "<a href='".uddeIMsefRelToAbs("index.php?option=com_uddeim&task=inbox&Itemid=".$item_id)."'>";
 		if ($config->showmenuicons==1 || $config->showmenuicons==2)
-			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_inbox.gif' border='0' alt='"._UDDEIM_INBOX."' />";
+			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_inbox.gif' border='0' alt='".JText::_('UDDEIM_INBOX')."' />";
 		if ($config->showmenuicons==0 || $config->showmenuicons==1)
 			echo JText::_('UDDEIM_INBOX');
 		echo $cnt;
@@ -442,18 +442,18 @@ function uddeIMprintMenu($myself, $uddeaction, $item_id, $config) {
 	if ($uddeaction=="outbox") {
 		echo "<li class='uddeim-activemenu'><span>";
 		if ($config->showmenuicons==1 || $config->showmenuicons==2)
-			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_outbox.gif' alt='"._UDDEIM_OUTBOX."' />";
+			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_outbox.gif' alt='".JText::_('UDDEIM_OUTBOX')."' />";
 		if ($config->showmenuicons==0 || $config->showmenuicons==1)
-			echo _UDDEIM_OUTBOX;
+			echo JText::_('UDDEIM_OUTBOX');
 		echo $cnt;
 		echo "</span></li>\n";
 	} else {
 		echo "<li>";
 		echo "<a href='".uddeIMsefRelToAbs("index.php?option=com_uddeim&task=outbox&Itemid=".$item_id)."'>";
 		if ($config->showmenuicons==1 || $config->showmenuicons==2)
-			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_outbox.gif' border='0' alt='"._UDDEIM_OUTBOX."' />";
+			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_outbox.gif' border='0' alt='".JText::_('UDDEIM_OUTBOX')."' />";
 		if ($config->showmenuicons==0 || $config->showmenuicons==1)
-			echo _UDDEIM_OUTBOX;
+			echo JText::_('UDDEIM_OUTBOX');
 		echo $cnt;
 		echo "</a>";
 		echo "</li>\n";
@@ -469,9 +469,9 @@ function uddeIMprintMenu($myself, $uddeaction, $item_id, $config) {
 	if ($uddeaction=="trashcan") {
 		echo "<li class='uddeim-activemenu'><span>";
 		if ($config->showmenuicons==1 || $config->showmenuicons==2)
-			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_trashcan.gif' alt='"._UDDEIM_TRASHCAN."' />";
+			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_trashcan.gif' alt='".JText::_('UDDEIM_TRASHCAN')."' />";
 		if ($config->showmenuicons==0 || $config->showmenuicons==1)
-			echo _UDDEIM_TRASHCAN;
+			echo JText::_('UDDEIM_TRASHCAN');
 		echo $cnt;
 		echo "</span></li>\n";
 	} else {
@@ -481,9 +481,9 @@ function uddeIMprintMenu($myself, $uddeaction, $item_id, $config) {
 			echo "<li>";
 			echo "<a href='".uddeIMsefRelToAbs("index.php?option=com_uddeim&task=trashcan&Itemid=".$item_id)."'>";
 			if ($config->showmenuicons==1 || $config->showmenuicons==2)
-				echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_trashcan.gif' border='0' alt='"._UDDEIM_TRASHCAN."' />";
+				echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_trashcan.gif' border='0' alt='".JText::_('UDDEIM_TRASHCAN')."' />";
 			if ($config->showmenuicons==0 || $config->showmenuicons==1)
-				echo _UDDEIM_TRASHCAN;
+			echo JText::_('UDDEIM_TRASHCAN');
 			echo $cnt;
 			echo "</a>";
 			echo "</li>\n";
@@ -576,17 +576,17 @@ function uddeIMprintMenu($myself, $uddeaction, $item_id, $config) {
 	if ($uddeaction=="new") {
 		echo "<li class='uddeim-activemenu'><span>";
 		if ($config->showmenuicons==1 || $config->showmenuicons==2)
-			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_new.gif' alt='"._UDDEIM_COMPOSE."' />";
+			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_new.gif' alt='".JText::_('UDDEIM_COMPOSE')."' />";
 		if ($config->showmenuicons==0 || $config->showmenuicons==1)
-			echo _UDDEIM_COMPOSE;
+			echo JText::_('UDDEIM_COMPOSE');
 		echo "</span></li>\n";
 	} else {
 		echo "<li>";
 		echo "<a href='".uddeIMsefRelToAbs("index.php?option=com_uddeim&task=new&Itemid=".$item_id)."'>";
 		if ($config->showmenuicons==1 || $config->showmenuicons==2)
-			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_new.gif' border='0' alt='"._UDDEIM_COMPOSE."' />";
+			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_new.gif' border='0' alt='".JText::_('UDDEIM_COMPOSE')."' />";
 		if ($config->showmenuicons==0 || $config->showmenuicons==1)
-			echo _UDDEIM_COMPOSE;
+			echo JText::_('UDDEIM_COMPOSE');
 		echo "</a>";
 		echo "</li>\n";
 	}

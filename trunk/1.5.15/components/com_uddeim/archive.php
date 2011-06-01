@@ -126,8 +126,7 @@ function uddeIMarchive($myself, $item_id, $limit, $limitstart, $cryptpass, $conf
 	echo "\t<tr><th style='text-align:center;' class='sectiontableheader'>";
 	echo "<input type='checkbox' name='arcmes[]' value='' onclick='wiglwogl(this);' title='"._UDDEIM_CHECKALL."' />";
 	echo "</th>";
-	echo "<th class='sectiontableheader'>&nbsp;</th><th class='sectiontableheader'>"._UDDEIM_FROM.$sort_name."</th><th class='sectiontableheader'>"._UDDEIM_MESSAGE."</th><th class='sectiontableheader'>"._UDDEIM_DATE.$sort_datum."</th><th class='sectiontableheader'>&nbsp;</th></tr>";
-
+	echo "<th class='sectiontableheader'>&nbsp;</th><th class='sectiontableheader'>".JText::_('UDDEIM_FROM').$sort_name."</th><th class='sectiontableheader'>".JText::_('UDDEIM_MESSAGE')."</th><th class='sectiontableheader'>".JText::_('UDDEIM_DATE').$sort_datum."</th><th class='sectiontableheader'>&nbsp;</th></tr>"; 
 	$i=1;
 	// now write the list
 	foreach($allmessages as $themessage) {
