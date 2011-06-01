@@ -421,7 +421,7 @@ function uddeIMprintMenu($myself, $uddeaction, $item_id, $config) {
 		if ($config->showmenuicons==1 || $config->showmenuicons==2)
 			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_inbox.gif' alt='"._UDDEIM_INBOX."' />";
 		if ($config->showmenuicons==0 || $config->showmenuicons==1)
-			echo _UDDEIM_INBOX;
+			echo JText::_('_UDDEIM_INBOX');
 		echo $cnt;
 		echo "</span></li>\n";
 	} else {
@@ -430,7 +430,7 @@ function uddeIMprintMenu($myself, $uddeaction, $item_id, $config) {
 		if ($config->showmenuicons==1 || $config->showmenuicons==2)
 			echo "<img src='".$pathtosite."/components/com_uddeim/templates/".$config->templatedir."/images/menu_inbox.gif' border='0' alt='"._UDDEIM_INBOX."' />";
 		if ($config->showmenuicons==0 || $config->showmenuicons==1)
-			echo _UDDEIM_INBOX;
+			echo JText::_('_UDDEIM_INBOX');
 		echo $cnt;
 		echo "</a>";
 		echo "</li>\n";
