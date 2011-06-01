@@ -143,7 +143,7 @@ function uddeIMshowInbox($myself, $item_id, $limit, $limitstart, $cryptpass, $co
 	echo "<div id='uddeim-overview'><table cellpadding='7' width='100%'>\n";
 	// checkcell
 	$delall="<input type=\"checkbox\" name=\"arcmes[]\" value=\"\" onclick=\"wiglwogl(this);\" title=\""._UDDEIM_CHECKALL."\" />";
-	echo "<tr><th style='text-align:center;' class='sectiontableheader'>".$delall."</th><th class='sectiontableheader'>&nbsp;</th><th class='sectiontableheader'>"._UDDEIM_FROM.$sort_name."</th><th class='sectiontableheader'>"._UDDEIM_MESSAGE."</th><th class='sectiontableheader'>"._UDDEIM_DATE.$sort_datum."</th><th class='sectiontableheader'>&nbsp;</th></tr>\n";
+	echo "<tr><th style='text-align:center;' class='sectiontableheader'>".$delall."</th><th class='sectiontableheader'>&nbsp;</th><th class='sectiontableheader'>".JText::_('UDDEIM_FROM').$sort_name."</th><th class='sectiontableheader'>".JText::_('UDDEIM_MESSAGE')."</th><th class='sectiontableheader'>".JText::_('UDDEIM_DATE').$sort_datum."</th><th class='sectiontableheader'>&nbsp;</th></tr>\n";
 
 	$i = 1;
 	// now write the list

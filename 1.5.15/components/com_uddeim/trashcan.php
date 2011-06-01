@@ -70,7 +70,7 @@ function uddeIMshowTrashCan($myself, $item_id, $limit, $limitstart, $cryptpass, 
 	echo "<div id='uddeim-overview'>";
 	echo "<table cellpadding='7' width='100%'>";
 //	echo "\n\n\t<tr><th class='sectiontableheader'>&nbsp;</th><th class='sectiontableheader'>"._UDDEIM_FROM." / "._UDDEIM_TO."</th><th class='sectiontableheader'>"._UDDEIM_MESSAGE."</th><th class='sectiontableheader'>"._UDDEIM_DATE."</th><th class='sectiontableheader'>&nbsp;</th></tr>";
-	echo "\n\n\t<tr><th class='sectiontableheader'>&nbsp;</th><th class='sectiontableheader'>"._UDDEIM_FROM." / "._UDDEIM_TO."</th><th class='sectiontableheader'>"._UDDEIM_MESSAGE."</th><th class='sectiontableheader'>"._UDDEIM_DELETED."</th><th class='sectiontableheader'>&nbsp;</th></tr>";
+	echo "\n\n\t<tr><th class='sectiontableheader'>&nbsp;</th><th class='sectiontableheader'>".JText::_('UDDEIM_FROM')." / ".JText::_('UDDEIM_TO')."</th><th class='sectiontableheader'>"._UDDEIM_MESSAGE."</th><th class='sectiontableheader'>"._UDDEIM_DELETED."</th><th class='sectiontableheader'>&nbsp;</th></tr>";
 
 	$i=1;
 	// now write the list
