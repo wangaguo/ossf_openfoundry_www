@@ -120,7 +120,7 @@
 			//$this->plugin( 'ahrefprint', $link );
 			//$this->plugin( 'ahrefcontact', $link, array("rel"=>"nofollow") );
 			//$this->plugin( 'ahrefvisit', $link );
-			$this->plugin( 'ahrefreport', $link, array("rel"=>"nofollow") );
+			//$this->plugin( 'ahrefreport', $link, array("rel"=>"nofollow") );
 			//$this->plugin( 'ahrefclaim', $link, array("rel"=>"nofollow") );
 			//$this->plugin( 'ahrefownerlisting', $link );
 			//$this->plugin( 'ahrefmap', $link );
