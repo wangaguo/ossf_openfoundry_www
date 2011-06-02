@@ -29,14 +29,16 @@
 <h2 class="contentheading"><?php echo JText::_( 'Report listing' ) . ' - ' . $this->link->link_name; ?></h2>
 
 <div id="listing">
+
+	<?php if( $this->user_id > 0 ) { ?>
 <form action="<?php echo JRoute::_("index.php") ?>" method="post" name="adminForm" id="adminForm">
 <table border="0" cellpadding="3" cellspacing="0" width="100%">
-	<?php if( $this->user_id <= 0 ) { ?>
+	<?php// if( $this->user_id <= 0 ) { ?>
 	<tr>
 		<td width="20%"><?php echo JText::_( 'Your name' ) ?>:</td>
 		<td width="80%"><input type="text" name="your_name" class="inputbox" size="40" /></td>
 	</tr>
-	<?php } ?>
+	<?php //} ?>
 	<tr>
 		<td><?php echo JText::_( 'Report problem' ) ?>:</td>
 		<td>
@@ -62,4 +64,6 @@
 	</tr>
 </table>
 </form>
+
+	<?php }else { echo "Only member can report listing .  Please login. "; } ?>
 </div>
