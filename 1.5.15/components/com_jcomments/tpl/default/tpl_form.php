@@ -74,8 +74,10 @@ class jtt_tpl_form extends JoomlaTuneTemplate
 	<input id="comments-form-email" type="text" name="email" value="" size="22" tabindex="2" />
 	<label for="comments-form-email"><?php echo $text; ?></label>
 </p>
+
+
+<?php }?>
 <?php
-		}
 		if ($this->getVar('comments-form-user-homepage', 0) == 1) {
 			$text = ($this->getVar('comments-form-homepage-required', 1) == 0) ? JText::_('FORM_HOMEPAGE') : JText::_('FORM_HOMEPAGE_REQUIRED');
 ?>
@@ -118,10 +120,20 @@ class jtt_tpl_form extends JoomlaTuneTemplate
 </p>
 <?php
 		}
+		$currentUser = JCommentsFactory::getUser($my->id);
+		$my->name = $currentUser->name;
+		if ($my->name ==''){
 ?>
+<p>
+  <input id="comments-nospam" type="text" name="nospam" value="" size="10" tabindex="7" />
+  <label for="comments-nospam"><span style="color:red; font-size:13px;">Please type '<b>NoSpam</b>' here.</font></label>
+</p>
+
+<?php } ?>
+
 <div id="comments-form-buttons">
-	<div class="btn" id="comments-form-send"><div><a href="#" tabindex="7" onclick="jcomments.saveComment();return false;" title="<?php echo JText::_('FORM_SEND_HINT'); ?>"><?php echo JText::_('FORM_SEND'); ?></a></div></div>
-	<div class="btn" id="comments-form-cancel" style="display:none;"><div><a href="#" tabindex="8" onclick="return false;" title="<?php echo JText::_('FORM_CANCEL'); ?>"><?php echo JText::_('FORM_CANCEL'); ?></a></div></div>
+	<div class="btn" id="comments-form-send"><div><a href="#" tabindex="8" onclick="jcomments.saveComment();return false;" title="<?php echo JText::_('FORM_SEND_HINT'); ?>"><?php echo JText::_('FORM_SEND'); ?></a></div></div>
+	<div class="btn" id="comments-form-cancel" style="display:none;"><div><a href="#" tabindex="9" onclick="return false;" title="<?php echo JText::_('FORM_CANCEL'); ?>"><?php echo JText::_('FORM_CANCEL'); ?></a></div></div>
 	<div style="clear:both;"></div>
 </div>
 	<input type="hidden" name="object_id" value="<?php echo $object_id; ?>" />

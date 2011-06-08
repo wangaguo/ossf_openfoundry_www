@@ -95,7 +95,7 @@
 #comments-form img.smile {margin: 0 3px 3px 0;padding: 0;border: none;cursor: pointer}
 #comments-form img.captcha {padding: 0;margin: 0 0 3px 0;border: 1px solid #ccc}
 #comments-form span.captcha {padding: 0 0 0 12px; color: #777; background: url(images/jc_refreshg.gif) no-repeat 0 2px;cursor: pointer}
-#comments-form label {color: #777; background-color: inherit; line-height: 1.5em; padding: 0; margin: 0; vertical-align: middle}
+#comments-form label {color: #777; background-color: inherit; line-height: 1.5em;  margin: 0; vertical-align: middle}
 #comments-form input, #comments-form textarea {color: #444; background-color: #fff; padding: 0; border: 1px solid #ccc}
 #comments-form input {width: 170px;margin-bottom: 2px;height: 1.5em}
 #comments-form input.selected, #comments-form textarea.selected {color: #777;background-color: #ffffe0;border: 1px solid #849B9F}
