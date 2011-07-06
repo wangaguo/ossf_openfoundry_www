@@ -18,7 +18,7 @@ if (defined('_uddeConfig')) {
   var $emn_body_withmessage = '';
   var $emn_forgetmenot = '';
   var $export_format = '';
-  var $showtitle = '私人訊息';
+  var $showtitle = '';
   var $templatedir = 'default';
   var $quotedivider = '__________';
   var $blockgroups = '';

@@ -6,8 +6,8 @@ define('_dmConfig',1);
 
 class dmConfig
 {
-// Last Edit: Thu, 2011-Apr-14 12:16
-// Edited by: webmaster
+// Last Edit: Tue, 2011-Jul-05 15:50
+// Edited by: reagent
 var $author_can = '2';
 var $days_for_new = '5';
 var $default_editor = '-6';
