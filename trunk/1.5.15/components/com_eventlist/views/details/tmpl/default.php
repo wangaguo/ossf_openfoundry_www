@@ -107,7 +107,6 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
                 <dd class="category">葛冬梅 (Florence T.M. Ko) &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:tmk2005@citi.sinica.edu.tw">tmk2005@citi.sinica.edu.tw</a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
                 <dd class="category">02-27883799 ext.1474 or 0953-366-676</dd>
-
                  <?php }else if ($this->row->did<=62){ ?>
                 <dd class="category">OSSF &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:ossfworkshop@openfoundry.org">ossfworkshop@openfoundry.org </a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
@@ -137,15 +136,20 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
 		<dd class="category">2788-3799#1469&nbsp;&nbsp;</dd>
 
-                <?php }else if ($this->row->did==137 or $this->row->did ==141 or $this->row->did==142 or $this->row->did==149 or $this->row->did>=150){ ?>
-                <dd class="category">林玉涵 &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:tobey@citi.sinica.edu.tw">tobey@citi.sinica.edu.tw</a></dd>
+                <?php }else if ($this->row->did==156 or $this->row->did==157  or $this->row->did==161 or $this->row->did==162){ ?>
+                <dd class="category">彭冠雯 &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:anna0420@citi.sinica.edu.tw">anna0420@citi.sinica.edu.tw</a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
-		<dd class="category">2788-3799#1478&nbsp;&nbsp;or 0972-392-993</dd>
+                <dd class="category">2788-3799#1469&nbsp;&nbsp;</dd>
+
+                <?php }else if ($this->row->did==137 or $this->row->did ==141 or $this->row->did==142 or $this->row->did==149 ){ ?>
+                <dd class="category">OSSF &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:ossfworkshop@openfoundry.org">ossfworkshop@openfoundry.org</a></dd>
+                <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
+		<dd class="category">2788-3799#1478&nbsp;&nbsp;</dd>
 
 		<?php }else if ($this->row->did==143){ ?>
-                <dd class="category">謝沐璇 &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:meg@citi.sinica.edu.tw">meg@citi.sinica.edu.tw</a></dd>
+                <dd class="category">OSSF &nbsp;&nbsp;<img src="/images/M_images/emailButton.png">&nbsp;&nbsp;<a href="mailto:ossfworkshop@openfoundry.org">ossfworkshop@openfoundry.org</a></dd>
                 <dt class="category">&nbsp;&nbsp;<!--TEL--></dt>
-                <dd class="category">2788-3799#1469&nbsp;&nbsp;or 0921-144-783</dd>
+                <dd class="category">2788-3799#1478&nbsp;&nbsp;</dd>
 
 
                 <?php }else if ($this->row->did==128 or $this->row->did==119 or $this->row->did==118 or $this->row->did==122 or $this->row->did==123 or $this->row->did==131 or $this->row->did==132 or $this->row->did==144){ ?>
