@@ -29,23 +29,21 @@ class JConfig {
 	/* Site Settings */
 	var $offline = '0';
 	var $offline_message = 'This site is down for maintenance.<br /> Please check back again soon.';
-	var $sitename = 'Joomla!';			// Name of Joomla site
+	var $sitename = 'OpenFoundry-development site';			// Name of Joomla site
 	var $editor = 'tinymce';
 	var $list_limit = '20';
-	var $legacy = '0';
-
 	/**
 	* -------------------------------------------------------------------------
 	* Database configuration section
 	* -------------------------------------------------------------------------
 	*/
 	/* Database Settings */
-	var $dbtype = 'mysql';					// Normally mysql
-	var $host = 'localhost';				// This is normally set to localhost
-	var $user = '';							// MySQL username
-	var $password = '';						// MySQL password
-	var $db = '';							// MySQL database name
-	var $dbprefix = 'jos_';					// Do not change unless you need to!
+	var $dbtype = 'mysql';				// Normally mysql
+	var $host = 'localhost';			// This is normally set to localhost
+	var $user = 'root';					// MySQL username
+	var $password = '';				// MySQL password
+	var $db = '';					// MySQL database name
+	var $dbprefix = 'jos_';				// Do not change unless you need to!
 
 	/* Server Settings */
 	var $secret = 'FBVtggIk5lAzEU9H'; 		//Change this to something more secure
@@ -59,11 +57,11 @@ class JConfig {
 	var $ftp_pass = '';
 	var $ftp_root = '';
 	var $ftp_enable = '';
-	var $tmp_path	= '/tmp';
-	var $log_path	= '/var/logs';
+	var $tmp_path	= '/tmp';			//Change this to match your website
+	var $log_path	= '/var/logs';			//Change this to match your website
 	var $offset = '0';
-	var $live_site = ''; 					// Optional, Full url to Joomla install.
-	var $force_ssl = 0;		//Force areas of the site to be SSL ONLY.  0 = None, 1 = Administrator, 2 = Both Site and Administrator
+	var $live_site = ''; 				// Optional, Full url to Joomla install.
+	var $force_ssl = '0';		//Force areas of the site to be SSL ONLY.  0 = None, 1 = Administrator, 2 = Both Site and Administrator
 
 	/* Session settings */
 	var $lifetime = '15';					// Session time
@@ -90,18 +88,25 @@ class JConfig {
 	var $debug_lang = '0';
 
 	/* Meta Settings */
-	var $MetaDesc = 'Joomla! - the dynamic portal engine and content management system';
-	var $MetaKeys = 'joomla, Joomla';
+	var $MetaDesc = 'OpenFoundry - Your project hosting';
+	var $MetaKeys = 'OpenFoundry';
 	var $MetaTitle = '1';
 	var $MetaAuthor = '1';
 
 	/* SEO Settings */
-	var $sef = '0';
-	var $sef_rewrite = '0';
+	var $sef = '1';			//Remember to enable apache mod_rewrite
+	var $sef_rewrite = '1';
 	var $sef_suffix = '';
 
 	/* Feed Settings */
 	var $feed_limit   = 10;
 	var $feed_email   = 'author';
+
+	/* SSO Settings */
+        var $ofsso_regist_key = '';
+        var $ofsso_cookie_name = 'ossfauth';
+        var $ofsso_service_cookie_name = 'ossfauth_wsw';
+        var $ofsso_site  = '';
+        var $ofsso_ip_limit = '';
 }
 ?>
