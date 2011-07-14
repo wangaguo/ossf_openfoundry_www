@@ -99,9 +99,7 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 		<?php endif; ?>
 
 		<?php echo $this->article->text; ?>
-		<br>
-		<div class="add_this">	
-
+		<br><br>
 			<!-- AddThis Button BEGIN -->
 			<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
 			<a class="addthis_button_preferred_1"></a>
@@ -114,7 +112,7 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 			<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
 			<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=openfoundry"></script>
 			<!-- AddThis Button END -->
-		</div><br>
+		<br>
 		<?php echo $this->article->event->afterDisplayContent; ?>
 		<?php /** Begin Article Sec/Cat **/ if (($this->params->get('show_section') && $this->article->sectionid) || ($this->params->get('show_category') && $this->article->catid)) : ?>
 		<p class="rt-article-cat">
