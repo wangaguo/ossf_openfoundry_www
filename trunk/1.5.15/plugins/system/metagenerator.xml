@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5" type="plugin" group="system">
+    <name>System - MetaGenerator</name>
+    <author>Shikle.com</author>
+    <creationDate>March 2011</creationDate>
+    <copyright>Copyright (C) 2010 Juan Padial</copyright>
+    <license>GNU/GPL</license>
+    <authorUrl>www.shikle.com</authorUrl>
+    <version>1.2.9</version>
+    <description>METAGENERATOR_DESCRIPTION</description>
+    <files>
+        <filename plugin="metagenerator">metagenerator.php</filename>
+    </files>
+    <languages>
+    	 <language tag="en-GB">en-GB.plg_system_metagenerator.ini</language>
+    </languages>
+	<params>
+	<param name="spacer1" type="spacer" default="FRONT_PAGE_OPTIONS" label="" description="" />
+		<param name="fpdisable" type="list" default="no" label="FP_DISABLE_LBL" description="FP_DISABLE_LBL_DESC">
+ 			<option value="yes">YES</option>
+ 			<option value="no">NO</option>
+		</param>
+		<param name="fptitle" type="text" size="40" default="HOME" label="OPTIONAL_FRONT_PAGE_TITLE" description="OPTIONAL_FRONT_PAGE_DESC"/>
+		<param name="fptitorder" type="list" default="0" label="FRONT_PAGE_TITLE_LAYOUT" description="FRONT_PAGE_TITLE_LAYOUT_DESC">
+ 			<option value="0">OPTIONAL_FP_TITLE_SITE_TITLE</option>
+ 			<option value="1">SITE_TITLE_OPTIONAL_FP_TITLE</option>
+			<option value="2">OPTIONAL_FP_TITLE</option>
+			<option value="3">SITE_TITLE</option>
+		</param>
+	<param name="spacer2" type="spacer" default="TITLE_OPTIONS" label="" description="" />
+		<param name="titorder" type="list" default="0" label="TITLE_LAYOUT" description="TITLE_LAYOUT_DESC">
+ 			<option value="0">PAGE_TITLE_SITE_TITLE</option>
+ 			<option value="1">SITE_TITLE_PAGE_TITLE</option>
+			<option value="2">PAGE_TITLE</option>
+		</param>		
+		<param name="separator" type="text" size="1" default="\|" label="SEPARATOR" description="SEPARATOR_DESC"/>	
+		<param name="categorytitle" type="radio" default="0" label="REPLACE_SITE_NAME_WITH_CATEGORY_TITLE" description="REPLACE_SITE_NAME_WITH_CATEGORY_TITLE_DESC">
+ 			<option value="0">YES</option>
+ 			<option value="1">NO</option>
+		</param>
+	  
+            <param name="spacer3" type="spacer" default="MAX_CHARACTERS_FROM_ARTICLE" label="" description="" />
+	      <param name="maxcharacters" type="text" size="5" default="500" label="ARTICLE_TEXT_CHARACTERS_PROCESSED" description="ARTICLE_TEXT_CHARACTERS_PROCESSED_DESC"/> 
+	      <param name="spacer4" type="spacer" default="PARAMS_FOR_METADESC" label="" description="" />
+	      <param name="desclength" type="text" size="5" default="200" label="METADESC_LENGTH" description="METADESC_LENGTH_DESC"/> 		
+	      <param name="spacer5" type="spacer" default="KEYWORDS_PARAMS" label="" description="" />	
+	      <param name="listexclude" type="textarea" label="BLACKWORDS" rows="10" cols="20" default="" description="BLACKWORDS_DESC"/>
+	      <param name="goldwords" type="textarea" label="GOLDWORDS" rows="10" cols="20" default="" description="GOLDWORDS_DESC"/>
+              <param name="minkeylength" type="text" label="KEYS_MINIMUM_LENGTH" default="5" description="KEYS_MINIMUM_LENGTH_DESC"/>
+              <param name="maxwords" type="text" label="MAX_NUMBER_OF_KEYWORDS" default="20" description="MAX_NUMBER_OF_KEYWORDS_DESC"/>	
+              <param name="spacer6" type="spacer" default="CANONICAL_META_TAG" label="" description="" />
+              <param name="usecanonical" type="radio" default="0" label="USE_CANONICAL_META_TAG" description="USE_CANONICAL_META_TAG_DESC">
+ 			<option value="0">YES</option>
+ 			<option value="1">NO</option>
+	      </param>
+	      <param name="sitedomain" type="text" label="SITE_DOMAIN" default="http://www.example.com" description="SITE_DOMAIN_DESC"/>
+    </params>
+</install>
