@@ -138,7 +138,7 @@ class plgEditorJCE extends JPlugin
         
         $buttons = $this->_displayButtons($id, $buttons, $asset, $author);
         
-        $editor  = '<label for="' . $id . '" style="display:none;" aria-visible="false">' . $id . '_textarea</label><textarea id="' . $id . '" name="' . $name . '" cols="' . $col . '" rows="' . $row . '" style="width:' . $width . ';height:' . $height . ';" class="wfEditor source" >' . $content . '</textarea>';
+        $editor  = '<label for="' . $id . '" style="display:none;" aria-visible="false">' . $id . '_textarea</label><textarea id="' . $id . '" name="' . $name . '" cols="' . $col . '" rows="' . $row . '" style="width:' . $width . ';height:' . $height . ';" class="wfEditor source" wrap="off">' . $content . '</textarea>';
         $editor .= $model->getToken($id);
         $editor .= $buttons;
 
