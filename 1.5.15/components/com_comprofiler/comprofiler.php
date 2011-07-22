@@ -985,7 +985,7 @@ function usersList( $uid ) {
 	$whereFields			=	$searchesFromFields->reduceSqlFormula( $tableReferences, $joinsSQL, TRUE );
 	if ( $whereFields ) {
 		$searchSQL = strtolower($_CB_database->getEscaped( $_GET['cb_keyword'] ));
-		$tablesWhereSQL[]	=	'((lower(ue.cb_nickname) LIKE \'%'.$searchSQL.'%\') OR (lower(u.username) LIKE \'%'.$searchSQL.'%\') OR (ue.cb_itskills LIKE \'%'.$searchSQL.'%\'))';
+		$tablesWhereSQL[]	=	'((lower(ue.cb_nickname) LIKE \'%'.$searchSQL.'%\') OR (lower(u.name) LIKE \'%'.$searchSQL.'%\') OR (lower(u.username) LIKE \'%'.$searchSQL.'%\') OR (ue.cb_itskills LIKE \'%'.$searchSQL.'%\'))';
 /*
 		if ( $search === null ) {
 			$search			=	'';
