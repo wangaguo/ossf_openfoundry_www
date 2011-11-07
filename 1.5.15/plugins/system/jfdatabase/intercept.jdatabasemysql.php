@@ -74,7 +74,7 @@ class interceptDB extends JDatabaseMySQL {
 			// This is a serious problem since we do not have a valid db connection
 			// or there is an error in the query
 			if ($this->getErrorNum()>0){
-				echo JText::_("No valid database connection")." ".$this->getErrorMsg()."<br/>";
+//				echo JText::_("No valid database connection")." ".$this->getErrorMsg()."<br/>";
 			}
 			return 0;
 		}
