@@ -57,7 +57,7 @@ blockquote {font: italic 16px/22px Georgia, Serif;}
 /* Lists */
 ul,ol {padding-left:20px;}
 ul li {padding: 0;margin: 0;}
-ul li a {font-size: 1.2em;line-height: 1.8em;}
+ul li a {/*font-size: 1.2em;*/line-height: 1.8em;}
 ul ul {margin-left: 25px;padding: 5px 0;}
 ul li.author {margin: 0;letter-spacing: 1px;list-style: none;font-weight: bold;text-align: right;}
 ul li.date {margin: 0;letter-spacing: 1px;list-style: none;text-align: right;font-weight: bold;}
