@@ -1,0 +1,131 @@
+/* Gray Blue - Gray */
+
+/* inspired by bento box template*/
+
+/*General*/
+
+
+.SurveyName 	{
+
+font-size: 140%;
+color:  #333333;
+
+}
+.SurveyDesciption {
+color: #000000;
+font-weight: normal;
+margin:20px 0px 20px 0px;
+}
+.PageName {
+
+font-size: 130%;
+color:  #333333;
+margin:20px 0px 20px 0px;
+}
+
+.PageDesciption {
+
+}
+
+.Question {
+
+font-size: 120%;
+color:  #333333;
+}
+
+.QuestionDesciption {
+
+}
+
+.Answer {
+
+}
+
+/*Form Elements*/
+
+.Checkbox {
+
+}
+.RadioButton {
+
+}
+.DropDownMenu {
+
+}
+.TextArea {
+
+}
+.Button {
+background-color: #333333;
+padding: 2px;
+padding: 3px;
+color: #fff;
+}
+
+.btnx{
+
+}
+/*Table*/
+
+.RowHeading {
+
+height: 25px;
+padding: 3px;
+}
+
+.matrix_heading{
+
+background-color: #eeeeee;
+padding: 3px;
+color: #333333;
+
+}
+
+.ColumnHeading {
+
+padding: 3px;
+color: #333333;
+}
+.TableRow1 {
+
+background-color: #D9ECFF;
+padding: 2px;
+height: 25px;
+padding: 3px;
+color: #333333;
+}
+
+.TableRow2 {
+
+background-color: #eeeeee;
+padding: 2px;
+height: 25px;
+padding: 3px;
+color: #333333;
+
+}
+
+/*Results*/
+
+.ResultHeading {
+
+}
+.TotalBackground{
+
+} 
+
+/*Pop up*/
+
+.PopupTitle {
+}
+.PopupContent {
+}
+.PopupButtonrow{
+
+}
+.abstract_class{
+}w{
+
+}
+.abstract_class{
+}
