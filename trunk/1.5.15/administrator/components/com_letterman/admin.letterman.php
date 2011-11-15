@@ -1623,7 +1623,7 @@ function lm_getContentSelectList(){
 	  	. "\n AND cc.section=".$section->id
 		. "\n And cc.section in ('20','13')"
 	  	. "\n ORDER BY c.created DESC, cc.title, c.title"
-	  	. "\n LIMIT 0, 15";
+	  	. "\n LIMIT 0, 20";
 	  	
 	  	//echo nl2br(str_replace("#__", "mos_", $query));
 	  	$database->setQuery( $query );
