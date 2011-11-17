@@ -9,6 +9,7 @@
 
 font-size: 140%;
 color:  #333333;
+padding-bottom:10px;
 
 }
 .SurveyDesciption {
@@ -24,11 +25,14 @@ margin:20px 0px 20px 0px;
 }
 
 .PageDesciption {
+   
+    font-size:15px;
+    line-height: 1.85;
 
 }
 
 .Question {
-
+padding-top:10px;
 font-size: 120%;
 color:  #333333;
 }
@@ -36,8 +40,8 @@ color:  #333333;
 .QuestionDesciption {
 
 }
-
 .Answer {
+    font-size:15px;
 
 }
 
@@ -50,6 +54,7 @@ color:  #333333;
 
 }
 .DropDownMenu {
+font-size:15px;
 
 }
 .TextArea {
@@ -69,6 +74,7 @@ color: #fff;
 
 .RowHeading {
 
+font-size:15px;
 height: 25px;
 padding: 3px;
 }
@@ -82,7 +88,7 @@ color: #333333;
 }
 
 .ColumnHeading {
-
+background-color: #D9ECFF;
 padding: 3px;
 color: #333333;
 }
