@@ -1265,12 +1265,14 @@ $database = &JFactory::getDBO();
 		if ($page_info['show_title']){
 
 			echo "<tr class='$css_page_name'><td >".stripslashes($page_info["title"])."</td></tr>";
-			echo "<tr><td class='$css_page_description'>";
+			//echo "<tr><td class='$css_page_description'>";
 			if ($page_info["images"]) {
 				echo "<table align='left'><tr><td align='left' style='padding-right:10px;padding-bottom:10px'><img src='".JURI::base()."images/stories/".$page_info["images"]."' alt='no image'/></td></tr></table>";
 			}
-			echo stripslashes($page_info["description"])."</td></tr>";
+			//echo stripslashes($page_info["description"])."</td></tr>";
 		}
+			echo "<tr><td class='$css_page_description'>";
+			echo stripslashes($page_info["description"])."</td></tr>";
 		echo "</table>";
 		$now=time();
 		$database->setQuery("SELECT * FROM #__ijoomla_surveys_questions WHERE s_id=$s_id  AND page_id=$page_id AND start_date<=$now AND end_date>=$now AND published=1 ORDER BY ordering ASC");
@@ -1300,7 +1302,7 @@ $database = &JFactory::getDBO();
 
 			foreach ($questions as $question_info) {
 			  echo '<tr><td><table width="100%">';
-				echo "<tr class='$css_question'><td ><span class='$css_question'>".text_wrap(stripslashes($question_info["title"]),30,"<br />").'<a id="id'.$question_info["q_id"].'"></a>';
+				echo "<tr class='$css_question'><td ><br><span class='$css_question'>".text_wrap(stripslashes($question_info["title"]),30,"<br />").'<a id="id'.$question_info["q_id"].'"></a>';
 				if ($question_info["required"]==1) {
 					 echo "<span style='color:red'>*</span>";
 					 $required=1;
@@ -2405,7 +2407,7 @@ function view_matrix_answers($q_id,$type="radio",$order='',$orderC='',$data=null
     				<input type='hidden' name='question[$q_id][orientation]' value='matrix' /></td>";
 
         for ($i=0;$i<count($c_value);$i++) {
-    				echo "<td width='$percent%' align='center' style='padding:15px' class='$css_column_heading'>".text_wrap(stripslashes($c_label[$i]),30,"<br />")."</td>";
+    				echo "<td width='$percent%' align='center' style='padding:5px' class='$css_column_heading'>".text_wrap(stripslashes($c_label[$i]),30,"<br />")."</td>";
     		}
     		echo "</tr>";
 
@@ -2478,7 +2480,7 @@ function view_matrix_answers($q_id,$type="radio",$order='',$orderC='',$data=null
     		echo "<table width='100%'><tr class='$css_column_heading'><td width='40%'><input type='hidden' name='question[$q_id][type]' value='$type' />
     				<input type='hidden' name='question[$q_id][orientation]' value='matrix' /></td>";
     		for ($i=0;$i<count($c_value);$i++) {
-    				echo "<td width='$percent%' align='center' style='padding:15px' class='$css_column_heading'>".text_wrap(stripslashes($c_label[$i]),30,"<br />")."</td>";
+    				echo "<td width='$percent%' align='center' style='padding:5px' class='$css_column_heading'>".text_wrap(stripslashes($c_label[$i]),30,"<br />")."</td>";
     		}
     		echo "</tr>";
 
@@ -2524,7 +2526,7 @@ function view_matrix_answers($q_id,$type="radio",$order='',$orderC='',$data=null
 		elseif ($type=="menu") {
 		    if (!isset($_SESSION["order"][$q_id])&&(!isset($_SESSION["order_column"][$q_id]))){
     			echo "<table width='100%'>";
-    			echo "<tr><td width='50%'></td>";
+    			echo "<tr><td width='10%'></td>";
     			$database->setQuery("SELECT * FROM #__ijoomla_surveys_menu_heading WHERE q_id=$q_id $order2");
                 if (!$database->query()){
                     die("Error !Code 36: The process could not be finished due to internal error. Please contact the administrators");
@@ -2542,7 +2544,7 @@ function view_matrix_answers($q_id,$type="radio",$order='',$orderC='',$data=null
                     	if ($load_menu_order){
                     	    array_push($_SESSION["order_column"][$q_id],$m_info["m_id"]);
                     	}
-    					echo "<td width='$percent%'>".$m_info["value"]."</td>";
+    					echo "<td width='90%'>".$m_info["value"]."</td>";
     					$database->setQuery("SELECT * FROM #__ijoomla_surveys_answer_columns WHERE m_id=".$m_info["m_id"]." $order1");
                         if (!$database->query()){
                             die("Error !Code 36: The process could not be finished due to internal error. Please contact the administrators");
@@ -2605,7 +2607,7 @@ function view_matrix_answers($q_id,$type="radio",$order='',$orderC='',$data=null
     			}
 			}else{
     			echo "<table width='100%'>";
-    			echo "<tr><td width='25%'></td>";
+    			echo "<tr><td width='10%'></td>";
 
 
     			$total_menus=count($_SESSION["order_column"][$q_id]);
@@ -2618,7 +2620,8 @@ function view_matrix_answers($q_id,$type="radio",$order='',$orderC='',$data=null
                         }
     				    $menus=$database->loadAssocList();
     				    $m_info=$menus[0];
-    					echo "<td width='$percent%'>".$m_info["value"]."</td>";
+    					echo "<td width='90%'>".$m_info["value"]."</td>";
+    					//echo "<td width='$percent%'>".$m_info["value"]."</td>";
     					$database->setQuery("SELECT * FROM #__ijoomla_surveys_answer_columns WHERE m_id=".$m_info["m_id"]." $order1");
                         if (!$database->query()){
                             die("Error !Code 36: The process could not be finished due to internal error. Please contact the administrators");
