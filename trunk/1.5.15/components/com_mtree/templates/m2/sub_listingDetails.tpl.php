@@ -85,6 +85,7 @@ while( $this->fields->hasNext() ) {
 				$address_displayed = true;
 			}
 		} else {
+			if ($field->getID()!=32){
 			echo '<div class="caption">';
 			if($field->hasCaption()) {
 				echo $field->getCaption();
@@ -95,6 +96,7 @@ while( $this->fields->hasNext() ) {
 			echo $field->getOutput(1);
 			echo $field->getDisplaySuffixText(); 
 			echo '</div>';
+		}
 		}
 		echo '</div>';
 	}
@@ -169,8 +171,12 @@ if (!empty($images) && $this->config->getTemParam('listingDetailsImagesOutputMod
 	echo '</div>';
 }
 if(!is_null($this->fields->getFieldById(2))) { 
-	$link_desc = $this->fields->getFieldById(2);
-	echo $link_desc->getOutput(2);
+//	$link_desc = $this->fields->getFieldById(2);
+//	echo $link_desc->getOutput(2)."<br>";
+
+ 	$link_fulltxt= $this->fields->getFieldById(32);
+	echo $link_fulltxt->getOutput(32);
+
 }
 echo '</div>';
 if ( !empty($this->mambotAfterDisplayContent) ) { echo trim( implode( "\n", $this->mambotAfterDisplayContent ) ); }
