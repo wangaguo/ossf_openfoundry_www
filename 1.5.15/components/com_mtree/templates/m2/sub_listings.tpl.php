@@ -1,5 +1,5 @@
 <div id="listings"><?php
-
+if ( $this->pageNav->total > 0 ) { 
 if( $this->task == "search" && empty($this->links) ) {
 
 	if( empty($this->categories) ) {
@@ -23,7 +23,6 @@ if( $this->task == "search" && empty($this->links) ) {
 		$fields = $this->fields[$link->link_id];
 		include $this->loadTemplate('sub_listingSummary.tpl.php');
 	}
-
 	if( $this->pageNav->total > $this->pageNav->limit ) { ?>
 	<div class="rt-pagination">
 		<?php echo $this->pageNav->getPagesLinks(); ?>
@@ -32,5 +31,6 @@ if( $this->task == "search" && empty($this->links) ) {
 	<?php
 	}
 	
+}
 }
 ?></div>
