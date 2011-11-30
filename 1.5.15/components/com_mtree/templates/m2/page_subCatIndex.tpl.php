@@ -14,30 +14,15 @@ if ( (isset($this->cat_image) && $this->cat_image <> '') || (isset($this->cat_de
 }
 ?>
 
-<?php include $this->loadTemplate( 'sub_subCats.tpl.php' ) ?>
-<div id="listings">
-        <div class="title"><?php echo JText::_( 'Teaching material' ); ?></div>
+<?php include $this->loadTemplate( 'sub_subCats.tpl.php' );
 
-        <div class="rt-pagination">
-                <?php echo $this->pageNav->getPagesLinks(); ?>
-                <p class="pagescounter"><?php #echo $this->pageNav->getResultsCounter(); ?></p>
-        </div>
+?>
 
-        <?php
-        foreach ($this->links AS $link) {
-                $fields = $this->fields[$link->link_id];
-                include $this->loadTemplate('sub_listingSummary.tpl.php');
+<?php 
+include $this->loadTemplate( 'sub_listings.tpl.php' );
+#if( $this->cat_show_listings ) include $this->loadTemplate( 'sub_listings.tpl.php' );
+
+?>
 
 
-        }
-        if( $this->pageNav->total > $this->pageNav->limit ) { ?>
-        <div class="rt-pagination">
-                <?php echo $this->pageNav->getPagesLinks(); ?>
-                <p class="pagescounter"><?php echo $this->pageNav->getResultsCounter(); ?></p>
-        </div>
-        <?php
-        }?>
 
-
-</div>
-<?php# if( $this->cat_show_listings ) include $this->loadTemplate( 'sub_listings.tpl.php' ) ?>
