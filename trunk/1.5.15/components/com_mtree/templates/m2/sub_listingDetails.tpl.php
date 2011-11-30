@@ -85,7 +85,7 @@ while( $this->fields->hasNext() ) {
 				$address_displayed = true;
 			}
 		} else {
-			if ($field->getID()!=32){
+			if ($field->getID()!=34){
 			echo '<div class="caption">';
 			if($field->hasCaption()) {
 				echo $field->getCaption();
@@ -174,8 +174,8 @@ if(!is_null($this->fields->getFieldById(2))) {
 //	$link_desc = $this->fields->getFieldById(2);
 //	echo $link_desc->getOutput(2)."<br>";
 
- 	$link_fulltxt= $this->fields->getFieldById(32);
-	echo $link_fulltxt->getOutput(32);
+ 	$link_fulltxt= $this->fields->getFieldById(34);
+	echo $link_fulltxt->getOutput(34);
 
 }
 echo '</div>';
