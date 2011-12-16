@@ -1323,15 +1323,24 @@ function showresponses( &$rows, $s_id, $pageNav, $option ,$act ) {
 	<?php
 		$k = 0 ;
 		for( $i = 0; $i < count( $rows ); $i++ ) {
-			$row = &$rows[$i] ;
-			if ( $row->user_id != 0 ) {
-				$database->setQuery( "SELECT  name,username,email FROM #__users WHERE id=$row->user_id" ) ;
-				list( $name, $username, $email ) = $database->loadRow() ;	
-			}
-			else {
-				$name = "N/A"; 
-				$username = "N/A" ;
-				$email = "N/A" ;
+						$row = &$rows[$i] ;
+				//Custom for Newsletter Survey because want to show user's answer not Register Member, so set s_id =1
+				if ($row->s_id!=1){
+					if ( $row->user_id != 0 ) {
+						$database->setQuery( "SELECT  name,username,email FROM #__users WHERE id=$row->user_id" ) ;
+						list( $name, $username, $email ) = $database->loadRow() ;	
+					}
+					else {
+						$name="N/A";				
+						$username = "N/A" ;
+						$email = "N/A" ;
+					}
+			}else {
+				  			$database->setQuery( "SELECT  value as name FROM jos_ijoomla_surveys_result_text WHERE session_id=$row->session_id and q_id=1" ) ;
+								list( $name ) = $database->loadRow() ;	
+				  			$database->setQuery( "SELECT  value as email FROM jos_ijoomla_surveys_result_text WHERE session_id=$row->session_id and q_id=5" ) ;
+								list( $email ) = $database->loadRow() ;	
+								$username = "N/A" ;
 			}
 			$img = $row->published == 0 ? "publish_x.png" : "tick.png" ;
 			$publish = $row->published == 0 ? "rpublish" : "runpublish" ;
