@@ -6,5 +6,6 @@
 		<param name="editor" type="editors" default="" label="User Editor" description="WYSIWYG Editor for this User" />
 		<param name="helpsite" type="helpsites" default="" label="Help Site" description="Help Site for this User" />
 		<param name="timezone" type="timezones" default="" label="Time Zone" description="Time Zone for this User" />
+		<param name="isauthor" type="text" default="" label="Is he/she a Article Author?" description="set author YES:1 / NO:0 " />
 	</params>
 </form>

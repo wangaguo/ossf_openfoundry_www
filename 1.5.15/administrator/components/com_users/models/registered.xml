@@ -4,5 +4,6 @@
 	<params>
 		<param name="language" type="languages" client="site" default="" label="Front-end Language" description="paramLanguage" />
 		<param name="timezone" type="timezones" default="" label="Time Zone" description="Time Zone for this User" />
+		<param name="isauthor" type="text" default="" label="Is he/she a Article Author?" description="set author YES:1 / NO:0 " />
 	</params>
 </form>
