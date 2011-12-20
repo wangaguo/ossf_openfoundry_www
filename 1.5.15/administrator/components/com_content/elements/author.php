@@ -33,6 +33,12 @@ class JElementAuthor extends JElement
 
 	function fetchElement($name, $value, &$node, $control_name)
 	{
-		return JHTML::_('list.users', $control_name.'['.$name.']', $value);
+		$db = &JFactory::getDBO();
+				//return JHTML::_('list.users', $control_name.'['.$name.']', $value);
+				$isauthor = "SELECT id,name  FROM jos_users  where params like '%isauthor=1%'";
+				$db->setQuery($isauthor);
+				$options = $db->loadObjectList( );
+				return JHTML::_('select.genericlist',  $options, ''.$control_name.'['.$name.']', '', 'id', 'name', $value, $name );
+
 	}
 }
