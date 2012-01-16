@@ -180,12 +180,12 @@ function unMount($cid,$option)
             $user->id = $id;
 			//$user->metakey = str_replace(", ".$oldTag[0]->subject,"",$removeTag);	
             $user->metakey = str_replace(",".$cids,"",$removeTag);
-			if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
-				if(!$database->updateObject('#__content',$user,'id'))
-					{
-						echo $database->stderr();
-					}			
-			}
+			//if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
+			//	if(!$database->updateObject('#__content',$user,'id'))
+			//		{
+			//			echo $database->stderr();
+			//		}			
+			//}
 		}
 	}
 
@@ -244,12 +244,12 @@ function reflashOldPaper($option)
                 //$user->metakey = $oldMetakey.", ".$subject;
 				$user->metakey = $oldMetakey.",".$subject_id;
 				$user->id = $contentid[0];
-				if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
-					if(!$database->updateObject('#__content',$user,'id'))
-					{
-						echo $database->stderr();
-					}
-				}
+			//	if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
+			//		if(!$database->updateObject('#__content',$user,'id'))
+			//		{
+			//			echo $database->stderr();
+			//		}
+			//	}
 			}
 			//看id是不是有在電子報中的tags裡 沒有的話新增
 			if(!in_array($contentid[0],$oldTagsArray))$tags.=  $contentid[0]."|";
@@ -577,12 +577,12 @@ function composeNow() {
 		$database->setQuery("SELECT metakey FROM #__content WHERE id=$id[$i]" );
 		$oldMetakey=$database->loadResult();
 		$user->metakey = $oldMetakey."$";
-		if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
-			if(!$database->updateObject('#__content',$user,'id'))
-			{
-				echo $database->stderr();
-			}
-		}
+		//if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
+		//	if(!$database->updateObject('#__content',$user,'id'))
+		//	{
+		//		echo $database->stderr();
+		//	}
+		//}
 	}
 /*--------------------------------------END--------------------------------------------------*/
 
