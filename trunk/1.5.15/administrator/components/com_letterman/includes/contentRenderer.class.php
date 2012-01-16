@@ -255,26 +255,26 @@ function lm_replaceContentHtml(&$matches){
 
 			if ($id > 1028 || $id < 1000 ) {	
 			$content .= '<tr>'
-			. '  <td colspan="2" align="left" style="font-size:12px;color:#444;line-height:200%;">' .( function_exists('ampReplace') ? ampReplace( $intro_text ) : $intro_text ). '</td>'
+			. '  <td colspan="2" align="left" style="font-size:15px;color:#444;line-height:200%;">' .( function_exists('ampReplace') ? ampReplace( $intro_text ) : $intro_text ). '</td>'
 			. '</tr>'
 			. '<tr>'
 			. '<td align="left" colspan="2">'
 			. '<img src="'.$getlive_site.'/images/M_images/arrow.png"><a href="'. $getlive_site
 			. '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
-			. '&amp;Itemid=4;isletter=1 ' . '" style="font-size:12px;color:#FD6003;"">'.	
+			. '&amp;Itemid=4;isletter=1 ' . '" style="font-size:15px;color:#FD6003;"">'.	
 			_READ_MORE
 			. '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
             		. '<img src="'.$getlive_site.'/images/M_images/arrow.png"><a href="'. $getlive_site
 			. '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
 			. '&amp;Itemid=4;isletter=1#addcomments' 
-			. '" style="font-size:12px;color:#FD6003;"">'.
+			. '" style="font-size:15px;color:#FD6003;"">'.
             		_ADD_COMMENT
             		. '</a>'
 			. '</td>'
 			. '</tr>'
 			. '<tr>'
 			. ' <td align="right" colspan="2" ><a href="#TOP">'
-			. '<font size="2" color="#FD6003"><b>'
+			. '<font size="15px" color="#FD6003"><b>'
 			._BACK_TOP
 			.'</b></font>' 
 			. '</a></td>'
