@@ -35,7 +35,7 @@ body {min-width: 960px;}
 body {font-size: 12px;line-height: 1.7em;font-family: Helvetica,Arial, Sans-Serif;}
 body.font-size-is-xlarge {font-size: 15px;line-height: 200%;}
 body.font-size-is-large {font-size: 14px;line-height: 200%;}
-body.font-size-is-default {font-size: 13px;}
+body.font-size-is-default {font-size: 13px;line-height:200%;}
 body.font-size-is-small {font-size: 11px;line-height: 200%;}
 body.font-size-is-xsmall {font-size: 10px;line-height: 200%;}
 form {margin: 0;padding: 0;}
