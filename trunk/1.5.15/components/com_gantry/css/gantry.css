@@ -39,7 +39,7 @@ body.font-size-is-default {font-size: 13px;}
 body.font-size-is-small {font-size: 11px;line-height: 200%;}
 body.font-size-is-xsmall {font-size: 10px;line-height: 200%;}
 form {margin: 0;padding: 0;}
-input.inputbox { width: 250px;color: #808080;}
+input.inputbox { width: 250px;color: #808080;border: 1px solid #C3C3C3; border-radius: 3px 3px 3px 3px;height:18px;}
 p {margin: 0 0 15px 0;}
 h1, h2, h3, h4, h5 {margin: 5px 0;line-height: 1.3em;}
 h1 {font-size: 200%;}
