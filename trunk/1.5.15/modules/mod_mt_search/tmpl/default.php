@@ -2,7 +2,7 @@
 <form action="index.php" method="post">
 
 	<div class="search<?php echo $moduleclass_sfx; ?>">
-	<input type="text" id="mod_mt_search_searchword" name="searchword" maxlength="20" class="inputbox" size="<?php echo $width; ?>" value="<?php echo $text; ?>"  onblur="if(this.value=='') this.value='<?php echo $text; ?>';" onfocus="if(this.value=='<?php echo $text; ?>') this.value='';" />
+	<input type="text" id="mod_mt_search_searchword" name="searchword" maxlength="20" size="<?php echo $width; ?>" value="<?php echo $text; ?>"  onblur="if(this.value=='') this.value='<?php echo $text; ?>';" onfocus="if(this.value=='<?php echo $text; ?>') this.value='';" />
 	<?php if( $lists['categories'] ) { ?>
 	<br /><?php echo $lists['categories'];
 	} ?>
