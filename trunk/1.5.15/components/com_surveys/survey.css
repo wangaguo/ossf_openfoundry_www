@@ -7,21 +7,25 @@
 
 .SurveyName 	{
 
-font-size: 140%;
+font-size: 145%;
 color:  #333333;
 padding-bottom:10px;
+font-weight:normal;
 
 }
 .SurveyDesciption {
 color: #000000;
 font-weight: normal;
 margin:20px 0px 20px 0px;
+font-size:15px;
 }
 .PageName {
-
-font-size: 130%;
-color:  #333333;
-margin:20px 0px 20px 0px;
+border-bottom: 2px solid;
+font-size: 155%;
+font-weight: bold;
+margin-bottom: 20px;
+margin-top: 40px;
+text-align: left;
 }
 
 .PageDesciption {
@@ -38,7 +42,9 @@ color:  #333333;
 }
 
 .QuestionDesciption {
-
+margin: 5px 5px 10px 30px;
+padding: 10px;
+border: 2px dashed #B7B7B7;
 }
 .Answer {
     font-size:15px;

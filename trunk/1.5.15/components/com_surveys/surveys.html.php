@@ -1301,17 +1301,33 @@ $database = &JFactory::getDBO();
       else{   $data=null;   }
 
 			foreach ($questions as $question_info) {
-			  echo '<tr><td><table width="100%">';
-				echo "<tr class='$css_question'><td ><br><span class='$css_question'>".text_wrap(stripslashes($question_info["title"]),30,"<br />").'<a id="id'.$question_info["q_id"].'"></a>';
+				echo '<tr><td><table width="100%">';
+				if ( $question_info["orientation"]=="front"){
+								echo "<tr class='$css_question'><td ><br>";
+								view_front_answers($question_info["q_id"],$question_info["type"],$question_info["other_field"],$question_info["other_field_title"],$order,$dataq);
+								echo "<span class='$css_question'>".text_wrap(stripslashes($question_info["title"]),30,"<br />").'<a id="id'.$question_info["q_id"].'"></a>';
+
+				}else if ($question_info["orientation"]=="title"){
+								echo "<tr class='PageName' ><td ><br>";
+								echo $question_info["title"];
+
+				}else{
+								echo "<tr class='$css_question'><td ><br><span class='$css_question'>".text_wrap(stripslashes($question_info["title"]),30,"<br />").'<a id="id'.$question_info["q_id"].'"></a>';
+				}
 				if ($question_info["required"]==1) {
 					 echo "<span style='color:red'>*</span>";
 					 $required=1;
 				}
 				echo "</span></td></tr>";
+				if ($question_info["description"]!="" && $question_info["orientation"]!="title"){
+					echo "<tr class='$css_question_description'><td>";
+					echo "<div class='$css_question_description'>".text_wrap(stripslashes($question_info["description"]),30,"<br />")."</div>
+								</td></tr>";
+				}else {
+					echo "<tr><td>";
+					echo text_wrap(stripslashes($question_info["description"]),30,"<br />")."</td></tr>";
 
-				echo "<tr class='$css_question_description'><td>";
-				echo "<span class='$css_question_description'>".text_wrap(stripslashes($question_info["description"]),30,"<br />")."</span>
-				</td></tr>";
+				}
 				echo "<tr><td>"; // Start view answer
 				if ($question_info["random_a"]==1) {
 				    $order=" ORDER BY RAND()";
@@ -2206,6 +2222,77 @@ function view_checksum_answers($q_id,$order,$required,$constant,&$script,$data=n
 					    return false;
 		            }";
     }
+}
+
+function view_front_answers($q_id,$type="radio",$other_field=0,$other_field_title="",$order,$data=null){
+
+  $css_inputbox     = JRequest::getVar('css_inputbox');
+  $css_answer     = JRequest::getVar('css_answer');
+  $css_checkbox     = JRequest::getVar('css_checkbox');
+  $css_radiobutton  = JRequest::getVar('css_radiobutton');
+
+  $css=$type=='radio'?$css_radiobutton:$css_checkbox;
+	$database = &JFactory::getDBO();
+  if (!isset($_SESSION["order"][$q_id])){
+      $database->setQuery("SELECT * FROM #__ijoomla_surveys_answers WHERE q_id=$q_id ");
+        if (!$database->query()){
+            die("Error !Code 34: The process could not be finished due to internal error. Please contact the administrators");
+        }
+      if ($database->getNumRows()>0) {
+        $answers=$database->loadAssocList();
+        $i=0;
+        if ($order !=""){
+            $load_order=true;
+                $_SESSION["order"][$q_id]=array();
+        }
+        foreach ($answers as $answer_info) {
+              if ($load_order){
+                  array_push($_SESSION["order"][$q_id],$answer_info["a_id"]);
+              }
+          $checked=in_array($answer_info["a_id"],$data["answer"])?" Checked":"";
+
+          if ($type=="radio"){
+          echo "<input name='question[$q_id][answer][]' type='$type' value='".$answer_info["a_id"]."' onclick='setentered(form.q$q_id,this,\"question[$q_id][answer     _text]\")' $checked class='$css'/>";
+                }else{
+          echo "<input name='question[$q_id][answer][]' type='$type' value='".$answer_info["a_id"]."' onchange='setentered(form.q$q_id,this,\"question[$q_id][answe     r_text]\")' $checked class='$css'/>";
+                }
+          echo "<span class='$css_answer'>".text_wrap(stripslashes($answer_info["value"]),30,"<br />")."</span>";
+          $i++;
+        }
+      }
+  }else{
+      $i=0;
+      foreach ($_SESSION["order"][$q_id] as $a_id) {
+          $database->setQuery("SELECT * FROM #__ijoomla_surveys_answers WHERE a_id=$a_id");
+            if (!$database->query()){
+                die("Error !Code 34: The process could not be finished due to internal error. Please contact the administrators");
+            }
+        $answers=$database->loadAssocList();
+        $answer_info=$answers[0];
+        $checked=in_array($answer_info["a_id"],$data["answer"])?" Checked":"";
+
+        if ($type=="radio"){
+        echo "<input name='question[$q_id][answer][]' type='$type' value='".$answer_info["a_id"]."' onclick='setentered(form.q$q_id,this,\"question[$q_id][answer_t     ext]\")' $checked class='$css'/>";
+            }else{
+        echo "<input name='question[$q_id][answer][]' type='$type' value='".$answer_info["a_id"]."' onchange='setentered(form.q$q_id,this,\"question[$q_id][answer_     text]\")' $checked class='$css'/>";
+            }
+        echo "<span class='$css_answer'>".text_wrap(stripslashes($answer_info["value"]),30,"<br />")."</span>";
+        $i++;
+      }
+  }
+
+   
+	if ($other_field!=0) {
+           if (!isset($data["answer_text"])){
+               $data["answer_text"]=null;
+           }
+       echo "<input name='question[$q_id][answer][]' type='$type' class='$css'/>".text_wrap(stripslashes($other_field_title),30,"<br />"     )."&nbsp;:&nbsp;&nbsp;";
+       echo "<input name='question[$q_id][answer_text]' type='text' value='".$data["answer_text"]."' onkeyup='setentertext(form.q$q_id,this.value); if(this.value.le     ngth>0) {change_checked(\"question[$q_id][answer][]\",$i);} else {test_radios(q$q_id,\"question[$q_id][answer][]\",$i)}' class='$css_inputbox'/>";
+   }
+   echo "
+         <input type='hidden' name='question[$q_id][type]' value='$type' />
+         <input type='hidden' name='question[$q_id][orientation]' value='vertical' />
+			";
 }
 
 function view_vertical_answers($q_id,$type="radio",$other_field=0,$other_field_title="",$order,$data=null){
