@@ -3644,7 +3644,7 @@ function editquestion( &$row,&$answer,&$column,$option ,$act) {
 					<tr>
 						<td align="left"  valign="top"><b><?php echo _DESCRIPTION?>:</b></td>
 						<td align="left" valign="top">
-					<textarea name="description" id="description" cols="40" rows="3"><?php echo stripslashes($row->description)?></textarea>
+					<textarea name="description" id="description" cols="60" rows="10"><?php echo stripslashes($row->description)?></textarea>
 					<?php
 						// parameters : areaname, escription, hidden field, width, height, rows, cols
 									// JEditor::display( 'editor1',  $row->description , 'description', '100%;', '250', '20', '30' ) ; 
