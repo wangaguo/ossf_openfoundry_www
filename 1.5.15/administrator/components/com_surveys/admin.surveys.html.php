@@ -3249,6 +3249,29 @@ function editquestion( &$row,&$answer,&$column,$option ,$act) {
 		}
 		function prepair_form( selObj ) {
 			switch (selObj.options[selObj.selectedIndex].value) {
+         case '-1':
+           window.document.adminForm.orientation.value='title';
+           window.document.adminForm.type.value='text';
+           show_div('div_answers');
+           hide_div('div_column');
+           show_div('div_random_answers');
+           hide_div('div_constant');
+           hide_div('div_menu_heading');
+           show_div('div_other_field');
+         break;
+
+
+         case '0':
+           window.document.adminForm.orientation.value='front';
+           window.document.adminForm.type.value='checkbox';
+           show_div('div_answers');
+           hide_div('div_column');
+           show_div('div_random_answers');
+           hide_div('div_constant');
+           hide_div('div_menu_heading');
+           show_div('div_other_field');
+         break;
+
 				case '1':
 					window.document.adminForm.orientation.value='vertical';
 					window.document.adminForm.type.value='radio';
@@ -3663,6 +3686,8 @@ function editquestion( &$row,&$answer,&$column,$option ,$act) {
 					?>
 			<select name="question_type" onchange="prepair_form(this)">
 							<option  value="#" selected="selected">-- Select a Question Type --</option>
+							<option  value="-1" <?php if ($row->type=='text' && $row->orientation=='title') {echo ' selected="selected"';} ?>><?php echo 'Subtitle' ?></option>
+							<option  value="0" <?php if ($row->type=='checkbox' && $row->orientation=='front') {echo ' selected="selected"';} ?>><?php echo 'Set Choice one answer in front of question' ?></option>
 							<option  value="1" <?php if ($row->type=='radio' && $row->orientation=='vertical') {echo ' selected="selected"';} ?>><?php echo _CHOICE_ONE_ANSWER_VERTICAL?></option>
 						<option  value="2" <?php if ($row->type=='radio' && $row->orientation=='horizontal') {echo ' selected="selected"';} ?>><?php echo _CHOICE_ONE_ANSWER_HORIZONTAL?></option>
 						<option  value="3" <?php if ($row->type=='radio' && $row->orientation=='dropdown') {echo ' selected="selected"';} ?>><?php echo _CHOICE_ONE_ANSWER_MENU?></option>
