@@ -899,7 +899,6 @@ function send_mail($sess_id,$s_id){
 										}else{
 														$mail_send .= .$question_name[0]["title"].":&nbsp;";
 										}
-						}
 				}else{
 					$mail_send .= $value.":&nbsp;";
 				}
