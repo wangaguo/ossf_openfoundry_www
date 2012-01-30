@@ -1031,7 +1031,7 @@ function send_mail($sess_id,$s_id){
 				}
 
 				if ($per_q_orientation!='front'){
-								$mail_send .= "<br />&nbsp;&nbsp;&nbsp;&nbsp;";
+								$mail_send .= "<br />";
 				}
 			}
 			$replace_content = str_replace("#RESULTS#",$mail_send,$sett[0]["email_settings_content"]);
