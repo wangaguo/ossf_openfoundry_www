@@ -284,6 +284,20 @@ function view_survey($s_id,$s_title='',$page=0,$view_command='') {
 					    var radios=document.getElementsByName(radio_name);
 					    radios[number].checked="true";
 					}
+
+          function switchonoff(name) {
+            name = "isur"+name;
+              if (document.getElementById(name).style.display=="none")
+                {
+                  document.getElementById(name).style.display="block";
+                  }
+              else  
+                  {
+                  document.getElementById(name).style.display="none";
+                  } 
+          }
+
+
 					
 					</script>';
 	//echo $scriptlib;
@@ -1323,13 +1337,15 @@ $database = &JFactory::getDBO();
                 }
 			}
       else{   $data=null;   }
-
+				$jsno=0;
 			foreach ($questions as $question_info) {
 				echo '<tr><td><table width="100%">';
+				$jsno++;
 				if ( $question_info["orientation"]=="front"){
 								echo "<tr class='$css_question'><td ><br>";
 								view_front_answers($question_info["q_id"],$question_info["type"],$question_info["other_field"],$question_info["other_field_title"],$order,$dataq);
-								echo "<span class='$css_question'>".text_wrap(stripslashes($question_info["title"]),30,"<br />").'<a id="id'.$question_info["q_id"].'"></a>';
+								echo "<span class='$css_question'>".text_wrap(stripslashes($question_info["title"]),30,"<br />").
+										 "<a href=javascript:switchonoff('".$question_info["q_id"].$question_info["s_id"]."');>[+]</a>";
 
 				}else if ($question_info["orientation"]=="title"){
 								echo "<tr class='PageName' ><td ><br>";
@@ -1345,7 +1361,7 @@ $database = &JFactory::getDBO();
 				echo "</span></td></tr>";
 				if ($question_info["description"]!="" && $question_info["orientation"]!="title"){
 					echo "<tr class='$css_question_description'><td>";
-					echo "<div class='$css_question_description'>".text_wrap(stripslashes($question_info["description"]),30,"<br />")."</div>
+					echo "<div id='isur".$question_info["q_id"].$question_info["s_id"]."' class='$css_question_description' style='display: none;' >".text_wrap(stripslashes($question_info["description"]),30,"<br />")."</div>
 								</td></tr>";
 				}else {
 					echo "<tr><td>";
