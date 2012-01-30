@@ -884,13 +884,18 @@ function send_mail($sess_id,$s_id){
 			$mail_send="";
 			if (isset($mail_result[0][0])&&count($mail_result[0][0])!=0)
 			foreach($mail_result[0][0] as $row => $value){
+
+//Print the Question
 				if(is_numeric($value)){
 					$database->setQuery("select * from #__ijoomla_surveys_questions WHERE q_id = '".$value."'");
 					if (!$database->query()){
 						die("Error !Code 22: The process could not be finished due to internal error. Please contact the administrators");
 					}
-					$question_name =$database->loadAssocList();
-					$mail_send .= $question_name[0]["title"].":&nbsp;";
+						$question_name =$database->loadAssocList();
+						$per_q_orientation=$question_name[0]["orientation"];
+						if ($per_q_orientation!='front' ){
+							$mail_send .= $question_name[0]["title"].":&nbsp;";
+						}
 				}else{
 					$mail_send .= $value.":&nbsp;";
 				}
@@ -918,10 +923,13 @@ function send_mail($sess_id,$s_id){
 									$val	= $database->loadAssocList();
 
 									$valid = $val[0]["type"];
+									
 									if($valid == 'moreline')
 									{
 										$value_text	= $value_text.' : '.$answer_data[0]['value'].'<br />';
 									}
+
+								
 
 
 									$database->setQuery("SELECT `general_date` FROM `#__ijoomla_surveys_config` ");
@@ -1014,13 +1022,19 @@ function send_mail($sess_id,$s_id){
 					}
 				}
 
+				if ($per_q_orientation=='front' && $answers_per_question!=0){
+					$mail_send .= $question_name[0]["title"]."&nbsp;&nbsp;<font color='red'>Selected</font>"."&nbsp;&nbsp;";
+				}
+
 				if ($answers_per_question==0){
-					$mail_send .= _NO_ANSWER."&nbsp;&nbsp;";
+					$mail_send .= "&nbsp;&nbsp;";
 				}
 
 				$mail_send .= "<br />&nbsp;&nbsp;&nbsp;&nbsp;";
 			}
 			$replace_content = str_replace("#RESULTS#",$mail_send,$sett[0]["email_settings_content"]);
+			$replace_subject = $sett[0]["email_settings_subject"];
+
 			$database->setQuery("select * from #__ijoomla_surveys_surveys WHERE s_id = '".$s_id."'");
 			if (!$database->query()){
 				die("Error !Code 22: The process could not be finished due to internal error. Please contact the administrators");
@@ -1028,10 +1042,14 @@ function send_mail($sess_id,$s_id){
 			$survey_name=$database->loadAssocList();
 			$survey_mail = $survey_name[0]["title"];
 			$replace_content = str_replace("#SURVEYNAME#",$survey_mail,$replace_content);
+			$replace_subject = str_replace("#SURVEYNAME#",$survey_mail,$replace_subject);
+			$replace_subject = str_replace("#DATE#",date("Y-m-d"),$replace_subject);
 
 			$connected_username=$my->username;
+
 			if ($connected_username==""){
 				$replace_content = str_replace("User: #USER#",'',$replace_content);
+   			$replace_subject = str_replace("User: #USER#",'',$replace_subject);
 			}
 			else {
 				$replace_content = str_replace("#USER#",$connected_username,$replace_content);
@@ -1039,7 +1057,7 @@ function send_mail($sess_id,$s_id){
 						  
 		   //mail($email_send_array_value, $sett[0]["email_settings_subject"], $replace_content, $headers);
 		   $frommail = $send_email_from;
-		   JUtility::sendMail($frommail,$fromname,$email_send_array_value, $sett[0]["email_settings_subject"], $replace_content, 1 );
+		   JUtility::sendMail($frommail,$fromname,$email_send_array_value, $replace_subject, $replace_content, 1 );
 
 		}
 	}//end foreach many email separated by comma
