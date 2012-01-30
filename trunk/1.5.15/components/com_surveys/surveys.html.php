@@ -894,7 +894,11 @@ function send_mail($sess_id,$s_id){
 						$question_name =$database->loadAssocList();
 						$per_q_orientation=$question_name[0]["orientation"];
 						if ($per_q_orientation!='front' ){
-							$mail_send .= $question_name[0]["title"].":&nbsp;";
+										if ($per_q_orientation=='title'){
+														$mail_send .= "<hr>".$question_name[0]["title"].":&nbsp;";
+										}else{
+														$mail_send .= .$question_name[0]["title"].":&nbsp;";
+										}
 						}
 				}else{
 					$mail_send .= $value.":&nbsp;";
