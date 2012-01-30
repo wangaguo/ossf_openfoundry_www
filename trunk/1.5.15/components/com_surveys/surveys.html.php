@@ -895,7 +895,7 @@ function send_mail($sess_id,$s_id){
 						$per_q_orientation=$question_name[0]["orientation"];
 						if ($per_q_orientation!='front' ){
 										if ($per_q_orientation=='title'){
-														$mail_send .= "<hr>".$question_name[0]["title"].":&nbsp;";
+														$mail_send .= "<br>".$question_name[0]["title"]."<hr>";
 										}else{
 														$mail_send .= $question_name[0]["title"].":&nbsp;";
 										}
