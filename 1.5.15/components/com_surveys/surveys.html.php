@@ -1345,7 +1345,7 @@ $database = &JFactory::getDBO();
 								echo "<tr class='$css_question'><td >";
 								view_front_answers($question_info["q_id"],$question_info["type"],$question_info["other_field"],$question_info["other_field_title"],$order,$dataq);
 								echo "<span class='$css_question'>".text_wrap(stripslashes($question_info["title"]),30,"<br />").
-										 "<a href=javascript:switchonoff('".$question_info["q_id"].$question_info["s_id"]."');>[+]</a>";
+										 "&nbsp;&nbsp;<a href=javascript:switchonoff('".$question_info["q_id"].$question_info["s_id"]."');>[+]</a>";
 
 				}else if ($question_info["orientation"]=="title"){
 								echo "<tr class='PageName' ><td ><br>";
