@@ -1023,14 +1023,18 @@ function send_mail($sess_id,$s_id){
 				}
 
 				if ($per_q_orientation=='front' && $answers_per_question!=0){
-					$mail_send .= $question_name[0]["title"]."&nbsp;&nbsp;<font color='red'>Selected</font>"."&nbsp;&nbsp;";
+					$mail_send .= $question_name[0]["title"]."&nbsp;&nbsp;<font color='red'>Selected</font>"."&nbsp;&nbsp;\r\n";
 				}
 
 				if ($answers_per_question==0){
 					$mail_send .= "&nbsp;&nbsp;";
 				}
 
-				$mail_send .= "<br />&nbsp;&nbsp;&nbsp;&nbsp;";
+				if ($per_q_orientation=='front' && $answers_per_question!=0){
+								$mail_send .= "&nbsp;&nbsp;&nbsp;&nbsp;";
+				}else {
+								$mail_send .= "<br />&nbsp;&nbsp;&nbsp;&nbsp;";
+				}
 			}
 			$replace_content = str_replace("#RESULTS#",$mail_send,$sett[0]["email_settings_content"]);
 			$replace_subject = $sett[0]["email_settings_subject"];
