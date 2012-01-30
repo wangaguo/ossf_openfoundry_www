@@ -1030,9 +1030,7 @@ function send_mail($sess_id,$s_id){
 					$mail_send .= "&nbsp;&nbsp;";
 				}
 
-				if ($per_q_orientation=='front' && $answers_per_question!=0){
-								$mail_send .= "&nbsp;&nbsp;&nbsp;&nbsp;";
-				}else {
+				if ($per_q_orientation!='front'){
 								$mail_send .= "<br />&nbsp;&nbsp;&nbsp;&nbsp;";
 				}
 			}
