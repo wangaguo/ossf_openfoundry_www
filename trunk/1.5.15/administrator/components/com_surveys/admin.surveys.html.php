@@ -2361,9 +2361,10 @@ function editSurvey ( &$row, &$images, &$lists, $option, $act ) {
 				<td align="left" valign="top">
 					<?php
 						// parameters : areaname, escription, hidden field, width, height, rows, cols
-						$editor1  = & JFactory::getEditor();
+						$editor1  =&JFactory::getEditor();
 						//$row->description = str_replace('\\&quot;', '', $row->description);
-						echo $editor1->display( 'editor1',  ''.stripslashes($row->description) , '100%', '270px', '150', '10' ) ; 
+						echo "<textarea class=\"inputbox\" type=\"text\" value=\"$row->description\" name=\"editor1\"  rows=\"15\" cols=\"120\">".$row->description."</textarea>";
+						//echo $editor1->display( 'editor1',  $row->description , '100%', '270px', '150', '10' ) ; 
 					?>
 				</td>
 				
@@ -2777,7 +2778,8 @@ function editSurvey ( &$row, &$images, &$lists, $option, $act ) {
 				//$editor3  = & JFactory::getEditor();
 				
 				$row->end_page_description = str_replace('\\&quot;', '', $row->end_page_description);
-				echo $editor3->display( 'editor3',  ''.stripslashes($row->end_page_description) , '100%', '250px', '10', '45') ; 
+				echo "<textarea class=\"inputbox\" type=\"text\" value=\"$row->end_page_description\" name=\"editor3\"  rows=\"15\" cols=\"120\">".$row->end_page_description."</textarea>";
+				//echo $editor3->display( 'editor3',  ''.stripslashes($row->end_page_description) , '100%', '250px', '10', '45') ; 
 				?>
 			</td>
 		</tr>
