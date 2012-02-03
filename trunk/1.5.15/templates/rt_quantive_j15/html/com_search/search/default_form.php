@@ -16,7 +16,7 @@ defined('_JEXEC') or die('Restricted access');
 <a name="form1"></a>
 <fieldset class="word">
 <label for="search_searchword"><?php echo JText::_('Search Keyword') ?> </label>
-<input type="text" name="searchword" id="search_searchword"  maxlength="20" value="<?php echo $this->escape($this->searchword) ?>" class="inputbox" />
+<input type="text" name="searchword" id="search_searchword"  maxlength="50" value="<?php echo $this->escape($this->searchword) ?>" class="inputbox" />
 </fieldset>
 
 <fieldset class="phrase">
