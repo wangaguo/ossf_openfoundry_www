@@ -86,7 +86,12 @@ function plgSearchContent( $text, $phrase='', $ordering='', $areas=null )
 			$wheres2[] 	= 'a.metadesc LIKE '.$text;
 			$where 		= '(' . implode( ') OR (', $wheres2 ) . ')';
 			break;
-
+		case 'exact_meta':
+			$text		= $db->Quote( '%'.$db->getEscaped( $text, true ).'%', false );
+			$wheres2 	= array();
+			$wheres2[] 	= 'a.metakey LIKE '.$text;
+			$where 		= '(' . implode( ') OR (', $wheres2 ) . ')';
+			break;
 		case 'all':
 		case 'any':
 		default:
