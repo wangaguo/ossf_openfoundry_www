@@ -48,7 +48,7 @@ echo <<<EOD
       <option value="Content"> {$JText->_('CONTENT')} </option>
       <option value="People"> {$JText->_('PEOPLE')} </option>
     </select>
-    <input id="query" name="query" id="mod_search_searchword" maxlength="20" alt="search" class="inputbox" type="text" size="28" value="search..."  onblur="if(this.value=='') this.value='search...';" onfocus="if(this.value=='search...') this.value='';" />
+    <input id="query" name="query" id="mod_search_searchword" maxlength="50" alt="search" class="inputbox" type="text" size="28" value="search..."  onblur="if(this.value=='') this.value='search...';" onfocus="if(this.value=='search...') this.value='';" />
     <input type="hidden" name="commit" value="search" />
   </form>
 </div>
