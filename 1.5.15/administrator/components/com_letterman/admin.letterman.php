@@ -577,12 +577,12 @@ function composeNow() {
 		$database->setQuery("SELECT metakey FROM #__content WHERE id=$id[$i]" );
 		$oldMetakey=$database->loadResult();
 		$user->metakey = $oldMetakey."$";
-		//if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
-		//	if(!$database->updateObject('#__content',$user,'id'))
-		//	{
-		//		echo $database->stderr();
-		//	}
-		//}
+		if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
+			if(!$database->updateObject('#__content',$user,'id'))
+			{
+				echo $database->stderr();
+			}
+		}
 	}
 /*--------------------------------------END--------------------------------------------------*/
 
@@ -760,7 +760,7 @@ function saveNewsletter( $option ) {
 			$newmetakey = explode("$",$e->metakey);
 			$user->id = $e->id;
 			//$user->metakey = $newmetakey[0]." ,".$title;
-        	        $user->metakey = $newmetakey[0].",".$title_id;
+      $user->metakey = $newmetakey[0].","."OSSFNL".$title_id;
 			if(!$database->updateObject('#__content',$user,'id'))
 			{
 				echo $database->stderr();
