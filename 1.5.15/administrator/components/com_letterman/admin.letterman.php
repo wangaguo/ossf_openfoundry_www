@@ -76,9 +76,6 @@ switch( $task ) {
 		//儲存修改過後的目錄
 		saveEditletter( "com_letterman", mosGetParam( $_POST, 'id'));
 		break;		
-	case "reflash":
-		reflashOldPaper($option);
-		break;
 	case "remove":
 		removeNewsletter( $cid, $option );
 		break;
@@ -142,141 +139,18 @@ switch( $task ) {
 	case 'cancelconfig':
 		cancelSettings( $option );
 		break;
-	//edit by aeil @ 090204
-	case 'allunmount':
-		unMount("" , $option);
-		break;
-	case 'unmount':
-		unMount( $cid , $option);
-	//end
 	default:
 		viewNewsletter( $option );
 		break;
 }
 HTML_letterman::footer();
-//modify by aeil @ 090204
-function unMount($cid,$option)
-{
-	global $database;
-    
-    if(empty($cid))
-    {
-        $sql = "SELECT id FROM #__letterman";
-        $database->setQuery( $sql );
-        $cid =  $database->loadResultArray();        
-    }
-	//從該篇文章中，取得他的內容ID，再根據ID刪除內容中的meta
-	foreach($cid as $cids)
-	{
-		$user = new stdClass;
-		$database->setQuery( "SELECT tags, subject FROM #__letterman WHERE id in ($cids) " );
-		$oldTag = $database->loadObjectList() ;
-		$removeTagId = explode("|",$oldTag[0]->tags);
-		foreach($removeTagId as $id)
-		{
-			$database->setQuery( "SELECT metakey FROM #__content WHERE id = $id" );
-			$removeTag = $database->loadResult() ;
-        
-            $user->id = $id;
-			//$user->metakey = str_replace(", ".$oldTag[0]->subject,"",$removeTag);	
-            $user->metakey = str_replace(",".$cids,"",$removeTag);
-			//if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
-			//	if(!$database->updateObject('#__content',$user,'id'))
-			//		{
-			//			echo $database->stderr();
-			//		}			
-			//}
-		}
-	}
 
-	mosRedirect( "index2.php?option=$option" );
-}
-//end
-
-function reflashOldPaper($option)
-{
-	global $database, $mosConfig_live_site;
-	
-	//modify by aeil @ 090204
-	$prefix = $database->_table_prefix;
-   	$tables = array( $prefix.'letterman' );
-    $result = $database->getTableFields( $tables );
-	if(!array_key_exists('id', $result[$prefix.'letterman']))
-    {
-            $sql = "ALTER TABLE #__letterman ADD tags VARCHAR( 255 ) NOT NULL ;";
-          	$database->setQuery( $sql );        
-            $database->loadResult();
-	}	 
-	//end
-
-	//找所有在letterman的文章
-	$database->setQuery( "SELECT message, id,  subject FROM #__letterman" );
-	$reflashItem = $database->loadObjectList() ;
-	
-	for($i=0;$i<sizeof($reflashItem);$i++)
-	{	
-		//挑出文章中的subject
-		$subject = $reflashItem[$i]->subject;
-	    $subject_id = $reflashItem[$i]->id;
-        
-		//如果message欄位是存成[content id=']的格式，處理之
-		$ids = explode('[CONTENT id="',$reflashItem[$i]->message);
-		
-		//將電子報中的tags欄位取出
-		$tags = "";
-		$database->setQuery("SELECT tags FROM #__letterman WHERE id = ". $reflashItem[$i]->id );
-		$oldTags = $database->loadResult();
-		$oldTagsArray = explode('|',$oldTags);
-		
-		foreach($ids as $id)
-		{
-			//將剛剛處理過的[content=']批次處理 用id去尋找content中的id
-			$contentid = explode('"',$id);
-			$database->setQuery("SELECT metakey FROM #__content WHERE id = $contentid[0]" );	
-			$oldMetakey = $database->loadResult();
-			
-			//尋找這篇content是不是已經有他相對應的電子報subject
-			//if(strrpos($oldMetakey, $subject) === false)
-            if(strrpos($oldMetakey, $subject_id) === false)
-			{
-				//沒有的話新增在其後
-				$user = new stdClass;
-                //$user->metakey = $oldMetakey.", ".$subject;
-				$user->metakey = $oldMetakey.",".$subject_id;
-				$user->id = $contentid[0];
-			//	if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
-			//		if(!$database->updateObject('#__content',$user,'id'))
-			//		{
-			//			echo $database->stderr();
-			//		}
-			//	}
-			}
-			//看id是不是有在電子報中的tags裡 沒有的話新增
-			if(!in_array($contentid[0],$oldTagsArray))$tags.=  $contentid[0]."|";
-		}
-		
-		//附加tags在電子報的tags中
-		//$mlTags = new stdClass;
-		//$mlTags-> id = $reflashItem[$i]->id;
-		//$mlTags-> tags = $oldTags.$tags;
-		//		
-		//if(!$database->updateObject('#__letterman',$mlTags,'id'))
-		//{
-		//	echo $database->stderr();
-		//}
-	}
-	//echo "<SCRIPT LANGUAGE='javascript'> alert('OK');window.location='$mosConfig_live_site.'/index2.php?option=$option''</script>\n";
-	
-	//mosRedirect( "index2.php?option=$option" );
-}
-/*避免重複寫入*/
 /*--------------------------------------START--------------------------------------------------*/
 function checkRemain()
 {
 	global $database;
 	$database->setQuery("SELECT metakey FROM #__content" );
 	$result = $database->loadObjectList();
-	//檢查是否有＄字號，有則刪除
 	foreach ($result as $e)	
 	{
 		if(stripos($e->metakey,"$")!==false)
@@ -559,13 +433,6 @@ function composeNow() {
 	}
 /*--------------------------------------START--------------------------------------------------*/
 
-	/*新增主題至文章的meta中*/	
-	
-	//由於compose的新增方式都是先選擇文章
-	//選擇文章之後會變成[CONTENT id="1"][CONTENT id="2"][CONTENT id="3"]的方式顯示，並存在＄nl_content的變數中
-	//之後再從資料庫中取得相對應的文章
-	//這裡利用explode先將＄nl_content拆開，取得文章的ID
-	//由於這裡還沒有做最後的貯存動作，所以先以＄字號存入meta中
 	$id = explode('"',$nl_content);
 	$user = new stdClass;		
 	for($i=1;$i<count($id)-1;$i+=2)
@@ -573,15 +440,18 @@ function composeNow() {
 		$oldMetakey = "";
 		$user->id = $id[$i];
 		
-		//檢查之前是否有其他的主題名稱，有則附加上去
 		$database->setQuery("SELECT metakey FROM #__content WHERE id=$id[$i]" );
 		$oldMetakey=$database->loadResult();
-		$user->metakey = $oldMetakey."$";
-		if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
-			if(!$database->updateObject('#__content',$user,'id'))
-			{
-				echo $database->stderr();
-			}
+		
+		if (stripos($oldMetakey,"OSSFNL")==false){
+	 			$user->metakey = $oldMetakey."$";
+	 		  	
+	 			if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
+	 				if(!$database->updateObject('#__content',$user,'id'))
+	 				{
+	 					echo $database->stderr();
+	 				}
+	 			}
 		}
 	}
 /*--------------------------------------END--------------------------------------------------*/
@@ -660,52 +530,35 @@ function saveEditletter( $option , $cid)
 
 /*--------------------------------------START--------------------------------------------------*/
 
-	//由於最後的呈現方式是文章而不是[CONTENT id="1"][CONTENT id="2"][CONTENT id="3"]
-	//所以只能針對主題名稱作修改，如果文章內的某一篇主題刪除的話是無法修改的，必須手動修改meta值
-	
-	//取得新的主題名稱，在與舊的比較之後若不相同，則修改之
-	$database->setQuery( "SELECT subject, tags FROM #__letterman WHERE id = $cid " );
-	$newSubject = $database->loadObjectList() ;
-    $title = $newSubject[0]->subject;
-	$user = new stdClass;
-	//if(strcmp ($newSubject[0]->subject,$oldSubject) !== 0)
-    if(strcmp ( $cid,$oldSubject) !== 0)
-	{
-		$tagsNumber = explode("|",$newSubject[0]->tags);
-		for($i=0;$i<count($tagsNumber);$i++)
-		{
-			$user->id = $user->metakey = "";
-			$database->setQuery("SELECT metakey FROM #__content WHERE id = $tagsNumber[$i]");
-			$oldMetakey = $database->loadResult();
-			$user->id = $tagsNumber[$i];
-			//將舊的主題名稱換成新的主題名稱
-			//$user->metakey = str_replace($oldSubject,$newSubject[0]->subject,$oldMetakey);	
-            $user->metakey = str_replace($olddSubject,$cid,$oldMetakey);
-			//$user->metakey = $oldMetakey.", ".$newSubject[0]->subject;	
-			//$newmeta = $newSubject[0]->subject;
-            $newmeta = $cid;
-			if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
-				if(!$database->updateObject('#__content',$user,'id'))
-				{
-					echo $database->stderr();
-				}			
-			}
-		}
-	}
-	
-	//加入RSS
-	//$rssId = "";
-	//foreach($tagsNumber as $temp)
+	//$database->setQuery( "SELECT subject, tags FROM #__letterman WHERE id = $cid " );
+	//$newSubject = $database->loadObjectList() ;
+  //  $title = $newSubject[0]->subject;
+	//$user = new stdClass;
+	////if(strcmp ($newSubject[0]->subject,$oldSubject) !== 0)
+  //  if(strcmp ( $cid,$oldSubject) !== 0)
 	//{
-	//	$rssId.= "id = ".$temp." or ";
+	//	$tagsNumber = explode("|",$newSubject[0]->tags);
+	//	for($i=0;$i<count($tagsNumber);$i++)
+	//	{
+	//		$user->id = $user->metakey = "";
+	//		$database->setQuery("SELECT metakey FROM #__content WHERE id = $tagsNumber[$i]");
+	//		$oldMetakey = $database->loadResult();
+	//		$user->id = $tagsNumber[$i];
+	//		//將舊的主題名稱換成新的主題名稱
+	//		//$user->metakey = str_replace($oldSubject,$newSubject[0]->subject,$oldMetakey);	
+  //          $user->metakey = str_replace($olddSubject,$cid,$oldMetakey);
+	//		//$user->metakey = $oldMetakey.", ".$newSubject[0]->subject;	
+	//		//$newmeta = $newSubject[0]->subject;
+  //          $newmeta = $cid;
+	//		if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
+	//			if(!$database->updateObject('#__content',$user,'id'))
+	//			{
+	//				echo $database->stderr();
+	//			}			
+	//		}
+	//	}
 	//}
-	//$id = substr($rssId,0,strlen($rssId) - 12);
-	//$database->setQuery( "SELECT * FROM #__content WHERE id=$cid" );
-	//$result = $database->loadObjectList();
-	//
-	//addRss($result,$newSubject[0]->subject);
-   	// addRss($result,$cid);
-     // addRss($result,$title);
+	
 /*--------------------------------------END--------------------------------------------------*/
 	
 	mosRedirect( "index2.php?option=$option" );
@@ -733,17 +586,11 @@ function saveNewsletter( $option ) {
 	$row->checkin();
 /*--------------------------------------START--------------------------------------------------*/
 
-	/*最後的貯存，將剛剛暫存的＄字號取代，並換上主題名稱*/
-	
-	//由於新增的一筆時間一定是最新的 依照時間去資料庫取得第一筆的資料
-	//$database->setQuery( "SELECT subject FROM #__letterman ORDER BY id DESC" );
-	//$title =  $database->loadResult() ;
-    $database->setQuery( "SELECT subject, id FROM #__letterman ORDER BY id DESC" );
-    $result = $database->loadObjectList();
-    $title = $result[0]->subject;
-    $title_id = $result[0]->id;
-	//$database->setQuery( "SELECT tags FROM #__letterman WHERE subject = $title " );
-    $database->setQuery( "SELECT tags FROM #__letterman WHERE id = $title_id " );
+  $database->setQuery( "SELECT subject, id FROM #__letterman ORDER BY id DESC" );
+  $result = $database->loadObjectList();
+  $title = $result[0]->subject;
+  $title_id = $result[0]->id;
+  $database->setQuery( "SELECT tags FROM #__letterman WHERE id = $title_id " );
         
 	$isTags = $database->loadResult() ;
 	$tags = "";
@@ -831,34 +678,36 @@ function publishNewsletter( $cid=null, $publish=1, $option ) {
 * @param array An array of unique category id numbers
 * @param string The current url option
 */
-/*移除文章之外，也移除相關連的meta值*/
+/*Remove content metakay Tag OSSFNLxxx*/
 function removeNewsletter( $cid, $option ) {
 	global $database;
 	$countcids = implode( ',', $cid );
-	
-	//從該篇文章中，取得他的內容ID，再根據ID刪除內容中的meta
-	foreach($cid as $cids)
-	{
-		$user = new stdClass;
-		$database->setQuery( "SELECT tags, subject FROM #__letterman WHERE id in ($cids) " );
-		$oldTag = $database->loadObjectList() ;
-		$removeTagId = explode("|",$oldTag[0]->tags);
-		foreach($removeTagId as $id)
-		{
-			$database->setQuery( "SELECT metakey FROM #__content WHERE id = $id" );
-			$removeTag = $database->loadResult() ;
-			
-			$user->id = $user->metakey = "";
-			$user->id = $id;
-			//$user->metakey = str_replace(",".$oldTag[0]->subject,"",$removeTag);	
-            $user->metakey = str_replace(",".$cids,"",$removeTag);
-			//echo "$user->metakey";	
-			if(!$database->updateObject('#__content',$user,'id'))
-				{
-					echo $database->stderr();
-				}			
-		}
+//Remove those have OSSFNL content's Tags
+	foreach ($cid as $cids){
+					$GetDB = JFactory::getDBO();
+					$query='select message from #__letterman where id='.$cids;
+					$GetDB->setQuery($query);
+					$Tag_data	=	$GetDB->loadObject();
+					$Tag_data = str_replace('[CONTENT id="','',$Tag_data->message);
+					$Tag_data = str_replace('"]',',',$Tag_data);
+
+					$contentIDs= explode(',',$Tag_data);
+					foreach ($contentIDs as $index=> $contentID){
+									$query='select metakey from #__content where id='.$contentID;
+									$GetDB->setQuery($query);
+									$getkey	=	$GetDB->loadObject();
+									$getNL = strpos($getkey->metakey,'OSSFNL');
+									$getkey = str_replace("OSSFNL$cids","",$getkey->metakey);	
+									//echo $getkey;	
+									if ($contentID!=''){	
+													$database->setQuery( "update #__content set metakey ='$getkey' WHERE id = $contentID" );
+													if (!$database->query()) {
+														echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
+													}
+									}
+					}
 	}
+//Remove letterman
 	if (count( $countcids )) {
 		
 		$database->setQuery( "DELETE FROM #__letterman WHERE id IN ($countcids)" );
