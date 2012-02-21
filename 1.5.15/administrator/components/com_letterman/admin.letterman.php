@@ -79,6 +79,12 @@ switch( $task ) {
 	case "remove":
 		removeNewsletter( $cid, $option );
 		break;
+	case "removetag":
+		removeTags($cid,$option);
+		break;
+  case "addtag":
+    addNLTags($cid,$option);
+    break;
 	case "publish":
 		publishNewsletter( $cid, 1, $option );
 		break;
@@ -94,7 +100,6 @@ switch( $task ) {
 	case "sendMail":
 		lm_sendMail();
 		break;
-		
 	//subscriber management
 	case "subscribers":
 		listSubscribers();
@@ -443,7 +448,6 @@ function composeNow() {
 		$database->setQuery("SELECT metakey FROM #__content WHERE id=$id[$i]" );
 		$oldMetakey=$database->loadResult();
 		
-		if (stripos($oldMetakey,"OSSFNL")==false){
 	 			$user->metakey = $oldMetakey."$";
 	 		  	
 	 			if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
@@ -452,7 +456,6 @@ function composeNow() {
 	 					echo $database->stderr();
 	 				}
 	 			}
-		}
 	}
 /*--------------------------------------END--------------------------------------------------*/
 
@@ -682,31 +685,7 @@ function publishNewsletter( $cid=null, $publish=1, $option ) {
 function removeNewsletter( $cid, $option ) {
 	global $database;
 	$countcids = implode( ',', $cid );
-//Remove those have OSSFNL content's Tags
-	foreach ($cid as $cids){
-					$GetDB = JFactory::getDBO();
-					$query='select message from #__letterman where id='.$cids;
-					$GetDB->setQuery($query);
-					$Tag_data	=	$GetDB->loadObject();
-					$Tag_data = str_replace('[CONTENT id="','',$Tag_data->message);
-					$Tag_data = str_replace('"]',',',$Tag_data);
-
-					$contentIDs= explode(',',$Tag_data);
-					foreach ($contentIDs as $index=> $contentID){
-									$query='select metakey from #__content where id='.$contentID;
-									$GetDB->setQuery($query);
-									$getkey	=	$GetDB->loadObject();
-									$getNL = strpos($getkey->metakey,'OSSFNL');
-									$getkey = str_replace("OSSFNL$cids","",$getkey->metakey);	
-									//echo $getkey;	
-									if ($contentID!=''){	
-													$database->setQuery( "update #__content set metakey ='$getkey' WHERE id = $contentID" );
-													if (!$database->query()) {
-														echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
-													}
-									}
-					}
-	}
+////Remove those have OSSFNL content's Tags
 //Remove letterman
 	if (count( $countcids )) {
 		
@@ -715,6 +694,75 @@ function removeNewsletter( $cid, $option ) {
 			echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
 		}
 	}
+	removeTags($cid,$option);
+
+//	mosRedirect( "index2.php?option=$option" );
+}
+
+function removeTags($cid,$option){
+   global $database;
+   $countcids = implode( ',', $cid );
+ //Remove those have OSSFNL content's Tags
+   foreach ($cid as $cids){
+           $GetDB = JFactory::getDBO();
+           $query='select message from #__letterman where id='.$cids;
+           $GetDB->setQuery($query);
+           $Tag_data = $GetDB->loadObject();
+           $Tag_data = str_replace('[CONTENT id="','',$Tag_data->message);
+           $Tag_data = str_replace('"]',',',$Tag_data);
+ 
+           $contentIDs= explode(',',$Tag_data);
+           foreach ($contentIDs as $index=> $contentID){
+                   $query='select metakey from #__content where id='.$contentID;
+                   $GetDB->setQuery($query);
+                   $getkey = $GetDB->loadObject();
+                   $getNL = strpos($getkey->metakey,'OSSFNL');
+                   if ($getNL){
+                   $getNLNUM = substr($getkey->metakey,$getNL,9);
+                   $getkey = str_replace($getNLNUM,"",$getkey->metakey);
+                   if ($contentID!=''){
+                           $database->setQuery( "update #__content set metakey ='$getkey' WHERE id = $contentID" );
+                           if (!$database->query()) {
+                             echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
+                           }
+                   }
+                   }
+           }
+   }
+	mosRedirect( "index2.php?option=$option" );
+}
+
+function addNLTags($cid,$option){
+	global $database;
+  $countcids = implode( ',', $cid );
+//Add Tag 
+  foreach ($cid as $cids){
+          $GetDB = JFactory::getDBO();
+          $query='select message from #__letterman where id='.$cids;
+          $GetDB->setQuery($query);
+          $Tag_data = $GetDB->loadObject();
+          $Tag_data = str_replace('[CONTENT id="','',$Tag_data->message);
+          $Tag_data = str_replace('"]',',',$Tag_data);
+
+          $contentIDs= explode(',',$Tag_data);
+          foreach ($contentIDs as $index=> $contentID){
+                  $query='select metakey from #__content where id='.$contentID;
+                  $GetDB->setQuery($query);
+                  $getkey = $GetDB->loadObject();
+									if ($getkey->metakey!=''){
+    		              $getkey = $getkey->metakey. ",OSSFNL".$cids;
+									}else{
+				
+		                  $getkey = $getkey->metakey. "OSSFNL".$cids;
+									}
+                  if ($contentID!=''){
+                          $database->setQuery( "update #__content set metakey ='$getkey' WHERE id = $contentID" );
+                          if (!$database->query()) {
+                            echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
+                          }
+                  }
+          }
+  }
 
 	mosRedirect( "index2.php?option=$option" );
 }
