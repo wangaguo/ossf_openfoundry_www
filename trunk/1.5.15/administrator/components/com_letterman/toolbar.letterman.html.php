@@ -74,6 +74,11 @@ class MENU_letterman {
 		mosMenuBar::editList( 'edit', _E_EDIT);
 		mosMenuBar::spacer();
 		mosMenuBar::deleteList( '', 'remove', _E_REMOVE);
+		mosMenuBar::spacer();
+		mosMenuBar::custom( 'addtag', 'upload.png', 'upload_f2.png', LM_reflashOldPaper, false );
+    mosMenuBar::spacer();
+    mosMenuBar::custom( 'removetag', 'upload.png', 'upload_f2.png', LM_unreflashOldPaper, true );
+
 
 		mosMenuBar::endTable();
 	}
