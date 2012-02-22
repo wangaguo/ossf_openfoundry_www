@@ -60,10 +60,13 @@ class modRelatedItemsHelper
 				// assemble any non-blank word(s)
 				foreach ($keys as $key)
 				{
-					$key = trim($key);
-					if ($key) {
-						$likes[] = ',' . $db->getEscaped($key) . ','; // surround with commas so first and last items have surrounding commas
-					}
+									$key = trim($key);
+									if ($key) {
+													if (strpos($key,'OSSFNL')===false){
+																	$likes[] = ',' . $db->getEscaped($key) . ','; // surround with commas so first and last items have surrounding commas
+																	echo $likes[$index];
+													}
+									}
 				}
 
 				if (count($likes))
@@ -84,7 +87,6 @@ class modRelatedItemsHelper
 							' AND ( a.publish_down = '.$db->Quote($nullDate).' OR a.publish_down >= '.$db->Quote($now).' )';
 					$db->setQuery($query);
 					$temp = $db->loadObjectList();
-
 					if (count($temp))
 					{
 						foreach ($temp as $row)
