@@ -1,18 +1,15 @@
 <?php
 /**
- * @version   $Id: editor.php 256 2011-06-30 09:36:47Z happy_noodle_boy $
  * @package   	JCE
- * @copyright 	Copyright Â© 2009-2011 Ryan Demmer. All rights reserved.
- * @copyright	Copyright (C) 2005 - 2010 Open Source Matters. All rights reserved.
- * @license   	GNU/GPL 2 or later
- * This version may have been modified pursuant
+ * @copyright 	Copyright © 2009-2011 Ryan Demmer. All rights reserved.
+ * @license   	GNU/GPL 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * JCE is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
  */
 
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die();
+defined('_JEXEC') or die('RESTRICTED');
 
 wfimport('admin.classes.text');
 wfimport('admin.helpers.xml');
@@ -22,7 +19,7 @@ wfimport('editor.libraries.classes.editor');
 
 class WFModelEditor extends JModel
 {
-    public function buildEditor()
+	public function buildEditor()
     {
         // get document
         $document = JFactory::getDocument();
@@ -50,7 +47,7 @@ class WFModelEditor extends JModel
         if ($profile) {
 			// get jqueryui theme
             $dialog_theme     = $wf->getParam('editor.dialog_theme', 'jce');
-            $dialog_theme_css = JFolder::files(WF_ADMINISTRATOR . DS . 'media' . DS . 'css' . DS . 'jquery' . DS . $dialog_theme, '\.css$');
+            $dialog_theme_css = JFolder::files(WF_EDITOR_LIBRARIES . DS . 'css' . DS . 'jquery' . DS . $dialog_theme, '\.css$');
             
             $settings = array_merge($settings, array(
                 'theme' 		=> 'advanced',
@@ -60,46 +57,28 @@ class WFModelEditor extends JModel
             
             // Theme and skins
             $theme = array(
-                'toolbar_location' => array(
-                    'top',
-                    'bottom'
-                ),
-                'toolbar_align' => array(
-                    'left',
-                    'center'
-                ),
-                'statusbar_location' => array(
-                    'bottom',
-                    'top'
-                ),
-                'path' => array(
-                    1,
-                    1
-                ),
-                'resizing' => array(
-                    1,
-                    0
-                ),
-                'resize_horizontal' => array(
-                    1,
-                    1
-                ),
-                'resizing_use_cookie' => array(1, 1)
+                'toolbar_location' 		=> array('top','bottom', 'string'),
+                'toolbar_align' 		=> array('left', 'center', 'string'),
+                'statusbar_location' 	=> array('bottom','top', 'string'),
+                'path' 					=> array(1, 1, 'boolean'),
+                'resizing' 				=> array(1, 0, 'boolean'),
+                'resize_horizontal' 	=> array(1, 1, 'boolean'),
+                'resizing_use_cookie' 	=> array(1, 1, 'boolean')
             );
             
             foreach ($theme as $k => $v) {
-                $settings['theme_advanced_' . $k] = $wf->getParam('editor.' . $k, $v[0], $v[1]);
+                $settings['theme_advanced_' . $k] = $wf->getParam('editor.' . $k, $v[0], $v[1], $v[2]);
             }
 			
 			if (!$wf->getParam('editor.use_cookies', 1)) {
-				$settings['theme_advanced_resizing_use_cookie'] = 0;
+				$settings['theme_advanced_resizing_use_cookie'] = false;
 			}
             
             $settings['width']  = $wf->getParam('editor.width');
             $settings['height'] = $wf->getParam('editor.height');
             
             // 'Look & Feel'
-            $settings['jquery_ui'] = JURI::root(true) . '/administrator/components/com_jce/media/css/jquery/' . $dialog_theme . '/' . basename($dialog_theme_css[0]);
+            $settings['jquery_ui'] 		= JURI::root(true) . '/components/com_jce/editor/libraries/css/jquery/' . $dialog_theme . '/' . basename($dialog_theme_css[0]);
             
             $skin                     	= explode('.', $wf->getParam('editor.toolbar_theme', 'default', 'default'));
             $settings['skin']         	= $skin[0];
@@ -112,26 +91,7 @@ class WFModelEditor extends JModel
 			// Editor Toggle
 			$settings['toggle']			= $wf->getParam('editor.toggle', 1, 1);
 			$settings['toggle_label']	= htmlspecialchars($wf->getParam('editor.toggle_label', '[show/hide]', '[show/hide]'));
-			$settings['toggle_state']	= $wf->getParam('editor.toggle_state', 1, 1);
-
-            // elements
-            // Get Extended elements
-            $settings['extended_valid_elements'] = $wf->getParam('editor.extended_elements', '', '');
-            // Configuration list of invalid elements as array
-            $settings['invalid_elements']        = explode(',', $wf->getParam('editor.invalid_elements', 'applet', ''));
-            
-            // Add elements to invalid list (removed by plugin)
-            $this->addKeys($settings['invalid_elements'], array(
-                'iframe',
-                'object',
-                'param',
-                'embed',
-                'audio',
-                'video',
-                'source',
-                'script',
-                'style'
-            ));
+			$settings['toggle_state']	= $wf->getParam('editor.toggle_state', 1, 1);  
         }// end profile
         
         //Other - user specified
@@ -196,10 +156,7 @@ class WFModelEditor extends JModel
         foreach ($settings as $k => $v) {
             // If the value is an array, implode!
             if (is_array($v)) {
-                $v = implode(',', $v);
-                if ($v[0] == ',') {
-                    $v = substr($v, 1);
-                }
+                $v = ltrim(implode(',', $v), ',');
             }
             // Value must be set
             if ($v !== '') {
@@ -208,14 +165,15 @@ class WFModelEditor extends JModel
                     // replace hash delimiters with / for javascript regular expression
                     $v = preg_replace('@^#(.*)#$@', '/$1/', $v);
                 }
+				// boolean
+				else if (is_bool($v)) {
+					$v = $v ? 'true' : 'false';
+				}
                 // anything that is not solely an integer
                 else if (!is_numeric($v)) {
                     $v = '"' . trim($v, '"') . '"';
                 }
-                // 1 or 0 become true/false
-                else if ($v == '1' || $v == '0') {
-                    $v = intval($v) ? 'true' : 'false';
-                }
+
                 $output .= "\t\t\t" . $k . ": " . $v . "";
                 if ($i < count($settings)) {
                     $output .= ",\n";
@@ -269,14 +227,18 @@ class WFModelEditor extends JModel
      */
     public function getEditorSettings()
     {
+        wfimport('editor.libraries.classes.token');	
+	
         $wf = WFEditor::getInstance();
         
+        $language = JFactory::getLanguage();
+        
         $settings = array(
+        	'token'				=> WFToken::getToken(),
             'base_url' 			=> JURI::root(),
             'language' 			=> $wf->getLanguage(),
-            'directionality' 	=> $wf->getLanguageDir(),
+            'directionality' 	=> $language->isRTL() ? 'rtl' : 'ltr',
             'theme' 			=> 'none',
-            'invalid_elements' 	=> 'applet,iframe,object,embed,script,style',
             'plugins'			=> ''
         );
         
@@ -352,16 +314,16 @@ class WFModelEditor extends JModel
         if (is_object($profile)) {
             $plugins = explode(',', $profile->plugins);
             
-            $plugins = array_unique(array_merge($plugins, array(
+            $plugins = array_unique(array_merge(array(
                 'advlist',
             	'autolink',
+            	'cleanup',
                 'code',
-                'cleanup',
                 'format',
             	'lists',
                 'tabfocus',
                 'wordcount'
-            )));
+            ), $plugins));
             
             $compress = $wf->getParam('editor.compress_javascript', 0);
             
@@ -382,12 +344,9 @@ class WFModelEditor extends JModel
                         $en  = $path . DS . 'langs' . DS . 'en.js';
                         
                         if (JFile::exists($en) && !JFile::exists($new)) {
-                            // try to copy en.js as new language file
-                            if (!@JFile::copy($en, $new)) {
-                                // remove plugin and throw error
-                                $this->removeKeys($plugins, $plugin);
-                                JError::raiseNotice('SOME_ERROR_CODE', sprintf(WFText::_('PLUGIN NOT LOADED : LANGUAGE FILE MISSING'), 'components/com_jce/editor/tiny_mce/plugins/' . $plugin . '/langs/' . $language . '.js') . ' - ' . ucfirst($plugin));
-                            }
+							// remove plugin and throw error
+                           	$this->removeKeys($plugins, $plugin);
+							JError::raiseNotice('SOME_ERROR_CODE', sprintf(WFText::_('PLUGIN NOT LOADED : LANGUAGE FILE MISSING'), 'components/com_jce/editor/tiny_mce/plugins/' . $plugin . '/langs/' . $language . '.js') . ' - ' . ucfirst($plugin));
                         }
                     }
                 }
@@ -467,7 +426,9 @@ class WFModelEditor extends JModel
                 $keys
             );
         }
+        
         $array = array_diff($array, $keys);
+        
     }
     /**
      * Add keys to an array
@@ -586,11 +547,9 @@ class WFModelEditor extends JModel
 		
 		$assigned = array();
 			
-		foreach ($templates as $template) {
-            if ($id) {
-            	if ($id == $template->id) {
-               		$assigned[] = $template->template;
-            	}
+		foreach ($templates as $template) {				
+            if ($id == $template->id) {
+               	array_unshift($assigned, $template->template);
             } else {
             	$assigned[] = $template->template;
             }
@@ -621,8 +580,10 @@ class WFModelEditor extends JModel
 				$url  = "templates/" . $template . "/css";	
 				break;
 			}
+			
+			$path = '';
 		}
-
+		
         $styles      = '';
         $stylesheets = array();
         $files       = array();
@@ -632,9 +593,12 @@ class WFModelEditor extends JModel
 	        $file = 'template.css';
 	        
 	        $css 	= JFolder::files($path, '(base|core|template|template_css)\.css$', false, true);
-			// use the first result
-			$file 	= $css[0]; 
 			
+			if (!empty($css)) {
+				// use the first result
+				$file 	= $css[0]; 
+			}
+
 			// check for php version
 			if (JFile::exists($file . '.php')) {
 				$file = $file . '.php';
@@ -835,7 +799,7 @@ class WFModelEditor extends JModel
             	$files[] = WF_EDITOR_LIBRARIES . DS . 'css' . DS . 'editor.css';
                 $dialog  = $wf->getParam('editor.dialog_theme', 'jce');
 
-                $files[] =WF_EDITOR_THEMES . DS . $themes[0] . DS . 'skins' . DS . $toolbar[0] . DS . 'ui.css';
+                $files[] = WF_EDITOR_THEMES . DS . $themes[0] . DS . 'skins' . DS . $toolbar[0] . DS . 'ui.css';
                 
                 if (isset($toolbar[1])) {
                     $files[] = WF_EDITOR_THEMES . DS . $themes[0] . DS . 'skins' . DS . $toolbar[0] . DS . 'ui_' . $toolbar[1] . '.css';

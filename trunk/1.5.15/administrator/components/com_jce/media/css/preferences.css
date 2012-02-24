@@ -7,22 +7,6 @@
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
  */
-
-@import url("../../../../../components/com_jce/editor/tiny_mce/themes/advanced/skins/default/ui.css");
-#jce span.mceIcon, #jce span.mceSeparator {
-	float: left;
-}
-#jce span.mceSeparator {
-	display: block;
-	padding: 1px 0;
-}
-
-#jce span.mceIcon {
-	background-color: #F0F0EE !important;
-}
-#jce p.title, #jce p.description {
-	margin : 2px 0;
-}
-#jce p.title {
-	font-weight: bold;
+.ui-jce #jce .ui-accordion {
+    width: auto;
 }

@@ -19,7 +19,7 @@ defined('JPATH_BASE') or die('RESTRICTED');
  * @since		1.5
  */
 
-class JElementText extends JElement
+class JElementBrowser extends JElement
 {
 	/**
 	* Element name
@@ -27,7 +27,7 @@ class JElementText extends JElement
 	* @access	protected
 	* @var		string
 	*/
-	var	$_name = 'Text';
+	var	$_name = 'Browser';
 
 	function fetchElement($name, $value, &$node, $control_name)
 	{
@@ -37,11 +37,6 @@ class JElementText extends JElement
 			if ($v != '') {
 				$attributes[$k] = $v;
 			}
-		}
-		
-		if (strpos($name, 'max_size') !== false || strpos($node->attributes('class'), 'upload_size') !== false) {
-			$uploadsize 		= intval($this->getUploadValue());	
-			$attributes['max'] 	= $uploadsize;
 		}
 		
 		/*
@@ -61,6 +56,8 @@ class JElementText extends JElement
 		$attributes['name'] 	= $control;
 		$attributes['id'] 		= preg_replace('#[^a-z0-9_-]#i', '', $control_name.$name);
 		
+		$filter					= isset($attributes['data-filter']) ? $attributes['data-filter'] : '';
+		
 		$html .= '<input';
 		
 		foreach ($attributes as $k => $v) {
@@ -70,69 +67,19 @@ class JElementText extends JElement
 		}
 
 		$html .= ' />';
+		
+		$options = array(
+			'width' 	=> 765,
+			'height'	=> 480,
+			'modal' 	=> true,
+			'id'		=> $attributes['id'] . '_browser'
+		);
 
-		if (strpos($name, 'max_size') !== false) {
-			$html .= $this->uploadSize();
-		}
-
+		$model = JModel::getInstance('WFModel');
+		
+		$html .= '<a href="' . $model->getBrowserLink($attributes['id'], $filter) . '" class="dialog browser" target="_blank" data-options=\'' . json_encode($options) . '\' title="' . WFText::_( 'WF_BROWSER_TITLE' ) . '"><span class="browser"></span></a>';
+		
 		return $html;
-	}
-
-	function uploadSize() {	
-		return '&nbsp;' . WFText::_('WF_SERVER_UPLOAD_SIZE') . ' : ' . $this->getUploadValue();
-	}
-	
-	function getUploadValue() {
-		$upload = trim(ini_get('upload_max_filesize'));
-		$post 	= trim(ini_get('post_max_size'));	
-			
-		$upload = $this->convertValue($upload);
-		$post 	= $this->convertValue($post);
-		
-		if (intval($upload) <= intval($post)) {
-			return $upload;
-		}
-		
-		return $post;
-	}
-	
-	function convertValue($value)
-	{
-		$unit = 'KB';
-		
-		// GB
-		if ($value > 1073741824)
-			$unit = 'GB';
-		
-		// MB
-		if ($value > 1048576)
-			$unit = 'MB';
-		
-		// Convert to bytes
-		switch( strtolower( $value{strlen( $value )-1} ) ) {
-			case 'g':
-				$value *= 1073741824;
-				break;
-			case 'm':
-				$value *= 1048576;
-				break;
-			case 'k':
-				$value *= 1024;
-				break;
-		}
-		// Convert to unit value
-		switch(strtolower( $unit{0})) {
-			case 'g':
-				$value /= 1073741824;
-				break;
-			case 'm':
-				$value /= 1048576;
-				break;
-			case 'k':
-				$value /= 1024;
-				break;
-		}
-		return preg_replace( '/[^0-9]/', '', $value ) .' '. $unit;
 	}
 }
 ?>

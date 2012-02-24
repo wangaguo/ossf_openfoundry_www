@@ -11,14 +11,14 @@
 
 defined('_JEXEC') or die('RESTRICTED');
 
-// load constants
-require_once(dirname(__FILE__) . DS . 'constants.php');
-// load loader
-require_once(dirname(__FILE__) . DS . 'loader.php');
-// load text
-require_once(dirname(dirname(__FILE__)) . DS . 'classes' . DS . 'text.php');
-// load xml
-require_once(dirname(dirname(__FILE__)) . DS . 'classes' . DS . 'xml.php');
-// load parameter
-require_once(dirname(dirname(__FILE__)) . DS . 'classes' . DS . 'parameter.php');
-?>
+class WFBrowserHelper 
+{
+	public static function getBrowserLink($element = null, $filter = '')
+	{
+		require_once(dirname(dirname(__FILE__)) .DS . 'models' .DS. 'model.php');	
+						
+		$model = JModel::getInstance('WFModel');		
+		return $model->getBrowserLink($element, $filter);
+	}
+}	
+	
