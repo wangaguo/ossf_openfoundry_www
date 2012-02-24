@@ -50,9 +50,11 @@ class SearchHelper
 		}
 
 		// next is to remove ignored words from type 'all' or 'any' (not exact) searches with multiple words
-		if ( count( $aterms ) > 1 && $searchphrase != 'exact' ) {
-			$pruned = array_diff( $aterms, $search_ignore );
-			$searchword = implode( ' ', $pruned );
+		if ( count( $aterms ) > 1 && $searchphrase != 'exact'  ) {
+						if ($searchphrase !='exact_meta'){ // add new phrase for tag search
+							$pruned = array_diff( $aterms, $search_ignore );
+							$searchword = implode( ' ', $pruned );
+						}
 		}
 
 		return $ignored;

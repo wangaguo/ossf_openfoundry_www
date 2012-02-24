@@ -82,7 +82,7 @@ function plgSearchContent( $text, $phrase='', $ordering='', $areas=null )
 			$wheres2[] 	= 'a.title LIKE '.$text;
 			$wheres2[] 	= 'a.introtext LIKE '.$text;
 			$wheres2[] 	= 'a.fulltext LIKE '.$text;
-			$wheres2[] 	= 'a.metakey LIKE '.$text;
+  		$wheres2[] 	= 'a.metakey LIKE '.$text;
 			$wheres2[] 	= 'a.metadesc LIKE '.$text;
 			$where 		= '(' . implode( ') OR (', $wheres2 ) . ')';
 			break;
