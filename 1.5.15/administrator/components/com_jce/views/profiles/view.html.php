@@ -1,17 +1,15 @@
 <?php
 /**
- * @version   	$Id: view.html.php 254 2011-06-29 17:36:00Z happy_noodle_boy $
  * @package   	JCE
  * @copyright 	Copyright © 2009-2011 Ryan Demmer. All rights reserved.
- * @copyright	Copyright (C) 2005 - 2010 Open Source Matters. All rights reserved.
- * @license   	GNU/GPL 2 or later
- * This version may have been modified pursuant
+ * @license   	GNU/GPL 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * JCE is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
  */
 
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die('RESTRICTED');
 
 jimport('joomla.application.component.view');
 
@@ -117,7 +115,7 @@ class WFViewProfiles extends JView
                     )
                 );
 
-                $this->document->addScript('components/com_jce/media/js/uploads.js?version=' . $model->getVersion());
+                $this->document->addScript(JURI::root(true) . '/administrator/components/com_jce/media/js/uploads.js?version=' . $model->getVersion());
                 $this->document->addScriptDeclaration('jQuery(document).ready(function($){$(":file").upload(' . json_encode($options) . ')});');
                 
                 $this->setLayout('default');
@@ -128,16 +126,17 @@ class WFViewProfiles extends JView
                 // Load media   
                 $scripts = array(
                     'profiles.js',
-                    'select.js',
-                    'colorpicker.js',
                     'extensions.js',
                     'checklist.js',
                 	'parameter.js'
                 );
                 // Load scripts
                 foreach ($scripts as $script) {
-                    $this->document->addScript('components/com_jce/media/js/' . $script);
+                    $this->document->addScript(JURI::root(true) . '/administrator/components/com_jce/media/js/' . $script . '?version=' . $model->getVersion());
                 }
+
+				$this->document->addScript(JURI::root(true) . '/components/com_jce/editor/libraries/js/colorpicker.js?version=' . $model->getVersion());
+				$this->document->addScript(JURI::root(true) . '/components/com_jce/editor/libraries/js/select.js?version=' . $model->getVersion());
                 
                 $cid = JRequest::getVar('cid', array(
                     0
@@ -328,11 +327,13 @@ class WFViewProfiles extends JView
                 // get width
                 $width = $params->get('editor_width', 600);
                 
-                $groups = $params->getGroups();
+                $groups = $params->getGroups();                
+                $rows 	= $model->getRowArray($row->rows);
                 
                 $this->assign('width', 		$width);
                 $this->assignRef('lists', 	$lists);
                 $this->assignRef('profile', $row);
+                $this->assignRef('rows', 	$rows);
                 $this->assignRef('params', 	$params);
                 $this->assignRef('groups', 	$groups);
                 $this->assignRef('plugins', $plugins);

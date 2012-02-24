@@ -1,35 +1,16 @@
-<?php 
+<?php
 /**
- * @version		$Id: form.php 201 2011-05-08 16:27:15Z happy_noodle_boy $
  * @package   	JCE
  * @copyright 	Copyright © 2009-2011 Ryan Demmer. All rights reserved.
- * @copyright	Copyright (C) 2005 - 2010 Open Source Matters. All rights reserved.
- * @license   	GNU/GPL 2 or later
- * This version may have been modified pursuant
+ * @license   	GNU/GPL 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * JCE is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
  */
 
-defined('_JEXEC') or die('Restricted access');	
+defined('_JEXEC') or die('RESTRICTED');	
 ?>
-<script type="text/javascript">
-	function submitbutton(pressbutton) {
-		var form = document.adminForm;
-		// Cancel button
-		if (pressbutton == "cancelEdit") {
-			submitform(pressbutton);
-			return;
-		}
-		// validation
-		if (form.name.value == "") {
-			alert( "<?php echo WFText::_('WF_PROFILES_NAME_ALERT'); ?>" );
-		} else {			
-			$jce.Profiles.onSubmit();
-			submitform(pressbutton);
-		}
-	}
-</script>
 <form action="index.php" method="post" name="adminForm">
 	<div id="jce">
 		<div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
