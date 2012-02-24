@@ -99,51 +99,71 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 		<?php endif; ?>
 
 		<?php echo $this->article->text; ?>
-		<?php if ($this->article->id !=3001):?>
-		<br><br>
-			<!-- AddThis Button BEGIN -->
-			<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
-			<a class="addthis_button_preferred_1"></a>
-			<a class="addthis_button_preferred_2"></a>
-			<a class="addthis_button_preferred_3"></a>
-			<a class="addthis_button_preferred_4"></a>
-			<a class="addthis_button_compact"></a>
-			<a class="addthis_counter addthis_bubble_style"></a>
-			</div>
-			<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
-			<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=openfoundry"></script>
-			<!-- AddThis Button END -->
-		<br>
-		<?php endif; ?>
-		<?php echo $this->article->event->afterDisplayContent; ?>
-		<?php /** Begin Article Sec/Cat **/ if (($this->params->get('show_section') && $this->article->sectionid) || ($this->params->get('show_category') && $this->article->catid)) : ?>
-		<p class="rt-article-cat">
-			<?php if ($this->params->get('show_section') && $this->article->sectionid && isset($this->article->section)) : ?>
-			<span class="rt-section">
-				<?php if ($this->params->get('link_section')) : ?>
-					<?php echo '<a href="'.JRoute::_(ContentHelperRoute::getSectionRoute($this->article->sectionid)).'">'; ?>
-				<?php endif; ?>
-				<?php echo $this->escape($this->article->section); ?>
-				<?php if ($this->params->get('link_section')) : ?>
-					<?php echo '</a>'; ?>
-				<?php endif; ?>
-				<?php if ($this->params->get('show_category')) : ?>
-					<?php echo ' - '; ?>
-				<?php endif; ?>
-			</span>
-			<?php endif; ?>
-			<?php if ($this->params->get('show_category') && $this->article->catid) : ?>
-			<span class="rt-category">
-				<?php if ($this->params->get('link_category')) : ?>
-					<?php echo '<a href="'.JRoute::_(ContentHelperRoute::getCategoryRoute($this->article->catslug, $this->article->sectionid)).'">'; ?>
-				<?php endif; ?>
+		<div style="font-size:14px;">
+		<!-- Add tags use metakey, and show OSSF Newsletter tag: OSSFNL+NUM-->
+		<?php 
+				$getNL	=	strpos($this->article->metakey,'OSSFNL');
+				$getNLNUM=substr($this->article->metakey,$getNL,9);
+				$tags = explode(",",$this->article->metakey);
+				if ($this->article->metakey!='' ){
+								if ($this->article->metakey!=$getNLNUM){
+												echo "<br><br> <hr style='border: 1px dashed #D2DADB;'><b>Tags:</b>&nbsp;"; 
+								}
+				$numtags= count($tags)-1;
+
+								foreach($tags as $index=> $key){
+												$getNL = strpos($key,'OSSFNL');
+												if ($getNL===false){
+														$searchphrase="<a href='".JURI::base()."index.php?option=com_search&Itemid=58".
+																							"&amp;searchphrase=exact_meta&amp;ordering=newest&searchword=".$key."'>".$key."</a>";
+														echo $searchphrase;
+							
+														if($index!=$numtags ){
+															echo ",&nbsp;&nbsp;";				
+														}
+												}
+				}
+		?>
+		<?php
+						$getNLID=substr($getNLNUM,6,3);
+	  		    $NLdb = JFactory::getDBO();
+	  		    $query = 'SELECT * '
+	  		        .' FROM #__letterman'
+	  		        .' WHERE id = '.$getNLID; 
+	  		    $NLdb->setQuery($query);
+						$NL_data = $NLdb->loadObject();
+						if ($NL_data->published!=0){
+						echo "<br>";
+						echo "<b>OSSF Newsletter&nbsp;:</b>&nbsp;<a href='/previous-issue?task=view&id=$getNLID'>".$NL_data->subject."</a>";}
+		}
+		?>
+		<!-- End -->
+		<?php if ($this->article->category!=''){ ?>
+			<br>
+					<?php echo '<b>Category: </b><a href="'.JRoute::_(ContentHelperRoute::getCategoryRoute($this->article->catslug, $this->article->sectionid)).'">'; ?>
 				<?php echo $this->escape($this->article->category); ?>
-				<?php if ($this->params->get('link_category')) : ?>
-					<?php echo '</a>'; ?>
-				<?php endif; ?>
-			</span>
-			<?php endif; ?>
-		</p>
-		<?php /** End Article Sec/Cat **/ endif; ?>
+					<?php echo '</a>';
+				}
+					 ?>
+				</div>
+			 <!-- AddThis Button BEGIN ID 3001 is the front page article -->
+     <?php if ($this->article->id !=3001):?>
+			<br><br>
+       <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+       <a class="addthis_button_preferred_1"></a>
+       <a class="addthis_button_preferred_2"></a>
+       <a class="addthis_button_preferred_3"></a>
+       <a class="addthis_button_preferred_4"></a>
+       <a class="addthis_button_compact"></a>
+       <a class="addthis_counter addthis_bubble_style"></a>
+       </div>
+       <script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
+       <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=openfoundry"></script>
+       <!-- AddThis Button END -->
+     <br>
+     <?php endif; ?>
+       <!-- AddThis Button END -->
+
+		<?php echo $this->article->event->afterDisplayContent; ?>
 	</div>
 </div>
