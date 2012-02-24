@@ -99,15 +99,29 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 		<?php endif; ?>
 
 		<?php echo $this->article->text; ?>
-		<div style="font-size:14px;">
+		<div class="article_note">
 		<!-- Add tags use metakey, and show OSSF Newsletter tag: OSSFNL+NUM-->
 		<?php 
 				$getNL	=	strpos($this->article->metakey,'OSSFNL');
 				$getNLNUM=substr($this->article->metakey,$getNL,9);
 				$tags = explode(",",$this->article->metakey);
+				if($this->article->category!=''){
+							echo "<br><br> <hr style='border: 1px dashed #D2DADB;'>";
+				}
+
+             $getNLID=substr($getNLNUM,6,3);
+             $NLdb = JFactory::getDBO();
+             $query = 'SELECT * '
+                 .' FROM #__letterman'
+                 .' WHERE id = '.$getNLID; 
+             $NLdb->setQuery($query);
+             $NL_data = $NLdb->loadObject();
+             if ($NL_data->published!=0){
+             echo "<b>".JText::_('OSSFNL')."&nbsp;:</b>&nbsp;<a href='/previous-issue?task=view&id=$getNLID'>".$NL_data->subject."</a><br>";}
+
 				if ($this->article->metakey!='' ){
 								if ($this->article->metakey!=$getNLNUM){
-												echo "<br><br> <hr style='border: 1px dashed #D2DADB;'><b>Tags:</b>&nbsp;"; 
+												echo "<b>".JText::_('TAGS').":</b>&nbsp;"; 
 								}
 				$numtags= count($tags)-1;
 
@@ -125,22 +139,12 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 				}
 		?>
 		<?php
-						$getNLID=substr($getNLNUM,6,3);
-	  		    $NLdb = JFactory::getDBO();
-	  		    $query = 'SELECT * '
-	  		        .' FROM #__letterman'
-	  		        .' WHERE id = '.$getNLID; 
-	  		    $NLdb->setQuery($query);
-						$NL_data = $NLdb->loadObject();
-						if ($NL_data->published!=0){
-						echo "<br>";
-						echo "<b>OSSF Newsletter&nbsp;:</b>&nbsp;<a href='/previous-issue?task=view&id=$getNLID'>".$NL_data->subject."</a>";}
 		}
 		?>
 		<!-- End -->
 		<?php if ($this->article->category!=''){ ?>
 			<br>
-					<?php echo '<b>Category: </b><a href="'.JRoute::_(ContentHelperRoute::getCategoryRoute($this->article->catslug, $this->article->sectionid)).'">'; ?>
+					<?php echo '<b>'.JText::_('CATEGORY').': </b><a href="'.JRoute::_(ContentHelperRoute::getCategoryRoute($this->article->catslug, $this->article->sectionid)).'">'; ?>
 				<?php echo $this->escape($this->article->category); ?>
 					<?php echo '</a>';
 				}
