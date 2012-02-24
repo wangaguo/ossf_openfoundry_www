@@ -1,15 +1,15 @@
 <?php
 /**
- * @package      JCE Media Manager - JCE Media Player
- * @copyright 	Copyright (C) 2005 - 2010 Ryan Demmer. All rights reserved.
- * @author		Ryan Demmer
- * @license 		http://www.gnu.org/copyleft/gpl.html GNU/GPL, see licence.txt
+ * @package   	JCE
+ * @copyright 	Copyright © 2009-2011 Ryan Demmer. All rights reserved.
+ * @license   	GNU/GPL 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * JCE is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
  */
-defined( '_WF_EXT' ) or die( 'Restricted access' );
+
+defined( '_WF_EXT' ) or die('RESTRICTED');
 ?>
 <table border="0" cellpadding="4" cellspacing="0" width="100%">
 	<tr>
@@ -36,6 +36,10 @@ defined( '_WF_EXT' ) or die( 'Restricted access' );
 	<tr>	
 		<td><label for="mediaplayer_endOfVideoOverlay" title="<?php echo WFText::_('WF_MEDIAPLAYER_JCEPLAYER_VIDEOOVERLAY_DESC')?>" class="tooltip"><?php echo WFText::_('WF_MEDIAPLAYER_JCEPLAYER_VIDEOOVERLAY')?></label></td>
 		<td><input type="text" id="mediaplayer_endOfVideoOverlay" value="" class="browser image" /></td>
+	</tr>
+	<tr>	
+		<td><label for="mediaplayer_backgroundColor" title="<?php echo WFText::_('WF_MEDIAPLAYER_JCEPLAYER_BACKGROUNDCOLOR_DESC')?>" class="tooltip"><?php echo WFText::_('WF_MEDIAPLAYER_JCEPLAYER_BACKGROUNDCOLOR')?></label></td>
+		<td><input type="text" id="mediaplayer_backgroundColor" value="" class="color" size="9" /></td>
 	</tr>
 	<tr>
 		<td colspan="2">

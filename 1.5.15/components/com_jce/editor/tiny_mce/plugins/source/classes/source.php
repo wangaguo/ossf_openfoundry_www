@@ -51,32 +51,18 @@ class WFSourcePlugin extends WFEditorPlugin {
 
 		$view->addTemplatePath(WF_EDITOR_PLUGIN .DS. 'tmpl');
 			
-		$document->setTitle(WFText::_('WF_' . strtoupper($this->getName() . '_TITLE')));
-		
-		$document->set('compress_javascript', 1);
-		$document->set('compress_css', 1);
-		
-		$document->addScript('jquery/jquery-' . WF_JQUERY . '.min.js', 'component');
+		$document->setTitle(WFText::_('WF_' . strtoupper($this->getName() . '_TITLE')));		
 
-		$editor = 'codemirror';
-		
-		switch ($editor) {
-			case 'codemirror' :
-				$javascript = array('codemirror');
-				$css 		= array('codemirror');
-				break;
-		}
-
-		$document->addScript($javascript, 'jce.tiny_mce.plugins.source.js.' . $editor);
+		$document->addScript(array('codemirror'), 'jce.tiny_mce.plugins.source.js.codemirror');
 		$document->addScript(array('editor'), 'plugins');
 		
-		$document->addStyleSheet($css, 'jce.tiny_mce.plugins.source.css.' . $editor);
+		$document->addStyleSheet(array('codemirror'), 'jce.tiny_mce.plugins.source.css.codemirror');
 		$document->addStyleSheet(array('editor'), 'plugins');				
 	}
 	
-	function execute() {
+	function execute() {			
 		$task = JRequest::getWord('task');
-		
+
 		if ($task == 'compile') {
 			return $this->compile();
 		}
@@ -86,24 +72,16 @@ class WFSourcePlugin extends WFEditorPlugin {
 
 	function compile()
 	{
-		// check token
-		WFToken::checkToken('GET') or die('RESTRICTED');
-
+		WFToken::checkToken() or die('RESTRICTED ACCESS');
+			
 		wfimport('admin.classes.packer');
 
-		$base 	= dirname(dirname(__FILE__));		
-		$editor = JRequest::getWord('editor', 'codemirror');		
+		$base 	= dirname(dirname(__FILE__));				
 		$theme 	= JRequest::getWord('theme', 'textmate');
 
 		switch (JRequest::getWord('type', 'base')) {
 			case 'base':
 				$files = array();
-
-				/*$names = array('util', 'stringstream', 'select', 'undo', 'editor', 'tokenize');
-
-				foreach($names as $name) {
-					$files[] = $base . DS . 'js' . DS . 'codemirror' . DS . $name . '.js';
-				}*/
 				
 				$files[] = $base . DS . 'js' . DS . 'codemirror' . DS . 'base.js';
 				
@@ -113,12 +91,6 @@ class WFSourcePlugin extends WFEditorPlugin {
 			case 'parser' :
 				$files = array();
 
-				/*$names = array('parsetext', 'parsexml', 'parsecss', 'tokenizejavascript', 'parsejavascript', 'parsehtmlmixed');
-
-				foreach($names as $name) {
-					$files[] = $base . DS . 'js' . DS . 'codemirror' . DS . $name . '.js';
-				}*/
-				
 				$files[] = $base . DS . 'js' . DS . 'codemirror' . DS . 'parser.js';
 
 				// javascript

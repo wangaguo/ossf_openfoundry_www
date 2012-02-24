@@ -24,7 +24,7 @@ class WFFormatPluginConfig
 
         // Encoding
         $settings['entity_encoding'] 		= $wf->getParam('editor.entity_encoding', 'raw', 'named');
-        $settings['inline_styles'] 			= $wf->getParam('editor.inline_styles', 1, 1);
+        $settings['inline_styles'] 			= $wf->getParam('editor.inline_styles', 1, 1, 'boolean');
         
         // Paragraph handling
         $settings['forced_root_block'] 		= $wf->getParam('editor.forced_root_block', 'p', 'p');
@@ -71,7 +71,7 @@ class WFFormatPluginConfig
         $selector 	= explode(',', $selector);
         
 		// set the root block
-        $rootblock 	= ($settings['forced_root_block'] === '') ? 'p' : $settings['forced_root_block'];
+        $rootblock 	= (!$settings['forced_root_block']) ? 'p' : $settings['forced_root_block'];
 
         if ($k = array_search($rootblock, $blocks) !== false) {
         	unset($blocks[$k]);
@@ -87,14 +87,16 @@ class WFFormatPluginConfig
         $settings['formats'] = "{span : {inline : 'span'}}";
 
         // new lines (paragraphs or linebreaks)
-        $newlines = $wf->getParam('editor.newlines', 0);
-        $settings['force_br_newlines'] 	= $newlines == 1 ? 1 : 0;
-        $settings['force_p_newlines'] 	= $newlines == 0 ? 1 : 0;
-        
+		if ($wf->getParam('editor.newlines', 0)) {
+			$settings['force_br_newlines'] 	= true;
+        	$settings['force_p_newlines'] 	= false;			
+			$settings['forced_root_block']	= false;
+		}
+
         // Relative urls
-        $settings['relative_urls'] = $wf->getParam('editor.relative_urls', 1, 1);
+        $settings['relative_urls'] = $wf->getParam('editor.relative_urls', 1, 1, 'boolean');
         if ($settings['relative_urls'] == 0) {
-            $settings['remove_script_host'] = 0;
+            $settings['remove_script_host'] = false;
         }
         
         // Fonts

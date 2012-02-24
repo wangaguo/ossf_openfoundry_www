@@ -1,16 +1,14 @@
 <?php
 /**
- * @package      JCE Media Player
- * @copyright   Copyright (C) 2005 - 2010 Ryan Demmer. All rights reserved.
- * @author    Ryan Demmer
- * @license     http://www.gnu.org/copyleft/gpl.html GNU/GPL, see licence.txt
+ * @package   	JCE
+ * @copyright 	Copyright © 2009-2011 Ryan Demmer. All rights reserved.
+ * @license   	GNU/GPL 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * JCE is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
  */
 
-// no direct access
 defined('_JEXEC') or die('RESTRICTED');
 
 wfimport('editor.libraries.classes.extensions');
@@ -20,7 +18,7 @@ class WFMediaPlayerExtension extends WFExtension
     /**
      * @access  protected
      */
-    function __construct($config = array())
+    public function __construct($config = array())
     {
         $default = array(
         	'name'		=> '',
@@ -43,7 +41,7 @@ class WFMediaPlayerExtension extends WFExtension
      * @return  MediaManager  The manager object.
      * @since 1.5
      */
-	function &getInstance($name = 'jceplayer')
+	public function &getInstance($name = 'jceplayer')
     {
         static $instance;
         
@@ -71,7 +69,7 @@ class WFMediaPlayerExtension extends WFExtension
         return $instance;
     }
     
-    function display()
+    public function display()
     {
     	parent::display();
     	
@@ -95,27 +93,27 @@ class WFMediaPlayerExtension extends WFExtension
         }
     }
 	
-	function isEnabled()
+	public function isEnabled()
 	{
 		return false;
 	}
     
-    function getName()
+    public function getName()
     {
     	return $this->get('name');
     }
     
-	function getTitle()
+	public function getTitle()
     {
     	return $this->get('title');
     }
     
-    function getParams()
+    public function getParams()
     {
     	return $this->params;
     }
     
-    function getParam($param, $default = '')
+    public function getParam($param, $default = '')
     {
     	$params = $this->getParams();
     	
@@ -127,7 +125,7 @@ class WFMediaPlayerExtension extends WFExtension
      * @param object $player
      * @return 
      */
-    function loadTemplate($tpl = '')
+    public function loadTemplate($tpl = '')
     {
         $output = '';
 		

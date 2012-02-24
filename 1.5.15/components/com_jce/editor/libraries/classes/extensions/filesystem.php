@@ -1,17 +1,15 @@
 <?php
 /**
- * @version   $Id: filesystem.php 221 2011-06-11 17:30:33Z happy_noodle_boy $
- * @package      JCE
- * @copyright    Copyright (C) 2005 - 2009 Ryan Demmer. All rights reserved.
- * @author    Ryan Demmer
- * @license      GNU/GPL
+ * @package   	JCE
+ * @copyright 	Copyright © 2009-2011 Ryan Demmer. All rights reserved.
+ * @license   	GNU/GPL 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * JCE is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
  */
-// no direct access
-defined('_JEXEC') or die('ERROR_403');
+
+defined('_JEXEC') or die('RESTRICTED');
 
 class WFFileSystem extends WFExtension
 {
@@ -113,21 +111,28 @@ class WFFileSystem extends WFExtension
 				$root = 'images';
 			}	
 			
+			jimport('joomla.user.helper');
 			// Joomla! 1.6+
-			if (method_exists('JUser', 'getAuthorisedGroups')) {
-				$groups 	= $user->getAuthorisedGroups();
-				$usertype 	= array_shift($groups);
+			if (method_exists('JUserHelper', 'getUserGroups')) {
+				$groups 	= JUserHelper::getUserGroups($user->id);
+				$usertype 	= array_shift(array_keys($groups));												
 			} else {
 				$usertype 	= $user->usertype;
 			}
 
 			// Replace any path variables
 			$pattern	= array('/\$id/', '/\$username/', '/\$usertype/', '/\$(group|profile)/', '/\$day/', '/\$month/', '/\$year/');
-			$replace	= array($user->id, strtolower($user->username), strtolower($usertype), strtolower($profile->name), date('d'), date('m'), date('Y'));	
+			$replace	= array($user->id, $user->username, $usertype, $profile->name, date('d'), date('m'), date('Y'));	
 			$root 		= preg_replace($pattern, $replace, $root);
-				
-			// Clean
-			$root = preg_replace(array('/$\w+\b/', '/(\.) {2,}/', '/[^A-Za-z0-9:\.\_\-\/]/'), '', $root);
+
+			// split into path parts to preserve /
+			$parts = explode('/', $root);
+			
+			// clean path parts
+			$parts = WFUtility::makeSafe($parts, $wf->getParam('editor.websafe_mode', 'utf-8'));
+
+			//join path parts
+			$root = implode('/', $parts);
     	}
     	
     	return $root;
@@ -251,28 +256,28 @@ class WFFileSystem extends WFExtension
 /**
  * Filesystem Error class
  */
-class WFFileSystemResult
+final class WFFileSystemResult
 {
     /*
      * @var Object type eg: file / folder
      */
-	var $type 		= null;
+	public $type 		= 'files';
     /*
      * @boolean	Result state
      */
-    var $state 		= false;
+    public $state 		= false;
     /*
      * @int	Error code
      */
-    var $code 		= null;
+    public $code 		= null;
     /*
      * @var Error message
      */
-    var $message 	= null;
+    public $message 	= null;
     /*
      * @var File / Folder path
      */
-    var $path = null;
+    public $path 		= null;
     
     function __construct(){}
 }
