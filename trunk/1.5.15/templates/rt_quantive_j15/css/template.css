@@ -345,3 +345,13 @@ tr.sectiontableentry1 {
 {
 float:right;
 }
+
+.article_note{
+	font-size:14px;
+}
+
+.article_note a:link ,a:active , a:visited {
+	color:#666666;
+}
+
+.article_note a:hover { text-decoration : underline;color:#666666 }
