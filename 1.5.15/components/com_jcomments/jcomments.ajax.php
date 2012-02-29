@@ -190,8 +190,10 @@ class JCommentsAJAX
 					JCommentsAJAX::showErrorMessage($response, 'email', JText::_('ERROR_INCORRECT_EMAIL'));
 				} else if (empty($values['homepage']) && ($config->get('author_homepage') == 2)) {
 					JCommentsAJAX::showErrorMessage($response, 'homepage', JText::_('ERROR_EMPTY_HOMEPAGE'));
-        } else if ($values['nospam']!='NoSpam') {
-          JCommentsAJAX::showErrorMessage($response, 'nospam', 'Please type \"NoSpam\" .');
+				} else if ($values['nospam']==''){
+					JCommentsAJAX::showErrorMessage($response, 'nospam', 'Please type you are a human or robot.');
+				} else if ($values['nospam']=='robot' or $values['nospam']!='human'){
+					JCommentsAJAX::showErrorMessage($response, 'nospam', 'Sorry, You are a robot cannot comment here.');
 				} else {
 					$noErrors = true;
 				}

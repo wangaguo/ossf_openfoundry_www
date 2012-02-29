@@ -125,8 +125,9 @@ class jtt_tpl_form extends JoomlaTuneTemplate
 		if ($my->name ==''){
 ?>
 <p>
-  <input id="comments-nospam" type="text" name="nospam" value="" size="10" tabindex="7" />
-  <label for="comments-nospam"><span style="color:red; font-size:13px;">Please type '<b>NoSpam</b>' here.</font></label>
+  <label for="comments-nospam"><span style="color:red; font-size:13px;">Q: Are you '<b>human</b>' or '<b> robot</b>'?</font></label>
+  <input id="comments-nospam" type="text" name="nospam" value="" size="10" tabindex="7" /><br>
+  <label for="comments-nospam"><span style=" font-size:13px;">( Type 'human' below to show you are not a robot )</font></label>
 </p>
 
 <?php } ?>
