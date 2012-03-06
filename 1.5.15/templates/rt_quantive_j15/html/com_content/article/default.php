@@ -102,35 +102,41 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 
 			<!-- Show relate article -->
 		<?php
-
-				$matchKey= mb_substr($this->article->title,0,7);
-				$matchdb = JFactory::getDBO();
-				$mcquery = 'select a.id,a.title,a.catid,b.alias from #__content as a, #__categories as b  where a.title like "%'.$matchKey.'%" and a.catid=b.id';
-				$matchdb->setQuery($mcquery);
-				$mc_data	= $matchdb->loadAssocList();
-				$mcNUM=count ($mc_data);
-				if ($mcNUM !=0){
-				echo "<br><br><h4>".JText::_('YOU MIGHT INTERESTED').":</h4><ul>";
-				foreach ($mc_data as $mcrow){
-								if ($mcrow[title] !=$this->article->title){
-									echo  "<li><a href='/".$mcrow[alias]."/".$mcrow[id]."'>".$mcrow[title]."</a></li>";
-								}
-				}
-				echo "</ul>";
+				if ($this->article->sectionid ==20){  // sectionid 20 is OSSFNewsletter section ID
+					$today = date("Y-m-d G:i:s"); // Some article setting open in some times 
+					$matchKey= mb_substr($this->article->title,0,8);
+					$matchdb = JFactory::getDBO();
+					$mcquery = 'select a.id,a.title,a.catid,b.alias from #__content as a, #__categories as b  '
+									.'where a.title like "%'.$matchKey.'%" and a.catid=b.id '
+									.' and a.state =1 '
+									.' and a.publish_up < "'.$today.'"';
+					$matchdb->setQuery($mcquery);
+					$mc_data	= $matchdb->loadAssocList();
+					$mcNUM=count ($mc_data);
+					if ($mcNUM > 1){
+					echo "<br><br><h4>".JText::_('YOU MIGHT INTERESTED').":</h4><ul>";
+					foreach ($mc_data as $mcrow){
+									if ($mcrow[title] !=$this->article->title){
+													if ($mcrow[alias]!=''){ //make sure all the categories have alias and we ues this to show URL
+																	echo  "<li><a href='/".$mcrow[alias]."/".$mcrow[id]."'>".$mcrow[title]."</a></li>";
+													}
+									}
+					}
+					echo "</ul>";
+					}
 				}
 		?>
 		<!-- end -->
 		<div class="article_note">
 		<!-- Add tags use metakey, and show OSSF Newsletter tag: OSSFNL+NUM-->
 		<?php 
-				$getNL	=	strpos($this->article->metakey,'OSSFNL');
-				$getNLNUM=substr($this->article->metakey,$getNL,9);
+				$getNL	=	strpos($this->article->metakey,'OSSFNL');// Use Letterman to inclould OSSFNL tag in those Newsletter article metakey
+				$getNLNUM=substr($this->article->metakey,$getNL,9);// OSSFNL + three number the number is the letterman ID
 				$tags = explode(",",$this->article->metakey);
 				if($this->article->category!=''){
 							echo "<br><br> <hr style='border: 1px dashed #D2DADB;'>";
 				}
-
-             $getNLID=substr($getNLNUM,6,3);
+             $getNLID=substr($getNLNUM,6,3);// get the letterman newsletter ID
              $NLdb = JFactory::getDBO();
              $query = 'SELECT * '
                  .' FROM #__letterman'
