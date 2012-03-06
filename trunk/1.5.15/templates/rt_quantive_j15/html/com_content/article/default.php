@@ -99,6 +99,27 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 		<?php endif; ?>
 
 		<?php echo $this->article->text; ?>
+
+			<!-- Show relate article -->
+		<?php
+
+				$matchKey= mb_substr($this->article->title,0,7);
+				$matchdb = JFactory::getDBO();
+				$mcquery = 'select a.id,a.title,a.catid,b.alias from #__content as a, #__categories as b  where a.title like "%'.$matchKey.'%" and a.catid=b.id';
+				$matchdb->setQuery($mcquery);
+				$mc_data	= $matchdb->loadAssocList();
+				$mcNUM=count ($mc_data);
+				if ($mcNUM !=0){
+				echo "<br><h4>".JText::_('YOU MIGHT INTERESTED').":</h4><ul>";
+				foreach ($mc_data as $mcrow){
+								if ($mcrow[title] !=$this->article->title){
+									echo  "<li><a href='/".$mcrow[alias]."/".$mcrow[id]."'>".$mcrow[title]."</a></li>";
+								}
+				}
+				echo "</ul>";
+				}
+		?>
+		<!-- end -->
 		<div class="article_note">
 		<!-- Add tags use metakey, and show OSSF Newsletter tag: OSSFNL+NUM-->
 		<?php 
