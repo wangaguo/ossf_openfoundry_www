@@ -106,10 +106,11 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 					$today = date("Y-m-d G:i:s"); // Some article setting open in some times 
 					$matchKey= mb_substr($this->article->title,0,8);
 					$matchdb = JFactory::getDBO();
-					$mcquery = 'select a.id,a.title,a.catid,b.alias from #__content as a, #__categories as b  '
+					$mcquery = 'select a.id,a.title,a.catid,b.alias,a.created from #__content as a, #__categories as b  '
 									.'where a.title like "%'.$matchKey.'%" and a.catid=b.id '
 									.' and a.state =1 '
-									.' and a.publish_up < "'.$today.'"';
+									.' and a.publish_up < "'.$today.'"'
+									.' order by a.created DESC';
 					$matchdb->setQuery($mcquery);
 					$mc_data	= $matchdb->loadAssocList();
 					$mcNUM=count ($mc_data);
@@ -118,7 +119,7 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 					foreach ($mc_data as $mcrow){
 									if ($mcrow[title] !=$this->article->title){
 													if ($mcrow[alias]!=''){ //make sure all the categories have alias and we ues this to show URL
-																	echo  "<li><a href='/".$mcrow[alias]."/".$mcrow[id]."'>".$mcrow[title]."</a></li>";
+																	echo  "<li><a href='/".$mcrow[alias]."/".$mcrow[id]."'>".$mcrow[title]."</a> - <span class='date-posted'>". substr($mcrow[created],0,10)."</span></li>";
 													}
 									}
 					}
