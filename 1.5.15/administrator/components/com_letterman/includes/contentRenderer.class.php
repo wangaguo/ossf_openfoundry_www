@@ -259,17 +259,17 @@ function lm_replaceContentHtml(&$matches){
 			. '</tr>'
 			. '<tr>'
 			. '<td align="left" colspan="2">'
-			. '<img src="'.$getlive_site.'/images/M_images/arrow.png"><a href="'. $getlive_site
+			. '<a href="'. $getlive_site
 			. '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
 			. '&amp;Itemid=4;isletter=1 ' . '" style="font-size:15px;color:#FD6003;"">'.	
 			_READ_MORE
 			. '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-            		. '<img src="'.$getlive_site.'/images/M_images/arrow.png"><a href="'. $getlive_site
+      . '<a href="'. $getlive_site
 			. '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
 			. '&amp;Itemid=4;isletter=1#addcomments' 
 			. '" style="font-size:15px;color:#FD6003;"">'.
             		_ADD_COMMENT
-            		. '</a>'
+      . '</a>'
 			. '</td>'
 			. '</tr>'
 			. '<tr>'
