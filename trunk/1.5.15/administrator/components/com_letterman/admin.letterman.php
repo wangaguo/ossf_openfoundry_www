@@ -449,7 +449,6 @@ function composeNow() {
 		$oldMetakey=$database->loadResult();
 		
 	 			$user->metakey = $oldMetakey."$";
-	 		  	
 	 			if ($id[$i] >1028 || $id[$i] <1000 ) {//Modify by ally
 	 				if(!$database->updateObject('#__content',$user,'id'))
 	 				{
@@ -609,8 +608,11 @@ function saveNewsletter( $option ) {
 		{
 			$newmetakey = explode("$",$e->metakey);
 			$user->id = $e->id;
-			//$user->metakey = $newmetakey[0]." ,".$title;
-      $user->metakey = $newmetakey[0].","."OSSFNL".$title_id;
+			if ($e->metakey=="$"){
+							$user->metakey = "OSSFNL".$title_id;
+			}else{
+							$user->metakey = $newmetakey[0].","."OSSFNL".$title_id;
+			}
 			if(!$database->updateObject('#__content',$user,'id'))
 			{
 				echo $database->stderr();
@@ -685,7 +687,32 @@ function publishNewsletter( $cid=null, $publish=1, $option ) {
 function removeNewsletter( $cid, $option ) {
 	global $database;
 	$countcids = implode( ',', $cid );
-////Remove those have OSSFNL content's Tags
+	////Remove those have OSSFNL content's Tags
+    foreach ($cid as $cids){
+            $GetDB = JFactory::getDBO();
+            $query='select message from #__letterman where id='.$cids;
+            $GetDB->setQuery($query);
+            $Tag_data = $GetDB->loadObject();
+            $Tag_data = str_replace('[CONTENT id="','',$Tag_data->message);
+            $Tag_data = str_replace('"]',',',$Tag_data);
+ 
+            $contentIDs= explode(',',$Tag_data);
+            foreach ($contentIDs as $index=> $contentID){
+                    $query='select metakey from #__content where id='.$contentID;
+                    $GetDB->setQuery($query);
+                    $getkey = $GetDB->loadObject();
+										$getNL = strpos($getkey->metakey,'OSSFNL');
+                   	$getNLNUM = substr($getkey->metakey,$getNL,9);
+                   	$getkey = str_replace($getNLNUM,"",$getkey->metakey);
+                    			if ($contentID!=''){
+                    			        $database->setQuery( "update #__content set metakey ='$getkey' WHERE id = $contentID" );
+                    			        if (!$database->query()) {
+                    			          echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
+                    			        }
+                    			}
+            }
+    }
+	
 //Remove letterman
 	if (count( $countcids )) {
 		
@@ -694,9 +721,8 @@ function removeNewsletter( $cid, $option ) {
 			echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
 		}
 	}
-	removeTags($cid,$option);
 
-//	mosRedirect( "index2.php?option=$option" );
+	mosRedirect( "index2.php?option=$option" );
 }
 
 function removeTags($cid,$option){
@@ -710,7 +736,6 @@ function removeTags($cid,$option){
            $Tag_data = $GetDB->loadObject();
            $Tag_data = str_replace('[CONTENT id="','',$Tag_data->message);
            $Tag_data = str_replace('"]',',',$Tag_data);
- 
            $contentIDs= explode(',',$Tag_data);
            foreach ($contentIDs as $index=> $contentID){
                    $query='select metakey from #__content where id='.$contentID;
@@ -721,14 +746,14 @@ function removeTags($cid,$option){
                    $getNLNUM = substr($getkey->metakey,$getNL,9);
                    $getkey = str_replace($getNLNUM,"",$getkey->metakey);
                    if ($contentID!=''){
-                           $database->setQuery( "update #__content set metakey ='$getkey' WHERE id = $contentID" );
-                           if (!$database->query()) {
-                             echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
-                           }
-                   }
+                          $database->setQuery( "update #__content set metakey ='$getkey' WHERE id = $contentID" );
+                          if (!$database->query()) {
+                            echo "<script> alert('".$database->getErrorMsg()."'); window.history.go(-1); </script>\n";
+                          }
+                  }
                    }
            }
-   }
+	 }
 	mosRedirect( "index2.php?option=$option" );
 }
 
