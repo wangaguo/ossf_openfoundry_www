@@ -17,7 +17,9 @@
   	</table>
   </reference>
   <translationfilters>
-	  <section>section</section>
+  	  <id>id</id>
+	  	<section>section</section>
   	  <published>published</published>
+  	  <keyword>title</keyword>
   </translationfilters>
 </joomfish>
