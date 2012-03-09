@@ -9,7 +9,7 @@
 		<field type="referenceid" name="id" translate="0">ID</field>
 		<field type="titletext" name="catname" translate="1">Name</field>
 		<field type="text" name="alias" translate="1">Alias</field>		
-		<field type="htmltext" name="catdescription" translate="1">Description</field>  		
+		<field type="htmltext" name="datdescription" translate="1">Description</field>  		
 		<field type="text" name="meta_keywords" translate="1">Meta Keywords</field>
 		<field type="textarea" name="meta_description" translate="1">Meta Description</field>
 		<field type="text" name="image" translate="1">Image</field>		
