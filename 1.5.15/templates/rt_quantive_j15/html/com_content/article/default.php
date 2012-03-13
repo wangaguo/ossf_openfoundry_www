@@ -109,6 +109,7 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 					$mcquery = 'select a.id,a.title,a.catid,b.alias,a.created from #__content as a, #__categories as b  '
 									.'where a.title like "%'.$matchKey.'%" and a.catid=b.id '
 									.' and a.state =1 '
+									.' and a.catid ='. $this->article->catid
 									.' and a.publish_up < "'.$today.'"'
 									.' order by a.created DESC';
 					$matchdb->setQuery($mcquery);
