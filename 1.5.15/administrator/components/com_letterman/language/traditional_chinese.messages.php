@@ -165,7 +165,7 @@ define( 'LM_ADD_CONTENT', '新增內容項目/文章' );
 define( 'LM_ADD_CONTENT_TOOLTIP', '如果您從列表中選擇一個內容項目，一個標籤將會被插入到文字區域中。這個標籤在儲存之後將會在文章中被轉譯出來(摘要文字只能使用圖片)。' );
 define( 'LM_ATTACHMENTS', '附件' );
 define( 'LM_ATTACHMENTS_TOOLTIP', '您可從目錄 %s 選擇一個或多個檔案，可以用來嵌入到要被寄送出的郵件中。請不要在意標籤[ATTACHMENT ..] - 這個將會寄送時被移除！' );
-define( 'LM_MULTISELECT', '使用Ctrl鍵和滑鼠點按來複選檔案' );
+define( 'LM_MULTISELECT', '使用Ctrl鍵和滑鼠點按來複選檔案,<br> 檔案請從元件->DOCMan 上傳，並注意格式需為中文"第"開頭，".txt" or ".TXT"為副檔名的檔案' );
 define( 'LM_ABOUTNEWSLETTER', '關於本報');
 define( 'LM_PUBLISH_MODE', '發行方式');
 define( 'LM_EMPOWER_WAY', '授權方式');
