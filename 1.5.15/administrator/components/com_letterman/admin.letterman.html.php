@@ -238,8 +238,13 @@ class HTML_letterman {
 			    				        	if(in_array($file, @$_REQUEST['nl_attachments'])){
 			    				          		echo '<option selected="selected">' . $file . '</option>';
 			    				        	}
-			    				        	else {
-			    				          		echo '<option>' . $file . '</option>';
+														else {
+																		if (substr($file,-3) =='txt' or substr($file,-3) =="TXT"){
+																						if (mb_substr($file,0,3)=='第'){	
+																										echo '<option>' . $file . '</option>';
+																						}
+																		}
+																
 			    				        	}
 			    				      	}				      
 			    				    }
