@@ -231,7 +231,7 @@ class HTML_letterman {
 			    				  <?php
 			    				  $files = lm_getAttachments($mosConfig_absolute_path . $lm_params->get('attachment_dir', '/media'));
 			    				  ?>
-			    				  <select name="nl_attachments[]" multiple="multiple" style="width: 250px;" size="10">
+			    				  <select name="nl_attachments[]" multiple="multiple" style="width: 450px;" size="10">
 			    				    <?php
 			    				    if(sizeof($files) > 0){
 			    				      	foreach ($files as $file){
