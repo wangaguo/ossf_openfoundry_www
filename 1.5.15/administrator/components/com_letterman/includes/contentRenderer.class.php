@@ -41,8 +41,7 @@ function CalTitle( &$row, &$params, &$access ) {
     if ( $params->get( 'item_title' ) ) {
             ?>
             <td class="contentheading<?php echo $params->get( 'pageclass_sfx' ); ?>" width="100%" height="26" valign     ="middle" style="font-size: 12px;font-weight:bold;vertical-align:bottom;color: #0055C5;">
-            <img src="http://www.openfoundry.org/images/newsletter/icon-cat.gif" align="left" hspace="6" alt="Image"/><a href="#<?php echo $row->id ; ?>" class="contentpagetitle<?php echo $params->get( 'pageclass_sfx' ); ?>">
-[<?php echo $row->category; ?>]&nbsp;&nbsp;<?php echo $row->title;?></a>
+						<span style="font-size: 18pt; color: #000000;">&nbsp;■&nbsp;</span><a href="#<?php echo $row->id ; ?>" class="contentpagetitle<?php echo $params->get( 'pageclass_sfx' ); ?>">[<?php echo $row->category; ?>]&nbsp;&nbsp;<?php echo $row->title;?></a>
             </td>
             <?php
     } else {
