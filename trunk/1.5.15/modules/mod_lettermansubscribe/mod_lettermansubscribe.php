@@ -32,7 +32,8 @@ function dropdown(mySel,myEm)
 {
 var myWin, myVal, myUrl, myLin, myPw;
 myUrl = "http://forge.iis.sinica.edu.tw/mailman/"
-myVal = mySel.options[mySel.selectedIndex].value;
+myVal = document.newsletter.kind.value;
+//myVal = mySel.options[mySel.selectedIndex].value;
 myEm  =	document.newsletter.email.value;
 		
 if(document.newsletter.subscribe[0].checked)
@@ -47,8 +48,7 @@ if(myVal)
    else myWin = window;
    if (! myWin) return true;
    myVal = myUrl + myLin + myVal + "?email="+ myEm ;  	
-
-   myWin.location = myVal;
+	 myWin.location = myVal;
    }
 return false;
 }
@@ -59,14 +59,11 @@ return false;
      ACTION="" 
      METHOD=POST onSubmit="return dropdown(this.kind,this.email)">
 <p>
-<input name="email" size="11" value="E-Mail" type="text"onblur="if(this.value=='') this.value='E-Mail';" onfocus="if(this.value=='E-Mail') this.value='';"/>
+<input name="email" size="16" value="E-Mail" type="text"onblur="if(this.value=='') this.value='E-Mail';" onfocus="if(this.value=='E-Mail') this.value='';"/>
 <input type="hidden" name="pw" value="foundry" />
 <input type="hidden" name="pw-conf" value="foundry" />
 <input type="hidden" name="digest" value="0" />
-<SELECT NAME="kind">
-<OPTION VALUE="OSSF-HTML">HTML
-<OPTION VALUE="OSSF-TXT" >TXT
-</SELECT>
+<input type="hidden" name="kind" value="OSSF-HTML" />
 </p>
 <input type="radio" name="subscribe" value="subscribe/" checked ><?php echo LM_SUBSCRIBE; ?>
 <input type="radio" name="subscribe" value="options/" ><?php echo LM_UNSUBSCRIBE; ?>
