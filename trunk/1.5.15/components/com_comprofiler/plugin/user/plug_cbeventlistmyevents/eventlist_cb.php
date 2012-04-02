@@ -194,13 +194,14 @@ class eventlistTab extends cbTabHandler {
 
 				$S_Itemid1 = 999999;
 
-			$userid = $user->get('id');
+
+			$userid = "\,".$user->get('id')."\,";
 
 
 
 			// get events
 
-			$query = "SELECT e.id, e.catsid, e.dates, e.enddates,e.created_by, e.title , e.datimage , u.email, u.username , u.gid , u.id AS userid, c.id AS catid, c.catname FROM #__eventlist_events AS e, #__users AS u, #__eventlist_categories AS c WHERE e.published = 1 AND c.id = e.catsid AND u.id = $user->id AND e.created_by = $user->id ORDER BY e.dates";
+			$query = "SELECT e.id, e.catsid, e.dates, e.enddates,e.created_by, e.title , e.datimage , u.email, u.username , u.gid , u.id AS userid, c.id AS catid, c.catname FROM #__eventlist_events AS e, #__users AS u, #__eventlist_categories AS c WHERE e.published = 1 AND c.id = e.catsid AND u.id = $user->id AND e.created_by LIKE '%$user->id%' ORDER BY e.dates";
 
 			$_CB_database->setQuery( $query );
 
