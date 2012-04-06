@@ -194,27 +194,58 @@ class eventlistTab extends cbTabHandler {
 
 				$S_Itemid1 = 999999;
 
-
 			$userid = "\,".$user->get('id')."\,";
 
-
-
 			// get events
+			$query = "SELECT e.id, e.catsid, e.dates, e.enddates,e.created_by, e.title , e.datimage , u.email, u.username , 
+								u.gid , u.id AS userid, c.id AS catid, c.catname 
+					FROM #__eventlist_events AS e, 
+							#__users AS u, 
+							#__eventlist_categories AS c 
+					WHERE e.published = 1 AND c.id = e.catsid AND u.id = $user->id AND e.created_by LIKE '%$user->id%' ORDER BY e.dates";
 
-			$query = "SELECT e.id, e.catsid, e.dates, e.enddates,e.created_by, e.title , e.datimage , u.email, u.username , u.gid , u.id AS userid, c.id AS catid, c.catname FROM #__eventlist_events AS e, #__users AS u, #__eventlist_categories AS c WHERE e.published = 1 AND c.id = e.catsid AND u.id = $user->id AND e.created_by LIKE '%$user->id%' ORDER BY e.dates";
+			$_CB_database->setQuery( $query );
+
+			$eventArray = $_CB_database->loadObjectList();	
+			
+			unset($speak_event);
+			$speak_event = array();
+			
+			$db = JFactory::getDBO();
+			
+			foreach($eventArray as $speaklist){
+				
+				$search_sql = 	" SELECT created_by ".
+								" FROM #__eventlist_events ".
+								" WHERE id = $speaklist->id";
+				$db->setQuery( $search_sql );
+				$speak_query = $db->loadObject();	
+				
+				$check_array = explode(",",$speak_query->created_by);
+				if(in_array($user->id,$check_array)){
+					$speak_event[] = $speaklist->id;
+				}
+			}
+			
+			$event_id = implode(',',$speak_event);
+
+			$query = "SELECT e.id, e.catsid, e.dates, e.enddates,e.created_by, e.title , e.datimage , u.email, u.username , 
+								u.gid , u.id AS userid, c.id AS catid, c.catname 
+					FROM #__eventlist_events AS e, 
+							#__users AS u, 
+							#__eventlist_categories AS c 
+					WHERE e.published = 1 AND c.id = e.catsid AND u.id = $user->id AND e.id IN($event_id) ORDER BY e.dates";
 
 			$_CB_database->setQuery( $query );
 
 			$results = $_CB_database->loadObjectList();	
-
-			
 
 			// if loop for checking published events
 
 			if($results){ 
 
 			$user_type=$results[0]->gid ;
-
+			
 			if ($userid == $user->id) {	
 
 				$url = "index.php?option=com_eventlist&view=editevent" ;
@@ -357,8 +388,6 @@ class eventlistTab extends cbTabHandler {
 
 					$return .= "\n\t\t<tr class='{$CSSClass}'>";						
 
-								
-
 					//$return .= "\n\t\t\t<td class='eventCBTabTableCat'>";										
 
 					$live_site = str_replace("/administrator/", "/", $live_site);
@@ -384,7 +413,6 @@ class eventlistTab extends cbTabHandler {
 					//$return .= "\n\t\t\t</td>";						
 
 								
-
 					$return .= "\n\t\t\t<td class='eventCBTabTableTitle'>";
 
 					$result_titles=explode(" " , $result->title);
@@ -397,10 +425,6 @@ class eventlistTab extends cbTabHandler {
 					$return .= "\n\t\t\t\t<a href=\"$url1\" class='eventCBAddLink'>{$result->title}</a>";
 
 					$return .= "\n\t\t\t</td>";			
-
-					
-
-					
 
 					$return .= "\n\t\t\t<td class='eventCBTabTableCat'>";
 
@@ -434,7 +458,7 @@ class eventlistTab extends cbTabHandler {
 
 					
 
-					$qry = "SELECT count(uid) AS regs FROM #__eventlist_reg_user where `reg_id`=$result->id";		
+					$qry = "SELECT count(uid) AS regs FROM #__eventlist_register where `event`=$result->id";		
 
 					$_CB_database->setQuery($qry);
 
@@ -646,12 +670,9 @@ class eventlistTab extends cbTabHandler {
 
 					$results = $_CB_database->loadObjectList();	
 
-					
-
 					// if loop for checking published events
 
 		
-
 					$user_type=$results[0]->gid ;
 
 					if ($userid == $user->id) {	
