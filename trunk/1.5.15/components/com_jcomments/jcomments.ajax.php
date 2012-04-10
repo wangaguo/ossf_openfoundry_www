@@ -191,9 +191,9 @@ class JCommentsAJAX
 				} else if (empty($values['homepage']) && ($config->get('author_homepage') == 2)) {
 					JCommentsAJAX::showErrorMessage($response, 'homepage', JText::_('ERROR_EMPTY_HOMEPAGE'));
 				} else if ($values['nospam']==''){
-					JCommentsAJAX::showErrorMessage($response, 'nospam', 'Please type you are a human or robot.');
-				} else if ($values['nospam']=='robot' or $values['nospam']!='human'){
-					JCommentsAJAX::showErrorMessage($response, 'nospam', 'Sorry, You are a robot cannot comment here.');
+					JCommentsAJAX::showErrorMessage($response, 'nospam', 'Please type the fourth word in this sentence.');
+				} else if ($values['nospam']!='Strawberry'){
+					JCommentsAJAX::showErrorMessage($response, 'nospam', 'Sorry, wrong word. Please note that the case. ');
 				} else {
 					$noErrors = true;
 				}
