@@ -39,13 +39,13 @@ class HTML_DMCategories
 			<th width="20">
 			<input type="checkbox" name="toggle" value="" onClick="checkAll(<?php echo count($rows);?>);" />
 			</th>
-			<th class="title"><?php echo _DML_CATNAME;?></th>
-			<th width="10%"><?php echo _DML_PUBLISHED;?></th>
+			<th class="title" width="70%"><?php echo _DML_CATNAME;?></th>
+			<th width="5%"><?php echo _DML_PUBLISHED;?></th>
 			<th colspan="2"><?php echo _DML_REORDER;?></th>
-			<th width="10%"><?php echo _DML_ACCESS;?></th>
-			<th width="12%"><?php echo _DML_CATEGORY;?> ID</th>
-			<th width="12%"># <?php echo _DML_DOCS;?></th>
-			<th width="12%"><?php echo _DML_CHECKED_OUT;?></th>
+			<th width="5%"><?php echo _DML_ACCESS;?></th>
+			<th width="5%"><?php echo _DML_CATEGORY;?> ID</th>
+			<th width="5%"># <?php echo _DML_DOCS;?></th>
+			<th width="5%"><?php echo _DML_CHECKED_OUT;?></th>
 		  </tr>
         </thead>
         <tfoot><tr><td colspan="11"><?php echo $pageNav->getListFooter();?></td></tr></tfoot>
