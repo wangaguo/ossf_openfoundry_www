@@ -1182,3 +1182,20 @@ DEFINE('_UE_WRONG_CONFIRMATION_CODE','Wrong confirmation code. Please check your
 // IMPORTANT WARNING: The closing tag, "?" and ">" has been intentionally omitted - CB works fine without it.
 // This was done to avoid errors caused by custom strings being added after the closing tag. ]
 // With such tags, always watchout to NOT add any line or space or anything after the "?" and the ">".
+//
+// Eventlist 
+DEFINE("_EVENT_EDIT_ENTRY","Edit");
+DEFINE("_EVENT_DELETE_ENTRY","Delete");
+
+DEFINE("_EVENTLIST_NO_LISTING","No Entries");
+
+DEFINE("_EVENT_CATEGORY","Categories");
+DEFINE("_EVENT_TITLE","Event Title");
+DEFINE("_EVENT_IMAGE","Event Image");
+DEFINE("_EVENT_START","Date");
+DEFINE("_EVENT_EXPIRE","End Date");
+DEFINE("_EVENTLIST_ADDNEW","Add New");
+DEFINE("_EVENTLIST_PUB"," Event(s) is/are not published");
+
+DEFINE("_EVENT_REGISTER","Registered users");
+
