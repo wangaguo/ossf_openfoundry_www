@@ -415,7 +415,11 @@ class CBListView_html_default extends cbListView {
 				echo "\t\t<tr class=\"$class\" ".$style.">\n";
 	
 				foreach ( array_keys( $this->columns ) as $colIdx ) {
-					echo "\t\t\t<td valign=\"top\" class=\"cbUserListCol" . $colIdx . "\">" . $this->_getUserListCell( $this->tableContent[$userIdx][$colIdx] ) . "\t\t\t</td>\n";
+								if ($colIdx ==2){
+									echo "\t\t\t<td valign=\"top\" class=\"cbUserListCol" . $colIdx . "\" width='150px'>" . $this->_getUserListCell( $this->tableContent[$userIdx][$colIdx] ) . "\t\t\t</td>\n";
+								}else {
+												echo "\t\t\t<td valign=\"top\" class=\"cbUserListCol" . $colIdx . "\">" . $this->_getUserListCell( $this->tableContent[$userIdx][$colIdx] ) . "\t\t\t</td>\n";
+								}
 				}
 				echo "\t\t</tr>\n";
 				$i++;
