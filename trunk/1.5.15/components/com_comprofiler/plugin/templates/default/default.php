@@ -303,6 +303,7 @@ class CBListView_html_default extends cbListView {
 <?php
 				}
 			}
+
 			if ( $this->searchTabContent ) {
 				if ( ! $this->searchResultDisplaying ) {
 ?>
@@ -446,10 +447,16 @@ class CBListView_html_default extends cbListView {
 				} else {
 					$title	=	'';
 				}
+				if ($fieldView->name ==username){
+								$fieldvalue = "<h3>".$fieldView->value."</h3>";
+				}else {
+								$fieldvalue 	= $fieldView->value;
+				}
+
 				$html[]		=	'<div class="cbUserListFieldLine">'
 							.	$title
 							.	'<span class="cbListFieldCont cbUserListFC_' . $fieldView->name . '">'
-							.	$fieldView->value
+							.	$fieldvalue
 							.	'</span>'
 							.	'</div>';
 			}
