@@ -1176,3 +1176,17 @@ DEFINE('_UE_USERNAME_OR_AUTH','使用者名稱, email 或 啟用驗證插件');
 // ATTENTION: The closing tag, "?" and ">" has been intentionally omitted - CB works fine without it.
 // This was done to avoid errors caused by custom strings being added after the closing tag. ]
 // With such tags, always watchout to NOT add any line or space or anything after the "?" and the ">".
+//
+// EventList tab
+DEFINE("_EVENT_EDIT_ENTRY","編輯");
+DEFINE("_EVENT_DELETE_ENTRY","刪除");
+DEFINE("_EVENTLIST_NO_LISTING","無活動");
+DEFINE("_EVENT_CATEGORY","分類");
+DEFINE("_EVENT_TITLE","活動名稱");
+DEFINE("_EVENT_IMAGE","圖片");
+DEFINE("_EVENT_START","日期");
+DEFINE("_EVENT_EXPIRE","結束日期");
+DEFINE("_EVENTLIST_ADDNEW","新增活動");
+DEFINE("_EVENTLIST_PUB"," 活動尚未發佈");
+DEFINE("_EVENT_REGISTER","報名使用者");
+
