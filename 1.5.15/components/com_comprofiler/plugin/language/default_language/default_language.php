@@ -435,7 +435,7 @@ DEFINE('_UE_AUTHORTAB','Articles');
 DEFINE('_UE_ABOUTMETAB','About');
 DEFINE('_UE_PARTNERTAB','Partner');
 DEFINE('_UE_PROJECTTAB','Projects');
-DEFINE('_UE_WORKSHOPTAB','Workshops');
+DEFINE('_UE_WORKSHOPTAB','Speech and Activities');
 DEFINE('_UE_FORUMTAB','Forum');
 DEFINE('_UE_JOBTITLE','Job title');
 DEFINE('_UE_NICKNAME','Nickname');
