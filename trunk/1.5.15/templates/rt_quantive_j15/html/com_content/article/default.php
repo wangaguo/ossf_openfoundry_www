@@ -68,17 +68,16 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 			</div>
 			<?php /** End Article Icons **/ endif; ?>
 
-			<?php /** Begin Created Date **/ if ($this->params->get('show_create_date')) : ?>
 			<span class="rt-date-posted">
-				<?php echo JHTML::_('date', $this->article->created, JText::_('DATE_FORMAT_LC2')) ?>
-			</span>
+			<?php /** Begin Created Date **/ if ($this->params->get('show_create_date')) : ?>
+			<?php echo JText::_('CREATED_AT');?>
+			<?php echo JHTML::_('date', $this->article->created, JText::_('DATE_FORMAT_LC2') ) ?>
 			<?php /** End Created Date **/ endif; ?>
-
+			<?php echo '&nbsp;&nbsp;&nbsp;&nbsp;'; ?>
 			<?php /** Begin Modified Date **/ if (intval($this->article->modified) !=0 && $this->params->get('show_modify_date')) : ?>
-			<span class="rt-date-modified">
-				<?php echo JText::sprintf('LAST_UPDATED2', JHTML::_('date', $this->article->modified, JText::_('DATE_FORMAT_LC2'))); ?>
-			</span>
+			<?php echo JText::sprintf('LAST_UPDATED2', JHTML::_('date', $this->article->modified, JText::_('DATE_FORMAT_LC2'))); ?>
 			<?php /** End Modified Date **/ endif; ?>
+			</span>
 
 			<?php /** Begin Author **/ if ($this->params->get('show_author') && ($this->article->author != "")) : ?>
 			<span class="rt-author">
