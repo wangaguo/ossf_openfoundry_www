@@ -32,21 +32,15 @@ div#easytagcloud<?php echo $moduleclass_sfx ?> a {
 	    {
 		  $tip=Jtext::_('MOD_EASYTAGCLOUD_RELATED_ARTICLES');
 		}
-		
+	 $itemid= $params->get('Itemid');
+	 $ordering= $params->get('ordering');
+
      $sef_rewrite=$app->getCfg('sef_rewrite')==0?'index.php/':'';     
-     if($app->getCfg('sef')==0)	
-	   {        
-	    $searchphrase="<a href='".JURI::base()."index.php?option=com_search&amp;Itemid=1&amp;searchword=".urlencode($key)."&amp;submit=Search&amp;searchphrase=exact_meta&amp;ordering=newest'  style='font-size:".$easytagcloud_params->tagsstyle[$key]."em' title='".$value." $tip' target='_blank'>".$key."</a>";   
-	    }
-	    else if($app->getCfg('sef')==1&&$app->getCfg('sef_suffix')==0)	
-		       {   
-			    $searchphrase="<a href='".JURI::base().$sef_rewrite."component/search/".urlencode($key)."?searchphrase=exact_meta&amp;ordering=newest'  style='font-size:".$easytagcloud_params->tagsstyle[$key]."em' title='".$value." $tip' target='_blank'>".$key."</a>";    }	
-			    else if($app->getCfg('sef')==1&&$app->getCfg('sef_suffix')==1)	
-				       {  
-					    $searchphrase="<a href='".JURI::base().$sef_rewrite."component/search/".urlencode($key).".html?searchphrase=exact_meta&amp;ordering=newest'  style='font-size:".$easytagcloud_params->tagsstyle[$key]."em' title='".$value." $tip' target='_blank'>".$key."</a>";   
-					    }	
-   echo $searchphrase;
+	    $searchphrase="<a href='".JURI::base()."index.php?option=com_search&Itemid=$itemid&searchphrase=exact_meta&ordering=$ordering&searchword=".$key."'  style='font-size:".$easytagcloud_params->tagsstyle[$key]."em' title='".$value." $tip' >".$key."</a>";   
+	 echo $searchphrase;
    echo " "; 
   } 
+
+
  ?>
 </div>

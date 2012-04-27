@@ -21,10 +21,20 @@ class modTagcloudhelper
   jimport('joomla.filesystem.file');
   global $mainframe;
   $db=JFactory::getDBO();
+  $LDB=JFactory::getDBO();
   $tagsarray=array();
   $catid=explode(",",$params->get('catid'));
-  $expcatid=explode(",",$params->get('expcatid'));
-  $blacklist=explode(",",$params->get('blacklist'));
+	$expcatid=explode(",",$params->get('expcatid'));
+
+	$Lettermanquery="SELECT id FROM #__letterman ";
+	$LDB->setQuery($Lettermanquery);
+	$lettermanID=$LDB->loadAssocList();
+	foreach ($lettermanID as $LID){
+			$LIDs.= 'OSSFNL'.$LID[id].',';	
+	}
+	$newblist = $params->get('blacklist').$LIDs;
+	$blacklist=explode(",",$newblist);
+
   if($catid[0]!='')
     {
 	 $catidquery=implode("' OR catid='",$catid);
@@ -55,14 +65,14 @@ class modTagcloudhelper
    {
       $temp=explode(",",$result->metakey);  
         foreach($temp as $t)
-        {
+        {	 
            $t=addslashes(strip_tags($t));
-           $t=trim($t);
+					 $t=trim($t);
            if(!in_array($t,$blacklist)&&$t!='')
-           {   
+					 {   
               if(in_array($t,array_keys($tagsarray)))
               {
-                 $tagsarray[$t]+=1;
+											$tagsarray[$t]+=1;
               }
 
               else
@@ -158,7 +168,7 @@ class modTagcloudhelper
 		 
 		 
     $tagcloud_params->show_underline=$show_underline;
-	$tagcloud_params->hover_show_underline=$hover_show_underline;
+		$tagcloud_params->hover_show_underline=$hover_show_underline;
     $tagcloud_params->color=$color;	
 	  
 return $tagcloud_params;

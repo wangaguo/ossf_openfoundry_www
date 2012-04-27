@@ -123,5 +123,16 @@
 			   type="text" default="" 
 			   label="MOD_EASYTAGCLOUD_MODULECLASSSFX" 
 			   description="MOD_EASYTAGCLOUD_MODULECLASSSFX_DESCRIPTION" />
+		<param
+					name="Itemid"
+					type="text" default="58"
+					label="Itemid"
+					description="show which Itemid, you can check the menu id" />
+		<param
+						name="ordering"
+						type="text"
+						label="ordering" default="newest"
+						description="show order param: newest /  oldest  /  popular  /  category  /  alpha "/>
+
 	</params>
 </install>
