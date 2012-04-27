@@ -180,17 +180,7 @@ else
         <tbody id = "topprofilebox_tbody">
             <tr class = "<?php echo $boardclass ;?>sectiontableentry1">
                 <td valign = "top" class = "td-1  fbm fb_profileboxcnt" align="left">
-<?php echo _PROFILEBOX_WELCOME; ?>, <b><?php echo _PROFILEBOX_GUEST; ?></b>
-
-                <br/> <?php echo _PROFILEBOX_PLEASE; ?>
-
-                <a href = "<?php echo $loginlink;?>"><?php echo _PROFILEBOX_LOGIN; ?></a> <?php echo _PROFILEBOX_OR; ?> <a href = "<?php echo $registerlink;?>"><?php echo _PROFILEBOX_REGISTER; ?></a>.
-
-                &nbsp;&nbsp;
-
-                <a href = "<?php echo $lostpasslink;?>"><?php echo _PROFILEBOX_LOST_PASSWORD; ?></a>
-
-</td>
+								</td>
                 <?php
                 if (mosCountModules('fb_1'))
                 {
