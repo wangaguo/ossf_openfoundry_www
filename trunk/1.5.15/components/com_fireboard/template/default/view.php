@@ -338,27 +338,18 @@ if ($letPass || $is_Moderator)
                     echo '</span>';
                     ?>
                 <!-- Finish: Total Favorite -->
-                </td>
-
-                <td class = "jr-topnav-right">
                     <?php
                     if ($total != 0)
                     {
                     ?>
 
-                        <div class = "jr-pagenav">
-                            <ul>
-                                <li class = "jr-pagenav-text"><?php echo _PAGE ?></li>
-
-                                <li class = "jr-pagenav-nb">
-
+                        <div class = "rt-pagination">
+																<div class="page-active">
                                 <?php
                                 // TODO: fxstein - Need to perform SEO cleanup
                                 echo $pageNav->writePagesLinks( JB_LIVEURLREL."&amp;func=view&amp;id=$id&amp;catid=$catid");
                                 ?>
-
-                                </li>
-                            </ul>
+                                </div>
                         </div>
 
                     <?php
@@ -1230,27 +1221,19 @@ if ($letPass || $is_Moderator)
                         }
                         // FINISH: FAVORITES
                         ?>
-                    </td>
-
-                    <td class = "jr-topnav-right">
                         <?php
                         if ($total != 0)
                         {
                         ?>
 
-                            <div class = "jr-pagenav">
-                                <ul>
-                                    <li class = "jr-pagenav-text"><?php echo _PAGE ?></li>
-
-                                    <li class = "jr-pagenav-nb">
-
+                            <div class = "rt-pagination">
+																<div class="page-active">
                                     <?php
                                     // TODO: fxstein - Need to perform SEO cleanup
                                     echo $pageNav->writePagesLinks("index.php?option=com_fireboard&amp;Itemid=$Itemid&amp;func=view&amp;id=$id&amp;catid=$catid");
-                                    ?>
+																		?>
+																</div>
 
-                                    </li>
-                                </ul>
                             </div>
 
                         <?php
