@@ -360,6 +360,6 @@ float:right;
 }
 
 .article_note a:hover { text-decoration : underline;color:#666666 }
-.totop {width:50px;text-align: center;font-weight: bold;float:right;
+.totop {width:50px;text-align: center;font-weight: bold;float:right;}
 
 .date-posted {color: #666666;font-size: 12px;}
