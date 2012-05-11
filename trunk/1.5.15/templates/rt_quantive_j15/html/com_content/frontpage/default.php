@@ -106,3 +106,4 @@ defined('_JEXEC') or die('Restricted access'); ?>
 
 	</div>
 </div>
+<div class="totop" ><a class="rt-totop" href="#" style="outline: medium none;">↑ Top</a></div>

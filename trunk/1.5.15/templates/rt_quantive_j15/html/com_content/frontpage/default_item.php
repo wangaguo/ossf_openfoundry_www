@@ -131,3 +131,4 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 		<div class="clear"></div>
 	</div>
 </div>
+<div class="totop" ><a class="rt-totop" href="#" style="outline: medium none;">↑ Top</a></div>
