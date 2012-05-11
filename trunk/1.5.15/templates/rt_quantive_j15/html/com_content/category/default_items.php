@@ -133,4 +133,3 @@ function tableOrdering( order, dir, task ) {
 <input type="hidden" name="filter_order_Dir" value="" />
 <input type="hidden" name="limitstart" value="0" />
 </form>
-<div class="totop" ><a class="rt-totop" href="#" style="outline: medium none;">↑ Top</a></div>
