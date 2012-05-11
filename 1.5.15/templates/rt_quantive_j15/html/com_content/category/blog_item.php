@@ -130,4 +130,3 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 		<?php /** End Article Sec/Cat **/ endif; ?>
 	</div>
 </div>
-<div class="totop" ><a class="rt-totop" href="#" style="outline: medium none;">↑ Top</a></div>
