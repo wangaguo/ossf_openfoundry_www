@@ -193,10 +193,10 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=openfoundry"></script>
        <!-- AddThis Button END -->
      <br>
+		<div class="totop" ><a class="rt-totop" href="#" style="outline: medium none;">↑ Top</a></div>
      <?php endif; ?>
        <!-- AddThis Button END -->
 
 		<?php echo $this->article->event->afterDisplayContent; ?>
 	</div>
 </div>
-<div class="totop" ><a class="rt-totop" href="#" style="outline: medium none;">↑ Top</a></div>
