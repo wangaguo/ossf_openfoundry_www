@@ -182,3 +182,4 @@ echo '</div>';
 if ( !empty($this->mambotAfterDisplayContent) ) { echo trim( implode( "\n", $this->mambotAfterDisplayContent ) ); }
 ?>
 </div>
+<div class="totop" ><a class="rt-totop" href="#" style="outline: medium none;">↑ Top</a></div>
