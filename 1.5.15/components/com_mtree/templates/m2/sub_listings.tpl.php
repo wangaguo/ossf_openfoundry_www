@@ -34,3 +34,4 @@ if( $this->task == "search" && empty($this->links) ) {
 }
 }
 ?></div>
+<div class="totop" ><a class="rt-totop" href="#" style="outline: medium none;">↑ Top</a></div>
