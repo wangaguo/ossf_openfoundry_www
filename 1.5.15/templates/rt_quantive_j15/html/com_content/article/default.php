@@ -199,3 +199,4 @@ $canEdit	= ($this->user->authorize('com_content', 'edit', 'content', 'all') || $
 		<?php echo $this->article->event->afterDisplayContent; ?>
 	</div>
 </div>
+<div class="totop" ><a class="rt-totop" href="#" style="outline: medium none;">↑ Top</a></div>

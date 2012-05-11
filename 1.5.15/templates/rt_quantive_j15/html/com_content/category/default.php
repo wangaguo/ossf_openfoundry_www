@@ -42,3 +42,4 @@ $cparams =& JComponentHelper::getParams('com_media');
 		<?php endif; ?>	
 	</div>
 </div>
+<div class="totop" ><a class="rt-totop" href="#" style="outline: medium none;">↑ Top</a></div>
