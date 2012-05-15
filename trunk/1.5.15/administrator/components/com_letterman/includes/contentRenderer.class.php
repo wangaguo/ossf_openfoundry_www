@@ -240,7 +240,7 @@ function lm_replaceContentHtml(&$matches){
   				echo '<span style="color: #fd6003; font-size: medium;"><strong>';
   				echo $row->category;
 				echo '</strong></span></td><td width="482" background="http://www.openfoundry.org/images/newsletter/kind-bg.gif"></td></tr>';
-  				echo '<tr><td colspan="2" align="left" valign="middle" style="font-weight: bold; font-size: 16px; vertical-align: bottom; color: rgb(0, 85, 197);"><a name="'.$row->id.'"></a>';
+  				echo '<tr><td colspan="2" align="left" valign="middle" style="font-weight: bold; font-size: 22px; vertical-align: bottom; color: rgb(0, 85, 197);"><a name="'.$row->id.'"></a>';
   				echo $row->title;
   				echo '</td></tr>';
   				echo '<tr><td colspan="2" align="left" style="font-weight: bold; font-size: 12px; color: rgb(153, 153, 153);">';
@@ -263,12 +263,12 @@ function lm_replaceContentHtml(&$matches){
 			. '&amp;Itemid=4;isletter=1 ' . '" style="font-size:15px;color:#FD6003;"">'.	
 			_READ_MORE
 			. '</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-      . '<a href="'. $getlive_site
-			. '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
-			. '&amp;Itemid=4;isletter=1#addcomments' 
-			. '" style="font-size:15px;color:#FD6003;"">'.
-            		_ADD_COMMENT
-      . '</a>'
+      //. '<a href="'. $getlive_site
+			//. '/index.php?option=com_content&amp;task=view&amp;id='.$row->id
+			//. '&amp;Itemid=4;isletter=1#addcomments' 
+			//. '" style="font-size:15px;color:#FD6003;"">'.
+      //      		_ADD_COMMENT
+      //. '</a>'
 			. '</td>'
 			. '</tr>'
 			. '<tr>'
