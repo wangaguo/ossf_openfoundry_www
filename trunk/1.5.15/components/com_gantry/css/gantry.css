@@ -44,9 +44,9 @@ p {margin: 0 0 15px 0;}
 h1, h2, h3, h4, h5 {margin: 5px 0;line-height: 1.3em;}
 h1 {font-size: 200%;}
 h2 {font-size: 135%;}
-h3 {font-size: 125%;}
-h4 {font-size: 120%;}
-h5 {font-size: 120%;}
+h3 {font-size: 120%;}
+h4 {font-size: 105%;}
+h5 {font-size: 95%;}
 h2.title {font-size: 150%;letter-spacing: 1px;line-height: 1em;}
 a {text-decoration: none;outline: none;}
 div .code {background-color:#000;color: #fff;margin: 5px;font: 10px Courier; padding:5px; margin:5px;padding:10px;}
