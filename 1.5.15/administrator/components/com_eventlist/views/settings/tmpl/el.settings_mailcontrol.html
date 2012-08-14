@@ -1,0 +1,139 @@
+	<table class="noshow">
+      <tr>
+        <td width="50%" valign="top">
+<!--報名通知-->
+		<fieldset class="adminform">
+			<legend><?php echo JText::_( 'REGISTRATION NOTICE' ); ?></legend>
+				<table class="admintable" cellspacing="1">
+				<tbody>
+					<tr>
+	          			<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'REGISTRATION SUCCESS' ); ?></span></td>
+						<td valign="top"><?php echo $this->lists['mail_join'];?></td>
+      				</tr>
+					<tr>
+	          			<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'REGISTRATION CANCEL' ); ?></span></td>
+       					<td valign="top"><?php echo $this->lists['mail_cancel'];?></td>
+      				</tr>
+					<tr>
+	          			<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'REGISTRATION CANDIDATE' ); ?></span></td>
+       					<td valign="top"><?php echo $this->lists['mail_candidate'];?></td>
+      				</tr>
+				</tbody>
+			</table>
+		</fieldset>
+<!--審核通知-->
+		<fieldset class="adminform">
+			<legend><?php echo JText::_( 'AUDIT MADE' ); ?></legend>
+				<table class="admintable" cellspacing="1">
+				<tbody>
+					<tr>
+	          			<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'AUDIT NOTICE' ); ?></span></td>
+       					<td valign="top"><?php echo $this->lists['audit_notice'];?></td>
+      				</tr>
+					<tr>
+	          			<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'AUDIT SUCCESS' ); ?></span></td>
+       					<td valign="top"><?php echo $this->lists['mail_approved'];?></td>
+      				</tr>
+					<tr>
+						<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'AUDIT FAIL' ); ?></span></td>
+						<td><?php echo $this->lists['mail_rejected'];?></td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+<!--vip通知-->
+		<fieldset class="adminform">
+			<legend><?php echo JText::_( 'VIP INVITE MAIL' ); ?></legend>
+				<table class="admintable" cellspacing="1">
+				<tbody>
+					<tr>
+	          			<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'ADMIN JOIN' ); ?></span></td>
+						<td valign="top"><?php echo $this->lists['touser_vipmail'];?></td>
+      				</tr>
+
+				</tbody>
+			</table>
+		</fieldset>
+<!--管理者通知-->
+		<fieldset class="adminform">
+			<legend><?php echo JText::_( 'ADMIN MAIL' ); ?></legend>
+				<table class="admintable" cellspacing="1">
+				<tbody>
+					<tr>
+	          			<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'ADMIN JOIN' ); ?></span></td>
+						<td valign="top"><?php echo $this->lists['toadmin_join'];?></td>
+      				</tr>
+					<tr>
+						<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'ADMIN CANCEL' ); ?></span></td>
+       					<td valign="top"><?php echo $this->lists['toadmin_cancel'];?></td>
+      				</tr>
+					<tr>
+						<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'ADMIN FULL' ); ?></span></td>
+						<td><?php echo $this->lists['toadmin_full'];?></td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+		
+		</td>
+<!--英文報名通知-->
+        <td width="50%" valign="top">
+		<fieldset class="adminform">
+			<legend><?php echo JText::_( 'EN_REGISTRATION NOTICE' ); ?></legend>
+				<table class="admintable" cellspacing="1">
+				<tbody>
+					<tr>
+	          			<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'REGISTRATION SUCCESS' ); ?></span></td>
+						<td valign="top"><?php echo $this->lists['mail_join_EN'];?></td>
+      				</tr>
+					<tr>
+	          			<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'REGISTRATION CANCEL' ); ?></span></td>
+       					<td valign="top"><?php echo $this->lists['mail_cancel_EN'];?></td>
+      				</tr>
+					<tr>
+	          			<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'REGISTRATION CANDIDATE' ); ?></span></td>
+       					<td valign="top"><?php echo $this->lists['mail_candidate_EN'];?></td>
+      				</tr>
+				</tbody>
+			</table>
+		</fieldset>
+<!--英文審核通知-->
+		<fieldset class="adminform">
+			<legend><?php echo JText::_( 'EN_AUDIT MADE' ); ?></legend>
+				<table class="admintable" cellspacing="1">
+				<tbody>
+					<tr>
+	          			<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'AUDIT NOTICE' ); ?></span></td>
+       					<td valign="top"><?php echo $this->lists['audit_notice_EN'];?></td>
+      				</tr>
+					<tr>
+	          			<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'AUDIT SUCCESS' ); ?></span></td>
+       					<td valign="top"><?php echo $this->lists['mail_approved_EN'];?></td>
+      				</tr>
+					<tr>
+						<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'AUDIT FAIL' ); ?></span></td>
+						<td><?php echo $this->lists['mail_rejected_EN'];?></td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+<!--英文vip通知-->
+		<fieldset class="adminform">
+			<legend><?php echo JText::_( 'EN_VIP INVITE MAIL' ); ?></legend>
+				<table class="admintable" cellspacing="1">
+				<tbody>
+					<tr>
+	          			<td width="300" class="key"><span class="editlinktip hasTip"><?php echo JText::_( 'ADMIN JOIN' ); ?></span></td>
+						<td valign="top"><?php echo $this->lists['touser_vipmail_EN'];?></td>
+      				</tr>
+
+				</tbody>
+			</table>
+		</fieldset>
+		</td>
+        <td width="50%" valign="top">
+
+		</td>
+
+      </tr>
+	</table>

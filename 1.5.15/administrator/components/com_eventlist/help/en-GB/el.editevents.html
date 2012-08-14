@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en_US" lang=
+"en_US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+<title>Edit Event 編輯活動</title>
+<link href="../css/help.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Edit Event 編輯活動</h1>
+
+<h3>Description</h3>
+	<p><img src="../../assets/images/icon-48-eventedit.png" alt="description" width="48" height="48" align="left" />編輯或新增活動</p>
+
+<br /><br />
+
+<h3>Navigation</h3>
+	<p>使用此功能: <strong>Components</strong> -> <strong>EventList</strong> -> <strong>Add Event </strong> 或 <strong>點選活動title</strong></p>
+
+<h3>User Access Level</h3>
+	<p><img src="../images/super_administrator.gif" alt="Super Administrator" /> Super Administrator <img src="../images/administrator.gif" alt="Administrator" /> Administrator <img src="../images/manager.png" alt="Manager" /> Manager</p>
+
+<h3>Toolbar Icons</h3>
+	<p><img src="toolbars/editevents.png"/></p>
+	<p><strong>應用:</strong> 儲存這次的修改後,停留在編輯頁面.</p>
+	<p><strong>儲存:</strong> 儲存這次的修改後,跳回上一頁.</p>
+	<p><strong>取消:</strong> 放棄這次的修改.</p>
+	<p><strong>幫助:</strong> Opens this help screen.</p>
+	<br />
+
+<h3>Main publishing area </h3>
+	<p><img src="../images/event_main.png" /></p>
+		<p><strong>活動標題:</strong>輸入活動標題.</p>
+		<p><strong>別名:</strong>輸入活動別名,將會使用於url中,若沒有系統會自動填入.</p>
+		<p><strong>發佈: </strong>選擇活動是否發佈於活動列表當中</p>
+			<DL>
+				<DD><strong>是:</strong> 到了<a href="#open_time">開放報名時間</a>,可在活動列表中看見
+				<DD><strong>否:</strong> 到了<a href="#open_time">開放報名時間</a>,無法在活動列表中看見
+			</DL>
+		<p><strong>場地:</strong>選擇活動場地,若沒有活動場地可以新增一個場地,或著選取無場地</p>
+		<p><strong>類別:</strong>選擇活動分類</p>
+
+<h3>活動參數</h3>
+<p><img src="../images/event_setting.png" /></p>
+	<p><strong><a href="#speaker">講者列表</a>:</strong>選擇活動講者, 活動講者清單可由群組功能中設定</p>
+	<p><strong>聯絡人:</strong> 選擇活動聯絡人, 聯絡人清單可由群組功能中設定</p>
+	<p><strong>報名通知群組:</strong> 當有使用者有參加或取消報名時, 所通知的群組, 清單可由群組功能中設定</p>
+	<p><strong>活動日期:</strong>輸入活動日期(必填)</p>
+	<p><strong>結束日期:</strong>輸入活動結束日期(選填)</p>
+	<p><strong>活動時間:</strong>輸入活動時間(必填)</p>
+	<p><strong>結束時間:</strong>輸入活動結束時間(選填)</p>
+	<p><strong><a id="open_time">開放報名日期</a>:</strong>輸入開放報名日期(選填) 時間到了該活動會顯示於活動列表當中</p>
+	<p><strong>開放報名時間:</strong>輸入開放報名時間(選填) 時間到了該活動會顯示於活動列表當中</p>
+	<p><strong>活動報名方式:</strong>分為以下七種
+	<br>
+	<table border="0">
+ 		<tr>
+			<td width=80></td>
+			<td><strong>關閉:</strong></td>
+			<td>使用者僅能看到活動訊息, 無法使用報名頁面</td>
+ 		</tr> 
+ 		<tr>
+     		<td width=80></td>
+      	 	<td><strong>open:</strong></td>
+       		<td>開放給普通會員報名參加</td>
+ 		</tr>
+     	<tr>
+     		<td width=80></td>
+       		<td><strong>vip:</strong></td>
+       		<td>只有擁有vip code的會員才可報名</td>
+     	</tr>
+     	<tr>
+     		<td width=80></td>
+       		<td><strong>open+vip:</strong></td>
+       		<td>需要設定vip報名結束日期, 在vip報名結束日期之前只開放給擁有vip code的會員報名, 之後則開放給普通會員報名</td>
+     	</tr>
+     	<tr>
+     		<td width=80></td>
+       		<td><strong>open(all):</strong></td>
+       		<td>所有人皆可參加 </td>
+     	</tr>
+     	<tr>
+     		<td width=80></td>
+       		<td><strong> vip(all): </strong></td>
+       		<td>只有擁有vip code皆可參加  </td>
+     	</tr>
+     	<tr>
+     		<td width=80></td>
+       		<td><strong>open+vip(all):</strong></td>
+       		<td>需要設定vip報名結束日期, 在vip報名結束日期之前只開放給擁有vip code的報名, 之後則開放給所有人報名</td>
+     	</tr>
+ 	</table>
+ 	<p><strong>審核制:</strong>使用者報名活動後, 需要經過管理者審核才可參加活動, 當活動為審核制時, 報名人數則不受活動名額的限制, 而是以審核通過的人數做為關閉活動的依據</p>
+
+<h3>報名時間</h3>
+	<p><img src="../images/join_time.png" /></p>
+		<p><strong>發佈日期:</strong>活動發佈時間, 預設為新增活動當天</p>
+		<p><strong>發佈時間:</strong>活動發佈時間, 預設為新增活動的時間</p>
+		<p><strong>報名截止日:</strong>報名截止日, 預設為活動開始當天</p>
+		<p><strong>報名截止時間:</strong>報名截止時間, 預設為活動開始時間</p>
+		<p><strong><a href="#vip_time">vip 報名結束日</a>:</strong>使用vip報名模式必填, 若沒使用vip報名模式則免填</p>
+		<p><strong><a href="#vip_time">vip 報名結束時間</a>:</strong>使用vip報名模式必填, 若沒使用vip報名模式則免填</p>
+<h3>預設參數</h3>
+	<p><img src="../images/default_setting.png" /></p>
+		<p><strong>活動語言:</strong>給使用者的訊息所使用的語系 分為 中文 英文 以及中英合併</p>
+		<p><strong>活動區域:</strong>選擇活動區域(若活動地點有選擇區域的話就會自動填入)</p>
+		<p><strong>活動問卷:</strong>於報名表中詢問參加者從何處得知此活動</p>
+		<p><strong>詢問餐點:</strong>於報名表中詢問參加者的飲食習慣(葷/素)</p>
+		<p><strong><a href="#full">活動名額</a>:</strong>可以參加活動的名額(選填), 預設為30.</p>
+		<p><strong>候補名額:</strong>活動候補名額(選填), 預設為5.</p>
+		<p><strong>活動費用:</strong>活動費用(選填), 預設為free.</p>
+	<br />
+
+<h3>圖片</h3>
+	<p><img src="../images/pic_link.png" /></p>
+	<p><strong>是否顯示連結:</strong>顯示的活動圖片是否要連結網址</p>
+	<p><strong>路徑:</strong>圖片欲連結的網址(若顯示連結則必填)</p>
+	<p><strong>選擇圖片:</strong>活動所顯示的圖片</p>
+	<br />
+
+<h3><a id="speaker">關於講者清單</a></h3>
+	<p>1.系統會將講者資料自動填入活動內容當中, 因此每次講者有異動時, 系統會自動更新為最新的講者資料, 因此設定活動時, 講者盡量避免更動, 否則講者資料一旦更新, 手動修改的講者資料會消失</p>
+	<p>2.NULL為空白講者表格, 若講者無會員時, 可使用空白表格手動將講者資料填上</p>
+
+<h3><a id="full">關於活動名額</a></h3>
+	<p>當報名人數超過活動名額之後參加的人皆為候補名單.</br>
+	當報名人數超過活動名額＋候補名額 活動則停止報名 但已報名者可取消.</p>
+	
+<h3>關於聯絡人</h3>
+	<p>在前台顯示以及寄發通知信時使用聯絡人的信箱寄出.其他功能並不會使用到聯絡人信箱.</p>
+
+<h3><a id="vip_time">關於VIP報名時間及日期</a></h3>
+	<p>若有使用vip+open模式的話此功能才會生效,&nbsp;在設定的vip時間到達之前報名頁面皆會顯示vip報名表單,&nbsp;直至到達設定時間後報名表單則顯示一般報名表單.</p>
+<h3>活動關閉條件</h3>
+
+<p><strong>時間:</strong>報名截止時間ㄧ到即關閉</p>
+<p><strong>非審核制</strong>報名成功人數以及候補人數相加等於活動所設定的人數</p>
+<p><strong>審核制:</strong>依據管理者審核的人數, 直到審核通過的人數等於活動設定的正取+候補的人數為止</p>
+	<div align="center" style="margin-top: 30px; margin-bottom: 30px;">
+		<a href="#" onclick="javascript:window.close();"><span class="small">Close Window</span></a>
+	</div>
+
+
+</body>
+</html>

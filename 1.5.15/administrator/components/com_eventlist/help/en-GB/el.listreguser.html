@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="utf-8" lang="utf-8">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+	<title>List RegUser 報名人數管理</title>
+	<link href="../css/help.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<h1>List RegUser 報名人數管理</h1>
+<h3>Description</h3>
+<p>
+	<img src="../../assets/images/icon-48-events.png" alt="description" width="48" height="48" align="left" />
+	報名者管理, 列出所有活動的參加者, 並加以編輯、修改參加者的狀態, 使用<a href="#select">select選單</a>選取活動.
+</p>
+<br />
+<br>
+<h3>Navigation</h3>
+<p>
+	使用此功能: <strong>Components</strong> -> <strong>EventList</strong> -> <strong>報名人數管理</strong>
+</p>
+	<h3>User Access Level</h3>
+<p><img src="../images/super_administrator.gif" alt="Super Administrator" /> Super Administrator <img src="../images/administrator.gif" alt="Administrator" /> Administrator <img src="../images/manager.png" alt="Manager" /> Manager</p>
+
+<h3>Toolbar Icons</h3>
+	<img src="toolbars/reg.png" alt="toolbar"  height="53" />
+	<p><em>使用CheckBox選擇想要編輯的使用者</em></p>
+	<p><strong>統計圖:</strong>當活動開放問卷時, 才會顯示此問卷, 以圓餅圖顯示問卷調查結果.</p>
+	<p><strong><a href="#add">新增使用者</a>:</strong> 手動加入使用者</p>
+	<p><strong>TXT:</strong> 將訂閱news letter的名單, 列成TXT文件 </p>
+	<p><strong>CSV:</strong> 將參加者名單列成CSV文件 </p>
+	<p><strong><a href="#html">HTML</a>:</strong> 將參加者名單以開啟新視窗方式輸出成HTML文件</p>
+	<p><strong>加入黑名單:</strong> 將使用者列為黑名單, 往後使用者在參加活動時會發出警告訊息, 並說明哪個活動未參加.</p>
+	<p><strong>取消報名:</strong> 將使用者取消報名. </p>
+	<p><strong><a href="#FILTER MAIL">FILTER MAIL</a>:</strong> 寄信給相關活動的參加者. </p>
+	<p><strong>MAIL TO ME:</strong> 寄出活動信件給自己 </p>
+	<p><strong><a href="#SEND MAIL">SENDMAIL</a>:</strong> 寄出信件給被勾選的參加者</p>
+	<p><strong>Help:</strong> 連結說明頁面.<br /></p>
+
+<h3>表單:</h3>
+	<p><strong>序號</strong> 使用者報名序號 </p>
+	<p><strong>姓名:</strong> 使用者姓名</p>
+	<p><b>電子信箱:</b> 使用者信箱. </p>
+	<p><strong>ALL-FUTRUE:</strong>(參加過得活動/尚未參加的活動)</p>
+	<p><strong>公司名稱:</strong> 使用者公司名稱(前台選填).</p>
+	<p><strong>部門/職稱:</strong> 使用者部門與職稱(前台選填).</p>
+	<p><strong>社群:</strong> 使用者參與的社群(選填).</p>
+	<p><strong>報名日期:</strong> 使用者的報名日期.</p>
+	<p><strong>USE VIPCODE:</strong> 報名時所使用的VIP CODE.</p>
+	<p><strong>JOIN STATE:</strong> 使用者目前狀態(參加,取消,由管理者加入,由管理者取消)</p>
+	<p><strong>備註:</strong> 管理者對於該使用者的備註, 可在編輯使用者中編輯此欄位.</p>
+
+<h3>HTML<a name="html" id="html"></a></h3>
+	<p>欲列印檔案時, 將紙張大小設定為A4, 否則會有表單破圖的情況發生.</p>
+	<p>若想增加輸出的參加者, 可使用新增使用者來增加避免檔案輸出時有表單異常的情況, 使用者資料可在新增後進行編輯.</p>
+
+<h3>SEND MAIL<a name="SEND MAIL" id="SEND MAIL"></a></h3>
+	<p>sendmail有兩種寄件方式</p>
+	<p>A:由使用活動列表勾選使用者:寄件者為<font color=red><strong>活動聯絡人</strong></font></p>
+	<p>B:使用區域或分類列表勾選使用者:寄件者為<font color=red><strong>登入者</strong></font></p>
+	<p>信件寄出時會提示寄件人姓名</p>
+<h3>新增使用者<a name="add" id="add"></a></h3>
+	<img src="toolbars/join.PNG" alt="toolbar" width="443" height="44" />
+	<p>使用者姓名與電子信箱:需要填入使用者的email以及姓名, 至少填入email</p>
+	<p>寄信給使用者:若勾選會將報名成功信件寄給使用者,反之則不會</p>
+	<p><strong>姓名:</strong> 被新增的使用者姓名</p>
+	<p><strong>信箱:</strong> 被新增的使用者信箱</p>
+	<p><strong>發送報名信件:</strong>決定新增後是否將報名信件寄出給該使用者</p>
+
+<h3>select選單<a name="select" id="select"></a></h3>
+	<img src="toolbars/sys_select.PNG"/>
+	<p><img src="toolbars/glass_numbers_1.png" alt="toolbar" width="20" height="20" />選擇活動:選擇後顯示該活動的所有使用者</p>
+	<p><img src="toolbars/glass_numbers_2.png" alt="toolbar" width="20" height="20" />選擇分類:選擇後顯示該分類的所有使用者 若有選擇活動必須先點重置, 將select選單重置</p>
+	<p><img src="toolbars/glass_numbers_3.png" alt="toolbar" width="20" height="20" />選擇區域:選擇後顯示該區域的所有使用者 若有選擇活動必須先點重置, 將select選單重置</p>
+	<p><img src="toolbars/glass_numbers_4.png" alt="toolbar" width="20" height="20" />選擇信件:使用mail to me 或 sendmail時所使用</p>
+	<p><img src="toolbars/glass_numbers_5.png" alt="toolbar" width="20" height="20" />選擇使用者狀態:僅在選擇活動後出現, 可針對使用者狀態在做一次篩選</p>
+
+<h3>使用者狀態</h3>
+位於使用者姓名後面會有四種狀態圖示, 若沒有任何圖示則是無特殊情況的使用者<br />
+<img src="../../assets/images/add_user.png" alt="toolbar" width="20" height="20" />初次參加活動的使用者<br />
+<img src="../../assets/images/cancel_user.png" alt="toolbar" width="20" height="20" />取消參加活動的使用者<br />
+<img src="../../assets/images/black_user.png" alt="toolbar" width="20" height="20" />在本次活動被列為黑名單的使用者<br />
+<img src="../../assets/images/newsletter.png" alt="toolbar" width="20" height="20" />訂閱電子報的使用者<br />
+</br>
+<h3><a id ="FILTER MAIL">FILTER MAIL</a></h3>
+	<p>在選取活動之後, 系統會自動帶入該活動所設定的活動分類以及活動區域</p>
+	<p>選擇信件後, 點選FILTER MAIL 系統會寄信給 參與過相關活動的使用者, 並且排除掉已參加該活動的使用者</p>
+<br />
+<div align="center" style="margin-top: 30px; margin-bottom: 30px;">
+<a href="#" onclick="javascript:window.close();"><span class="small">Close Window</span></a>
+</div>
+</body>
+</html>

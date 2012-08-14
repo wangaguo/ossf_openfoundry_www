@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en_US" lang=
+"en_US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+<title>Edit Mail 編輯信件</title>
+<link href="../css/help.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Edit Mail 編輯信件</h1>
+
+<h3>Description</h3>
+<p>
+<img src="../../assets/images/icon-48-eventedit.png" alt="description" width="48" height="48" align="left" />
+編輯或新增信件
+</p>
+
+<br /><br />
+
+
+<h3>Navigation</h3>
+<p>
+使用此功能: <strong>Components</strong> -> <strong>EventList</strong> -> <strong> Mail </strong>  或 <strong>點選信件title</strong>
+</p>
+
+<h3>User Access Level</h3>
+
+<p>
+<img src="../images/super_administrator.gif" alt="Super Administrator" /> Super Administrator <img src="../images/administrator.gif" alt="Administrator" /> Administrator <img src="../images/manager.png" alt="Manager" /> Manager
+</p>
+
+<h3>Toolbar Icons</h3>
+
+<p><img src="toolbars/editevents.png"/></p>
+<p><strong>應用:</strong> 儲存這次的修改後,停留在編輯頁面.</p>
+<p>
+<strong>儲存:</strong> 儲存這次的修改後,跳回上一頁.</p>
+<p>
+<strong>取消:</strong> 放棄這次的修改.</p>
+<p><strong>幫助:</strong> Opens this help screen.</p>
+<br />
+
+<h3>Main area </h3>
+
+<p><strong>信件標題:</strong>輸入信件標題(必填).</p>
+
+<p><strong>信件內容描述:</strong> 輸入信件內容(選填)</p>
+
+
+<h3>信件 Tag</h3>
+信件中類似變數的存在, 信件內容會將活動的資料替換至Tag中</br>
+
+</br>
+<table id="customers" border="1" cellspacing="0" cellpadding="4">
+<tbody>
+	<tr valign="top" bgcolor=#629DE3>
+		<td width='150' align="center"><b><font color='#FFFFFF'>Tag</font></b></td>
+		<td width='110' align="center"><b><font color='#FFFFFF'>名稱</font></b></td>
+		<td width='110'align="center"><b><font color='#FFFFFF'>語系</font></b></td>
+		<td align="center"><b><font color='#FFFFFF'>格式</font></b></TD>
+	</tr>
+	<tr>
+		<td>{EVENT}</td>
+		<td>活動名稱</td>
+		<td>依據填入的資訊</td>
+		<td>測試活動</TD>
+	</tr>
+	<tr bgcolor=#B2DAEA>
+		<td>{EVENT_ADDRESS}</td>
+		<td>活動地點</td>
+		<td>依據填入的資訊</td>
+		<td>[台北] 中央研究院資訊科學研究所101室</TD>
+	</tr>
+	<tr>
+		<td>{EVENT_ADMIN}</td>
+		<td>聯絡人姓名</td>
+		<td>依據填入的資訊</td>
+		<td>contact</TD>
+	</tr>
+	<tr bgcolor=#B2DAEA>
+		<td>{ADMIN_PHONE}</td>
+		<td>聯絡人電話</td>
+		<td>依據填入的資訊</td>
+		<td>(02)2788-3799</TD>
+	</tr>
+	<tr>
+		<td>{ADMIN_EMAIL}</td>
+		<td>聯絡人信箱</td>
+		<td>依據填入的資訊</td>
+		<td>admin@joomla.com</TD>
+	</tr>
+	<tr bgcolor=#B2DAEA>
+		<td>{USER}</td>
+		<td>收件人姓名</td>
+		<td>依據填入的資訊</td>
+		<td>王大明</TD>
+	</tr>
+	<tr>
+		<td>{EVENT_DATE}</td>
+		<td>活動日期</td>
+		<td>日期</td>
+		<td>2011-08-02</TD>
+	</tr>
+	<tr bgcolor=#B2DAEA>
+		<td>{SIGNUP_ID}</td>
+		<td>報名序號</td>
+		<td>數字</td>
+		<td>0001</TD>
+	</tr>
+	<tr>
+		<td>{EVENT_WAITING}</td>
+		<td>候補序號</td>
+		<td>數字</td>
+		<td>1</TD>
+	</tr>
+	<tr bgcolor=#B2DAEA>
+		<td>{NEW_NAME}</td>
+		<td>使用者姓名</td>
+		<td>依據填入的資訊</td>
+		<td>Admin</TD>
+	</tr>
+	<tr>
+		<td>{NEW_COMPANY}</td>
+		<td>使用者公司</td>
+		<td>依據填入的資訊</td>
+		<td>OSSF</TD>
+	</tr>
+	<tr bgcolor=#B2DAEA>
+		<td>{NEW_CAPTAINCY}</td>
+		<td>使用者職稱</td>
+		<td>依據填入的資訊</td>
+		<td>OSSF</TD>
+	</tr>
+	<tr>
+		<td>{EVENT_REG_EN}</td>
+		<td>活動語系</td>
+		<td>英文</td>
+		<td>English</TD>
+	</tr>
+	<tr bgcolor=#B2DAEA>
+		<td>{EVENT_REG_ZH}</td>
+		<td>活動語系</td>
+		<td>中文</td>
+		<td>Chinese</TD>
+	</tr>
+	<tr>
+		<td>{EVENT_PAGE_EN}</td>
+		<td>活動頁面link</td>
+		<td>英文</td>
+		<td><a href=''>registration website</a></TD>
+	</tr>
+	<tr bgcolor=#B2DAEA>
+		<td>{EVENT_PAGE_ZH}</td>
+		<td>活動頁面link</td>
+		<td>中文</td>
+		<td><a href=''>活動網頁</a></TD>
+	</tr>
+	<tr>
+		<td>{EVENT_CANCEL_EN}</td>
+		<td>取消報名連結</td>
+		<td>英文</td>
+		<td><a href=''>here</a></TD>
+	</tr>
+	<tr bgcolor=#B2DAEA>
+		<td>{EVENT_CANCEL_ZH}</td>
+		<td>取消報名連結</td>
+		<td>中文</td>
+		<td><a href=''>取消報名</a></TD>
+	</tr>
+	<tr>
+		<td>{EVENT_TIME_EN}</td>
+		<td>活動時間</td>
+		<td>英文</td>
+		<td>10:00~12:00 on Wednesday, Nov 23, 2011</TD>
+	</tr>
+	<tr bgcolor=#B2DAEA>
+		<td>{EVENT_TIME_ZH}</td>
+		<td>活動時間</td>
+		<td>中文</td>
+		<td>2011 年 11 月 23 ( 三 ) 10:00~12:00</TD>
+	</tr>
+	<tr>
+		<td>{EVENT_VIP_MD}</td>
+		<td>vip開始報名時間</td>
+		<td>英文</td>
+		<td>Oct 31</TD>
+	</tr>
+	<tr bgcolor=#B2DAEA>
+		<td>{EVENT_VIP_MD2}</td>
+		<td>vip結束報名時間</td>
+		<td>英文</td>
+		<td>November 03 14:00</td>
+	</tr>
+	<tr>
+		<td>{VIP_END_TIME}</td>
+		<td>vip報名結束時間</td>
+		<td>中文</td>
+		<td>2011年11月03(三) 14:00</td>
+	</tr>
+</table>
+<br />
+<div align="center" style="margin-top: 30px; margin-bottom: 30px;">
+	<a href="#" onclick="javascript:window.close();"><span class="small">Close Window</span></a>
+</div>
+
+</body>
+</html>
