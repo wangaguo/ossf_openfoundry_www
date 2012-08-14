@@ -1,6 +1,6 @@
 -- MySQL dump 10.11
 --
--- Host: localhost    Database: wsw2
+-- Host: localhost    Database: wsw
 -- ------------------------------------------------------
 -- Server version	5.0.88-log
 
