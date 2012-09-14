@@ -967,7 +967,7 @@ function Default_value( )
 			}
 			
 			if($data_result->username !=''){
-				$userStr = $data_result->username;
+				$userStr = $data_result->name;
 				if($userStr[0]=='!'){
 					$userStr = substr($userStr,1);
 				}
