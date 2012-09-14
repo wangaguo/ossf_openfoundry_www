@@ -616,7 +616,7 @@ switch ($this->formhandler) {
 
 	case 0:
 	//報名截止(後台設定)
-		echo "<br><h1><font color='#277BC0'><center>".JText::_( 'TOO LATE REGISTER' )."</cnter></font></h1><br>";
+		//echo "<br><h1><font color='#277BC0'><center>".JText::_( 'TOO LATE REGISTER' )."</cnter></font></h1><br>";
 	break;
 		
 	case 1:
