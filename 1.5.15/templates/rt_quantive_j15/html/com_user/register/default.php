@@ -15,6 +15,8 @@ defined('_JEXEC') or die('Restricted access');
 
 <script type="text/javascript">
 <!--
+	
+	document.location.href="http://www.openfoundry.org/sso/user/signup";
 	Window.onDomReady(function(){
 		document.formvalidator.setHandler('passverify', function (value) { return ($('password').value == value); }	);
 	});
