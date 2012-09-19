@@ -363,3 +363,33 @@ float:right;
 .totop {width:50px;text-align: center;font-weight: bold;float:right;}
 
 .date-posted {color: #666666;font-size: 12px;}
+
+.border-radius {
+-webkit-border-radius: 10px;
+-webkit-border-top-left-radius: 100px;
+-webkit-border-bottom-right-radius: 100px;
+-moz-border-radius: 10px;
+-moz-border-radius-topleft: 100px;
+-moz-border-radius-bottomright: 100px;
+border-radius: 10px;
+border-top-left-radius: 50px;
+border-bottom-right-radius: 50px;
+background-color:#e7f1e5;
+padding:25px 10px 10px 25px;
+}
+
+.border-radius a:link, a:active {
+color:#333333;
+}
+
+.border-radius a:hover {
+text-decoration:underline;
+}
+.fqtop {
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+background-color:#e7f1e5;
+padding:8px;
+float:right;
+}
