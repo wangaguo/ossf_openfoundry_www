@@ -185,12 +185,14 @@ class EventListViewEventList extends JView
 			$today_time = strtotime(date( "Y-m-d H:i:s"));
 			$open_time	= strtotime(date("$row->open_date $row->open_time"));
 			
-			if ( $today_time > $open_time ) {
+//			if ( $today_time > $open_time ) {
+//				$this->rows[$key] = $row;
+//				$this->rows[$key]->display = 1;
+//			}else{
+//							$this->rows[$key]->display = 0 ;
+//			}
 				$this->rows[$key] = $row;
 				$this->rows[$key]->display = 1;
-			}else{
-				$this->rows[$key]->display = 0 ;
-			}
 
 			$k = 1 - $k;
 		}
