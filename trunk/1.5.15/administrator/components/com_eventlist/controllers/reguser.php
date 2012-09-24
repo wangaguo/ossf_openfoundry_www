@@ -493,7 +493,7 @@ class EventListControllerreguser extends EventListController
 							"<table width=680px cellspacing=0 >".
 							"<tbody font-family:AR PL UMing TW MBE,Arial,Times,TimesNR,New Century Schoolbook,Georgia,,serif;font-size:14px; >".
 								"<tr>".
-									"<td align=center><img src=http://swan.iis.sinica.edu.tw/signup/images/OSSF.jpg width=130px></td>".
+									"<td align=center><img src=http://www.openfoundry.org/images/OSSF.jpg width=130px></td>".
 									"<td><b>".JText::_( 'EVENTSIGNALTURE' )."</b></td>".
 								"</tr>".
 										
