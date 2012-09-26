@@ -9,7 +9,7 @@
 .feature-block .desc-container .description {position: absolute;top: 0; left: 0;visibility: hidden;}
 .feature-block img.feature-main {display: block;}
 .feature-block img.feature-sub {margin: 7px 7px 0 0;}
-.feature-block .feature-title {display: block;font-size: 180%;line-height: 130%;margin:10px 0 0 0;}
+.feature-block .feature-title {display: block;font-size: 150%;line-height: 130%;margin:10px 0 0 0; font-weight:bold;text-shadow:0 0 7px #999;}
 .feature-block .created-date {display:block;font-size:90%;margin: 0px 0 20px 0;color:#999;}
 .feature-block .feature-desc {font-size: 120%;line-height: 130%;}
 .feature-block .moduletable h3 {font-size: 180%;}
