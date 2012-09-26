@@ -81,8 +81,16 @@ pre {font-style:italic;overflow: auto;padding: 10px;margin-bottom: 15px;}
 /* Inset Styles */
 span.inset-left {float: left;margin-right: 20px;margin-bottom:20px;}
 span.inset-right {float: right;margin-left: 20px;margin-bottom:20px;}
-.yellowbox { background-color:#fbe96f;}
-.bluebox { background-color:#3fb0e5;}
+.yellowbox { background-color:#fbe96f;border-radius: 13px;}
+.bluebox { background-color:#3fb0e5;border-radius: 13px;}
+.redbox { background-color:#f45235;border-radius: 13px;}
+.graybox {background-color:#c0c0c0;border-radius: 13px;}
+.greenbox{background-color:#8de019;border-radius: 13px;}
+.lightgreenbox {background-color:#c3e099; border-radius: 13px;}
+.lightredbox {background-color:#f4b5b5; border-radius: 13px;}
+.lightbluebox {background-color:#bfd9e5; border-radius: 13px;}
+.lightgraybox {background-color:#ededed; border-radius: 13px;}
+
 .yellowbox pre {font-size:70%;}
 span.inset-right-title, span.inset-left-title {position: absolute;display: block;top: -12px;left: 10px;padding: 3px 8px;font-weight: bold;background-color:#cccccc;}
 span.inset-left, span.inset-right {display: block;padding: 22px 8px 8px 8px;width: 45%;font-size: 75%;margin-top: 25px;position: relative;}
