@@ -13,6 +13,12 @@
 defined('_JEXEC') or die('Restricted access');
 ?>
 
+<script type="text/javascript">
+<!--
+  document.location.href="./sso/user/login";
+// -->
+</script>
+
 <?php if(JPluginHelper::isEnabled('authentication', 'openid')) :
 		$lang = &JFactory::getLanguage();
 		$lang->load( 'plg_authentication_openid', JPATH_ADMINISTRATOR );
