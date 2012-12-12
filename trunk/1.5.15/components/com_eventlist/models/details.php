@@ -504,9 +504,16 @@ class EventListModelDetails extends JModel
 		$notice_merger = ELOutput::check_merger($join_data['u_email']);//檢查是否合併
 	}
 	//查詢黑名單
-		$notice_black = ELOutput::check_black( $join_data['u_email'] );
+	$notice_black = ELOutput::check_black( $join_data['u_email'] );
 
-	//檢查目前參加人數
+	  //判斷是否已開放報名
+    $start_date = date('Y-m-d H:i:s',strtotime($event_info->open_date." ".$event_info->open_time));
+    if(date('Y-m-d H:i:s')<=$start_date){
+	         JError::raiseNotice( 403, JText::_('Not yet open for registration') );
+	         return;
+	       }
+				
+    //檢查目前參加人數
 		$get_num =	"SELECT reg_sn ".
 					"FROM #__eventlist_reg_user ".
 					"WHERE reg_id = $event ".
@@ -516,10 +523,16 @@ class EventListModelDetails extends JModel
 		$db->Query();
 		$user_Full = $db->getNumRows();
 		$eventJ = $db->loadObject();
-	//檢查目前參加人數 結束
-		
+	    
+	  //判斷目前報名是否己滿（正取人數加後補人數）
+	 
+		if($user_Full >= ($event_info->candidate + $event_info->full)){
+	          JError::raiseNotice( 403, JText::_('Quota is full, can not be registered') );
+	          return;
+	      }
 	
-	//報名人數超過正常人數
+
+		//報名人數超過正常人數
 		if($user_Full >= $event_info->full){
 			//user waiting
 			$waitarray[] = "reg_id = $event";
