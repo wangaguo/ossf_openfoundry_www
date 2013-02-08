@@ -18,7 +18,6 @@
 --
 -- Table structure for table `jos_banner`
 --
-test
 DROP TABLE IF EXISTS `jos_banner`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
