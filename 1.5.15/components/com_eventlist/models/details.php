@@ -33,6 +33,7 @@ jimport('joomla.application.component.model');
  */
 class EventListModelDetails extends JModel
 {
+			
 	/**
 	 * Details data in details array
 	 *
@@ -263,6 +264,7 @@ class EventListModelDetails extends JModel
 	 */
 	function delreguser()
 	{
+			
 		$user 	= & JFactory::getUser();
 		$event 	= (int) $this->_id;
 		$userid = $user->get('id');
@@ -276,6 +278,19 @@ class EventListModelDetails extends JModel
 		$leave_info['reg_sn'] = $reg_sn;
 		$leave_info['ch_email'] = $ch_email;
 		$session->set("leave_info", $leave_info);
+
+    //確認驗證碼
+			
+		$tsCode=JRequest::getVar( 'Turing_cancel', '', 'post','string', JREQUEST_ALLOWRAW );
+  	$ts_cancel=$session->get('ts_add');
+		
+		if (!isset($ts_cancel)){
+						 JError::raiseNotice( 403, JText::_('CAPTCHAMESS') );
+						 return;
+		  }elseif( strtoupper($ts_cancel) != strtoupper($tsCode) ){
+  	 	  		JError::raiseNotice( 403, JText::_('CAPTCHAMESS') );
+						return;
+	   }
 		
 		// Must be logged in
 		if ($userid < 1 && $registra < 6) {
@@ -467,6 +482,21 @@ class EventListModelDetails extends JModel
 				return;
 			}
 		}
+
+	//確認驗證碼
+		$session =& JFactory::getSession();
+	  $ts_add=$session->get('ts_add');	
+		$tsCode=JRequest::getVar( 'Turing', '', 'post','string', JREQUEST_ALLOWRAW );
+
+	  if (!isset($ts_add)){
+	              JError::raiseNotice( 403, JText::_('CAPTCHAMESS') );
+	              return;
+	    }elseif( strtoupper($ts_add) != strtoupper($tsCode) ){
+	              JError::raiseNotice( 403, JText::_('CAPTCHAMESS') );
+	              return;
+	    }      
+
+
 
 	//檢查是否需要驗證vip code
 		if( $event_info->registra == 5 || $event_info->registra == 9 ){
