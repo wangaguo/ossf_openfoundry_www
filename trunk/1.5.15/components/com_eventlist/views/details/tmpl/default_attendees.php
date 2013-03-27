@@ -1,4 +1,5 @@
 <?php
+
 /** 
  * @version 1.0 $Id: default_attendees.php 1082 2009-07-22 11:18:13Z schlu $
  * @package Joomla
@@ -26,10 +27,9 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 	$ch_login = $user->get('id');
 	$dis = 'none';
 	
-//session 寫入
-	$session =& JFactory::getSession();
+	//session 寫入
+  $session =& JFactory::getSession();
 	$info_session = $session->get("join_info");
-	
 	if($ch_login!=0){
 		if($info_session['u_name']==''){
 			$edit_name	= $user->name;
@@ -195,10 +195,19 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 				"<td class=semi4 width=23% align=right bgcolor=#caf5b4 >".'&nbsp;'.JText::_('UCA')."</td>".
 				"<td class=semi2 bgcolor=#caf5b5>&nbsp;".
 					"<input type=hidden name=u_sex value='null'>".$lists['signup'].'&nbsp;'.JText::_('FON')."(<a target=_blank href=http://www.openfoundry.org/previous-issue>".JText::_('DETAILS')."</a>)".
-		"&nbsp;<b>*</b></tr>"."$survey".$reg_button.JHTML::_( 'form.token' ).
+					"&nbsp;<b>*</b></tr>".
+			"<tr>".
+      "<td class=semi4 width=23% align=right bgcolor=#caf5b4 >&nbsp;".JText::_('CAPTCHA')."</td>".
+			"<td class=semi2 bgcolor=#caf5b5><span style=\"float:left\">&nbsp;".
+       " <img src=\"/captcha/code.php\"></span>".
+			  " <input type=\"text\" name=\"Turing\" value=\"\" size=\"10\">".
+			  "</td>".
+			"</tr>".		
+					"$survey".$reg_button.JHTML::_( 'form.token' ).
 		"</table>".
 	"</div>".
-	"</form>";
+  "</form>";
+
 
 //取消報名所用的參數
 	if($ch_login!=0){
@@ -230,7 +239,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 					JText::_('EMAIL').":".
 					"<input type=text size=23 name=ch_email value=".$ch_email." >".
 				"</td>".
-			"</tr>".
+				"</tr>".
+				       "<tr align=center>".
+							  "<td>".JText::_('CAPTCHA').
+								"&nbsp; <img src=\"/captcha/code.php\">".
+                " <input type=\"text\" name=\"Turing_cancel\" value=\"\" size=\"10\" style=\"vertical-align:top\"></td>".
+							       "</tr>".
+
 			"<tr align=center>".
 				"<td>".
 					"<input type=checkbox name=reg_check onclick=check(this,document.getElementById('el_send_attend2')) />".
