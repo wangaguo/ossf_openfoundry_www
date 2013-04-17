@@ -122,7 +122,7 @@ class OfssoControllerSso extends JController
 
   function SyncUsers()
   {
-    $data = json_decode(stripslashes($_REQUEST["data"]), true);
+    $data = json_decode($_REQUEST["data"], true);
     if($data)
     {
       $udata = Array();
@@ -133,18 +133,8 @@ class OfssoControllerSso extends JController
         $udata["username"] = $data["user"]["name"];
         $udata["gid"] = 19;
         $udata["usertype"] = 'Registered';
-			}
-
-			$Cfirst_name	=$data["user"]["first_name"];
-			$Clast_name		=$data["user"]["last_name"];
-			if ($Cfirst_name == $Clast_name){
-				$insertname = mb_convert_encoding( str_replace('u','&#x',$Cfirst_name), 'UTF-8', 'auto');
-			}else{
-				$Cname = $Cfirst_name . $Clast_name;
-				$insertname = mb_convert_encoding( str_replace('u','&#x',$Cname), 'UTF-8', 'auto');
-			}
-//      $udata["name"] = $data["user"]["first_name"].' '.$data["user"]["last_name"];
-      $udata["name"] = $insertname;
+      }
+      $udata["name"] = $data["user"]["first_name"].' '.$data["user"]["last_name"];
       $udata["password"] = $data["user"]["password"];
       $udata["password2"] = $data["user"]["password"];
       $udata["email"] = $data["user"]["email"];
