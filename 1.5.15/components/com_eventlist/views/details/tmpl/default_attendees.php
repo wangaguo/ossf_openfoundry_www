@@ -637,18 +637,19 @@ switch ($this->formhandler) {
 	case 1:
 	//報名截止(報名額滿)
 		echo "<br><h1><font color='#277BC0'><center>".JText::_( 'TOO LATE REGISTER' )."</cnter></font></h1><br>";
-
+    
 		$jetzt = date("Y-m-d H:i:s");
 		$now = strtotime($jetzt);
-		$date = strtotime(date($this->row->signupEnddate.' '.$this->row->signupEndtime));
-		$timecheck = $date - $now;
+		//$date = strtotime(date($this->row->signupEnddate.' '.$this->row->signupEndtime));
+		//$timecheck = $date - $now;
 		$eventTime = strtotime(date($this->row->dates.' '.$this->row->times));
 		$timecheck_event = $eventTime - $now;
 		//時間未到 報名人數額滿
 		//無登入者 僅顯示取消報名表格
 		//有登入者 若有加入 才顯示取消表格
-	
-		if($timecheck > 0 && $timecheck_event > 0){
+	  
+		//if($timecheck > 0 && $timecheck_event > 0){
+	   if($timecheck_event > 0){
 			if( $ch_login==0 && $this->row->registra >=7 && $this->row->registra <=9 ){
 				echo $cancel_user_loginNR;
 			}
