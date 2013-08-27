@@ -47,7 +47,20 @@ $this->setTitle( $this->getTitle() . ' - ' . $app->getCfg( 'sitename' ) );
   })();
 
 </script>
-
+<style>
+.divnotice {
+            float: left;
+            margin-right: 20px;
+            margin-bottom:20px;
+            padding: 22px 8px 8px 8px;
+            width: 45%;
+            font-size: 75%;
+            margin-top: 25px;
+            position: relative;
+            background-color:#fbe96f;    
+            border-radius: 13px;
+}
+</style>
 </head>
 	<body <?php echo $gantry->displayBodyTag(array('backgroundLevel','bodyLevel')); ?>>
 		<div id="rt-main-background">
