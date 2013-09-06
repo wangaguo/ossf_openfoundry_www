@@ -90,10 +90,11 @@ span.inset-right {float: right;margin-left: 20px;margin-bottom:20px;}
 .lightredbox {background-color:#f4b5b5; border-radius: 13px;}
 .lightbluebox {background-color:#bfd9e5; border-radius: 13px;}
 .lightgraybox {background-color:#ededed; border-radius: 13px;}
-
+.divnotice {float: left; margin-right: 20px; margin-bottom:20px; padding: 22px 8px 8px 8px; width: 45%; font-size: 75%; margin-top: 25px; position: relative; background-color:#fbe96f; border-radius: 13px; }
 .yellowbox pre {font-size:70%;}
 span.inset-right-title, span.inset-left-title {position: absolute;display: block;top: -12px;left: 10px;padding: 3px 8px;font-weight: bold;background-color:#cccccc;}
 span.inset-left, span.inset-right {display: block;padding: 22px 8px 8px 8px;width: 45%;font-size: 75%;margin-top: 25px;position: relative;}
+
 
 /* RTL Stuff */
 .rtl ul.bullet-1, .rtl ul.bullet-2, .rtl ul.bullet-3, .rtl ul.bullet-4, .rtl ul.bullet-5, .rtl ul.bullet-6, .rtl ul.bullet-7, .rtl ul.bullet-8, .rtl ul.bullet-9, .rtl ul.bullet-10 {padding: 0 15px 0 0;margin-right: 0 !important;}
@@ -116,3 +117,4 @@ span.inset-left, span.inset-right {display: block;padding: 22px 8px 8px 8px;widt
 .rtl span.inset-right-title, .rtl span.inset-left-title {right: 10px;left: inherit;}
 .rtl .quote-l {padding: 8px 36px 0px 10px;background: url(../images/typography/quote-r.png) no-repeat 99% 12px;}
 .rtl .quote-r {padding: 0 0 0 10px;background: url(../images/typography/quote-l.png) no-repeat 10px 100%;}
+
