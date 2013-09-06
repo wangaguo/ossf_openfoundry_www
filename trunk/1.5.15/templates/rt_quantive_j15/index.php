@@ -47,7 +47,6 @@ $this->setTitle( $this->getTitle() . ' - ' . $app->getCfg( 'sitename' ) );
   })();
 
 </script>
-</style>
 </head>
 	<body <?php echo $gantry->displayBodyTag(array('backgroundLevel','bodyLevel')); ?>>
 		<div id="rt-main-background">
