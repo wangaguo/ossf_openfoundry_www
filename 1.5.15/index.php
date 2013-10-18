@@ -1,4 +1,14 @@
 <?php
+
+  // Include and instantiate the class.
+    require_once 'Mobile_Detect.php';
+    $detect = new Mobile_Detect;
+    // Exclude tablets.
+    if( $detect->isMobile() && !$detect->isTablet() ){
+              header('Location:http://m.openfoundry.org');
+		exit();
+    }
+
 /**
 * @version		$Id: index.php 11407 2009-01-09 17:23:42Z willebil $
 * @package		Joomla
