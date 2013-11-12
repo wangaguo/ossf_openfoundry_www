@@ -1,14 +1,42 @@
 <?php
-
-  // Include and instantiate the class.
-    require_once 'Mobile_Detect.php';
-    $detect = new Mobile_Detect;
-    // Exclude tablets.
-    if( $detect->isMobile() && !$detect->isTablet() ){
-              header('Location:http://m.openfoundry.org');
-		exit();
-    }
-
+require_once 'mobile_session.php';
+if(isset($_GET['mobileNo'])){
+    start_session(600);
+ }
+require_once 'Mobile_Detect.php';
+      $detect = new Mobile_Detect;
+			// Exclude tablets.
+			if( $detect->isMobile() && !$detect->isTablet() ){
+			       if(!isset($_COOKIE['closemobile'])){
+			           $hrs= $_SERVER['REQUEST_URI'];
+			           $hr=explode('/',$hrs);
+			     			 $wArray=array('news','law-and-licensing','activities','about');
+					 			 $news=array('foss-news','tech-column','foss-programs','legal-column-list','foss-forum','enterprise-application','foss-projects');
+			    			 $abouts=array('about-openfoundry','ossf-members','steering-organization');
+			  	 			 if($hrs=='/' || $hr[1]=='index.php'){
+			 			 			    $m='Location:https://m.openfoundry.org';
+			   			  }elseif($hr[1]=='tw'){
+			 			  			    if(in_array($hr[2],$news)){
+			 			    				   	$action='action=news&page=/tw/'.$hr[2].'/'.$hr[3];				  
+					   					  }elseif(in_array($hr[2], $abouts)){
+							  				  	$action='action=about&page='.$hr[2];
+					  					  }elseif(in_array($hr[2], $wArray)){
+			  											if($hr[2]=='activities' && $hr[4]<>''){
+		                             $action='action=activities&page='.$hr[4];
+																}else{
+  																$action='action='.$hr[2];
+		 										    	}				    					 					
+											}
+									$m='Location:https://m.openfoundry.org/?'.$action;
+						  }elseif(strpos($hr[1],'option=com_content')){
+									$url=explode('&',$hr[1]);
+		 							$id=explode('=',$url[2]);
+									$m='Location:https://m.openfoundry.org/?action=news&page=/tw/news/'.$id[1];		  
+		  			  }
+			 			  header($m);
+			 			  exit();
+			   }
+  }
 /**
 * @version		$Id: index.php 11407 2009-01-09 17:23:42Z willebil $
 * @package		Joomla
@@ -63,7 +91,7 @@ $mainframe->route();
 
 // authorization
 $Itemid = JRequest::getInt( 'Itemid');
-require_once( JPATH_LIBRARIES       .DS.'ofsso'.DS.'ofsso.php');
+require_once( JPATH_LIBRARIES.DS.'ofsso'.DS.'ofsso.php');
 $ofsso = new OfssoLibrary;
 $ofsso->authorize($Itemid);
 
@@ -100,3 +128,4 @@ $mainframe->triggerEvent('onAfterRender');
  * RETURN THE RESPONSE
  */
 echo JResponse::toString($mainframe->getCfg('gzip'));
+
