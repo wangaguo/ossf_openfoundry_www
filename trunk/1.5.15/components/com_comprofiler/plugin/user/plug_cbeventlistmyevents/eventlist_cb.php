@@ -121,8 +121,9 @@ class eventlistTab extends cbTabHandler {
 			//echo "<br>" . JPATH_SITE;
 
 			//echo "<br>" . admin: $mainframe->getSiteURL();
+     $mainframe->addCustomHeadTag("<link href=\"/components/com_comprofiler/plugin/user/plug_cbeventlistmyevents/eventlist_cb.css\" rel=\"stylesheet\" type=\"text/css\" />");
 
-			$mainframe->addCustomHeadTag("<link href=\"{$mosConfig_live_site}/components/com_comprofiler/plugin/user/plug_cbeventlistmyevents/eventlist_cb.css\" rel=\"stylesheet\" type=\"text/css\" />");
+    // $mainframe->addCustomHeadTag("<link href=\"{$mosConfig_live_site}/components/com_comprofiler/plugin/user/plug_cbeventlistmyevents/eventlist_cb.css\" rel=\"stylesheet\" type=\"text/css\" />");
 
 			if($tab->description == null) {
 
