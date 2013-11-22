@@ -26,7 +26,8 @@ if ( !class_exists('mtConfig') ) {
 			global $mainframe;
 			$this->jconfig['absolute_path'] = JPATH_SITE;
 			if(substr(JURI::root(),-1) == '/') {
-				$this->jconfig['live_site'] = substr(JURI::root(),0,-1);
+				$this->jconfig['live_site']='';
+				//$this->jconfig['live_site'] = substr(JURI::root(),0,-1);
 			} else {
 				$this->jconfig['live_site'] = JURI::root();
 			}
