@@ -1943,7 +1943,9 @@ class CBframework {
 					}
 					if ( substr( $live_site, -1, 1 ) == '/' ) {
 						// fix erroneous ending / in some joomla 1.5 versions:
-						return substr( $live_site, 0, -1 );
+					//	return substr( $live_site, 0, -1 );
+				    $live_site='';
+						return $live_site;
 					} else {
 						return $live_site;
 					}
