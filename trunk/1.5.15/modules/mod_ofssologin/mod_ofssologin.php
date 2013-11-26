@@ -8,8 +8,8 @@ global $mainframe;
 echo '<div class="ofssologin_'.$class_sfx.'">';
 if($user->get('aid') == 0)
 { //login
-  $loginPost = ("/sso/user/login?return_url=/of/user/dashboard");
-  $singupPost = ("sso/user/signup");
+  $loginPost = ("https://www.openfoundry.org/sso/user/login?return_url=/of/user/dashboard");
+  $singupPost = ("https://www.openfoundry.org/sso/user/signup");
   
   echo '<a href="'.$loginPost.'">'.JText::_('Login').'</a>';
   echo $pipe;
@@ -19,13 +19,13 @@ if($user->get('aid') == 0)
 }
 else
 { //logout
-  $logoutPost   = "/sso/user/logout";
-  $dashboard    = "/of/user/dashboard";
-  $ssoedit      = "/sso/user/edit";
+  $logoutPost   = "https://www.openfoundry.org/sso/user/logout";
+  $dashboard    = "https://www.openfoundry.org/of/user/dashboard";
+  $ssoedit      = "https://www.openfoundry.org/sso/user/edit";
   $txtusername  = $user->get('username');
 
   echo JText::_('HI');
-  echo '<a href="user/userprofile/">';
+  echo '<a href="https://www.openfoundry.org/user/userprofile/">';
   echo $txtusername.'</a>';
   echo $pipe;
   echo '<a href="'.$dashboard.'" >'.JText::_('DASHBOARD').'</a>';
@@ -42,7 +42,7 @@ $doc->addScript(JURI::root(true) ."/modules/mod_ofssologin/js/ofssologin.js");
 $JText = &JFactory::getLanguage();
 echo <<<EOD
 <div class="ofssologin_search_{$class_sfx}">
-  <form id="of_search" action="/of/openfoundry/search" method="get" onsubmit="of_search(); return false;">
+  <form id="of_search" action="https://www.openfoundry.org/of/openfoundry/search" method="get" onsubmit="of_search(); return false;">
     <select id="of_search_type">
       <option value="Projects"> {$JText->_('PROJECTS')} </option>
       <option value="Content"> {$JText->_('CONTENT')} </option>
