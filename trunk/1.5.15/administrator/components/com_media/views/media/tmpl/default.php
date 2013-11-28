@@ -63,18 +63,12 @@
             <!-- File Upload Form -->
 	<?php $canUpload= ($this->user->authorize('com_media', 'upload')); ?> 	
 	<?php if ($canUpload) : ?>
-	<?php $Url= JURI::base();
-	      $headUrl=explode(':',$Url);
-	      if($headUrl[0]=='http'){
-	 	 $furl='https:';
-		for($i=1; $i<count($headUrl); $i++){
-			$furl .= $headUrl[$i];
-			}
-		}else{
-			 $furl=$Url;		
-		}
+	<?php $post_url= JURI::base();
+	      if(eregi('http://', $post_url)){
+			     $post_url =ereg_replace ("http://", "https://", $post_url);
+			     }
         ?>
-	<form action="<?php echo $furl; ?>index.php?option=com_media&amp;task=file.upload&amp;tmpl=component&amp;<?php echo $this->session->getName().'='.$this->session->getId(); ?>&amp;<?php echo JUtility::getToken();?>=1" id="uploadForm" method="post" enctype="multipart/form-data">
+	<form action="<?php echo $post_url; ?>index.php?option=com_media&amp;task=file.upload&amp;tmpl=component&amp;<?php echo $this->session->getName().'='.$this->session->getId(); ?>&amp;<?php echo JUtility::getToken();?>=1" id="uploadForm" method="post" enctype="multipart/form-data">
 	<fieldset>
 	<legend><?php echo JText::_( 'Upload File' ); ?> [ <?php echo JText::_( 'Max' ); ?>&nbsp;<?php echo ($this->config->get('upload_maxsize') / 1000000); ?>M ]</legend>
 	<fieldset class="actions">
