@@ -212,7 +212,7 @@ class EventListModelDetails extends JModel
 		//Get registered users
 		//r.uid改成r.*
 
-			$query = 'SELECT u.* AS name, r.*'
+			$query = 'SELECT u.name AS name,u.username AS username, r.*'
 					. $avatar
 					. ' FROM #__eventlist_reg_user AS r'
 					. ' LEFT JOIN #__users AS u ON u.id = r.uid'
@@ -817,7 +817,7 @@ class EventListModelDetails extends JModel
 				}
 				
 				if($register->uid != 0 && $this->elsettings->comunoption == 1){
-					$useravatar = "<img src = http://www.openfoundry.org/sso/user/image?name=$register->username&size=medium width=40>";
+					$useravatar = "<img src = https://www.openfoundry.org/sso/user/image?name=$register->username&size=medium width=40>";
 					$output .= "<li><a href='/community/userprofile/".$register->username."'>".$useravatar."<span class='username'>".str_replace('!','',$member_name)."</span></a></li>";
 					$u_num=$u_num+1;
 				}
@@ -830,7 +830,7 @@ class EventListModelDetails extends JModel
 					}
 					
 					if($register->uid != 0 && $this->elsettings->comunoption == 1){
-						$useravatar = "<img src = http://www.openfoundry.org/sso/user/image?name=$register->username&size=medium width=40>";
+						$useravatar = "<img src = https://www.openfoundry.org/sso/user/image?name=$register->username&size=medium width=40>";
 						$output .= "<li><a href='/community/userprofile/".$register->username."'>".$useravatar."<span class='username'>".str_replace('!','',$member_name)."</span></a></li>";
 						$u_num=$u_num+1;
 					}
@@ -855,7 +855,7 @@ class EventListModelDetails extends JModel
 					$output .=  "</ul><ul id=\"menu2\"  class=\"user floattext\" style='display:none;text-align:left;' >";
 				}
 					
-				$useravatar = "<img src = http://www.openfoundry.org/sso/user/image?name=$register->name&size=medium width=40>";
+				$useravatar = "<img src = https://www.openfoundry.org/sso/user/image?name=$register->name&size=medium width=40>";
 			 
 				if($register->uid == 0){
 					$output .= JHTML::_('image.site', 'people.png', 'components/com_eventlist/assets/images/', NULL, NULL, NULL,"width=32 title=$register->u_name");
@@ -868,7 +868,7 @@ class EventListModelDetails extends JModel
 					$output .=  "</ul><ul id=\"menu2\"  class=\"user floattext\" style='display:none;text-align:left;' >";
 				}
 					
-				$useravatar = "<img src = http://www.openfoundry.org/sso/user/image?name=$register->name&size=medium width=40>";
+				$useravatar = "<img src = https://www.openfoundry.org/sso/user/image?name=$register->name&size=medium width=40>";
 			 
 				if($register->uid == 0){
 					$output .= JHTML::_('image.site', 'people.png', 'components/com_eventlist/assets/images/', NULL, NULL, NULL,"width=32 title=$register->u_name");
