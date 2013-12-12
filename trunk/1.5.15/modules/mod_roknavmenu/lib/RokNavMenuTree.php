@@ -329,7 +329,8 @@ class RokNavMenuTree extends RokMenuTreeBase
             		
 			// Get the final URL
 			if ($tmp->home == 1) {  											// Set Home Links to the Base
-				$tmp->url = JURI::base();
+							$tmp->url="/"; //2013/12/12 edit
+							//	$tmp->url = JURI::base();
 			} 
 			
 			if ($tmp->type != 'separator' && $tmp->type != 'url') {		
