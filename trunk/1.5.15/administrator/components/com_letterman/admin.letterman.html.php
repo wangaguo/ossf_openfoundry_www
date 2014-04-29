@@ -239,7 +239,7 @@ class HTML_letterman {
 			    				          		echo '<option selected="selected">' . $file . '</option>';
 			    				        	}
 														else {
-																		if (substr($file,-3) =='txt' or substr($file,-3) =="TXT"){
+                                    if(in_array(end(explode('.',$file)),array('txt','mkd','md'))){
 																						if (mb_substr($file,0,3)=='第'){	
 																										echo '<option>' . $file . '</option>';
 																						}
